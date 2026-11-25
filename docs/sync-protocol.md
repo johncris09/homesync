@@ -79,6 +79,17 @@ Format: `<physical_ms>-<counter 4 hex>-<node 8 hex>`, compared as a tuple (physi
 
 ## 5. Endpoints
 
+### 5.0 Auth
+
+| Endpoint | Body | Returns |
+| --- | --- | --- |
+| `POST /api/auth/login` | `email`, `password`, `device_id` (UUID made by the app), `device_name`, `platform` (`android`/`web`), `is_shared` | `token`, `device`, `member`, `household` |
+| `POST /api/auth/pin` | `member_id`, `pin` (4 digits), `device_id` — called with the shared tablet's token | a token for that member's profile on the tablet |
+| `GET /api/auth/me` | — | `device`, `member`, `household` |
+| `POST /api/auth/logout` | — | revokes this device's token |
+
+Tokens belong to devices. A shared tablet holds one token per PIN profile and switches between them offline after checking the PIN against the synced `pin_hash`.
+
 ### 5.1 `POST /api/sync/push`
 
 Request:

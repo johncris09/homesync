@@ -12,6 +12,17 @@ cd api && php artisan install:api   # adds Sanctum and routes/api.php
 
 `composer create-project` needs an empty folder, so it goes to `api-tmp` first; `cp -n` keeps this README.
 
+## First run
+
+```bash
+cp .env.example .env && php artisan key:generate
+php artisan migrate
+php artisan homesync:setup   # creates the household and the owner account
+php artisan test             # sync rules, auth and permissions
+```
+
+Synced tables, their fields, roles and conflict rules are registered in `config/homesync.php`.
+
 ## Planned pieces
 
 | Piece | Notes |
