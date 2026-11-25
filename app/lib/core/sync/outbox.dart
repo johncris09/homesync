@@ -33,12 +33,11 @@ class SyncIdentity {
 class LocalWriter {
   LocalWriter({
     required this.db,
-    required SyncIdentity identity,
+    required this.identity,
     required this.clock,
     this.onWrite,
     DateTime Function()? now,
-  }) : identity = identity,
-       _state = SyncStateStore(db),
+  }) : _state = SyncStateStore(db),
        _now = now ?? DateTime.now;
 
   final AppDatabase db;
