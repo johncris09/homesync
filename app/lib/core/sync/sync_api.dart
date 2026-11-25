@@ -114,6 +114,15 @@ class SignedOut implements Exception {
   const SignedOut();
 }
 
+/// No token for the profile that made these ops (a PIN profile used offline
+/// that hasn't signed in online yet). Its ops wait; pulling continues.
+class ProfileTokenMissing implements Exception {
+  const ProfileTokenMissing(this.deviceId);
+  final String deviceId;
+  @override
+  String toString() => 'ProfileTokenMissing($deviceId)';
+}
+
 /// No connection, timeout or a 5xx: try again later.
 class SyncUnavailable implements Exception {
   const SyncUnavailable(this.reason);

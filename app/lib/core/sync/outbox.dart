@@ -33,15 +33,18 @@ class SyncIdentity {
 class LocalWriter {
   LocalWriter({
     required this.db,
-    required this.identity,
+    required SyncIdentity identity,
     required this.clock,
     this.onWrite,
     DateTime Function()? now,
-  }) : _state = SyncStateStore(db),
+  }) : identity = identity,
+       _state = SyncStateStore(db),
        _now = now ?? DateTime.now;
 
   final AppDatabase db;
-  final SyncIdentity identity;
+  /// Current profile. Switched when a PIN profile takes over the tablet;
+  /// each write is stamped with the profile active when it started.
+  SyncIdentity identity;
   final HlcClock clock;
 
   /// Called after each committed write (the sync scheduler debounces it).
@@ -57,15 +60,15 @@ class LocalWriter {
     _checkFields(spec, fields.keys);
     final entityId = id ?? _uuid.v7();
 
-    await _write(entity, entityId, (table, hlc, now) async {
+    await _write(entity, entityId, (table, hlc, now, who) async {
       await SyncCodec.insert(db, table, {
         ...fields,
         'id': entityId,
-        'household_id': identity.householdId,
+        'household_id': who.householdId,
         'created_at': now,
-        ..._stamp(hlc, now),
+        ..._stamp(hlc, now, who),
       });
-      await _enqueue(spec, entityId, 'insert', fields, hlc, null);
+      await _enqueue(who, spec, entityId, 'insert', fields, hlc, null);
       await _setClocks(entity, entityId, fields.keys.where((f) => !spec.counters.contains(f)), hlc);
     });
     return entityId;
@@ -84,10 +87,10 @@ class LocalWriter {
     }
     if (fields.isEmpty) return;
 
-    await _write(entity, id, (table, hlc, now) async {
+    await _write(entity, id, (table, hlc, now, who) async {
       final base = await _serverVersion(table, id);
-      await _updateRow(table, id, {...fields, ..._stamp(hlc, now)});
-      await _enqueue(spec, id, 'update', fields, hlc, base);
+      await _updateRow(table, id, {...fields, ..._stamp(hlc, now, who)});
+      await _enqueue(who, spec, id, 'update', fields, hlc, base);
       await _setClocks(entity, id, fields.keys, hlc);
     });
   }
@@ -100,7 +103,7 @@ class LocalWriter {
     }
     if (deltas.isEmpty) return;
 
-    await _write(entity, id, (table, hlc, now) async {
+    await _write(entity, id, (table, hlc, now, who) async {
       final base = await _serverVersion(table, id);
       final sets = deltas.keys.map((f) => '"$f" = "$f" + ?').join(', ');
       await db.customUpdate(
@@ -108,18 +111,18 @@ class LocalWriter {
         variables: [...deltas.values.map((d) => Variable<double>(d.toDouble())), Variable<String>(id)],
         updates: {table},
       );
-      await _updateRow(table, id, _stamp(hlc, now));
-      await _enqueue(spec, id, 'increment', deltas, hlc, base);
+      await _updateRow(table, id, _stamp(hlc, now, who));
+      await _enqueue(who, spec, id, 'increment', deltas, hlc, base);
     });
   }
 
   /// Soft delete (tombstone).
   Future<void> delete(String entity, String id) async {
     final spec = specFor(entity);
-    await _write(entity, id, (table, hlc, now) async {
+    await _write(entity, id, (table, hlc, now, who) async {
       final base = await _serverVersion(table, id);
-      await _updateRow(table, id, {'deleted_at': now, ..._stamp(hlc, now)});
-      await _enqueue(spec, id, 'delete', {'deleted_at': now}, hlc, base);
+      await _updateRow(table, id, {'deleted_at': now, ..._stamp(hlc, now, who)});
+      await _enqueue(who, spec, id, 'delete', {'deleted_at': now}, hlc, base);
       await _setClocks(entity, id, const ['deleted_at'], hlc);
     });
   }
@@ -129,22 +132,23 @@ class LocalWriter {
   Future<void> _write(
     String entity,
     String id,
-    Future<void> Function(TableInfo<Table, dynamic> table, Hlc hlc, DateTime now) body,
+    Future<void> Function(TableInfo<Table, dynamic> table, Hlc hlc, DateTime now, SyncIdentity who) body,
   ) async {
     final table = db.syncedTable(entity)!;
+    final who = identity;
     await db.transaction(() async {
       final hlc = clock.tick();
-      await body(table, hlc, _now().toUtc());
+      await body(table, hlc, _now().toUtc(), who);
       await _state.saveClock(clock);
     });
     onWrite?.call();
   }
 
-  Map<String, Object?> _stamp(Hlc hlc, DateTime now) => {
+  Map<String, Object?> _stamp(Hlc hlc, DateTime now, SyncIdentity who) => {
     'updated_at': now,
     'hlc': hlc.toString(),
-    'updated_by': identity.memberId,
-    'device_id': identity.deviceId,
+    'updated_by': who.memberId,
+    'device_id': who.deviceId,
   };
 
   void _checkFields(EntitySpec spec, Iterable<String> fields) {
@@ -180,6 +184,7 @@ class LocalWriter {
   }
 
   Future<void> _enqueue(
+    SyncIdentity who,
     EntitySpec spec,
     String entityId,
     String op,
@@ -194,7 +199,7 @@ class LocalWriter {
           ..limit(1))
         .getSingleOrNull();
 
-    if (latest != null && !latest.sending) {
+    if (latest != null && !latest.sending && latest.deviceId == who.deviceId) {
       final merged = mergeOps(
         latest.op,
         (jsonDecode(latest.fields) as Map).cast<String, Object?>(),
@@ -222,6 +227,8 @@ class LocalWriter {
         fields: jsonEncode(wire),
         hlc: hlc.toString(),
         baseVersion: Value(baseVersion),
+        memberId: who.memberId,
+        deviceId: who.deviceId,
       ),
     );
   }

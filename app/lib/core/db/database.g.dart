@@ -4593,6 +4593,28 @@ class $OutboxTable extends Outbox with TableInfo<$OutboxTable, OutboxOp> {
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _memberIdMeta = const VerificationMeta(
+    'memberId',
+  );
+  @override
+  late final GeneratedColumn<String> memberId = GeneratedColumn<String>(
+    'member_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -4616,6 +4638,8 @@ class $OutboxTable extends Outbox with TableInfo<$OutboxTable, OutboxOp> {
     hlc,
     baseVersion,
     sending,
+    memberId,
+    deviceId,
     createdAt,
   ];
   @override
@@ -4696,6 +4720,22 @@ class $OutboxTable extends Outbox with TableInfo<$OutboxTable, OutboxOp> {
         sending.isAcceptableOrUnknown(data['sending']!, _sendingMeta),
       );
     }
+    if (data.containsKey('member_id')) {
+      context.handle(
+        _memberIdMeta,
+        memberId.isAcceptableOrUnknown(data['member_id']!, _memberIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_memberIdMeta);
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deviceIdMeta);
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -4747,6 +4787,14 @@ class $OutboxTable extends Outbox with TableInfo<$OutboxTable, OutboxOp> {
         DriftSqlType.bool,
         data['${effectivePrefix}sending'],
       )!,
+      memberId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}member_id'],
+      )!,
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -4777,6 +4825,12 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
   /// Set when a push containing this op starts. A sending op is never merged
   /// with later edits: the server may already have applied it.
   final bool sending;
+
+  /// Profile that made the change. On the shared tablet each PIN profile is
+  /// its own device with its own token, and the op must be pushed with it:
+  /// the server takes `updated_by` from the token.
+  final String memberId;
+  final String deviceId;
   final DateTime createdAt;
   const OutboxOp({
     required this.seq,
@@ -4788,6 +4842,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
     required this.hlc,
     this.baseVersion,
     required this.sending,
+    required this.memberId,
+    required this.deviceId,
     required this.createdAt,
   });
   @override
@@ -4804,6 +4860,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
       map['base_version'] = Variable<int>(baseVersion);
     }
     map['sending'] = Variable<bool>(sending);
+    map['member_id'] = Variable<String>(memberId);
+    map['device_id'] = Variable<String>(deviceId);
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -4821,6 +4879,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
           ? const Value.absent()
           : Value(baseVersion),
       sending: Value(sending),
+      memberId: Value(memberId),
+      deviceId: Value(deviceId),
       createdAt: Value(createdAt),
     );
   }
@@ -4840,6 +4900,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
       hlc: serializer.fromJson<String>(json['hlc']),
       baseVersion: serializer.fromJson<int?>(json['baseVersion']),
       sending: serializer.fromJson<bool>(json['sending']),
+      memberId: serializer.fromJson<String>(json['memberId']),
+      deviceId: serializer.fromJson<String>(json['deviceId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -4856,6 +4918,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
       'hlc': serializer.toJson<String>(hlc),
       'baseVersion': serializer.toJson<int?>(baseVersion),
       'sending': serializer.toJson<bool>(sending),
+      'memberId': serializer.toJson<String>(memberId),
+      'deviceId': serializer.toJson<String>(deviceId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
@@ -4870,6 +4934,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
     String? hlc,
     Value<int?> baseVersion = const Value.absent(),
     bool? sending,
+    String? memberId,
+    String? deviceId,
     DateTime? createdAt,
   }) => OutboxOp(
     seq: seq ?? this.seq,
@@ -4881,6 +4947,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
     hlc: hlc ?? this.hlc,
     baseVersion: baseVersion.present ? baseVersion.value : this.baseVersion,
     sending: sending ?? this.sending,
+    memberId: memberId ?? this.memberId,
+    deviceId: deviceId ?? this.deviceId,
     createdAt: createdAt ?? this.createdAt,
   );
   OutboxOp copyWithCompanion(OutboxCompanion data) {
@@ -4896,6 +4964,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
           ? data.baseVersion.value
           : this.baseVersion,
       sending: data.sending.present ? data.sending.value : this.sending,
+      memberId: data.memberId.present ? data.memberId.value : this.memberId,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -4912,6 +4982,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
           ..write('hlc: $hlc, ')
           ..write('baseVersion: $baseVersion, ')
           ..write('sending: $sending, ')
+          ..write('memberId: $memberId, ')
+          ..write('deviceId: $deviceId, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -4928,6 +5000,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
     hlc,
     baseVersion,
     sending,
+    memberId,
+    deviceId,
     createdAt,
   );
   @override
@@ -4943,6 +5017,8 @@ class OutboxOp extends DataClass implements Insertable<OutboxOp> {
           other.hlc == this.hlc &&
           other.baseVersion == this.baseVersion &&
           other.sending == this.sending &&
+          other.memberId == this.memberId &&
+          other.deviceId == this.deviceId &&
           other.createdAt == this.createdAt);
 }
 
@@ -4956,6 +5032,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxOp> {
   final Value<String> hlc;
   final Value<int?> baseVersion;
   final Value<bool> sending;
+  final Value<String> memberId;
+  final Value<String> deviceId;
   final Value<DateTime> createdAt;
   const OutboxCompanion({
     this.seq = const Value.absent(),
@@ -4967,6 +5045,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxOp> {
     this.hlc = const Value.absent(),
     this.baseVersion = const Value.absent(),
     this.sending = const Value.absent(),
+    this.memberId = const Value.absent(),
+    this.deviceId = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
   OutboxCompanion.insert({
@@ -4979,13 +5059,17 @@ class OutboxCompanion extends UpdateCompanion<OutboxOp> {
     required String hlc,
     this.baseVersion = const Value.absent(),
     this.sending = const Value.absent(),
+    required String memberId,
+    required String deviceId,
     this.createdAt = const Value.absent(),
   }) : opId = Value(opId),
        entity = Value(entity),
        entityId = Value(entityId),
        op = Value(op),
        fields = Value(fields),
-       hlc = Value(hlc);
+       hlc = Value(hlc),
+       memberId = Value(memberId),
+       deviceId = Value(deviceId);
   static Insertable<OutboxOp> custom({
     Expression<int>? seq,
     Expression<String>? opId,
@@ -4996,6 +5080,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxOp> {
     Expression<String>? hlc,
     Expression<int>? baseVersion,
     Expression<bool>? sending,
+    Expression<String>? memberId,
+    Expression<String>? deviceId,
     Expression<DateTime>? createdAt,
   }) {
     return RawValuesInsertable({
@@ -5008,6 +5094,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxOp> {
       if (hlc != null) 'hlc': hlc,
       if (baseVersion != null) 'base_version': baseVersion,
       if (sending != null) 'sending': sending,
+      if (memberId != null) 'member_id': memberId,
+      if (deviceId != null) 'device_id': deviceId,
       if (createdAt != null) 'created_at': createdAt,
     });
   }
@@ -5022,6 +5110,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxOp> {
     Value<String>? hlc,
     Value<int?>? baseVersion,
     Value<bool>? sending,
+    Value<String>? memberId,
+    Value<String>? deviceId,
     Value<DateTime>? createdAt,
   }) {
     return OutboxCompanion(
@@ -5034,6 +5124,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxOp> {
       hlc: hlc ?? this.hlc,
       baseVersion: baseVersion ?? this.baseVersion,
       sending: sending ?? this.sending,
+      memberId: memberId ?? this.memberId,
+      deviceId: deviceId ?? this.deviceId,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -5068,6 +5160,12 @@ class OutboxCompanion extends UpdateCompanion<OutboxOp> {
     if (sending.present) {
       map['sending'] = Variable<bool>(sending.value);
     }
+    if (memberId.present) {
+      map['member_id'] = Variable<String>(memberId.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -5086,6 +5184,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxOp> {
           ..write('hlc: $hlc, ')
           ..write('baseVersion: $baseVersion, ')
           ..write('sending: $sending, ')
+          ..write('memberId: $memberId, ')
+          ..write('deviceId: $deviceId, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -8284,6 +8384,8 @@ typedef $$OutboxTableCreateCompanionBuilder =
       required String hlc,
       Value<int?> baseVersion,
       Value<bool> sending,
+      required String memberId,
+      required String deviceId,
       Value<DateTime> createdAt,
     });
 typedef $$OutboxTableUpdateCompanionBuilder =
@@ -8297,6 +8399,8 @@ typedef $$OutboxTableUpdateCompanionBuilder =
       Value<String> hlc,
       Value<int?> baseVersion,
       Value<bool> sending,
+      Value<String> memberId,
+      Value<String> deviceId,
       Value<DateTime> createdAt,
     });
 
@@ -8351,6 +8455,16 @@ class $$OutboxTableFilterComposer
 
   ColumnFilters<bool> get sending => $composableBuilder(
     column: $table.sending,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -8414,6 +8528,16 @@ class $$OutboxTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -8458,6 +8582,12 @@ class $$OutboxTableAnnotationComposer
   GeneratedColumn<bool> get sending =>
       $composableBuilder(column: $table.sending, builder: (column) => column);
 
+  GeneratedColumn<String> get memberId =>
+      $composableBuilder(column: $table.memberId, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 }
@@ -8499,6 +8629,8 @@ class $$OutboxTableTableManager
                 Value<String> hlc = const Value.absent(),
                 Value<int?> baseVersion = const Value.absent(),
                 Value<bool> sending = const Value.absent(),
+                Value<String> memberId = const Value.absent(),
+                Value<String> deviceId = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
               }) => OutboxCompanion(
                 seq: seq,
@@ -8510,6 +8642,8 @@ class $$OutboxTableTableManager
                 hlc: hlc,
                 baseVersion: baseVersion,
                 sending: sending,
+                memberId: memberId,
+                deviceId: deviceId,
                 createdAt: createdAt,
               ),
           createCompanionCallback:
@@ -8523,6 +8657,8 @@ class $$OutboxTableTableManager
                 required String hlc,
                 Value<int?> baseVersion = const Value.absent(),
                 Value<bool> sending = const Value.absent(),
+                required String memberId,
+                required String deviceId,
                 Value<DateTime> createdAt = const Value.absent(),
               }) => OutboxCompanion.insert(
                 seq: seq,
@@ -8534,6 +8670,8 @@ class $$OutboxTableTableManager
                 hlc: hlc,
                 baseVersion: baseVersion,
                 sending: sending,
+                memberId: memberId,
+                deviceId: deviceId,
                 createdAt: createdAt,
               ),
           withReferenceMapper: (p0) => p0

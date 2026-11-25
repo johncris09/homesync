@@ -19,7 +19,7 @@ class Device {
     api = server.apiFor(memberId: member, deviceId: device);
     final id = identity(memberId: member, deviceId: device);
     w = writer(db, id);
-    engine = SyncEngine(db: db, api: api, clock: w.clock, deviceId: device, pullPageSize: pullPageSize);
+    engine = SyncEngine(db: db, api: api, clock: w.clock, pullPageSize: pullPageSize);
   }
 
   final AppDatabase db;
@@ -100,6 +100,8 @@ void main() {
         op: 'update',
         fields: '{"quantity": 1}',
         hlc: a.w.clock.tick().toString(),
+        memberId: memberA,
+        deviceId: deviceA,
       ),
     );
     final report = await a.engine.sync();
@@ -158,7 +160,7 @@ void main() {
     await b.engine.sync();
 
     final racing = RacingApi(a.api, () => a.w.update('grocery_items', id, {'note': 'jasmine'}));
-    final engine = SyncEngine(db: a.db, api: racing, clock: a.w.clock, deviceId: deviceA);
+    final engine = SyncEngine(db: a.db, api: racing, clock: a.w.clock);
     await engine.sync();
 
     final row = await grocery(a, id);
@@ -206,6 +208,32 @@ void main() {
       final row = await (d.db.select(d.db.pantryItems)..where((p) => p.id.equals(id))).getSingle();
       expect(row.quantity, 7);
     }
+  });
+
+  test('shared tablet: each PIN profile pushes with its own token', () async {
+    const kidMember = '01900000-0000-7000-8000-0000000000cc';
+    const kidDevice = 'c0000000-0000-7000-8000-00000000000c';
+    final rice = await a.w.insert('grocery_items', {'name': 'Rice'});
+
+    a.w.identity = identity(memberId: kidMember, deviceId: kidDevice);
+    final milk = await a.w.insert('grocery_items', {'name': 'Milk'});
+    // Same record edited by two profiles: never folded into one op.
+    await a.w.update('grocery_items', rice, {'note': 'kid says brown'});
+    expect(await a.outboxCount(), 3);
+
+    // The kid's profile has no token yet: the parent's op goes, the kid's wait.
+    final first = await a.engine.sync();
+    expect(first.pushed, 1);
+    expect(first.waitingForDevice, kidDevice);
+    expect(await a.outboxCount(), 2);
+
+    a.api.profiles[kidDevice] = kidMember; // PIN sign-in online gave a token
+    final second = await a.engine.sync();
+    expect(second.waitingForDevice, isNull);
+    expect(await a.outboxCount(), 0);
+    expect(server.rows['grocery_items']![milk]!['updated_by'], kidMember);
+    expect(server.rows['grocery_items']![milk]!['device_id'], kidDevice);
+    expect(server.rows['grocery_items']![rice]!['updated_by'], kidMember);
   });
 
   test('concurrent sync calls share one run', () async {

@@ -22,7 +22,7 @@ class SimDevice {
       identity: identity(memberId: member, deviceId: device),
       clock: HlcClock(deviceId: device, now: now),
     );
-    engine = SyncEngine(db: db, api: api, clock: w.clock, deviceId: device, pushBatchSize: 7, pullPageSize: 5);
+    engine = SyncEngine(db: db, api: api, clock: w.clock, pushBatchSize: 7, pullPageSize: 5);
   }
 
   final String name;

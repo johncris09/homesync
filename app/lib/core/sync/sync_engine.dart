@@ -15,11 +15,15 @@ class SyncReport {
     required this.pushed,
     required this.rejected,
     required this.pulled,
+    this.waitingForDevice,
   });
 
   final int pushed;
   final int rejected;
   final int pulled;
+
+  /// Profile device whose ops are waiting for a token (see ProfileTokenMissing).
+  final String? waitingForDevice;
 
   @override
   String toString() => 'SyncReport(pushed: $pushed, rejected: $rejected, pulled: $pulled)';
@@ -34,7 +38,6 @@ class SyncEngine {
     required this.db,
     required this.api,
     required this.clock,
-    required this.deviceId,
     this.pushBatchSize = 200,
     this.pullPageSize = 500,
     DateTime Function()? now,
@@ -44,7 +47,6 @@ class SyncEngine {
   final AppDatabase db;
   final SyncApi api;
   final HlcClock clock;
-  final String deviceId;
   final int pushBatchSize;
   final int pullPageSize;
 
@@ -56,24 +58,27 @@ class SyncEngine {
   Future<SyncReport> sync() => _running ??= _run().whenComplete(() => _running = null);
 
   Future<SyncReport> _run() async {
-    final (pushed, rejected) = await _push();
+    final (pushed, rejected, waiting) = await _push();
     final pulled = await _pull();
     await _state.setLastSyncedAt(_now());
-    return SyncReport(pushed: pushed, rejected: rejected, pulled: pulled);
+    return SyncReport(pushed: pushed, rejected: rejected, pulled: pulled, waitingForDevice: waiting);
   }
 
   // ------------------------------------------------------------------ push
 
-  Future<(int, int)> _push() async {
+  /// Pushes in outbox order. A batch holds consecutive ops of one profile,
+  /// sent with that profile's token.
+  Future<(int, int, String?)> _push() async {
     var pushed = 0;
     var rejected = 0;
     // Bounded so a device writing non-stop can't keep one sync alive forever.
     for (var round = 0; round < 50; round++) {
       final batch = await db.transaction(() async {
-        final ops = await (db.select(db.outbox)
+        final head = await (db.select(db.outbox)
               ..orderBy([(o) => OrderingTerm.asc(o.seq)])
               ..limit(pushBatchSize))
             .get();
+        final ops = head.takeWhile((o) => o.deviceId == head.first.deviceId).toList();
         if (ops.isNotEmpty) {
           await (db.update(db.outbox)..where((o) => o.seq.isIn(ops.map((o) => o.seq))))
               .write(const OutboxCompanion(sending: Value(true)));
@@ -82,7 +87,12 @@ class SyncEngine {
       });
       if (batch.isEmpty) break;
 
-      final response = await api.push(deviceId, [for (final op in batch) _opJson(op)]);
+      final PushResponse response;
+      try {
+        response = await api.push(batch.first.deviceId, [for (final op in batch) _opJson(op)]);
+      } on ProfileTokenMissing catch (e) {
+        return (pushed, rejected, e.deviceId);
+      }
       final byId = {for (final op in batch) op.opId: op};
       var answered = 0;
 
@@ -117,7 +127,7 @@ class SyncEngine {
       // A server that answers for none of the ops would loop forever.
       if (answered == 0) throw const SyncUnavailable('push answered no ops');
     }
-    return (pushed, rejected);
+    return (pushed, rejected, null);
   }
 
   Map<String, Object?> _opJson(OutboxOp op) => {

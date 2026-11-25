@@ -230,11 +230,15 @@ class _Rejected implements Exception {
 /// One device's connection to the fake hub. Flip [offline] or
 /// [upgradeRequired] to simulate failures.
 class FakeSyncApi implements SyncApi {
-  FakeSyncApi(this.server, this.memberId, this.deviceId);
+  FakeSyncApi(this.server, this.memberId, this.deviceId) : profiles = {deviceId: memberId};
 
   final FakeSyncServer server;
   final String memberId;
   final String deviceId;
+
+  /// Device id -> member for every token this install holds (the main
+  /// sign-in plus PIN profiles that signed in online).
+  final Map<String, String> profiles;
   bool offline = false;
   bool upgradeRequired = false;
 
@@ -250,7 +254,9 @@ class FakeSyncApi implements SyncApi {
   @override
   Future<PushResponse> push(String deviceId, List<Map<String, Object?>> ops) async {
     _check();
-    final res = server.push(memberId, deviceId, ops);
+    final member = profiles[deviceId];
+    if (member == null) throw ProfileTokenMissing(deviceId);
+    final res = server.push(member, deviceId, ops);
     if (dropNextPushResponse) {
       dropNextPushResponse = false;
       throw const SyncUnavailable('connection dropped');

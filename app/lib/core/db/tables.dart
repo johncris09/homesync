@@ -99,6 +99,12 @@ class Outbox extends Table {
   /// Set when a push containing this op starts. A sending op is never merged
   /// with later edits: the server may already have applied it.
   BoolColumn get sending => boolean().withDefault(const Constant(false))();
+
+  /// Profile that made the change. On the shared tablet each PIN profile is
+  /// its own device with its own token, and the op must be pushed with it:
+  /// the server takes `updated_by` from the token.
+  TextColumn get memberId => text()();
+  TextColumn get deviceId => text()();
   DateTimeColumn get createdAt => dateTime().clientDefault(DateTime.now)();
 }
 
