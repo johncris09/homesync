@@ -15,7 +15,7 @@ flutter create . --project-name homesync --org com.johncris09 --platforms=androi
 | Purpose | Package |
 | --- | --- |
 | State management | `flutter_riverpod`, `riverpod_annotation` |
-| Local database | `drift`, `drift_flutter`, `sqlite3_flutter_libs` (Android), `sqlcipher_flutter_libs` (Android) |
+| Local database | `drift`, `drift_flutter`; encryption via the `sqlite3` hook option `source: sqlite3mc` in `pubspec.yaml` (no extra package) |
 | Routing | `go_router` |
 | HTTP | `dio` |
 | Secure storage | `flutter_secure_storage` |

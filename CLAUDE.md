@@ -50,10 +50,17 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Plan, design, decisions | Done |
 | Repo scaffold (Flutter + Laravel generated) | Done — `feature/repo-scaffold` |
 | API sync engine: push/pull/bootstrap, all conflict rules, device tokens, email + PIN login, protocol check, setup command, 28 tests | Done — `feature/sync-core` |
-| **App sync engine** | **Next** |
+| **App sync engine** — core (steps 1–5, 9) | Done — `feature/app-sync-core`: Drift DB (sqlite3mc), HLC, outbox writer, sync engine, Dio transport, scheduler with backoff, 3-device convergence test (68 tests) |
+| **App sync engine** — triggers wiring, auth, sync UI (steps 6–8) | **Next** |
 | Phase 1 modules (Budget, Bills & Subscriptions, Chores, Calendar, Pantry & Grocery) | Not started |
 
 ### Next: app side of Phase 0 (`feature/app-sync-core`)
+
+Steps 1–5 and 9 are done (see `app/lib/core/sync/`, `app/test/core/sync/`). Notes for what's left:
+- Features write synced data only through `LocalWriter` (wire field names, Dart values); `EntitySpec` in `core/sync/entities.dart` mirrors `api/config/homesync.php` — keep both in step.
+- `SyncScheduler` already does debounce, periodic and backoff; step 6 is wiring it to app resume (`AppLifecycleListener`), `connectivity_plus` and WorkManager (needs the token from step 7).
+- Web needs `sqlite3.wasm` + `drift_worker.js` in `app/web/` before the DB opens in the browser.
+
 
 1. Add packages from `app/README.md` (drift, drift_flutter, sqlcipher_flutter_libs, flutter_riverpod, go_router, dio, flutter_secure_storage, connectivity_plus, workmanager, cryptography, uuid, flutter_local_notifications).
 2. `core/db`: Drift database with a sync-columns mixin (`id, household_id, created_at, updated_at, deleted_at, hlc, server_version, updated_by, device_id`), an `outbox` table, a `field_clocks` table, a `sync_state` table (cursor, last synced) and a `sync_errors` table. Start with the same reference tables as the API: `members`, `grocery_items`, `pantry_items`, `bills`, `transactions`.
