@@ -50,27 +50,18 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Plan, design, decisions | Done |
 | Repo scaffold (Flutter + Laravel generated) | Done — `feature/repo-scaffold` |
 | API sync engine: push/pull/bootstrap, all conflict rules, device tokens, email + PIN login, protocol check, setup command, 28 tests | Done — `feature/sync-core` |
-| **App sync engine** — core (steps 1–5, 9) | Done — `feature/app-sync-core`: Drift DB (sqlite3mc), HLC, outbox writer, sync engine, Dio transport, scheduler with backoff, 3-device convergence test (68 tests) |
-| **App sync engine** — triggers wiring, auth, sync UI (steps 6–8) | **Next** |
+| **App sync engine** (steps 1–9) | Done — `feature/app-sync-core`: Drift DB (sqlite3mc), HLC, outbox (per-profile), sync engine, triggers + WorkManager, email/PIN-profile auth, app lock, synced conflicts + Conflict Inbox, sync status UI; 97 app tests, 30 API tests |
+| Phase 0 leftovers | **Next**: web `sqlite3.wasm` + `drift_worker.js`, Bricolage Grotesque font files, owner screens to add members and set PINs, test against a real hub |
 | Phase 1 modules (Budget, Bills & Subscriptions, Chores, Calendar, Pantry & Grocery) | Not started |
 
-### Next: app side of Phase 0 (`feature/app-sync-core`)
+### Phase 0 app notes (`feature/app-sync-core`)
 
-Steps 1–5 and 9 are done (see `app/lib/core/sync/`, `app/test/core/sync/`). Notes for what's left:
-- Features write synced data only through `LocalWriter` (wire field names, Dart values); `EntitySpec` in `core/sync/entities.dart` mirrors `api/config/homesync.php` — keep both in step.
-- `SyncScheduler` already does debounce, periodic and backoff; step 6 is wiring it to app resume (`AppLifecycleListener`), `connectivity_plus` and WorkManager (needs the token from step 7).
-- Web needs `sqlite3.wasm` + `drift_worker.js` in `app/web/` before the DB opens in the browser.
-
-
-1. Add packages from `app/README.md` (drift, drift_flutter, sqlcipher_flutter_libs, flutter_riverpod, go_router, dio, flutter_secure_storage, connectivity_plus, workmanager, cryptography, uuid, flutter_local_notifications).
-2. `core/db`: Drift database with a sync-columns mixin (`id, household_id, created_at, updated_at, deleted_at, hlc, server_version, updated_by, device_id`), an `outbox` table, a `field_clocks` table, a `sync_state` table (cursor, last synced) and a `sync_errors` table. Start with the same reference tables as the API: `members`, `grocery_items`, `pantry_items`, `bills`, `transactions`.
-3. `core/sync/hlc.dart`: format `<13-digit ms>-<4 hex counter>-<8 hex node>`; tick on local change, merge on remote, keep the max server time seen. Unit-test ordering and a wrong phone clock.
-4. `core/sync/outbox.dart`: write row + op in one transaction; merge repeated edits to one record into one op; counters as summed increments.
-5. `core/sync/sync_client.dart`: push batches, then pull pages, apply pulled rows in one transaction per page, store the cursor; handle `applied/duplicate/merged/rejected`, 426 → "Update the app", backoff 5 s → 30 s → 2 min → 10 min.
-6. Triggers: app start/resume, connectivity regained, 3 s after a local write, WorkManager every ~15 min on Android, every 3 min on web while open.
-7. Auth: email login (store token in secure storage), shared-tablet PIN profiles (verify PIN against synced `pin_hash` offline, one token per profile), app lock with PIN/biometrics.
-8. Sync status UI: per-record pending/conflict marker, "Last synced …" header, Conflict Inbox.
-9. Tests: a simulated two-device test (two in-memory databases + a fake server) that edits offline, syncs in random order and converges.
+- Features write synced data only through `LocalWriter` (`ref.read(servicesProvider).writer`; wire field names, Dart values). `EntitySpec` in `core/sync/entities.dart` mirrors `api/config/homesync.php` — keep both in step.
+- Show `SyncMarker(entity:, id:)` next to records in module lists (pending / needs review).
+- Shared tablet: each PIN profile is its own device + token; outbox ops carry `member_id`/`device_id` and push with that token; the tablet pulls with the account that set it up. Limit what each profile sees by `session.active.role` in module screens.
+- `pin_hash` is written by the app with `hashPin()` (bcrypt `$2y$`, cost 10) when the owner sets a member's PIN.
+- Widget tests that use Drift streams must end with `finish(tester, services)` (see `test/app_test.dart`), or a pending timer fails the test.
+- Still missing before a real web run: `sqlite3.wasm` and `drift_worker.js` in `app/web/` (from the sqlite3/drift releases matching `pubspec.lock`).
 
 ## Design system (from the design canvas)
 
