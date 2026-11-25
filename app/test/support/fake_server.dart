@@ -14,7 +14,7 @@ class FakeSyncServer {
   final Map<String, ({String hlc, String by})> _clocks = {};
   final Map<String, int> _processed = {};
   final List<PulledChange> log = [];
-  final List<Map<String, Object?>> conflicts = [];
+  int _conflictSeq = 0;
   int pushCalls = 0;
 
   FakeSyncApi apiFor({required String memberId, required String deviceId}) =>
@@ -62,6 +62,7 @@ class FakeSyncServer {
     final entity = op['entity'] as String;
     final spec = syncedEntities[entity];
     if (spec == null) throw _Rejected('unknown_entity');
+    if (spec.serverCreated && op['op'] == 'insert') throw _Rejected('forbidden');
     final id = op['entity_id'] as String;
     final hlc = op['hlc'] as String;
     final fields = (op['fields'] as Map? ?? const {}).cast<String, Object?>();
@@ -153,14 +154,18 @@ class FakeSyncServer {
         return;
       }
       final differs = '$current' != '$value';
+      final reviewed = ctx.spec.reviewed.contains(field);
       if (_newer(ctx.hlc, clock?.hlc)) {
+        if (differs && reviewed && clock != null && clock.by != ctx.member &&
+            ctx.baseVersion != null && ctx.baseVersion! < (row['server_version'] as int? ?? 0)) {
+          conflictId = _recordConflict(ctx, field, value, ctx.member, current, clock.by);
+        }
         if (differs) changes[field] = value;
         _setClock(ctx, field);
       } else {
         merged = true;
-        if (differs && ctx.spec.reviewed.contains(field)) {
-          conflictId = 'conflict-${conflicts.length + 1}';
-          conflicts.add({'entity': ctx.spec.name, 'entity_id': ctx.id, 'field': field, 'lost': value});
+        if (differs && reviewed) {
+          conflictId = _recordConflict(ctx, field, current, clock?.by, value, ctx.member);
         }
       }
     });
@@ -170,6 +175,36 @@ class FakeSyncServer {
       _touch(ctx, row);
     }
     return (merged ? 'merged' : 'applied', conflictId);
+  }
+
+  /// Same as SyncService::recordConflict: a server-created `conflicts` row,
+  /// logged so it arrives on pull.
+  String _recordConflict(_Ctx ctx, String field, Object? kept, String? keptBy, Object? lost, String? lostBy) {
+    final id = '01990000-0000-7000-8000-${(++_conflictSeq).toRadixString(16).padLeft(12, '0')}';
+    final now = _iso();
+    final row = <String, Object?>{
+      'id': id,
+      'household_id': householdId,
+      'entity': ctx.spec.name,
+      'entity_id': ctx.id,
+      'field': field,
+      'kept_value': kept,
+      'kept_by': keptBy,
+      'lost_value': lost,
+      'lost_by': lostBy,
+      'resolved_at': null,
+      'resolved_by': null,
+      'created_at': now,
+      'updated_at': now,
+      'deleted_at': null,
+      'hlc': ctx.hlc,
+      'server_version': log.length + 1,
+      'updated_by': ctx.member,
+      'device_id': ctx.device,
+    };
+    rows.putIfAbsent('conflicts', () => {})[id] = row;
+    log.add(PulledChange(seq: log.length + 1, entity: 'conflicts', entityId: id, op: 'insert', row: Map.of(row)));
+    return id;
   }
 
   (String, String?) _delete(_Ctx ctx, Map<String, Object?> row) {

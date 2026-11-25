@@ -112,5 +112,27 @@ return [
             'read' => $adults,
             'write' => $household,
         ],
+
+        // Reviewed-money and never-auto-merged losers, for the Conflict Inbox.
+        // Created only by the server; devices may only mark them resolved.
+        'conflicts' => [
+            'table' => 'conflicts',
+            'fields' => [
+                'entity' => 'string',
+                'entity_id' => 'uuid',
+                'field' => 'string',
+                'kept_value' => 'json',
+                'kept_by' => 'uuid',
+                'lost_value' => 'json',
+                'lost_by' => 'uuid',
+                'resolved_at' => 'datetime',
+                'resolved_by' => 'uuid',
+            ],
+            'server_created' => true,
+            'append_only' => true,
+            'mutable' => ['resolved_at', 'resolved_by'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
     ],
 ];

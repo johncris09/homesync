@@ -32,7 +32,7 @@ The contract between the Flutter app (`app/`) and the Laravel API (`api/`). Any 
 | `updated_by` | UUID | Member who made the last change |
 | `device_id` | UUID | Device that made the last change |
 
-Server-only tables: `change_log`, `processed_ops`, `device_cursors`.
+Server-only tables: `change_log`, `processed_ops`, `device_cursors`. `conflicts` is synced but server-created (§6.1).
 
 Per-field HLCs for field-level merge are stored server-side in `change_log` payloads and on the device in a `field_clocks` table (`entity`, `entity_id`, `field`, `hlc`).
 
@@ -178,6 +178,21 @@ Applied by the server when an incoming op's field HLC is older than or concurren
 | Never auto-merged | `vault_items`, `vault_files`, `health_profiles` | Both versions kept; the newer is live, the older stored in `conflicts`; Owner chooses |
 
 Tombstones are kept 90 days, then pruned by the nightly job.
+
+### 6.1 Conflict records
+
+Every value stored for review (reviewed money, never-auto-merged) is a row in the synced `conflicts` entity, readable and writable by Owner and Adult only:
+
+| Field | Type | Notes |
+| --- | --- | --- |
+| `entity`, `entity_id`, `field` | string, uuid, string | The record and field in conflict |
+| `kept_value`, `kept_by` | json, uuid | The value that is live, and who wrote it |
+| `lost_value`, `lost_by` | json, uuid | The overwritten value, and who wrote it |
+| `resolved_at`, `resolved_by` | datetime, uuid | Null until an adult decides |
+
+- The server creates conflict rows (and logs them to `change_log`, so they arrive on pull like any record). A device `insert` on `conflicts` is rejected `forbidden`.
+- Devices may only `update` `resolved_at` / `resolved_by` (or soft-delete).
+- **Keep:** set `resolved_at`. **Revert:** first push an `update` of the record's field with `lost_value` (a newer HLC, so it wins), then set `resolved_at`.
 
 ---
 

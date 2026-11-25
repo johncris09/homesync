@@ -70,6 +70,12 @@ class EntityRegistry
         return (bool) ($this->def($entity)['append_only'] ?? false);
     }
 
+    /** Rows are created by the server only; devices may not insert them. */
+    public function isServerCreated(string $entity): bool
+    {
+        return (bool) ($this->def($entity)['server_created'] ?? false);
+    }
+
     public function isMutableAfterInsert(string $entity, string $field): bool
     {
         return in_array($field, $this->def($entity)['mutable'] ?? [], true);

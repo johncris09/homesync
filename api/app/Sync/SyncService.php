@@ -91,6 +91,9 @@ class SyncService
         if (! $this->registry->canWrite($entity, $member->role)) {
             throw new OpRejected('forbidden');
         }
+        if ($op['op'] === 'insert' && $this->registry->isServerCreated($entity)) {
+            throw new OpRejected('forbidden');
+        }
 
         $table = $this->registry->table($entity);
         $id = strtolower($op['entity_id']);
@@ -390,7 +393,13 @@ class SyncService
             'lost_by' => $lostBy,
             'created_at' => now(),
             'updated_at' => now(),
+            'hlc' => $ctx->hlc,
+            'updated_by' => $ctx->member->id,
+            'device_id' => $ctx->device->id,
         ]);
+
+        // Synced like any record, so adults see it in the Conflict Inbox.
+        $this->logChange(new OpContext($ctx->device, $ctx->member, 'conflicts', 'conflicts', $id, $ctx->hlc, null), 'insert');
 
         return $id;
     }

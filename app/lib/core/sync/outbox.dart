@@ -56,6 +56,7 @@ class LocalWriter {
   /// Inserts a record and returns its new UUIDv7 id.
   Future<String> insert(String entity, Map<String, Object?> fields, {String? id}) async {
     final spec = specFor(entity);
+    if (spec.serverCreated) throw ArgumentError('$entity rows are created by the hub');
     _checkFields(spec, fields.keys);
     final entityId = id ?? _uuid.v7();
 

@@ -13,6 +13,7 @@ part 'database.g.dart';
     PantryItems,
     Bills,
     Transactions,
+    Conflicts,
     Outbox,
     FieldClocks,
     SyncState,

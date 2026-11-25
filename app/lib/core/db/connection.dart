@@ -15,6 +15,8 @@ QueryExecutor openAppDatabase({required String encryptionKey}) {
   return driftDatabase(
     name: 'homesync',
     native: DriftNativeOptions(
+      // The WorkManager task opens the database in another isolate.
+      shareAcrossIsolates: true,
       setup: (db) {
         db.execute("PRAGMA key = '$encryptionKey';");
       },

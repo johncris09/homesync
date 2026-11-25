@@ -12,6 +12,8 @@ class EntitySpec {
     this.reviewed = const {},
     this.appendOnly = false,
     this.mutable = const {},
+    this.jsonFields = const {},
+    this.serverCreated = false,
   });
 
   /// Wire and table name, e.g. `grocery_items`.
@@ -32,6 +34,12 @@ class EntitySpec {
   /// Inserts only; afterwards only [mutable] fields and deletion may change.
   final bool appendOnly;
   final Set<String> mutable;
+
+  /// Fields holding any JSON value; stored locally as JSON text.
+  final Set<String> jsonFields;
+
+  /// Rows only the hub creates; devices may not insert them.
+  final bool serverCreated;
 
   bool canUpdate(String field) =>
       fields.contains(field) &&
@@ -91,6 +99,24 @@ const syncedEntities = <String, EntitySpec>{
     },
     appendOnly: true,
     mutable: {'note'},
+  ),
+  'conflicts': EntitySpec(
+    name: 'conflicts',
+    fields: {
+      'entity',
+      'entity_id',
+      'field',
+      'kept_value',
+      'kept_by',
+      'lost_value',
+      'lost_by',
+      'resolved_at',
+      'resolved_by',
+    },
+    appendOnly: true,
+    mutable: {'resolved_at', 'resolved_by'},
+    jsonFields: {'kept_value', 'lost_value'},
+    serverCreated: true,
   ),
 };
 

@@ -78,6 +78,22 @@ class Transactions extends Table with SyncColumns {
   TextColumn get note => text().nullable()();
 }
 
+/// Values kept for review (sync-protocol §6.1). Created by the hub only.
+@DataClassName('ConflictRecord')
+class Conflicts extends Table with SyncColumns {
+  TextColumn get entity => text()();
+  TextColumn get entityId => text()();
+  TextColumn get field => text()();
+
+  /// JSON-encoded values, as received.
+  TextColumn get keptValue => text().nullable()();
+  TextColumn get keptBy => text().nullable()();
+  TextColumn get lostValue => text().nullable()();
+  TextColumn get lostBy => text().nullable()();
+  DateTimeColumn get resolvedAt => dateTime().nullable()();
+  TextColumn get resolvedBy => text().nullable()();
+}
+
 // ------------------------------------------------------------- sync tables
 
 /// Local changes waiting to be pushed (sync-protocol §3).

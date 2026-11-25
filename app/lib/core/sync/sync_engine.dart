@@ -171,6 +171,9 @@ class SyncEngine {
     if (table == null || spec == null) return; // entity from a newer server
 
     final row = Map<String, Object?>.of(change.row);
+    for (final f in spec.jsonFields) {
+      if (row.containsKey(f)) row[f] = row[f] == null ? null : jsonEncode(row[f]);
+    }
     final pending = await (db.select(db.outbox)
           ..where((o) => o.entity.equals(change.entity) & o.entityId.equals(change.entityId))
           ..orderBy([(o) => OrderingTerm.asc(o.seq)]))

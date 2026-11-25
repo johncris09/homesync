@@ -154,6 +154,45 @@ class PushTest extends SyncTestCase
         $this->assertSame($ana->member_id, $conflict->lost_by);
     }
 
+    public function test_conflicts_sync_to_adults_and_can_be_resolved(): void
+    {
+        $john = $this->device('owner');
+        $ana = $this->device('adult');
+        $teen = $this->device('teen');
+        $id = (string) Str::uuid7();
+        $seen = $this->push($john, [$this->op('bills', $id, 'insert', ['name' => 'Water', 'amount_minor' => 120000], $this->hlc(1))])
+            ->json('results.0.server_version');
+        $this->push($john, [$this->op('bills', $id, 'update', ['amount_minor' => 142000], $this->hlc(3), $seen)]);
+        $conflictId = $this->push($ana, [$this->op('bills', $id, 'update', ['amount_minor' => 124000], $this->hlc(2, 0, 'bbbbbbbb'), $seen)])
+            ->json('results.0.conflict_id');
+
+        $pulled = collect($this->pull($john)->assertOk()->json('changes'))->firstWhere('entity', 'conflicts');
+        $this->assertSame($conflictId, $pulled['entity_id']);
+        $this->assertSame('bills', $pulled['row']['entity']);
+        $this->assertSame('amount_minor', $pulled['row']['field']);
+        $this->assertSame(142000, $pulled['row']['kept_value']);
+        $this->assertSame(124000, $pulled['row']['lost_value']);
+        $this->assertSame($ana->member_id, $pulled['row']['lost_by']);
+        $this->assertNull($pulled['row']['resolved_at']);
+        $this->assertNotNull($pulled['row']['server_version']);
+
+        $this->assertNull(collect($this->pull($teen)->json('changes'))->firstWhere('entity', 'conflicts'));
+
+        $res = $this->push($john, [$this->op('conflicts', $conflictId, 'update', [
+            'resolved_at' => '2026-11-25T08:00:00Z', 'resolved_by' => $john->member_id,
+        ], $this->hlc(4))]);
+        $this->assertSame(['applied'], $this->statuses($res));
+        $this->assertNotNull(DB::table('conflicts')->where('id', $conflictId)->value('resolved_at'));
+    }
+
+    public function test_devices_cannot_create_or_rewrite_conflicts(): void
+    {
+        $john = $this->device('owner');
+        $id = (string) Str::uuid7();
+        $res = $this->push($john, [$this->op('conflicts', $id, 'insert', ['entity' => 'bills', 'field' => 'x'], $this->hlc(1))]);
+        $this->assertSame('forbidden', $res->json('results.0.error'));
+    }
+
     public function test_delete_wins_over_an_older_edit(): void
     {
         $ana = $this->device('adult');
