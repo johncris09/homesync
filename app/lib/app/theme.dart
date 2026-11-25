@@ -12,8 +12,10 @@ abstract final class HomeColors {
   static const card = Color(0xFFFBFCF8);
 }
 
-/// Bricolage Grotesque is the design font; it is not bundled yet, so the
-/// platform font is used until the font files are added to assets.
+const fontFamily = 'BricolageGrotesque';
+
+/// Bricolage Grotesque is a variable font: heavier weights and narrower
+/// widths are set with `fontVariations` on the text style.
 ThemeData buildTheme() {
   final scheme = ColorScheme.fromSeed(
     seedColor: HomeColors.dahon,
@@ -24,6 +26,7 @@ ThemeData buildTheme() {
     error: HomeColors.gumamela,
   );
   return ThemeData(
+    fontFamily: fontFamily,
     colorScheme: scheme,
     scaffoldBackgroundColor: HomeColors.capiz,
     cardTheme: const CardThemeData(
@@ -46,8 +49,18 @@ ThemeData buildTheme() {
       border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(14)), borderSide: BorderSide.none),
     ),
     textTheme: const TextTheme(
-      displaySmall: TextStyle(fontWeight: FontWeight.w800, color: Colors.white, height: 1.05),
-      titleMedium: TextStyle(fontWeight: FontWeight.w700, color: HomeColors.narra),
+      // Big figures: heavy, 75% width (design canvas).
+      displaySmall: TextStyle(
+        fontWeight: FontWeight.w800,
+        fontVariations: [FontVariation.weight(800), FontVariation.width(75)],
+        color: Colors.white,
+        height: 1.05,
+      ),
+      titleMedium: TextStyle(
+        fontWeight: FontWeight.w700,
+        fontVariations: [FontVariation.weight(700)],
+        color: HomeColors.narra,
+      ),
     ),
   );
 }

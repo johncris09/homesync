@@ -51,7 +51,7 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Repo scaffold (Flutter + Laravel generated) | Done — `feature/repo-scaffold` |
 | API sync engine: push/pull/bootstrap, all conflict rules, device tokens, email + PIN login, protocol check, setup command, 28 tests | Done — `feature/sync-core` |
 | **App sync engine** (steps 1–9) | Done — `feature/app-sync-core`: Drift DB (sqlite3mc), HLC, outbox (per-profile), sync engine, triggers + WorkManager, email/PIN-profile auth, app lock, synced conflicts + Conflict Inbox, sync status UI; 97 app tests, 30 API tests |
-| Phase 0 leftovers | **Next**: web `sqlite3.wasm` + `drift_worker.js`, Bricolage Grotesque font files, owner screens to add members and set PINs, test against a real hub |
+| Phase 0 leftovers | **Next**: owner screens to add members and set PINs, test against a real hub |
 | Phase 1 modules (Budget, Bills & Subscriptions, Chores, Calendar, Pantry & Grocery) | Not started |
 
 ### Phase 0 app notes (`feature/app-sync-core`)
@@ -61,7 +61,8 @@ The UI reads and writes only the local Drift database. Every local write updates
 - Shared tablet: each PIN profile is its own device + token; outbox ops carry `member_id`/`device_id` and push with that token; the tablet pulls with the account that set it up. Limit what each profile sees by `session.active.role` in module screens.
 - `pin_hash` is written by the app with `hashPin()` (bcrypt `$2y$`, cost 10) when the owner sets a member's PIN.
 - Widget tests that use Drift streams must end with `finish(tester, services)` (see `test/app_test.dart`), or a pending timer fails the test.
-- Still missing before a real web run: `sqlite3.wasm` and `drift_worker.js` in `app/web/` (from the sqlite3/drift releases matching `pubspec.lock`).
+- `app/web/sqlite3.wasm` and `drift_worker.js` come from the `drift-2.34.4` GitHub release; replace both together whenever `drift` is upgraded. Web storage runs on OPFS when served with the `_headers` COOP/COEP.
+- Font: Bricolage Grotesque variable font in `app/assets/fonts/` (OFL, licence registered at startup). Use `fontVariations` (`FontVariation.weight` / `.width(75)` for big figures), not just `fontWeight`.
 
 ## Design system (from the design canvas)
 

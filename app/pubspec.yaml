@@ -71,6 +71,14 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   generate: true
+  assets:
+    - assets/fonts/OFL.txt
+  fonts:
+    # Variable font (opsz, wdth, wght); weights and widths are set with
+    # FontVariation in lib/app/theme.dart.
+    - family: BricolageGrotesque
+      fonts:
+        - asset: assets/fonts/BricolageGrotesque.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
