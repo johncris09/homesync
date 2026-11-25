@@ -1,0 +1,40 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+key.properties
+
+# Flutter / Dart (app/)
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/build/
+app/.pub-cache/
+app/.pub/
+app/android/.gradle/
+app/android/local.properties
+app/android/app/release/
+app/**/*.g.dart.bak
+
+# Laravel (api/)
+api/vendor/
+api/node_modules/
+api/public/build/
+api/public/hot
+api/public/storage
+api/storage/*.key
+api/storage/logs/*
+api/storage/framework/cache/*
+api/storage/framework/sessions/*
+api/storage/framework/views/*
+api/.phpunit.result.cache
+api/database/*.sqlite
