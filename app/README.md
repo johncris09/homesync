@@ -49,3 +49,26 @@ lib/
 ```
 
 Rule: features talk to each other only through repositories, never through screens.
+
+## Web deployment (Cloudflare Pages)
+
+After `flutter create`, add two files to `app/web/` (Cloudflare Pages reads them from the build output):
+
+`app/web/_redirects`
+```
+/* /index.html 200
+```
+
+`app/web/_headers`
+```
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+```
+
+The COOP/COEP headers let Drift use its fastest browser storage. Build and deploy from GitHub Actions:
+
+```bash
+flutter build web --release --dart-define=API_BASE_URL=https://api.yourdomain.com
+npx wrangler pages deploy build/web --project-name homesync
+```

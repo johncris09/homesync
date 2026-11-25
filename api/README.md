@@ -35,3 +35,7 @@ The scheduler runs `queue:work --stop-when-empty --max-time=50` every minute and
 
 - `exec()` may be disabled: create the storage symlink manually instead of `php artisan storage:link`, and check before relying on `mysqldump` for backups.
 - Point the subdomain's document root at `api/public`.
+
+## CORS for the web app (Cloudflare Pages)
+
+In `config/cors.php`: `paths` = `['api/*']`, `allowed_origins` = the Pages domain (e.g. `https://app.yourdomain.com`) plus `http://localhost:*` patterns for development, `supports_credentials` = `false` (auth uses bearer tokens, not cookies).
