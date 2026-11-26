@@ -15,6 +15,7 @@ import '../budget/budget_providers.dart';
 import '../calendar/calendar_providers.dart';
 import '../calendar/calendar_screen.dart' show dayLabel;
 import '../chores/chores_providers.dart';
+import '../debts/debts_providers.dart';
 import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
@@ -44,6 +45,7 @@ class HomeScreen extends ConsumerWidget {
         ? (money.left >= 0 ? l10n.budgetTileLeft(peso(money.left)) : l10n.budgetTileOver(peso(-money.left)))
         : l10n.budgetTileSpent(peso(money.spent));
     final bills = adult ? ref.watch(billsSummaryProvider) : null;
+    final debts = adult ? ref.watch(debtsSummaryProvider) : null;
     final chores = ref.watch(choreBoardProvider);
     final choresCaption = chores.today.isEmpty
         ? l10n.choresTileNone
@@ -110,6 +112,24 @@ class HomeScreen extends ConsumerWidget {
                           ),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => context.push(Routes.bills),
+                        ),
+                      if (debts != null)
+                        ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: debts.overdue > 0 ? HomeColors.gumamela : HomeColors.narra,
+                            foregroundColor: Colors.white,
+                            child: const Icon(Icons.account_balance_outlined),
+                          ),
+                          title: Text(l10n.debtsModule),
+                          subtitle: Text(
+                            debts.overdue > 0
+                                ? l10n.debtsTileOverdue(debts.overdue)
+                                : debts.owed > 0
+                                ? l10n.debtsTileOwed(peso(debts.owed))
+                                : l10n.debtsTileNone,
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => context.push(Routes.debts),
                         ),
                       ListTile(
                         leading: const CircleAvatar(

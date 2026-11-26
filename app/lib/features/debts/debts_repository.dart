@@ -106,8 +106,7 @@ class DebtsRepository {
       (db.select(db.debts)..where((d) => d.id.equals(id) & d.deletedAt.isNull())).watchSingleOrNull();
 
   /// Every live payment, interest and charge (for balances).
-  Stream<List<DebtPayment>> watchPayments() =>
-      (db.select(db.debtPayments)..where((p) => p.deletedAt.isNull())).watch();
+  Stream<List<DebtPayment>> watchPayments() => (db.select(db.debtPayments)..where((p) => p.deletedAt.isNull())).watch();
 
   /// One debt's history, latest first.
   Stream<List<DebtPayment>> watchHistory(String debtId) =>
@@ -219,8 +218,9 @@ class DebtsRepository {
   Future<void> removePayment(DebtPayment p) async {
     await writer.delete('debt_payments', p.id);
     final ledgerId = debtPaymentLedgerId(_household, p.id);
-    final entry = await (db.select(db.transactions)..where((t) => t.id.equals(ledgerId) & t.deletedAt.isNull()))
-        .getSingleOrNull();
+    final entry = await (db.select(
+      db.transactions,
+    )..where((t) => t.id.equals(ledgerId) & t.deletedAt.isNull())).getSingleOrNull();
     if (entry != null) await writer.delete('transactions', ledgerId);
   }
 
@@ -237,7 +237,8 @@ class DebtsRepository {
   /// Only the person who closed it can reopen it (forward-only, sync-protocol §6).
   bool canReopen(Debt d) => d.isClosed && d.closedBy == _me;
 
-  Future<void> reopen(Debt d) => writer.update('debts', d.id, {'is_closed': false, 'closed_at': null, 'closed_by': null});
+  Future<void> reopen(Debt d) =>
+      writer.update('debts', d.id, {'is_closed': false, 'closed_at': null, 'closed_by': null});
 
   static String? _blankToNull(String? s) => s == null || s.trim().isEmpty ? null : s.trim();
 }

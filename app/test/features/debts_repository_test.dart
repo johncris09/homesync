@@ -24,7 +24,11 @@ void main() {
     setUp(() {
       db = memoryDb();
       now = DateTime(2026, 11, 26, 9);
-      repo = DebtsRepository(db, writer(db, identity(memberId: memberA, deviceId: deviceA)), now: () => now);
+      repo = DebtsRepository(
+        db,
+        writer(db, identity(memberId: memberA, deviceId: deviceA)),
+        now: () => now,
+      );
     });
     tearDown(() => db.close());
 
@@ -113,7 +117,11 @@ void main() {
       final id = await repo.addDebt(kind: 'loan', name: 'SSS loan', principalMinor: 2000000);
       await repo.pay(await debt(id), 100000);
       final p = (await repo.watchHistory(id).first).single;
-      final other = DebtsRepository(db, writer(db, identity(memberId: memberB, deviceId: deviceB)), now: () => now);
+      final other = DebtsRepository(
+        db,
+        writer(db, identity(memberId: memberB, deviceId: deviceB)),
+        now: () => now,
+      );
       expect(other.canRemove(p), isFalse);
       expect(repo.canRemove(p), isTrue);
 
@@ -125,7 +133,11 @@ void main() {
     test('only the closer reopens', () async {
       final id = await repo.addDebt(kind: 'lent', name: 'Kumare', principalMinor: 100000);
       await repo.close(await debt(id));
-      final other = DebtsRepository(db, writer(db, identity(memberId: memberB, deviceId: deviceB)), now: () => now);
+      final other = DebtsRepository(
+        db,
+        writer(db, identity(memberId: memberB, deviceId: deviceB)),
+        now: () => now,
+      );
       expect(other.canReopen(await debt(id)), isFalse);
       expect(repo.canReopen(await debt(id)), isTrue);
       await repo.reopen(await debt(id));
@@ -170,8 +182,17 @@ void main() {
       paidOn: '2026-11-01',
     );
     final sum = DebtsSummary(
-      [d('Loan', 'loan', 1000000, '2026-12-10'), d('Ring', 'pawn', 500000, '2026-11-20'), d('Ben', 'lent', 300000, '2026-11-01')],
-      [p('Loan', 'payment', 200000), p('Loan', 'interest', 5000), p('Ring', 'charge', 10000), p('Ben', 'payment', 100000)],
+      [
+        d('Loan', 'loan', 1000000, '2026-12-10'),
+        d('Ring', 'pawn', 500000, '2026-11-20'),
+        d('Ben', 'lent', 300000, '2026-11-01'),
+      ],
+      [
+        p('Loan', 'payment', 200000),
+        p('Loan', 'interest', 5000),
+        p('Ring', 'charge', 10000),
+        p('Ben', 'payment', 100000),
+      ],
       today,
     );
     expect(sum.owed, 800000 + 510000);
@@ -190,8 +211,16 @@ void main() {
     final now = DateTime(2026, 11, 26, 9);
     final a = DebtsRepository(dbA, wA, now: () => now);
     final b = DebtsRepository(dbB, wB, now: () => now);
-    final syncA = SyncEngine(db: dbA, api: server.apiFor(memberId: memberA, deviceId: deviceA), clock: wA.clock);
-    final syncB = SyncEngine(db: dbB, api: server.apiFor(memberId: memberB, deviceId: deviceB), clock: wB.clock);
+    final syncA = SyncEngine(
+      db: dbA,
+      api: server.apiFor(memberId: memberA, deviceId: deviceA),
+      clock: wA.clock,
+    );
+    final syncB = SyncEngine(
+      db: dbB,
+      api: server.apiFor(memberId: memberB, deviceId: deviceB),
+      clock: wB.clock,
+    );
 
     final id = await a.addDebt(kind: 'card', name: 'BPI card', principalMinor: 1000000);
     await syncA.sync();
