@@ -9,6 +9,7 @@ import '../features/auth/sign_in_screen.dart';
 import '../features/auth/tablet_pin_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/members/members_screen.dart';
+import '../features/pantry/pantry_screen.dart';
 import '../features/sync/conflict_inbox_screen.dart';
 import '../features/sync/sync_problems_screen.dart';
 
@@ -21,6 +22,7 @@ abstract final class Routes {
   static const syncProblems = '/sync-problems';
   static const members = '/members';
   static const tabletPin = '/tablet-pin';
+  static const pantry = '/pantry';
 }
 
 GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRouter(
@@ -42,5 +44,6 @@ GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRo
     GoRoute(path: Routes.syncProblems, builder: (_, _) => const SyncProblemsScreen()),
     GoRoute(path: Routes.members, builder: (_, _) => const MembersScreen()),
     GoRoute(path: Routes.tabletPin, builder: (_, _) => const TabletPinScreen()),
+    GoRoute(path: Routes.pantry, builder: (_, _) => const PantryScreen()),
   ],
 );

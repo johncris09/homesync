@@ -1,0 +1,147 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:homesync/core/app_services.dart';
+import 'package:homesync/core/auth/auth_service.dart';
+import 'package:homesync/core/auth/secure_store.dart';
+import 'package:homesync/features/pantry/pantry_repository.dart';
+
+import '../app_test.dart' as app;
+import '../support/test_db.dart';
+
+Future<AppServices> open(MemorySecureStore store, {Future<void> Function(PantryRepository r)? seed}) async {
+  final s = await app.services(store);
+  await s.writer.insert('members', {'name': 'Mama', 'role': 'owner'}, id: app.me.memberId);
+  if (seed != null) await seed(PantryRepository(s.db, s.writer));
+  return s;
+}
+
+Future<void> openPantry(WidgetTester tester) async {
+  await tester.tap(find.text('Pantry & grocery'));
+  await tester.pumpAndSettle();
+}
+
+void main() {
+  testWidgets('home shows the module; quick-add, tick and clear on the grocery list', (tester) async {
+    final store = MemorySecureStore();
+    app.signedIn(store);
+    final s = (await tester.runAsync(() => open(store)))!;
+    await app.pumpApp(tester, s);
+    expect(find.text('0 to buy · 0 running low'), findsOneWidget);
+
+    await openPantry(tester);
+    expect(find.text('Nothing to buy'), findsOneWidget);
+    expect(find.text('The list is empty.'), findsOneWidget);
+
+    await tester.enterText(find.byKey(const Key('grocery-add')), 'Eggs');
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('grocery-add')), 'Rice');
+    await tester.tap(find.byTooltip('Add'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('2 to buy'), findsOneWidget);
+    expect(find.text('asked by Mama'), findsNWidgets(2));
+
+    await tester.tap(find.byType(Checkbox).first); // Eggs (sorted by name)
+    await tester.pumpAndSettle();
+    expect(find.text('1 to buy'), findsOneWidget);
+    expect(find.text('Bought'), findsOneWidget);
+
+    await tester.tap(find.text('Clear bought'));
+    await tester.pumpAndSettle();
+    expect(find.text('Bought'), findsNothing);
+    expect(find.text('Eggs'), findsNothing);
+    expect(find.text('Rice'), findsOneWidget);
+    await app.finish(tester, s);
+  });
+
+  testWidgets('pantry: add an item, use and restock it, then put it on the list', (tester) async {
+    final store = MemorySecureStore();
+    app.signedIn(store);
+    final s = (await tester.runAsync(() => open(store)))!;
+    await app.pumpApp(tester, s);
+    await openPantry(tester);
+    await tester.tap(find.text('Pantry'));
+    await tester.pumpAndSettle();
+    expect(find.text('Nothing in the pantry yet.'), findsOneWidget);
+
+    await tester.tap(find.text('Add pantry item'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Save'));
+    await tester.pump();
+    expect(find.text('Enter a name.'), findsOneWidget);
+    await tester.enterText(find.byKey(const Key('pantry-name')), 'Coffee');
+    await tester.enterText(find.byKey(const Key('pantry-quantity')), 'x');
+    await tester.tap(find.text('Save'));
+    await tester.pump();
+    expect(find.text('Enter a number, 0 or more.'), findsOneWidget);
+    await tester.enterText(find.byKey(const Key('pantry-quantity')), '2');
+    await tester.enterText(find.byKey(const Key('pantry-min')), '1');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('2'), findsOneWidget);
+    await tester.tap(find.byTooltip('Use one Coffee'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Running low'), findsOneWidget);
+    expect(find.text('1 item running low in the pantry.'), findsOneWidget);
+    await tester.tap(find.byTooltip('Add one Coffee'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Running low'), findsNothing);
+
+    await tester.tap(find.text('Coffee'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Add to grocery list'));
+    await tester.pumpAndSettle();
+    expect(find.text('Added to the grocery list.'), findsOneWidget);
+    expect(find.text('1 to buy'), findsOneWidget);
+
+    final row = await tester.runAsync(
+      () => s.db.customSelect("SELECT quantity FROM pantry_items WHERE name = 'Coffee'").getSingle(),
+    );
+    expect(row!.data['quantity'], 2);
+    await app.finish(tester, s);
+  });
+
+  testWidgets('viewers see the list and pantry but cannot change them', (tester) async {
+    final store = MemorySecureStore();
+    const viewer = Profile(
+      memberId: '01900000-0000-7000-8000-0000000000dd',
+      name: 'Lola',
+      role: 'viewer',
+      deviceId: 'd0000000-0000-7000-8000-00000000000d',
+    );
+    store.values['session'] = jsonEncode(
+      const Session(
+        householdId: householdId,
+        householdName: 'Manabo',
+        isShared: false,
+        main: viewer,
+        active: viewer,
+      ).toJson(),
+    );
+    final s = (await tester.runAsync(
+      () => open(
+        store,
+        seed: (r) async {
+          await r.addGrocery('Eggs');
+          await r.addPantry(name: 'Rice', quantity: 3, unit: 'kg');
+        },
+      ),
+    ))!;
+    await app.pumpApp(tester, s);
+    await openPantry(tester);
+    expect(find.text('Eggs'), findsOneWidget);
+    expect(find.byKey(const Key('grocery-add')), findsNothing);
+    expect(tester.widget<Checkbox>(find.byType(Checkbox)).onChanged, isNull);
+
+    await tester.tap(find.text('Pantry'));
+    await tester.pumpAndSettle();
+    expect(find.text('3 kg'), findsOneWidget);
+    expect(find.text('Add pantry item'), findsNothing);
+    expect(find.byTooltip('Use one Rice'), findsNothing);
+    await app.finish(tester, s);
+  });
+}
