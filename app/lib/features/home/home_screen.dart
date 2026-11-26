@@ -9,6 +9,7 @@ import '../../core/auth/pin_hash.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/pin_pad.dart';
 import '../../shared/money.dart';
+import '../bills/bills_providers.dart';
 import '../budget/budget_providers.dart';
 import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
@@ -37,6 +38,7 @@ class HomeScreen extends ConsumerWidget {
         : money.hasBudget
         ? (money.left >= 0 ? l10n.budgetTileLeft(peso(money.left)) : l10n.budgetTileOver(peso(-money.left)))
         : l10n.budgetTileSpent(peso(money.spent));
+    final bills = adult ? ref.watch(billsSummaryProvider) : null;
 
     return Scaffold(
       body: ListView(
@@ -68,6 +70,24 @@ class HomeScreen extends ConsumerWidget {
                           subtitle: Text(budgetCaption),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => context.push(Routes.budget),
+                        ),
+                      if (bills != null)
+                        ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: bills.overdue > 0 ? HomeColors.gumamela : HomeColors.mangga,
+                            foregroundColor: bills.overdue > 0 ? Colors.white : HomeColors.narra,
+                            child: const Icon(Icons.receipt_long_outlined),
+                          ),
+                          title: Text(l10n.billsModule),
+                          subtitle: Text(
+                            bills.overdue > 0
+                                ? l10n.billsTileOverdue(bills.overdue)
+                                : bills.due > 0
+                                ? l10n.billsTileDue(peso(bills.due))
+                                : l10n.billsTileClear,
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => context.push(Routes.bills),
                         ),
                       ListTile(
                         leading: const CircleAvatar(

@@ -110,7 +110,13 @@ class SyncService
         $fields = $op['fields'] ?? [];
 
         [$status, $conflictId] = match ($op['op']) {
-            'insert' => $row ? $this->update($ctx, $row, $fields) : $this->insert($ctx, $fields),
+            'insert' => match (true) {
+                ! $row => $this->insert($ctx, $fields),
+                // The same ledger record made on two devices (a payment with a
+                // derived id): the first one stays.
+                $this->registry->isAppendOnly($entity) => ['merged', null],
+                default => $this->update($ctx, $row, $fields),
+            },
             'update' => $this->update($ctx, $this->mustExist($row), $fields),
             'delete' => $this->delete($ctx, $this->mustExist($row)),
             'increment' => $this->increment($ctx, $this->mustExist($row), $fields),

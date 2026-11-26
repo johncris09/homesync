@@ -241,7 +241,7 @@ abstract class AppLocalizations {
   /// No description provided for @modulesComingSoon.
   ///
   /// In en, this message translates to:
-  /// **'Bills, chores and calendar are coming next.'**
+  /// **'Chores and calendar are coming next.'**
   String get modulesComingSoon;
 
   /// No description provided for @syncSyncing.
@@ -1155,6 +1155,276 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get catOther;
+
+  /// No description provided for @billsModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills & subscriptions'**
+  String get billsModule;
+
+  /// No description provided for @billsTileDue.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to pay this month'**
+  String billsTileDue(String amount);
+
+  /// No description provided for @billsTileOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 bill overdue} other{{count} bills overdue}}'**
+  String billsTileOverdue(int count);
+
+  /// No description provided for @billsTileClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing left to pay this month'**
+  String get billsTileClear;
+
+  /// No description provided for @billsToPay.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to pay'**
+  String billsToPay(String amount);
+
+  /// No description provided for @billsAllPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'All paid'**
+  String get billsAllPaid;
+
+  /// No description provided for @billsOverdueCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 overdue. Pay it soon.} other{{count} overdue. Pay them soon.}}'**
+  String billsOverdueCaption(int count);
+
+  /// No description provided for @billsNextCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {name}, {date}'**
+  String billsNextCaption(String name, String date);
+
+  /// No description provided for @billsEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your bills to see what\'s due.'**
+  String get billsEmptyCaption;
+
+  /// No description provided for @billsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
+  String get billsTab;
+
+  /// No description provided for @subscriptionsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions'**
+  String get subscriptionsTab;
+
+  /// No description provided for @billsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No bills yet. Add Meralco, water, rent or internet.'**
+  String get billsEmpty;
+
+  /// No description provided for @billsNoneDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to pay right now.'**
+  String get billsNoneDue;
+
+  /// No description provided for @billsPaidRecently.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid recently'**
+  String get billsPaidRecently;
+
+  /// No description provided for @billAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add bill'**
+  String get billAdd;
+
+  /// No description provided for @billEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit bill'**
+  String get billEdit;
+
+  /// No description provided for @billRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove bill'**
+  String get billRemove;
+
+  /// No description provided for @billNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Meralco'**
+  String get billNameHint;
+
+  /// No description provided for @billAmountHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Your best guess if it changes every month'**
+  String get billAmountHelp;
+
+  /// No description provided for @billDueLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String billDueLabel(String date);
+
+  /// No description provided for @billRepeatMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Every month'**
+  String get billRepeatMonthly;
+
+  /// No description provided for @billRepeatHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'When it\'s paid, next month\'s bill is added.'**
+  String get billRepeatHelp;
+
+  /// No description provided for @billMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get billMonthly;
+
+  /// No description provided for @billCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded in Budget as'**
+  String get billCategoryLabel;
+
+  /// No description provided for @billNoDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get billNoDueDate;
+
+  /// No description provided for @billOverdueBy.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Overdue by 1 day} other{Overdue by {count} days}}'**
+  String billOverdueBy(int count);
+
+  /// No description provided for @billDueIn.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Due today} =1{Due tomorrow} other{Due in {count} days}}'**
+  String billDueIn(int count);
+
+  /// No description provided for @billDueOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String billDueOn(String date);
+
+  /// No description provided for @billPaidOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {date}'**
+  String billPaidOn(String date);
+
+  /// No description provided for @billAmountPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount paid'**
+  String get billAmountPaid;
+
+  /// No description provided for @billPayHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded in Budget under {category}.'**
+  String billPayHint(String category);
+
+  /// No description provided for @billMarkPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark paid'**
+  String get billMarkPaid;
+
+  /// No description provided for @billUndoPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo paid'**
+  String get billUndoPaid;
+
+  /// No description provided for @billUndoOnlyPayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the person who marked it paid can undo it.'**
+  String get billUndoOnlyPayer;
+
+  /// No description provided for @subscriptionAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add subscription'**
+  String get subscriptionAdd;
+
+  /// No description provided for @subscriptionEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit subscription'**
+  String get subscriptionEdit;
+
+  /// No description provided for @subscriptionRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove subscription'**
+  String get subscriptionRemove;
+
+  /// No description provided for @subscriptionNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Netflix'**
+  String get subscriptionNameHint;
+
+  /// No description provided for @subscriptionPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get subscriptionPrice;
+
+  /// No description provided for @subscriptionMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get subscriptionMonthly;
+
+  /// No description provided for @subscriptionYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get subscriptionYearly;
+
+  /// No description provided for @subscriptionNextLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Next payment {date}'**
+  String subscriptionNextLabel(String date);
+
+  /// No description provided for @subscriptionsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No subscriptions yet. Add streaming, apps or memberships.'**
+  String get subscriptionsEmpty;
+
+  /// No description provided for @subscriptionsMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} a month in subscriptions'**
+  String subscriptionsMonthly(String amount);
+
+  /// No description provided for @subscriptionPayHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Records this payment in Budget under {category} and moves the date to the next one.'**
+  String subscriptionPayHint(String category);
 }
 
 class _AppLocalizationsDelegate

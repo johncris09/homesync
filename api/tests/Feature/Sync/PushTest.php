@@ -195,6 +195,39 @@ class PushTest extends SyncTestCase
         $this->assertSame('forbidden', $res->json('results.0.error'));
     }
 
+    public function test_the_same_payment_from_two_devices_is_recorded_once(): void
+    {
+        $john = $this->device('owner');
+        $ana = $this->device('adult');
+        $txId = '7b2d4f6a-1c3e-5a8b-9d0f-2e4a6c8b0d1f';
+        $billId = (string) Str::uuid7();
+        $payment = fn (int $amount) => ['amount_minor' => -$amount, 'category' => 'utilities', 'occurred_at' => '2026-11-26T01:00:00Z', 'source_type' => 'bill', 'source_id' => $billId];
+
+        $this->push($ana, [$this->op('transactions', $txId, 'insert', $payment(324000), $this->hlc(2))]);
+        $res = $this->push($john, [$this->op('transactions', $txId, 'insert', $payment(330000), $this->hlc(3))]);
+
+        $this->assertSame(['merged'], $this->statuses($res), 'not rejected: the device just pulls the first one');
+        $this->assertSame(1, DB::table('transactions')->count());
+        $this->assertSame(-324000, $this->latest($john, $txId)['amount_minor']);
+    }
+
+    public function test_bills_take_repeat_fields_and_subscriptions_are_for_adults(): void
+    {
+        $john = $this->device('owner');
+        $helper = $this->device('helper');
+        $billId = (string) Str::uuid7();
+
+        $res = $this->push($john, [
+            $this->op('bills', $billId, 'insert', ['name' => 'Meralco', 'amount_minor' => 324000, 'due_on' => '2026-12-05', 'category' => 'utilities', 'repeat' => 'monthly', 'series_id' => $billId], $this->hlc(1)),
+            $this->op('subscriptions', (string) Str::uuid7(), 'insert', ['name' => 'Netflix', 'price_minor' => 54900, 'cycle' => 'monthly', 'next_due_on' => '2026-12-01'], $this->hlc(2)),
+        ]);
+        $this->assertSame(['applied', 'applied'], $this->statuses($res));
+        $this->assertSame('monthly', $this->latest($john, $billId)['repeat']);
+
+        $res = $this->push($helper, [$this->op('subscriptions', (string) Str::uuid7(), 'insert', ['name' => 'Spotify'], $this->hlc(3))]);
+        $this->assertSame('forbidden', $res->json('results.0.error'));
+    }
+
     public function test_conflicts_sync_to_adults_and_can_be_resolved(): void
     {
         $john = $this->device('owner');

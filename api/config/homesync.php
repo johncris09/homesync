@@ -75,7 +75,9 @@ return [
             'write' => $household,
         ],
 
-        // Recurring bills. Paid only moves forward; amount changes are reviewed.
+        // One bill per due date. Paid only moves forward; amount changes are
+        // reviewed. Monthly bills share a series_id; the next occurrence's id is
+        // derived from the series and due date (sync-protocol §2.1).
         'bills' => [
             'table' => 'bills',
             'fields' => [
@@ -86,9 +88,29 @@ return [
                 'due_on' => 'date',
                 'is_paid' => 'bool',
                 'paid_at' => 'datetime',
+                'category' => 'string',
+                'repeat' => 'string',
+                'series_id' => 'uuid',
             ],
             'forward_only' => ['is_paid'],
             'reviewed' => ['amount_minor'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // Subscriptions (streaming, apps, memberships). Paying posts to the
+        // ledger and moves next_due_on one cycle on; price changes are reviewed.
+        'subscriptions' => [
+            'table' => 'subscriptions',
+            'fields' => [
+                'name' => 'string',
+                'price_minor' => 'int',
+                'currency' => 'string',
+                'cycle' => 'string',
+                'next_due_on' => 'date',
+                'category' => 'string',
+            ],
+            'reviewed' => ['price_minor'],
             'read' => $adults,
             'write' => $adults,
         ],

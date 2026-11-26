@@ -2,6 +2,9 @@ import 'package:drift/drift.dart';
 
 import '../../core/db/database.dart';
 import '../../core/sync/outbox.dart';
+import '../../shared/dates.dart';
+
+export '../../shared/dates.dart';
 
 enum Expiry { none, soon, expired }
 
@@ -172,14 +175,6 @@ Expiry expiryOf(PantryItem p, DateTime today) {
   if (days < 0) return Expiry.expired;
   return days <= expirySoonDays ? Expiry.soon : Expiry.none;
 }
-
-/// Whole calendar days from [today] to [date] (negative when past).
-int daysUntil(DateTime date, DateTime today) =>
-    DateTime.utc(date.year, date.month, date.day).difference(DateTime.utc(today.year, today.month, today.day)).inDays;
-
-/// `YYYY-MM-DD` for a picked date.
-String isoDate(DateTime d) =>
-    '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
 /// 2.0 -> "2", 1.5 -> "1.5".
 String formatQuantity(double q) {

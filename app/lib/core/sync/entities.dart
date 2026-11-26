@@ -85,9 +85,17 @@ const syncedEntities = <String, EntitySpec>{
       'due_on',
       'is_paid',
       'paid_at',
+      'category',
+      'repeat',
+      'series_id',
     },
     forwardOnly: {'is_paid'},
     reviewed: {'amount_minor'},
+  ),
+  'subscriptions': EntitySpec(
+    name: 'subscriptions',
+    fields: {'name', 'price_minor', 'currency', 'cycle', 'next_due_on', 'category'},
+    reviewed: {'price_minor'},
   ),
   'transactions': EntitySpec(
     name: 'transactions',

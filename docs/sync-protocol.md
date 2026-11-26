@@ -43,6 +43,11 @@ Some entities hold at most one row per natural key. Their id is not random: the 
 | Entity | Key |
 | --- | --- |
 | `budgets` | `category` |
+| `bills` (next occurrence of a monthly bill) | `<series_id>/<due_on>` |
+| `transactions` (bill payment) | `bill/<bill_id>` |
+| `transactions` (subscription payment) | `subscription/<subscription_id>/<due_on>` |
+
+An `insert` for an existing **append-only** record (two devices recording the same payment) changes nothing: the first record stays and the op is answered `merged`, so the second device pulls the first one. A payment re-recorded after its owner undid it uses a random id.
 
 ---
 
@@ -180,7 +185,7 @@ Applied by the server when an incoming op's field HLC is older than or concurren
 | Kind | Entities / fields | Rule |
 | --- | --- | --- |
 | Default | All fields not listed below | Field-level last-writer-wins by HLC |
-| Append-only | `transactions`, `bill_payments`, `loan_payments`, `card_payments`, `receivable_payments`, `pawn_renewals`, `chore_completions`, `med_doses`, `fuel_logs`, `rent_payments`, `stock_movements`, `safety_checkins`, `activity_log` | Inserts only; updates allowed only to `note` and `deleted_at`. Never conflict |
+| Append-only | `transactions`, `loan_payments`, `card_payments`, `receivable_payments`, `pawn_renewals`, `chore_completions`, `med_doses`, `fuel_logs`, `rent_payments`, `stock_movements`, `safety_checkins`, `activity_log` | Inserts only; updates allowed only to `note` and `deleted_at`. Never conflict |
 | Counters | `pantry_items.quantity`, `medicines.stock`, `go_bag_items.quantity` | `increment` ops summed; absolute `update` of a counter is rejected (`not_counter`) |
 | Forward-only status | `bills.is_paid`, `chores.is_done`, `grocery_items.is_bought`, `pawn_tickets.is_redeemed`, `loans.is_closed` | `true` wins over `false`, unless the `false` has a newer HLC **and** the same `updated_by` as the `true` |
 | Reviewed money | `budgets.limit_minor`, `bills.amount_minor`, `subscriptions.price_minor`, `leases.rent_minor`, `loans.principal_minor`, `credit_cards.limit_minor` | LWW, and the losing value is stored in `conflicts` for an Adult/Owner to confirm or revert |

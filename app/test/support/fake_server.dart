@@ -82,7 +82,12 @@ class FakeSyncServer {
     final base = op['op'] == 'insert' && row != null ? 0 : op['base_version'] as int?;
     final ctx = _Ctx(spec, id, hlc, memberId, deviceId, base);
     final (String status, String? conflictId) = switch (op['op']) {
-      'insert' => row != null ? _update(ctx, row, fields) : _insert(ctx, table, fields),
+      'insert' => row == null
+          ? _insert(ctx, table, fields)
+          // Same ledger record from two devices (derived payment id): first stays.
+          : spec.appendOnly
+          ? ('merged', null)
+          : _update(ctx, row, fields),
       'update' => _update(ctx, _exists(row), fields),
       'delete' => _delete(ctx, _exists(row)),
       'increment' => _increment(ctx, _exists(row), fields),

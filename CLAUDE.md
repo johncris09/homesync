@@ -59,7 +59,8 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Phase 0 real-hub test | Done (web + Android emulator); merged to `develop` (PR #1) |
 | Phase 1: Pantry & Grocery | Done — `feature/pantry-grocery`: grocery list (quick add, bought, clear) and pantry (stock +/-, stock-take, running low, expiry, add to list); tested on web + emulator against a local hub; 124 app tests |
 | Phase 1: Budget | Done — `feature/budget`: `budgets` entity (derived id per category, reviewed limit), ledger entries (append-only), month view with category progress, money in/out; non-adults record and see only their own; 139 app tests, 33 API tests |
-| Phase 1: Bills & Subscriptions, Chores, Calendar | Not started — Bills next: `subscriptions` + `bill_payments` (append-only, posts to the ledger as `source_type`/`source_id`) |
+| Phase 1: Bills & Subscriptions | Done — `feature/bills`: bills (one row per due date, monthly series, pay with the actual amount, undo by the payer), subscriptions (monthly/yearly, pay moves the date on); payments post to the ledger (`source_type` `bill`/`subscription`) with derived ids; adults only; 153 app tests, 35 API tests |
+| Phase 1: Chores, Calendar | Not started |
 
 ### Phase 0 app notes (`feature/app-sync-core`)
 
@@ -71,7 +72,8 @@ The UI reads and writes only the local Drift database. Every local write updates
 - New installs bootstrap from `/sync/bootstrap` while the cursor is 0.
 - New synced table: migration + `config/homesync.php` (API), table in `tables.dart` + `onUpgrade` step with a `schemaVersion` bump + `entities.dart` (app), `dart run build_runner build`, and `docs/sync-protocol.md`. One row per natural key → derived id (protocol §2.1, `budgetId()`).
 - Money: integer centavos; `shared/money.dart` (`formatPeso`, `parsePeso`). Ledger sign: expenses negative, income positive.
-- Module pattern (see `features/pantry/`): a repository over the local DB + `LocalWriter`, providers, one screen with a solid header figure. Counters change only through `increment` (a stock-take sends the difference). Hide edit controls for roles not in the entity's `write` list. Use one-off `.get()` queries inside actions, not `watch().first`.
+- Modules that pay for something post a ledger entry with `source_type`/`source_id` and a derived id (see `features/bills/bills_repository.dart`), so a payment made on two devices offline is recorded once (the hub keeps the first insert of an append-only record). Calendar dates: `shared/dates.dart`; bottom sheets: `shared/sheet_body.dart`.
+- Module pattern (see `features/pantry/`): a repository over the local DB + `LocalWriter`, providers, one screen with a solid header figure. Counters change only through `increment` (a stock-take sends the difference). Hide edit controls for roles not in the entity's `write` list. Use one-off `.get()` queries inside actions, not `watch().first`. Don't wrap `LocalWriter` calls in `db.transaction` (each is its own transaction; nesting hung on web while native tests passed).
 - Widget tests that use Drift streams must end with `finish(tester, services)` (see `test/app_test.dart`), or a pending timer fails the test.
 - `app/web/sqlite3.wasm` and `drift_worker.js` come from the `drift-2.34.4` GitHub release; replace both together whenever `drift` is upgraded. Web storage runs on OPFS when served with the `_headers` COOP/COEP.
 - Font: Bricolage Grotesque variable font in `app/assets/fonts/` (OFL, licence registered at startup). Use `fontVariations` (`FontVariation.weight` / `.width(75)` for big figures), not just `fontWeight`.
