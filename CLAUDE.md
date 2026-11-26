@@ -37,7 +37,12 @@ flutter pub get
 dart run build_runner build --delete-conflicting-outputs   # Drift / Riverpod codegen
 flutter test
 flutter run -d chrome             # or an Android device/emulator
+
+# Android emulator against a local hub (php artisan serve on :8000)
+flutter build apk --debug --dart-define=API_BASE_URL=http://10.0.2.2:8000
 ```
+
+Debug builds allow plain HTTP (`android/app/src/debug/AndroidManifest.xml`) so they can reach a local hub; release builds are HTTPS-only.
 
 ## Architecture in one paragraph
 
@@ -51,7 +56,7 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Repo scaffold (Flutter + Laravel generated) | Done — `feature/repo-scaffold` |
 | API sync engine: push/pull/bootstrap, all conflict rules, device tokens, email + PIN login, protocol check, setup command, 28 tests | Done — `feature/sync-core` |
 | **App sync engine** (steps 1–9) | Done — `feature/app-sync-core`: Drift DB (sqlite3mc), HLC, outbox (per-profile), sync engine, triggers + WorkManager, email/PIN-profile auth, app lock, synced conflicts + Conflict Inbox, sync status UI, owner Household members screen (add/edit/remove, set tablet PIN), bootstrap snapshot on first sync, tablet PIN for the setup person; 107 app tests, 30 API tests |
-| Phase 0 real-hub test | Done on web against a local hub (setup → sign in → members/PINs → tablet profiles → two-device sync). **Next**: same on a real Android device, then merge to `develop` |
+| Phase 0 real-hub test | Done against a local hub on web (tablet profiles, two-device sync) and the Android emulator (sign-in, encrypted DB, members, offline edit synced on reconnect). **Next**: merge `feature/app-sync-core` into `develop`, then Phase 1 |
 | Phase 1 modules (Budget, Bills & Subscriptions, Chores, Calendar, Pantry & Grocery) | Not started |
 
 ### Phase 0 app notes (`feature/app-sync-core`)
