@@ -16,6 +16,8 @@ part 'database.g.dart';
     Chores,
     ChoreCompletions,
     Events,
+    Debts,
+    DebtPayments,
     Budgets,
     Transactions,
     Conflicts,
@@ -29,7 +31,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -57,6 +59,11 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(choreCompletions);
       }
       if (from < 5) await m.createTable(events); // Calendar
+      if (from < 6) {
+        // Debts & Loans
+        await m.createTable(debts);
+        await m.createTable(debtPayments);
+      }
     },
   );
 

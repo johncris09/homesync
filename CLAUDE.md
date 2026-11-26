@@ -64,6 +64,7 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Phase 1: Calendar | Done — `feature/calendar`: events (all day or timed; once, weekly, monthly, yearly), month view with dots, the picked day and coming up; adults also see bills and subscriptions due; everyone but viewers adds, non-adults change only their own; 172 app tests, 37 API tests |
 | Deployment | Ready — `feature/deploy`: CI, Hostinger and Cloudflare Pages workflows, CORS by origin, scheduler, `docs/deploy.md`; live at Cloudflare Pages and Hostinger |
 | Releases | Ready — `feature/android-release`: one version for the whole system; a `v1.2.3` tag on `main` runs `release.yml` (hub, then web + signed APK on a GitHub Release); Home shows app and hub versions (`X-HomeSync-Version`); APKs signed with the upload key (`android/key.properties`) |
+| Phase 2: Debts & Loans | Done — `feature/debts-loans`: one `debts` table (loan, card, pawn ticket, money lent) and append-only `debt_payments` (payment, interest, charge); balance worked out on the device; payments on what the household owes post to the ledger (category `debt`); monthly due dates move on when paid; paid off at zero, reopen by the closer; adults only; 190 app tests, 42 API tests |
 
 ### Phase 0 app notes (`feature/app-sync-core`)
 

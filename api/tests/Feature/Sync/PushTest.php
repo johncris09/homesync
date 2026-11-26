@@ -262,6 +262,45 @@ class PushTest extends SyncTestCase
         $this->assertSame('2026-12-04', $pulled['row']['starts_on']);
     }
 
+    public function test_debts_are_for_adults_and_payments_from_two_devices_both_count(): void
+    {
+        $john = $this->device('owner');
+        $ana = $this->device('adult');
+        $teen = $this->device('teen');
+        $debtId = (string) Str::uuid7();
+        $debt = ['kind' => 'loan', 'name' => 'Pag-IBIG salary loan', 'counterparty' => 'Pag-IBIG', 'principal_minor' => 6000000, 'installment_minor' => 280000, 'next_due_on' => '2026-12-10', 'repeat' => 'monthly', 'started_on' => '2026-06-10'];
+
+        $this->assertSame('forbidden', $this->push($teen, [$this->op('debts', (string) Str::uuid7(), 'insert', $debt, $this->hlc(1))])->json('results.0.error'));
+        $this->assertSame(['applied'], $this->statuses($this->push($john, [$this->op('debts', $debtId, 'insert', $debt, $this->hlc(2))])));
+
+        $payment = fn ($d, int $t) => $this->op('debt_payments', (string) Str::uuid7(), 'insert', ['debt_id' => $debtId, 'kind' => 'payment', 'amount_minor' => 280000, 'paid_on' => '2026-12-09', 'member_id' => $d->member_id], $this->hlc($t));
+        $this->assertSame(['applied'], $this->statuses($this->push($john, [$payment($john, 3)])));
+        $this->assertSame(['applied'], $this->statuses($this->push($ana, [$payment($ana, 4)])));
+        $this->assertSame(2, DB::table('debt_payments')->where('debt_id', $debtId)->count());
+
+        $pulled = collect($this->pull($ana)->assertOk()->json('changes'))->firstWhere('entity', 'debts');
+        $this->assertSame('loan', $pulled['row']['kind']);
+        $this->assertSame(6000000, $pulled['row']['principal_minor']);
+        $this->assertEmpty(collect($this->pull($teen)->json('changes'))->whereIn('entity', ['debts', 'debt_payments'])->all());
+    }
+
+    public function test_a_paid_off_debt_stays_closed_unless_the_closer_reopens_it(): void
+    {
+        $john = $this->device('owner');
+        $ana = $this->device('adult');
+        $id = (string) Str::uuid7();
+        $seen = $this->push($john, [$this->op('debts', $id, 'insert', ['kind' => 'pawn', 'name' => 'Gold ring', 'principal_minor' => 500000], $this->hlc(1))])
+            ->json('results.0.server_version');
+
+        $this->push($john, [$this->op('debts', $id, 'update', ['is_closed' => true, 'closed_by' => $john->member_id], $this->hlc(3), $seen)]);
+        $this->push($ana, [$this->op('debts', $id, 'update', ['is_closed' => false], $this->hlc(4), $seen)]);
+        $this->assertTrue((bool) $this->latest($john, $id)['is_closed'], 'someone else cannot reopen it');
+        $this->push($john, [$this->op('debts', $id, 'update', ['is_closed' => false, 'closed_by' => null], $this->hlc(6), $seen)]);
+        $this->assertFalse((bool) $this->latest($john, $id)['is_closed'], 'the closer can');
+
+        $this->assertSame('validation', $this->push($john, [$this->op('debt_payments', (string) Str::uuid7(), 'insert', ['debt_id' => $id, 'kind' => 'payment', 'amount_minor' => 'lots', 'paid_on' => '2026-11-26'], $this->hlc(5))])->json('results.0.error'));
+    }
+
     public function test_conflicts_sync_to_adults_and_can_be_resolved(): void
     {
         $john = $this->device('owner');

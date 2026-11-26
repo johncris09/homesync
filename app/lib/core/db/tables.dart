@@ -138,6 +138,50 @@ class Events extends Table with SyncColumns {
   TextColumn get createdBy => text().nullable()();
 }
 
+/// A loan, credit card, pawn ticket or money lent ([kind] `loan`, `card`,
+/// `pawn`, `lent`). Balance = [principalMinor] + charges - payments in
+/// [DebtPayments]; it is never stored.
+class Debts extends Table with SyncColumns {
+  TextColumn get kind => text()();
+  TextColumn get name => text()();
+
+  /// Bank, pawnshop or person.
+  TextColumn get counterparty => text().nullable()();
+
+  /// Pawn ticket number, last digits of a card, loan account.
+  TextColumn get reference => text().nullable()();
+  IntColumn get principalMinor => integer().withDefault(const Constant(0))();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+
+  /// Monthly amortization or minimum due.
+  IntColumn get installmentMinor => integer().nullable()();
+
+  /// Calendar date `YYYY-MM-DD` (a pawn ticket's maturity).
+  TextColumn get nextDueOn => text().nullable()();
+
+  /// `monthly` or null.
+  TextColumn get repeat => text().nullable()();
+  TextColumn get startedOn => text().nullable()();
+  BoolColumn get isClosed => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get closedAt => dateTime().nullable()();
+  TextColumn get closedBy => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// A payment, interest-only payment or charge on a debt ([kind] `payment`,
+/// `interest`, `charge`; [amountMinor] positive). Append-only.
+class DebtPayments extends Table with SyncColumns {
+  TextColumn get debtId => text()();
+  TextColumn get kind => text()();
+  IntColumn get amountMinor => integer()();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+
+  /// Calendar date `YYYY-MM-DD`.
+  TextColumn get paidOn => text()();
+  TextColumn get memberId => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
 /// The money ledger. Append-only: only `note` and deletion change later.
 @DataClassName('LedgerEntry')
 class Transactions extends Table with SyncColumns {

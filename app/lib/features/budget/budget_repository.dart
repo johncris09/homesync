@@ -17,6 +17,7 @@ const expenseCategories = [
   'load',
   'personal',
   'giving',
+  'debt',
   'other',
 ];
 
@@ -33,6 +34,7 @@ String categoryLabel(AppLocalizations l10n, String? key) => switch (key) {
   'load' => l10n.catLoad,
   'personal' => l10n.catPersonal,
   'giving' => l10n.catGiving,
+  'debt' => l10n.catDebt,
   'income' => l10n.catIncome,
   _ => l10n.catOther,
 };
@@ -47,6 +49,7 @@ IconData categoryIcon(String? key) => switch (key) {
   'load' => Icons.wifi_outlined,
   'personal' => Icons.person_outline,
   'giving' => Icons.volunteer_activism_outlined,
+  'debt' => Icons.account_balance_outlined,
   'income' => Icons.savings_outlined,
   _ => Icons.more_horiz,
 };
