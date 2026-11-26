@@ -129,6 +129,35 @@ return [
             'write' => $adults,
         ],
 
+        // Household chores: daily, weekly on one weekday (1 = Monday), or once
+        // on a date. Adults manage them; doing one is a chore_completions row.
+        'chores' => [
+            'table' => 'chores',
+            'fields' => [
+                'name' => 'string',
+                'assigned_to' => 'uuid',
+                'repeat' => 'string',
+                'weekday' => 'int',
+                'due_on' => 'date',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
+        // Who did a chore on which day. Append-only: undo is a delete.
+        'chore_completions' => [
+            'table' => 'chore_completions',
+            'fields' => [
+                'chore_id' => 'uuid',
+                'member_id' => 'uuid',
+                'done_on' => 'date',
+            ],
+            'append_only' => true,
+            'mutable' => [],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',

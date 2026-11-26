@@ -11,6 +11,7 @@ import '../../shared/pin_pad.dart';
 import '../../shared/money.dart';
 import '../bills/bills_providers.dart';
 import '../budget/budget_providers.dart';
+import '../chores/chores_providers.dart';
 import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
@@ -39,6 +40,14 @@ class HomeScreen extends ConsumerWidget {
         ? (money.left >= 0 ? l10n.budgetTileLeft(peso(money.left)) : l10n.budgetTileOver(peso(-money.left)))
         : l10n.budgetTileSpent(peso(money.spent));
     final bills = adult ? ref.watch(billsSummaryProvider) : null;
+    final chores = ref.watch(choreBoardProvider);
+    final choresCaption = chores.today.isEmpty
+        ? l10n.choresTileNone
+        : chores.left == 0
+        ? l10n.choresTileDone
+        : !adult && chores.mineLeft > 0
+        ? l10n.choresTileMine(chores.mineLeft)
+        : l10n.choresTileLeft(chores.left);
 
     return Scaffold(
       body: ListView(
@@ -89,6 +98,17 @@ class HomeScreen extends ConsumerWidget {
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => context.push(Routes.bills),
                         ),
+                      ListTile(
+                        leading: const CircleAvatar(
+                          backgroundColor: HomeColors.dagat,
+                          foregroundColor: Colors.white,
+                          child: Icon(Icons.cleaning_services_outlined),
+                        ),
+                        title: Text(l10n.choresModule),
+                        subtitle: Text(choresCaption),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(Routes.chores),
+                      ),
                       ListTile(
                         leading: const CircleAvatar(
                           backgroundColor: HomeColors.ube,

@@ -90,7 +90,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeCaption => 'Everything here works offline.';
 
   @override
-  String get modulesComingSoon => 'Chores and calendar are coming next.';
+  String get modulesComingSoon => 'The calendar is coming next.';
 
   @override
   String get syncSyncing => 'Syncing…';
@@ -853,4 +853,144 @@ class AppLocalizationsEn extends AppLocalizations {
   String subscriptionPayHint(String category) {
     return 'Records this payment in Budget under $category and moves the date to the next one.';
   }
+
+  @override
+  String get choresModule => 'Chores';
+
+  @override
+  String choresTileLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count chores left today',
+      one: '1 chore left today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String choresTileMine(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count are yours today',
+      one: '1 is yours today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get choresTileDone => 'All done today';
+
+  @override
+  String get choresTileNone => 'Nothing today';
+
+  @override
+  String choresLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count left today',
+      one: '1 left today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get choresAllDone => 'All done today';
+
+  @override
+  String get choresNoneToday => 'Nothing today';
+
+  @override
+  String choresDoneCaption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count done so far. Salamat!',
+      one: '1 done so far. Salamat!',
+      zero: 'Tick a chore when it\'s done.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String choresMineCaption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count of them are yours.',
+      one: '1 of them is yours.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get choresToday => 'Today';
+
+  @override
+  String get choresComingUp => 'Coming up';
+
+  @override
+  String get choresEmpty => 'No chores for today.';
+
+  @override
+  String get choresEmptyAdult =>
+      'No chores yet. Add dishes, laundry, sweeping or taking out the trash.';
+
+  @override
+  String get choreAdd => 'Add chore';
+
+  @override
+  String get choreEdit => 'Edit chore';
+
+  @override
+  String get choreRemove => 'Remove chore';
+
+  @override
+  String get choreNameHint => 'e.g. Wash the dishes';
+
+  @override
+  String get choreWho => 'Who does it';
+
+  @override
+  String get choreAnyone => 'Anyone';
+
+  @override
+  String get choreDaily => 'Daily';
+
+  @override
+  String get choreWeekly => 'Weekly';
+
+  @override
+  String get choreOnce => 'Once';
+
+  @override
+  String choreEveryWeekday(String day) {
+    return 'Every $day';
+  }
+
+  @override
+  String choreOnceOn(String date) {
+    return 'Once, $date';
+  }
+
+  @override
+  String choreDoneBy(String names) {
+    return 'Done by $names';
+  }
+
+  @override
+  String choreOverdueSince(String date) {
+    return 'Not done since $date';
+  }
+
+  @override
+  String get choreMarkDone => 'Mark done';
+
+  @override
+  String get choreUndo => 'Undo';
+
+  @override
+  String get choreUndoOnlyDoer => 'Only the person who did it can undo it.';
 }

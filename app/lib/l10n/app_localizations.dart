@@ -241,7 +241,7 @@ abstract class AppLocalizations {
   /// No description provided for @modulesComingSoon.
   ///
   /// In en, this message translates to:
-  /// **'Chores and calendar are coming next.'**
+  /// **'The calendar is coming next.'**
   String get modulesComingSoon;
 
   /// No description provided for @syncSyncing.
@@ -1425,6 +1425,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Records this payment in Budget under {category} and moves the date to the next one.'**
   String subscriptionPayHint(String category);
+
+  /// No description provided for @choresModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Chores'**
+  String get choresModule;
+
+  /// No description provided for @choresTileLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 chore left today} other{{count} chores left today}}'**
+  String choresTileLeft(int count);
+
+  /// No description provided for @choresTileMine.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 is yours today} other{{count} are yours today}}'**
+  String choresTileMine(int count);
+
+  /// No description provided for @choresTileDone.
+  ///
+  /// In en, this message translates to:
+  /// **'All done today'**
+  String get choresTileDone;
+
+  /// No description provided for @choresTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing today'**
+  String get choresTileNone;
+
+  /// No description provided for @choresLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 left today} other{{count} left today}}'**
+  String choresLeft(int count);
+
+  /// No description provided for @choresAllDone.
+  ///
+  /// In en, this message translates to:
+  /// **'All done today'**
+  String get choresAllDone;
+
+  /// No description provided for @choresNoneToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing today'**
+  String get choresNoneToday;
+
+  /// No description provided for @choresDoneCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Tick a chore when it\'s done.} =1{1 done so far. Salamat!} other{{count} done so far. Salamat!}}'**
+  String choresDoneCaption(int count);
+
+  /// No description provided for @choresMineCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 of them is yours.} other{{count} of them are yours.}}'**
+  String choresMineCaption(int count);
+
+  /// No description provided for @choresToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get choresToday;
+
+  /// No description provided for @choresComingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get choresComingUp;
+
+  /// No description provided for @choresEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No chores for today.'**
+  String get choresEmpty;
+
+  /// No description provided for @choresEmptyAdult.
+  ///
+  /// In en, this message translates to:
+  /// **'No chores yet. Add dishes, laundry, sweeping or taking out the trash.'**
+  String get choresEmptyAdult;
+
+  /// No description provided for @choreAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add chore'**
+  String get choreAdd;
+
+  /// No description provided for @choreEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit chore'**
+  String get choreEdit;
+
+  /// No description provided for @choreRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove chore'**
+  String get choreRemove;
+
+  /// No description provided for @choreNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Wash the dishes'**
+  String get choreNameHint;
+
+  /// No description provided for @choreWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Who does it'**
+  String get choreWho;
+
+  /// No description provided for @choreAnyone.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone'**
+  String get choreAnyone;
+
+  /// No description provided for @choreDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get choreDaily;
+
+  /// No description provided for @choreWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get choreWeekly;
+
+  /// No description provided for @choreOnce.
+  ///
+  /// In en, this message translates to:
+  /// **'Once'**
+  String get choreOnce;
+
+  /// No description provided for @choreEveryWeekday.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {day}'**
+  String choreEveryWeekday(String day);
+
+  /// No description provided for @choreOnceOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Once, {date}'**
+  String choreOnceOn(String date);
+
+  /// No description provided for @choreDoneBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Done by {names}'**
+  String choreDoneBy(String names);
+
+  /// No description provided for @choreOverdueSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Not done since {date}'**
+  String choreOverdueSince(String date);
+
+  /// No description provided for @choreMarkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark done'**
+  String get choreMarkDone;
+
+  /// No description provided for @choreUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get choreUndo;
+
+  /// No description provided for @choreUndoOnlyDoer.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the person who did it can undo it.'**
+  String get choreUndoOnlyDoer;
 }
 
 class _AppLocalizationsDelegate

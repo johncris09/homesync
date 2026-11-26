@@ -187,10 +187,12 @@ Applied by the server when an incoming op's field HLC is older than or concurren
 | Default | All fields not listed below | Field-level last-writer-wins by HLC |
 | Append-only | `transactions`, `loan_payments`, `card_payments`, `receivable_payments`, `pawn_renewals`, `chore_completions`, `med_doses`, `fuel_logs`, `rent_payments`, `stock_movements`, `safety_checkins`, `activity_log` | Inserts only; updates allowed only to `note` and `deleted_at`. Never conflict |
 | Counters | `pantry_items.quantity`, `medicines.stock`, `go_bag_items.quantity` | `increment` ops summed; absolute `update` of a counter is rejected (`not_counter`) |
-| Forward-only status | `bills.is_paid`, `chores.is_done`, `grocery_items.is_bought`, `pawn_tickets.is_redeemed`, `loans.is_closed` | `true` wins over `false`, unless the `false` has a newer HLC **and** the same `updated_by` as the `true` |
+| Forward-only status | `bills.is_paid`, `grocery_items.is_bought`, `pawn_tickets.is_redeemed`, `loans.is_closed` | `true` wins over `false`, unless the `false` has a newer HLC **and** the same `updated_by` as the `true` |
 | Reviewed money | `budgets.limit_minor`, `bills.amount_minor`, `subscriptions.price_minor`, `leases.rent_minor`, `loans.principal_minor`, `credit_cards.limit_minor` | LWW, and the losing value is stored in `conflicts` for an Adult/Owner to confirm or revert |
 | Delete vs edit | All | Delete wins unless the edit's HLC is newer than the delete's |
 | Never auto-merged | `vault_items`, `vault_files`, `health_profiles` | Both versions kept; the newer is live, the older stored in `conflicts`; Owner chooses |
+
+A chore has no done flag: it is done for a day when it has a `chore_completions` row for that day, so two people doing it offline both keep their completion.
 
 Tombstones are kept 90 days, then pruned by the nightly job.
 
