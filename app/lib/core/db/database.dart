@@ -12,6 +12,7 @@ part 'database.g.dart';
     GroceryItems,
     PantryItems,
     Bills,
+    Subscriptions,
     Budgets,
     Transactions,
     Conflicts,
@@ -25,7 +26,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -40,6 +41,13 @@ class AppDatabase extends _$AppDatabase {
     },
     onUpgrade: (m, from, to) async {
       if (from < 2) await m.createTable(budgets); // Budget module
+      if (from < 3) {
+        // Bills & Subscriptions
+        await m.addColumn(bills, bills.category);
+        await m.addColumn(bills, bills.repeat);
+        await m.addColumn(bills, bills.seriesId);
+        await m.createTable(subscriptions);
+      }
     },
   );
 

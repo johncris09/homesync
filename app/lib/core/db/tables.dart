@@ -60,6 +60,8 @@ class Budgets extends Table with SyncColumns {
   TextColumn get currency => text().withDefault(const Constant('PHP'))();
 }
 
+/// One bill per due date. A monthly bill's occurrences share [seriesId];
+/// the next one's id is derived from the series and due date (§2.1).
 class Bills extends Table with SyncColumns {
   TextColumn get name => text()();
   TextColumn get provider => text().nullable()();
@@ -70,6 +72,26 @@ class Bills extends Table with SyncColumns {
   TextColumn get dueOn => text().nullable()();
   BoolColumn get isPaid => boolean().withDefault(const Constant(false))();
   DateTimeColumn get paidAt => dateTime().nullable()();
+
+  /// Budget category the payment is recorded under.
+  TextColumn get category => text().nullable()();
+
+  /// `monthly` or null (one-off).
+  TextColumn get repeat => text().nullable()();
+  TextColumn get seriesId => text().nullable()();
+}
+
+class Subscriptions extends Table with SyncColumns {
+  TextColumn get name => text()();
+  IntColumn get priceMinor => integer().withDefault(const Constant(0))();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+
+  /// `monthly` or `yearly`.
+  TextColumn get cycle => text().withDefault(const Constant('monthly'))();
+
+  /// Calendar date `YYYY-MM-DD`.
+  TextColumn get nextDueOn => text().nullable()();
+  TextColumn get category => text().nullable()();
 }
 
 /// The money ledger. Append-only: only `note` and deletion change later.

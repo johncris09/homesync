@@ -90,7 +90,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeCaption => 'Everything here works offline.';
 
   @override
-  String get modulesComingSoon => 'Bills, chores and calendar are coming next.';
+  String get modulesComingSoon => 'Chores and calendar are coming next.';
 
   @override
   String get syncSyncing => 'Syncing…';
@@ -662,4 +662,195 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get catOther => 'Other';
+
+  @override
+  String get billsModule => 'Bills & subscriptions';
+
+  @override
+  String billsTileDue(String amount) {
+    return '$amount to pay this month';
+  }
+
+  @override
+  String billsTileOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count bills overdue',
+      one: '1 bill overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get billsTileClear => 'Nothing left to pay this month';
+
+  @override
+  String billsToPay(String amount) {
+    return '$amount to pay';
+  }
+
+  @override
+  String get billsAllPaid => 'All paid';
+
+  @override
+  String billsOverdueCaption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count overdue. Pay them soon.',
+      one: '1 overdue. Pay it soon.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String billsNextCaption(String name, String date) {
+    return 'Next: $name, $date';
+  }
+
+  @override
+  String get billsEmptyCaption => 'Add your bills to see what\'s due.';
+
+  @override
+  String get billsTab => 'Bills';
+
+  @override
+  String get subscriptionsTab => 'Subscriptions';
+
+  @override
+  String get billsEmpty =>
+      'No bills yet. Add Meralco, water, rent or internet.';
+
+  @override
+  String get billsNoneDue => 'Nothing to pay right now.';
+
+  @override
+  String get billsPaidRecently => 'Paid recently';
+
+  @override
+  String get billAdd => 'Add bill';
+
+  @override
+  String get billEdit => 'Edit bill';
+
+  @override
+  String get billRemove => 'Remove bill';
+
+  @override
+  String get billNameHint => 'e.g. Meralco';
+
+  @override
+  String get billAmountHelp => 'Your best guess if it changes every month';
+
+  @override
+  String billDueLabel(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String get billRepeatMonthly => 'Every month';
+
+  @override
+  String get billRepeatHelp => 'When it\'s paid, next month\'s bill is added.';
+
+  @override
+  String get billMonthly => 'Monthly';
+
+  @override
+  String get billCategoryLabel => 'Recorded in Budget as';
+
+  @override
+  String get billNoDueDate => 'No due date';
+
+  @override
+  String billOverdueBy(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Overdue by $count days',
+      one: 'Overdue by 1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String billDueIn(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Due in $count days',
+      one: 'Due tomorrow',
+      zero: 'Due today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String billDueOn(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String billPaidOn(String date) {
+    return 'Paid $date';
+  }
+
+  @override
+  String get billAmountPaid => 'Amount paid';
+
+  @override
+  String billPayHint(String category) {
+    return 'Recorded in Budget under $category.';
+  }
+
+  @override
+  String get billMarkPaid => 'Mark paid';
+
+  @override
+  String get billUndoPaid => 'Undo paid';
+
+  @override
+  String get billUndoOnlyPayer =>
+      'Only the person who marked it paid can undo it.';
+
+  @override
+  String get subscriptionAdd => 'Add subscription';
+
+  @override
+  String get subscriptionEdit => 'Edit subscription';
+
+  @override
+  String get subscriptionRemove => 'Remove subscription';
+
+  @override
+  String get subscriptionNameHint => 'e.g. Netflix';
+
+  @override
+  String get subscriptionPrice => 'Price';
+
+  @override
+  String get subscriptionMonthly => 'Monthly';
+
+  @override
+  String get subscriptionYearly => 'Yearly';
+
+  @override
+  String subscriptionNextLabel(String date) {
+    return 'Next payment $date';
+  }
+
+  @override
+  String get subscriptionsEmpty =>
+      'No subscriptions yet. Add streaming, apps or memberships.';
+
+  @override
+  String subscriptionsMonthly(String amount) {
+    return '$amount a month in subscriptions';
+  }
+
+  @override
+  String subscriptionPayHint(String category) {
+    return 'Records this payment in Budget under $category and moves the date to the next one.';
+  }
 }

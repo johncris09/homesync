@@ -195,6 +195,11 @@ void main() {
     final v2 = AppDatabase(NativeDatabase(file));
     await v2.customStatement('SELECT 1'); // creates the schema
     await v2.customStatement('DROP TABLE budgets');
+    // Also undo version 3 (Bills & Subscriptions).
+    await v2.customStatement('DROP TABLE subscriptions');
+    for (final c in ['category', 'repeat', 'series_id']) {
+      await v2.customStatement('ALTER TABLE bills DROP COLUMN "$c"');
+    }
     await v2.customStatement('PRAGMA user_version = 1');
     await v2.close();
 

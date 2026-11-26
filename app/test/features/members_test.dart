@@ -20,6 +20,9 @@ Future<AppServices> seeded(MemorySecureStore store) async {
 }
 
 Future<void> openMembers(WidgetTester tester) async {
+  await tester.pumpAndSettle(); // home tiles fill in from streams
+  await tester.ensureVisible(find.text('Household members'));
+  await tester.pumpAndSettle();
   await tester.tap(find.text('Household members'));
   await tester.pumpAndSettle();
 }

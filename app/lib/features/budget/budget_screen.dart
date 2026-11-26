@@ -7,6 +7,7 @@ import '../../app/theme.dart';
 import '../../core/db/database.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/money.dart';
+import '../../shared/sheet_body.dart';
 import '../sync/sync_widgets.dart';
 import 'budget_providers.dart';
 import 'budget_repository.dart';
@@ -310,7 +311,7 @@ class _AmountSheetState extends State<_AmountSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return _SheetBody(
+    return SheetBody(
       title: widget.title,
       children: [
         TextField(
@@ -433,7 +434,7 @@ class _EntrySheetState extends ConsumerState<EntrySheet> {
     final canChange = session != null && (session.active.isAdult || e.memberId == session.active.memberId);
     final repo = ref.read(budgetRepoProvider);
 
-    return _SheetBody(
+    return SheetBody(
       title: '${e.amountMinor > 0 ? '+' : '−'}${formatPeso(e.amountMinor.abs(), locale: locale)}',
       children: [
         Text(
@@ -533,7 +534,7 @@ class _EntryFormState extends ConsumerState<EntryForm> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context).toString();
-    return _SheetBody(
+    return SheetBody(
       title: _income ? l10n.budgetAddIncome : l10n.budgetAddExpense,
       children: [
         if (widget.allowIncome) ...[
@@ -596,33 +597,6 @@ class _EntryFormState extends ConsumerState<EntryForm> {
         const SizedBox(height: 20),
         FilledButton(onPressed: _save, child: Text(l10n.save)),
       ],
-    );
-  }
-}
-
-/// Bottom-sheet body that stays above the keyboard and scrolls when tall.
-class _SheetBody extends StatelessWidget {
-  const _SheetBody({required this.title, required this.children});
-
-  final String title;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(title, style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 16),
-            ...children,
-          ],
-        ),
-      ),
     );
   }
 }
