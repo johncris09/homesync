@@ -1124,4 +1124,262 @@ class AppLocalizationsEn extends AppLocalizations {
   String versionLineNoHub(String app) {
     return 'Version $app';
   }
+
+  @override
+  String get catDebt => 'Debt payments';
+
+  @override
+  String get debtsModule => 'Debts & loans';
+
+  @override
+  String debtsTileOwed(String amount) {
+    return '$amount owed';
+  }
+
+  @override
+  String debtsTileOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count payments overdue',
+      one: '1 payment overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get debtsTileNone => 'Nothing owed';
+
+  @override
+  String debtsOwed(String amount) {
+    return '$amount owed';
+  }
+
+  @override
+  String debtsOwedToUs(String amount) {
+    return '$amount owed to you';
+  }
+
+  @override
+  String get debtsNone => 'No debts';
+
+  @override
+  String debtsOverdueCaption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count payments overdue. Pay them soon.',
+      one: '1 payment overdue. Pay it soon.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get debtsEmptyCaption => 'Loans, cards, pawn tickets and money lent.';
+
+  @override
+  String get debtsYouOwe => 'You owe';
+
+  @override
+  String get debtsOwedToYou => 'Owed to you';
+
+  @override
+  String get debtsPaidOff => 'Paid off';
+
+  @override
+  String get debtsEmpty =>
+      'Nothing here yet. Add a loan, credit card, pawn ticket or money you lent.';
+
+  @override
+  String get debtAdd => 'Add debt';
+
+  @override
+  String debtKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'loan': 'Loan',
+      'card': 'Credit card',
+      'pawn': 'Pawn ticket',
+      'other': 'Money lent',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String debtNameHint(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'loan': 'e.g. Pag-IBIG salary loan',
+      'card': 'e.g. BPI card',
+      'pawn': 'e.g. Gold ring',
+      'other': 'e.g. Tito Ben',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String debtCounterpartyLabel(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'loan': 'Lender (optional)',
+      'card': 'Bank (optional)',
+      'pawn': 'Pawnshop (optional)',
+      'other': 'Who borrowed it (optional)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String debtReferenceLabel(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'pawn': 'Ticket number (optional)',
+      'card': 'Last 4 digits (optional)',
+      'other': 'Account or reference (optional)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String debtPrincipalLabel(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'loan': 'Amount borrowed',
+      'card': 'Balance now',
+      'pawn': 'Amount received',
+      'other': 'Amount lent',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String debtInstallmentLabel(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'card': 'Minimum due (optional)',
+      'other': 'Monthly payment (optional)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String debtDueLabel(String kind, String date) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'pawn': 'Maturity: $date',
+      'other': 'Next due: $date',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get debtSetDue => 'Set a due date';
+
+  @override
+  String get debtClearDue => 'No due date';
+
+  @override
+  String get debtRepeatMonthly => 'Due every month';
+
+  @override
+  String get debtRepeatHelp =>
+      'Paying near the due date moves it to next month.';
+
+  @override
+  String get debtNote => 'Note (optional)';
+
+  @override
+  String debtBalanceLine(String balance, String principal) {
+    return '$balance left of $principal';
+  }
+
+  @override
+  String debtInstallmentLine(String amount) {
+    return '$amount a month';
+  }
+
+  @override
+  String debtPay(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'lent': 'Got paid back',
+      'other': 'Record payment',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String debtAddCharge(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'lent': 'Lent more',
+      'card': 'Add charges',
+      'other': 'Add to balance',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get debtInterestOnly => 'Interest only';
+
+  @override
+  String debtInterestHelp(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'pawn': 'Renewing the ticket? Pay the interest only: the balance stays.',
+      'other': 'The balance stays the same.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get debtPayHint => 'Recorded in Budget under Debt payments.';
+
+  @override
+  String get debtAmountPaid => 'Amount paid';
+
+  @override
+  String get debtAmountAdded => 'Amount added';
+
+  @override
+  String debtClose(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'pawn': 'Mark redeemed',
+      'lent': 'Mark repaid',
+      'other': 'Mark paid off',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String debtClosedOn(String kind, String date) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'pawn': 'Redeemed $date',
+      'lent': 'Repaid $date',
+      'other': 'Paid off $date',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get debtReopen => 'Reopen';
+
+  @override
+  String get debtReopenOnlyCloser =>
+      'Only the person who closed it can reopen it.';
+
+  @override
+  String get debtEdit => 'Edit debt';
+
+  @override
+  String get debtRemove => 'Remove debt';
+
+  @override
+  String get debtHistory => 'History';
+
+  @override
+  String get debtHistoryEmpty => 'Nothing recorded yet.';
+
+  @override
+  String debtEntry(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'payment': 'Payment',
+      'interest': 'Interest',
+      'other': 'Added',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get debtRemoveEntry => 'Remove this entry';
 }
