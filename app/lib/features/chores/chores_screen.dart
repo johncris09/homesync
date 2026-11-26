@@ -78,7 +78,10 @@ class ChoresScreen extends ConsumerWidget {
                 if (board.today.isEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
-                    child: Text(manage ? l10n.choresEmptyAdult : l10n.choresEmpty, textAlign: TextAlign.center),
+                    child: Text(
+                      manage && board.upcoming.isEmpty ? l10n.choresEmptyAdult : l10n.choresEmpty,
+                      textAlign: TextAlign.center,
+                    ),
                   )
                 else
                   Card(
