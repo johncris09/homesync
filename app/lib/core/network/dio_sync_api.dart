@@ -77,4 +77,14 @@ class DioSyncApi implements SyncApi {
     );
     return PullResponse.fromJson(res.data ?? const {});
   }
+
+  @override
+  Future<BootstrapResponse> bootstrap() async {
+    final token = await tokenFor(mainDeviceId());
+    if (token == null) throw const SignedOut();
+    final res = await guardApi(
+      () => _dio.get<Map<String, Object?>>('/sync/bootstrap', options: bearer(token)),
+    );
+    return BootstrapResponse.fromJson(res.data ?? const {});
+  }
 }

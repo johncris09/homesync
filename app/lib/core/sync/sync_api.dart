@@ -95,10 +95,35 @@ class PullResponse {
   final bool hasMore;
 }
 
+/// Snapshot of every row the member may read (sync-protocol §5.3), valid
+/// from [cursor].
+class BootstrapResponse {
+  const BootstrapResponse({required this.serverTimeMs, required this.entities, required this.cursor});
+
+  factory BootstrapResponse.fromJson(Map<String, Object?> j) {
+    final raw = j['entities'];
+    return BootstrapResponse(
+      serverTimeMs: (j['server_time_ms'] as num).toInt(),
+      entities: {
+        // PHP encodes an empty object as [].
+        if (raw is Map)
+          for (final e in raw.entries)
+            e.key as String: [for (final r in e.value as List) (r as Map).cast<String, Object?>()],
+      },
+      cursor: (j['cursor'] as num?)?.toInt() ?? 0,
+    );
+  }
+
+  final int serverTimeMs;
+  final Map<String, List<Map<String, Object?>>> entities;
+  final int cursor;
+}
+
 /// Transport for sync. [DioSyncApi] talks to the real hub; tests use a fake.
 abstract interface class SyncApi {
   Future<PushResponse> push(String deviceId, List<Map<String, Object?>> ops);
   Future<PullResponse> pull(int cursor, int limit);
+  Future<BootstrapResponse> bootstrap();
 }
 
 /// Server answered 426: this app is too old. Sync pauses; local data is kept.

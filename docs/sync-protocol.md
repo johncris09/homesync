@@ -157,6 +157,8 @@ Response `200`:
 
 For a new device or reinstall. Returns a gzip JSON snapshot of every table the member may read, plus the `cursor` it is valid from. The device then switches to normal pulls.
 
+The app bootstraps whenever its stored cursor is 0 (new install, or the hub's change log was still empty at the last sync). This also delivers rows the hub wrote without a change-log entry, such as the owner member created by `homesync:setup`. Snapshot rows are applied like pulled rows, in one transaction, with this device's pending outbox ops laid over them.
+
 ### 5.4 Version check
 
 Every request sends header `X-HomeSync-Protocol: 1`. If the server no longer supports it, it responds `426 Upgrade Required` with `{ "min_protocol": 2 }`. The app pauses sync and shows "Update the app"; local data is untouched.

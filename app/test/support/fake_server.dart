@@ -43,6 +43,14 @@ class FakeSyncServer {
     return PushResponse(serverTimeMs: timeMs, results: results);
   }
 
+  BootstrapResponse bootstrap() => BootstrapResponse(
+    serverTimeMs: timeMs,
+    entities: {
+      for (final e in rows.entries) e.key: [for (final r in e.value.values) Map.of(r)],
+    },
+    cursor: log.length,
+  );
+
   PullResponse pull(int cursor, int limit) {
     final page = log.where((c) => c.seq > cursor).take(limit + 1).toList();
     final hasMore = page.length > limit;
@@ -303,5 +311,14 @@ class FakeSyncApi implements SyncApi {
   Future<PullResponse> pull(int cursor, int limit) async {
     _check();
     return server.pull(cursor, limit);
+  }
+
+  int bootstrapCalls = 0;
+
+  @override
+  Future<BootstrapResponse> bootstrap() async {
+    _check();
+    bootstrapCalls++;
+    return server.bootstrap();
   }
 }

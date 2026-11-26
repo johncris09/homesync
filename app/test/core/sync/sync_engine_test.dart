@@ -47,6 +47,9 @@ class RacingApi implements SyncApi {
     if (hook != null) await hook();
     return inner.pull(cursor, limit);
   }
+
+  @override
+  Future<BootstrapResponse> bootstrap() => inner.bootstrap();
 }
 
 void main() {
@@ -140,16 +143,68 @@ void main() {
   });
 
   test('pull walks every page and stores the cursor', () async {
+    await a.w.insert('grocery_items', {'name': 'First'});
+    await a.engine.sync();
+    final paged = Device(server, member: memberB, device: deviceB, pullPageSize: 2);
+    await paged.engine.sync(); // bootstrap, cursor 1
     for (var i = 0; i < 5; i++) {
       await a.w.insert('grocery_items', {'name': 'Item $i'});
     }
     await a.engine.sync();
-    final paged = Device(server, member: memberB, device: deviceB, pullPageSize: 2);
     final report = await paged.engine.sync();
     expect(report.pulled, 5);
-    expect((await paged.db.select(paged.db.groceryItems).get()).length, 5);
-    expect(await SyncStateStore(paged.db).cursor(), 5);
+    expect(paged.api.bootstrapCalls, 1);
+    expect((await paged.db.select(paged.db.groceryItems).get()).length, 6);
+    expect(await SyncStateStore(paged.db).cursor(), 6);
     await paged.db.close();
+  });
+
+  test('a new device starts from a snapshot, including rows the hub made itself', () async {
+    // The owner row from `homesync:setup` is in the table but not the log.
+    server.rows['members'] = {
+      memberA: {
+        'id': memberA,
+        'household_id': householdId,
+        'name': 'Mama',
+        'role': 'owner',
+        'user_id': 1,
+        'created_at': '2026-11-26T00:00:00.000Z',
+        'updated_at': '2026-11-26T00:00:00.000Z',
+        'deleted_at': null,
+        'hlc': null,
+        'server_version': null,
+        'updated_by': null,
+        'device_id': null,
+      },
+    };
+    final id = await a.w.insert('grocery_items', {'name': 'Rice'});
+    await a.engine.sync();
+
+    final report = await b.engine.sync();
+    expect(b.api.bootstrapCalls, 1);
+    expect(report.pulled, 2);
+    final members = await b.db.select(b.db.members).get();
+    expect(members.single.name, 'Mama');
+    expect(members.single.role, 'owner');
+    expect((await grocery(b, id)).name, 'Rice');
+    expect(await SyncStateStore(b.db).cursor(), 1);
+
+    await b.engine.sync();
+    expect(b.api.bootstrapCalls, 1, reason: 'later syncs pull from the cursor');
+  });
+
+  test('a snapshot keeps rows recorded on this device before the first sync', () async {
+    final theirs = await a.w.insert('grocery_items', {'name': 'Rice'});
+    await a.engine.sync();
+    b.api.offline = true;
+    final mine = await b.w.insert('grocery_items', {'name': 'Eggs'});
+    await expectLater(b.engine.sync(), throwsA(isA<SyncUnavailable>()));
+    b.api.offline = false;
+    await b.engine.sync();
+    expect((await grocery(b, theirs)).name, 'Rice');
+    expect((await grocery(b, mine)).name, 'Eggs');
+    await a.engine.sync();
+    expect((await grocery(a, mine)).name, 'Eggs');
   });
 
   test('a local edit made during a sync survives the pull', () async {

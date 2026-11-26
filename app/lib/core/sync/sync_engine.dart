@@ -145,6 +145,26 @@ class SyncEngine {
   Future<int> _pull() async {
     var pulled = 0;
     var cursor = await _state.cursor();
+    // Cursor 0: a new device, or a hub whose change log was empty last time.
+    // Rows the hub made itself (the owner from `homesync:setup`) are not in
+    // the change log, so start from a snapshot (§5.3).
+    if (cursor == 0) {
+      final snap = await api.bootstrap();
+      await db.transaction(() async {
+        for (final MapEntry(key: entity, value: rows) in snap.entities.entries) {
+          for (final row in rows) {
+            final id = row['id'];
+            if (id is! String) continue;
+            await _applyRemote(PulledChange(seq: 0, entity: entity, entityId: id, op: 'upsert', row: row));
+            pulled++;
+          }
+        }
+        clock.observeServerTime(snap.serverTimeMs);
+        await _state.saveClock(clock);
+        await _state.setCursor(snap.cursor);
+      });
+      cursor = snap.cursor;
+    }
     while (true) {
       final page = await api.pull(cursor, pullPageSize);
       await db.transaction(() async {
