@@ -219,7 +219,8 @@ class DebtSheet extends ConsumerWidget {
           Text(
             [
               if (d.nextDueOn != null) dueText(l10n, locale, d.nextDueOn, repo.today),
-              if (d.installmentMinor != null) l10n.debtInstallmentLine(formatPeso(d.installmentMinor!, locale: locale)),
+              if (d.installmentMinor != null)
+                l10n.debtInstallmentLine(formatPeso(d.installmentMinor!, locale: locale, whole: true)),
             ].join(' · '),
           ),
         ],
