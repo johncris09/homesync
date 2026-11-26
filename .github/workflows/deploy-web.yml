@@ -1,0 +1,44 @@
+# Builds the web app and deploys it to Cloudflare Pages when main changes.
+# Needs (repo Settings > Secrets and variables > Actions, environment
+# "production"): secrets CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID;
+# variables API_BASE_URL, CLOUDFLARE_PAGES_PROJECT. See docs/deploy.md.
+name: Deploy web (Cloudflare Pages)
+
+on:
+  push:
+    branches: [main]
+    paths: ['app/**', '.github/workflows/deploy-web.yml']
+  workflow_dispatch:
+
+concurrency: deploy-web
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - name: Check settings
+        env:
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+          PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT }}
+        working-directory: .
+        run: |
+          case "$API_BASE_URL" in https://*) ;; *) echo "::error::Set the API_BASE_URL variable to the hub's https:// address"; exit 1;; esac
+          [ -n "$PROJECT" ] || { echo "::error::Set the CLOUDFLARE_PAGES_PROJECT variable"; exit 1; }
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.1'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build web --release --dart-define=API_BASE_URL=${{ vars.API_BASE_URL }}
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy app/build/web --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=main --commit-dirty=true

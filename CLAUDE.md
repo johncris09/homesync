@@ -62,6 +62,7 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Phase 1: Bills & Subscriptions | Done — `feature/bills`: bills (one row per due date, monthly series, pay with the actual amount, undo by the payer), subscriptions (monthly/yearly, pay moves the date on); payments post to the ledger (`source_type` `bill`/`subscription`) with derived ids; adults only; 153 app tests, 35 API tests |
 | Phase 1: Chores | Done — `feature/chores`: chores (daily, weekly on a day, once on a date; assigned or anyone; adults manage), today's list + coming up, tick off by whoever did it (`chore_completions`, append-only; undo by the doer); everyone but viewers ticks; 162 app tests, 36 API tests |
 | Phase 1: Calendar | Done — `feature/calendar`: events (all day or timed; once, weekly, monthly, yearly), month view with dots, the picked day and coming up; adults also see bills and subscriptions due; everyone but viewers adds, non-adults change only their own; 172 app tests, 37 API tests |
+| Deployment | Ready — `feature/deploy`: CI, Hostinger and Cloudflare Pages workflows, CORS by origin, scheduler, `docs/deploy.md`; hosting accounts and GitHub secrets still to be set up by the owner |
 
 ### Phase 0 app notes (`feature/app-sync-core`)
 
@@ -96,6 +97,9 @@ Grounded in a Filipino home, not a generic app kit. One family: **Bricolage Grot
 Each module screen opens with a solid colour header holding one large figure (e.g. "₱11,550 left") and a one-line caption. Sentence-case section headings (no all-caps labels), round icons, cards `#FBFCF8` radius 18, no borders. No woven/checkered band (removed by the owner).
 
 ## Hosting constraints
+
+Setup and deploys: `docs/deploy.md` (GitHub Actions deploy both parts on push to `main`; CI runs tests on PRs).
+
 
 - API on **Hostinger shared hosting**: no long-running workers. One cron entry runs `php artisan schedule:run` every minute; the database queue is drained with `queue:work --stop-when-empty`. `exec()` may be disabled — don't rely on `storage:link` or `mysqldump`.
 - Web app on **Cloudflare Pages**, built in GitHub Actions (`flutter build web` + `wrangler pages deploy`). Needs `_redirects` and `_headers` (COOP/COEP) in `app/web/`. API CORS allows only the Pages origin; auth is bearer tokens, never cookies.
