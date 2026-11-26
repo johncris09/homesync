@@ -116,10 +116,29 @@ class AuthService extends ChangeNotifier {
   static String _tokenKey(String deviceId) => 'token:$deviceId';
   static String _profileDeviceKey(String memberId) => 'profile_device:$memberId';
   static const _profileDevicesKey = 'profile_devices';
+  static const _tabletPinKey = 'tablet_main_pin_hash';
 
   Session? _session;
   Session? get session => _session;
   bool get signedIn => _session != null;
+
+  String? _tabletPinHash;
+
+  /// Shared tablet whose setup person hasn't chosen the PIN that switches
+  /// back to them. Only asked while they are the active profile.
+  bool get needsTabletPin {
+    final s = _session;
+    return s != null && s.isShared && s.active.memberId == s.main.memberId && _tabletPinHash == null;
+  }
+
+  /// Stores the setup person's tablet PIN on this install (bcrypt). Kept
+  /// locally so it works for any role and before members have synced.
+  Future<void> setTabletPin(String pin) async {
+    final hash = hashPin(pin);
+    await store.write(_tabletPinKey, hash);
+    _tabletPinHash = hash;
+    notifyListeners();
+  }
 
   /// PINs typed while offline, kept in memory only, to fetch the profile's
   /// token once the hub is reachable.
@@ -137,6 +156,7 @@ class AuthService extends ChangeNotifier {
   Future<Session?> restore() async {
     final raw = await store.read(_sessionKey);
     _session = raw == null ? null : Session.fromJson((jsonDecode(raw) as Map).cast());
+    _tabletPinHash = await store.read(_tabletPinKey);
     notifyListeners();
     return _session;
   }
@@ -160,6 +180,8 @@ class AuthService extends ChangeNotifier {
       isShared: isShared,
     );
     await store.write(_tokenKey(r.deviceId), r.token);
+    await store.delete(_tabletPinKey);
+    _tabletPinHash = null;
     final me = Profile(memberId: r.memberId, name: r.memberName, role: r.role, color: r.color, deviceId: r.deviceId);
     await _save(Session(
       householdId: r.householdId,
@@ -172,20 +194,24 @@ class AuthService extends ChangeNotifier {
   }
 
   /// Switches the shared tablet to [member]'s profile after checking the PIN
-  /// against the synced `pin_hash`, offline. Throws [InvalidCredentials].
+  /// against the synced `pin_hash` (or, for the setup person, the tablet
+  /// PIN kept on this install), offline. Throws [InvalidCredentials].
   Future<Session> switchProfile(Member member, String pin) async {
     final s = _session;
     if (s == null || !s.isShared) throw StateError('PIN profiles need the shared tablet');
     final blocked = pinLimiter.blockedUntil;
     if (blocked != null) throw TooManyPinAttempts(blocked);
-    if (member.deletedAt != null || !await verifyPin(pin, member.pinHash)) {
+    final isMain = member.id == s.main.memberId;
+    final ok = member.deletedAt == null &&
+        (await verifyPin(pin, member.pinHash) || (isMain && await verifyPin(pin, _tabletPinHash)));
+    if (!ok) {
       pinLimiter.failure();
       throw const InvalidCredentials('That PIN is not right.');
     }
     pinLimiter.success();
 
     final Profile profile;
-    if (member.id == s.main.memberId) {
+    if (isMain) {
       profile = s.main;
     } else {
       var deviceId = await store.read(_profileDeviceKey(member.id));
@@ -241,6 +267,8 @@ class AuthService extends ChangeNotifier {
       await store.delete(_tokenKey(id));
     }
     _pendingPins.clear();
+    await store.delete(_tabletPinKey);
+    _tabletPinHash = null;
     await store.delete(_sessionKey);
     _session = null;
     notifyListeners();

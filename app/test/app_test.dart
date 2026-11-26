@@ -71,9 +71,47 @@ void main() {
   testWidgets('shared tablet: offers switching person', (tester) async {
     final store = MemorySecureStore();
     signedIn(store, shared: true);
+    store.values['tablet_main_pin_hash'] = hashPin('2468');
     final s = await tester.runAsync(() => services(store));
     await pumpApp(tester, s!);
     expect(find.text('Switch person'), findsOneWidget);
+    await finish(tester, s);
+  });
+
+  testWidgets('new shared tablet: the setup person chooses their tablet PIN first', (tester) async {
+    final store = MemorySecureStore();
+    signedIn(store, shared: true);
+    final s = await tester.runAsync(() async {
+      final s = await services(store);
+      await s.writer.insert('members', {'name': 'Mama', 'role': 'owner'}, id: me.memberId);
+      return s;
+    });
+    await pumpApp(tester, s!);
+    expect(find.text('Your tablet PIN'), findsOneWidget);
+    expect(find.text('Hi, Mama'), findsNothing);
+
+    Future<void> enter(String pin) async {
+      for (final d in pin.split('')) {
+        await tester.tap(find.text(d).last);
+        await tester.pump();
+      }
+      await tester.pumpAndSettle();
+    }
+
+    await enter('2468');
+    expect(find.text('Enter the PIN again'), findsOneWidget);
+    await enter('2469');
+    expect(find.text("The PINs don't match."), findsOneWidget);
+    await enter('2468');
+    await enter('2468');
+    // Wait out the bcrypt work done off the fake clock.
+    await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hi, Mama'), findsOneWidget);
+    expect(store.values['tablet_main_pin_hash'], startsWith(r'$2y$10$'));
+    final row = await tester.runAsync(() => rawRow(s.db, 'members', me.memberId));
+    expect(row!['pin_hash'], startsWith(r'$2y$10$'), reason: "the owner's PIN also syncs");
     await finish(tester, s);
   });
 

@@ -9,6 +9,7 @@ import '../../core/auth/pin_hash.dart';
 import '../../core/db/database.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/pin_pad.dart';
+import '../members/members_screen.dart' show memberColor;
 
 /// Shared tablet: pick who is using it, then enter that person's PIN.
 class ProfilePickerScreen extends ConsumerWidget {
@@ -18,7 +19,10 @@ class ProfilePickerScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final members = ref.watch(membersProvider).value ?? const [];
-    final active = ref.watch(authProvider).session?.active.memberId;
+    final session = ref.watch(authProvider).session;
+    final active = session?.active.memberId;
+    // The setup person always has the tablet PIN kept on this install.
+    bool canPick(Member m) => m.pinHash != null || m.id == session?.main.memberId;
 
     return Scaffold(
       body: ListView(
@@ -37,11 +41,15 @@ class ProfilePickerScreen extends ConsumerWidget {
                 children: [
                   for (final m in members)
                     ListTile(
-                      leading: CircleAvatar(child: Text(m.name.characters.first)),
+                      leading: CircleAvatar(
+                        backgroundColor: memberColor(m.color),
+                        foregroundColor: Colors.white,
+                        child: Text(m.name.isEmpty ? '?' : m.name.characters.first.toUpperCase()),
+                      ),
                       title: Text(m.name),
-                      subtitle: m.pinHash == null ? Text(l10n.profileNoPin) : null,
+                      subtitle: canPick(m) ? null : Text(l10n.profileNoPin),
                       trailing: m.id == active ? const Icon(Icons.check_circle, color: HomeColors.dahon) : null,
-                      enabled: m.pinHash != null,
+                      enabled: canPick(m),
                       onTap: () => _enterPin(context, ref, m),
                     ),
                 ],

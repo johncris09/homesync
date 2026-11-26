@@ -17,10 +17,17 @@ class FakeAuthApi implements AuthApi {
   final loggedOut = <String>[];
   final pins = <String, String>{kid: '4821', owner: '1111'};
 
-  AuthResult _result(String token, String deviceId, String memberId, String name, String role) => AuthResult(
+  AuthResult _result(
+    String token,
+    String deviceId,
+    String memberId,
+    String name,
+    String role, {
+    bool isShared = true,
+  }) => AuthResult(
     token: token,
     deviceId: deviceId,
-    isShared: true,
+    isShared: isShared,
     memberId: memberId,
     memberName: name,
     role: role,
@@ -39,7 +46,7 @@ class FakeAuthApi implements AuthApi {
   }) async {
     if (!online) throw const SyncUnavailable('offline');
     if (password != 'secret') throw const InvalidCredentials('Email or password is incorrect.');
-    return _result('tablet-token', deviceId, owner, 'Mama', 'owner');
+    return _result('tablet-token', deviceId, owner, 'Mama', 'owner', isShared: isShared);
   }
 
   @override
@@ -83,8 +90,13 @@ void main() {
     auth = AuthService(store: store, api: api);
   });
 
-  Future<void> signInTablet() =>
-      auth.signIn(email: 'mama@example.com', password: 'secret', deviceName: 'Tablet', platform: 'android', isShared: true);
+  Future<void> signInTablet() => auth.signIn(
+    email: 'mama@example.com',
+    password: 'secret',
+    deviceName: 'Tablet',
+    platform: 'android',
+    isShared: true,
+  );
 
   group('pin hashing', () {
     test('hashes in the \$2y\$ form and verifies', () async {
@@ -189,6 +201,44 @@ void main() {
       }
       await expectLater(auth.switchProfile(k, '4821'), throwsA(isA<TooManyPinAttempts>()));
       expect(auth.session!.active.memberId, owner);
+    });
+
+    test('tablet asks the setup person for a PIN, only while they are active', () async {
+      await signInTablet();
+      expect(auth.needsTabletPin, isTrue);
+      await auth.setTabletPin('2468');
+      expect(auth.needsTabletPin, isFalse);
+      expect(store.values['tablet_main_pin_hash'], startsWith(r'$2y$10$'));
+
+      final again = AuthService(store: store, api: api);
+      await again.restore();
+      expect(again.needsTabletPin, isFalse, reason: 'kept across launches');
+
+      await auth.signOut();
+      expect(store.values.containsKey('tablet_main_pin_hash'), isFalse);
+      expect(auth.needsTabletPin, isFalse, reason: 'signed out');
+    });
+
+    test('a phone (not shared) never asks for a tablet PIN', () async {
+      await auth.signIn(email: 'mama@example.com', password: 'secret', deviceName: 'Phone', platform: 'android');
+      expect(auth.needsTabletPin, isFalse);
+    });
+
+    test('the setup person switches back with the tablet PIN even without a synced one', () async {
+      await signInTablet();
+      await auth.setTabletPin('2468');
+      await auth.switchProfile(member(kid, 'Kid', 'child', '4821'), '4821');
+      expect(auth.needsTabletPin, isFalse, reason: 'never asked while someone else is active');
+      final mama = member(owner, 'Mama', 'owner', null);
+      await expectLater(auth.switchProfile(mama, '1111'), throwsA(isA<InvalidCredentials>()));
+      final s = await auth.switchProfile(mama, '2468');
+      expect(s.active.memberId, owner);
+      expect(s.active.deviceId, s.main.deviceId);
+      await expectLater(
+        auth.switchProfile(member(kid, 'Kid', 'child', null), '2468'),
+        throwsA(isA<InvalidCredentials>()),
+        reason: 'the tablet PIN only opens the setup person',
+      );
     });
 
     test('PIN profiles need a signed-in shared tablet', () async {

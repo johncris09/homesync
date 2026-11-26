@@ -23,6 +23,8 @@
 
   "profilesTitle": "Who's using the tablet?",
   "profileNoPin": "No PIN yet. Ask the owner to set one.",
+  "tabletPinTitle": "Your tablet PIN",
+  "tabletPinCaption": "Choose a 4-digit PIN to switch back to yourself on this tablet.",
   "enterPinFor": "PIN for {name}",
   "@enterPinFor": {"placeholders": {"name": {"type": "String"}}},
 

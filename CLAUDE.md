@@ -50,8 +50,8 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Plan, design, decisions | Done |
 | Repo scaffold (Flutter + Laravel generated) | Done — `feature/repo-scaffold` |
 | API sync engine: push/pull/bootstrap, all conflict rules, device tokens, email + PIN login, protocol check, setup command, 28 tests | Done — `feature/sync-core` |
-| **App sync engine** (steps 1–9) | Done — `feature/app-sync-core`: Drift DB (sqlite3mc), HLC, outbox (per-profile), sync engine, triggers + WorkManager, email/PIN-profile auth, app lock, synced conflicts + Conflict Inbox, sync status UI, owner Household members screen (add/edit/remove, set tablet PIN), bootstrap snapshot on first sync; 103 app tests, 30 API tests |
-| Phase 0 leftovers | **Next**: test against a real hub (setup → sign in → add members/PINs → tablet profiles → two-device sync) |
+| **App sync engine** (steps 1–9) | Done — `feature/app-sync-core`: Drift DB (sqlite3mc), HLC, outbox (per-profile), sync engine, triggers + WorkManager, email/PIN-profile auth, app lock, synced conflicts + Conflict Inbox, sync status UI, owner Household members screen (add/edit/remove, set tablet PIN), bootstrap snapshot on first sync, tablet PIN for the setup person; 107 app tests, 30 API tests |
+| Phase 0 real-hub test | Done on web against a local hub (setup → sign in → members/PINs → tablet profiles → two-device sync). **Next**: same on a real Android device, then merge to `develop` |
 | Phase 1 modules (Budget, Bills & Subscriptions, Chores, Calendar, Pantry & Grocery) | Not started |
 
 ### Phase 0 app notes (`feature/app-sync-core`)
@@ -60,6 +60,8 @@ The UI reads and writes only the local Drift database. Every local write updates
 - Show `SyncMarker(entity:, id:)` next to records in module lists (pending / needs review).
 - Shared tablet: each PIN profile is its own device + token; outbox ops carry `member_id`/`device_id` and push with that token; the tablet pulls with the account that set it up. Limit what each profile sees by `session.active.role` in module screens.
 - `pin_hash` is written by the app with `hashPin()` (bcrypt `$2y$`, cost 10) when the owner sets a member's PIN.
+- Shared tablet: the setup person picks a tablet PIN right after sign-in (`TabletPinScreen`, router guard `auth.needsTabletPin`); kept on the device as `tablet_main_pin_hash`, and synced as the owner's `pin_hash` when they are the owner.
+- New installs bootstrap from `/sync/bootstrap` while the cursor is 0.
 - Widget tests that use Drift streams must end with `finish(tester, services)` (see `test/app_test.dart`), or a pending timer fails the test.
 - `app/web/sqlite3.wasm` and `drift_worker.js` come from the `drift-2.34.4` GitHub release; replace both together whenever `drift` is upgraded. Web storage runs on OPFS when served with the `_headers` COOP/COEP.
 - Font: Bricolage Grotesque variable font in `app/assets/fonts/` (OFL, licence registered at startup). Use `fontVariations` (`FontVariation.weight` / `.width(75)` for big figures), not just `fontWeight`.

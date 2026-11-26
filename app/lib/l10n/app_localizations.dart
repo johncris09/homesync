@@ -208,6 +208,18 @@ abstract class AppLocalizations {
   /// **'No PIN yet. Ask the owner to set one.'**
   String get profileNoPin;
 
+  /// No description provided for @tabletPinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your tablet PIN'**
+  String get tabletPinTitle;
+
+  /// No description provided for @tabletPinCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a 4-digit PIN to switch back to yourself on this tablet.'**
+  String get tabletPinCaption;
+
   /// No description provided for @enterPinFor.
   ///
   /// In en, this message translates to:

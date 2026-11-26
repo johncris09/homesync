@@ -70,6 +70,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileNoPin => 'No PIN yet. Ask the owner to set one.';
 
   @override
+  String get tabletPinTitle => 'Your tablet PIN';
+
+  @override
+  String get tabletPinCaption =>
+      'Choose a 4-digit PIN to switch back to yourself on this tablet.';
+
+  @override
   String enterPinFor(String name) {
     return 'PIN for $name';
   }
