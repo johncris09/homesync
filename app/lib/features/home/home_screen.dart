@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../app/providers.dart';
 import '../../app/router.dart';
 import '../../app/theme.dart';
+import '../../core/app_version.dart';
 import '../../core/auth/pin_hash.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/pin_pad.dart';
@@ -29,6 +30,7 @@ class HomeScreen extends ConsumerWidget {
     final lock = ref.watch(appLockProvider);
     final conflicts = ref.watch(openConflictsProvider).value?.length ?? 0;
     final errors = ref.watch(syncErrorsProvider).value?.length ?? 0;
+    final hub = ref.watch(hubVersionProvider).value;
     final adult = session.active.isAdult;
     final toBuy = ref.watch(toBuyProvider).value?.length ?? 0;
     final low = ref.watch(pantryItemsProvider).value?.where(isLow).length ?? 0;
@@ -192,6 +194,12 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 24),
                 Text(l10n.modulesComingSoon, style: Theme.of(context).textTheme.bodyMedium),
+                const SizedBox(height: 8),
+                Text(
+                  hub == null ? l10n.versionLineNoHub(appVersion) : l10n.versionLine(appVersion, hub),
+                  key: const Key('version-line'),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ],
             ),
           ),

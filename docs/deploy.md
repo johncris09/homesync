@@ -2,11 +2,12 @@
 
 | Part | Where | How it updates |
 | --- | --- | --- |
-| Sync hub (`api/`) | Hostinger shared hosting, e.g. `https://api.example.com` | `.github/workflows/deploy-api.yml` on every push to `main` that touches `api/` |
-| Web app (`app/`) | Cloudflare Pages, e.g. `https://homesync.pages.dev` | `.github/workflows/deploy-web.yml` on every push to `main` that touches `app/` |
+| Sync hub (`api/`) | Hostinger shared hosting, e.g. `https://api.example.com` | `.github/workflows/release.yml` when a version tag such as `v1.0.0` is pushed on `main` |
+| Web app (`app/`) | Cloudflare Pages, e.g. `https://homesync.pages.dev` | Same release, after the hub |
+| Android app | GitHub Releases (signed APK) | Same release, after the hub |
 | Tests | GitHub Actions | `.github/workflows/ci.yml` on every pull request and push to `develop` |
 
-Both deploy workflows run the tests first and use the GitHub environment **production**. Each can also be run by hand from the Actions tab (**Run workflow**).
+A release ships the whole system with one version (section 5). Each part runs its tests first and uses the GitHub environment **production**. Merging to `main` alone deploys nothing.
 
 Everything below is done once. Keep passwords, keys and tokens in hPanel, Cloudflare and GitHub secrets only. Never commit them.
 
@@ -38,7 +39,7 @@ You need a plan with **SSH access** (Premium or higher). PHP 8.2 or newer.
      rm -rf ~/domains/api.example.com/public_html
      ln -s ~/homesync-api/public ~/domains/api.example.com/public_html
      ```
-7. **First upload.** Set up GitHub (section 3), then run **Deploy API (Hostinger)** from the Actions tab. It uploads the code. It fails at the migrate step because there is no `.env` yet; that is expected.
+7. **First upload.** Set up GitHub (section 3), then make the first release (section 5). The hub job uploads the code and fails at the migrate step because there is no `.env` yet; that is expected. After step 8, rerun the release from the Actions tab (**Release > Run workflow**, on the tag).
 8. **Server `.env`.** Over SSH:
    ```sh
    cd ~/homesync-api
@@ -59,7 +60,7 @@ You need a plan with **SSH access** (Premium or higher). PHP 8.2 or newer.
    Use the same PHP path as above. The scheduler drains the queue each minute (`routes/console.php`); nothing needs to run all the time.
 10. **Check.** Open `https://api.example.com/up`. It should say the application is up.
 
-Later deploys put the hub in maintenance mode (devices retry), upload the code (leaving `.env` and `storage/` alone), migrate, cache and bring it back up.
+Later releases put the hub in maintenance mode (devices retry), upload the code (leaving `.env` and `storage/` alone), migrate, cache and bring it back up.
 
 ## 2. Cloudflare Pages: the web app
 
@@ -86,6 +87,9 @@ Go to **Settings > Environments > New environment** and create `production`. You
 | Secret | `CLOUDFLARE_ACCOUNT_ID` | Account ID from section 2 |
 | Variable | `CLOUDFLARE_PAGES_PROJECT` | Pages project name, e.g. `homesync` |
 | Variable | `API_BASE_URL` | The hub address, e.g. `https://api.example.com` |
+| Secret | `ANDROID_KEYSTORE_BASE64` | The signing key file, base64 (section 4) |
+| Secret | `ANDROID_KEYSTORE_PASSWORD` | The signing key's password (section 4) |
+| Variable | `ANDROID_KEY_ALIAS` | Optional: key alias if not `upload` |
 
 The web build stops if `API_BASE_URL` is missing or not `https://`.
 
@@ -112,13 +116,59 @@ Android only installs an update signed with the same key as the installed app. I
 
 Without `key.properties` the build falls back to the debug key. Such APKs can't update ones signed with the release key.
 
-### Build
+### Releases on GitHub
+
+Each release (section 5) builds a signed APK in GitHub Actions and publishes it as a GitHub Release (`homesync-1.2.3.apk`), with notes listing the merged pull requests. Share the release page with the family.
+
+Once, give GitHub the signing key (from `E:\homesync`, with the GitHub CLI signed in):
+
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("$HOME\.android\homesync-upload.jks")) | gh secret set ANDROID_KEYSTORE_BASE64
+```
+```powershell
+gh secret set ANDROID_KEYSTORE_PASSWORD
+```
+
+The second command asks for the password, so it stays out of your shell history.
+
+The release stops before publishing if a secret is missing or the APK came out signed with the debug key.
+
+### Build on this PC
 
 ```powershell
 flutter build apk --release --dart-define=API_BASE_URL=https://api.example.com
 ```
 
-The APK is `app/build/app/outputs/flutter-apk/app-release.apk`. A phone with an APK signed by a different key (e.g. an earlier debug-key build) must uninstall it first; sync before uninstalling.
+The APK is `app/build/app/outputs/flutter-apk/app-release.apk`. It shows "Version dev" and has the build number in `pubspec.yaml` (`1`), lower than any release, so it can't update a phone that has a release installed; use it only for testing. A phone with an APK signed by a different key (e.g. an earlier debug-key build) must uninstall it first; sync before uninstalling.
+
+## 5. Releases
+
+One version for the whole system, `MAJOR.MINOR.PATCH`: raise PATCH for fixes, MINOR for new features, MAJOR for big changes.
+
+1. Merge `develop` into `main` (release pull request).
+2. Tag `main` with the next version and push the tag:
+   ```powershell
+   git fetch origin; git tag v1.0.0 origin/main; git push origin v1.0.0
+   ```
+3. **Release** in the Actions tab runs:
+   - **version**: checks the tag and that it is on `main`.
+   - **hub**: tests, uploads to Hostinger with the version in `api/VERSION`, migrates.
+   - then, only if the hub succeeded, **web** (tests, build, Cloudflare Pages) and **android** (tests, signed APK, GitHub Release), side by side.
+
+What carries the version:
+
+| Where | Shows |
+| --- | --- |
+| Home screen, at the bottom (web and Android) | `Version 1.2.3 · hub 1.2.3`: this app's version and the hub version it last heard from |
+| Hub | Header `X-HomeSync-Version` on every API response (`config('homesync.version')`) |
+| Android app info | versionName `1.2.3`, versionCode `10203` |
+| GitHub | Tag `v1.2.3` and the release page |
+
+The build number is worked out from the version (`1.2.3` is `10203`), so each release must have a higher version than the last, and MINOR and PATCH stay below 100.
+
+The **sync protocol version** (`protocol` in `api/config/homesync.php`, `syncProtocolVersion` in the app) is separate: it changes only when older apps can no longer sync with the new hub (`docs/sync-protocol.md` §5.4).
+
+To redeploy a release (for example after fixing a secret), open **Actions > Release > Run workflow** and pick its tag. The APK on an existing release is replaced.
 
 ## Not covered yet
 

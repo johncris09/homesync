@@ -1803,6 +1803,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Added by {name}'**
   String eventAddedBy(String name);
+
+  /// No description provided for @versionLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {app} · hub {hub}'**
+  String versionLine(String app, String hub);
+
+  /// No description provided for @versionLineNoHub.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {app}'**
+  String versionLineNoHub(String app);
 }
 
 class _AppLocalizationsDelegate

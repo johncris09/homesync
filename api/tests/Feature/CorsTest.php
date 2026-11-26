@@ -17,6 +17,8 @@ class CorsTest extends TestCase
 
         $preflight('https://homesync.pages.dev')
             ->assertHeader('Access-Control-Allow-Origin', 'https://homesync.pages.dev');
+        $this->call('GET', '/api/sync/pull', server: ['HTTP_ORIGIN' => 'https://homesync.pages.dev'])
+            ->assertHeader('Access-Control-Expose-Headers', 'X-HomeSync-Version');
         // Another origin never gets itself back, so the browser blocks it.
         $this->assertNotSame('https://evil.example', $preflight('https://evil.example')->headers->get('Access-Control-Allow-Origin'));
     }

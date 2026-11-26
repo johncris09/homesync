@@ -16,7 +16,7 @@ return [
     'allowed_origins' => $origins,
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
-    'exposed_headers' => [],
+    'exposed_headers' => ['X-HomeSync-Version'],
     'max_age' => 86400,
     'supports_credentials' => false,
 ];

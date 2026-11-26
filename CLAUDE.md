@@ -62,7 +62,8 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Phase 1: Bills & Subscriptions | Done — `feature/bills`: bills (one row per due date, monthly series, pay with the actual amount, undo by the payer), subscriptions (monthly/yearly, pay moves the date on); payments post to the ledger (`source_type` `bill`/`subscription`) with derived ids; adults only; 153 app tests, 35 API tests |
 | Phase 1: Chores | Done — `feature/chores`: chores (daily, weekly on a day, once on a date; assigned or anyone; adults manage), today's list + coming up, tick off by whoever did it (`chore_completions`, append-only; undo by the doer); everyone but viewers ticks; 162 app tests, 36 API tests |
 | Phase 1: Calendar | Done — `feature/calendar`: events (all day or timed; once, weekly, monthly, yearly), month view with dots, the picked day and coming up; adults also see bills and subscriptions due; everyone but viewers adds, non-adults change only their own; 172 app tests, 37 API tests |
-| Deployment | Ready — `feature/deploy`: CI, Hostinger and Cloudflare Pages workflows, CORS by origin, scheduler, `docs/deploy.md`; hosting accounts and GitHub secrets still to be set up by the owner |
+| Deployment | Ready — `feature/deploy`: CI, Hostinger and Cloudflare Pages workflows, CORS by origin, scheduler, `docs/deploy.md`; live at Cloudflare Pages and Hostinger |
+| Releases | Ready — `feature/android-release`: one version for the whole system; a `v1.2.3` tag on `main` runs `release.yml` (hub, then web + signed APK on a GitHub Release); Home shows app and hub versions (`X-HomeSync-Version`); APKs signed with the upload key (`android/key.properties`) |
 
 ### Phase 0 app notes (`feature/app-sync-core`)
 
@@ -98,7 +99,7 @@ Each module screen opens with a solid colour header holding one large figure (e.
 
 ## Hosting constraints
 
-Setup and deploys: `docs/deploy.md` (GitHub Actions deploy both parts on push to `main`; CI runs tests on PRs).
+Setup and releases: `docs/deploy.md` (a version tag on `main` releases hub, web and APK together; merging alone deploys nothing; CI runs tests on PRs). Android and web only — no Windows or iOS app.
 
 
 - API on **Hostinger shared hosting**: no long-running workers. One cron entry runs `php artisan schedule:run` every minute; the database queue is drained with `queue:work --stop-when-empty`. `exec()` may be disabled — don't rely on `storage:link` or `mysqldump`.

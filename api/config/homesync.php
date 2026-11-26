@@ -23,6 +23,10 @@ return [
     'protocol' => 1,
     'min_protocol' => 1,
 
+    // Release version (e.g. "1.2.3"), written to the VERSION file by the
+    // release workflow; "dev" elsewhere. Sent as X-HomeSync-Version.
+    'version' => is_file(base_path('VERSION')) ? trim((string) file_get_contents(base_path('VERSION'))) : 'dev',
+
     'push_max_ops' => 200,
     'pull_max_limit' => 500,
 

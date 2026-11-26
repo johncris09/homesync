@@ -1,0 +1,216 @@
+# One release of the whole system, started by pushing a version tag (v1.2.3)
+# on main: the hub goes to Hostinger first, then the web app to Cloudflare
+# Pages and a signed APK to a GitHub Release, all stamped with that version.
+# To redeploy a release, run this workflow from the Actions tab on its tag.
+#
+# Needs (environment "production"):
+#   hub      secrets HOSTINGER_SSH_HOST, HOSTINGER_SSH_PORT, HOSTINGER_SSH_USER,
+#            HOSTINGER_SSH_KEY, HOSTINGER_KNOWN_HOSTS; variable HOSTINGER_APP_DIR
+#            (optional HOSTINGER_PHP). The server's .env is made once by hand.
+#   web      secrets CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID; variables
+#            API_BASE_URL, CLOUDFLARE_PAGES_PROJECT
+#   android  secrets ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD;
+#            variable API_BASE_URL (optional ANDROID_KEY_ALIAS)
+# See docs/deploy.md.
+name: Release
+
+on:
+  push:
+    tags: ['v*.*.*']
+  workflow_dispatch:
+
+concurrency: release
+
+permissions:
+  contents: write
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      build: ${{ steps.v.outputs.build }}
+    steps:
+      - id: v
+        name: Version from the tag
+        env:
+          TAG: ${{ github.ref_name }}
+          REF_TYPE: ${{ github.ref_type }}
+        run: |
+          [ "$REF_TYPE" = tag ] || { echo "::error::Run this on a version tag such as v1.2.3"; exit 1; }
+          [[ "$TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]?)\.(0|[1-9][0-9]?)$ ]] || { echo "::error::Tag must look like v1.2.3 (minor and patch below 100)"; exit 1; }
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+          # Android's versionCode must grow with every release: 1.2.3 -> 10203.
+          echo "build=$((BASH_REMATCH[1] * 10000 + BASH_REMATCH[2] * 100 + BASH_REMATCH[3]))" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Tag is on main
+        run: |
+          git fetch -q origin main
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main || { echo "::error::Tag a commit that is on main"; exit 1; }
+
+  hub:
+    needs: version
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        working-directory: api
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+      SSH_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+      SSH_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+      SSH_USER: ${{ secrets.HOSTINGER_SSH_USER }}
+      APP_DIR: ${{ vars.HOSTINGER_APP_DIR }}
+      PHP: ${{ vars.HOSTINGER_PHP || 'php' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_sqlite, sqlite3, bcmath, intl
+          tools: composer:v2
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: cp .env.example .env && php artisan key:generate && php artisan test
+      - name: Production dependencies only
+        run: |
+          rm .env
+          composer install --no-dev --no-interaction --prefer-dist --no-progress --optimize-autoloader
+          echo "$VERSION" > VERSION
+      - name: SSH key
+        env:
+          SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.HOSTINGER_KNOWN_HOSTS }}
+        run: |
+          [ -n "$APP_DIR" ] || { echo "::error::Set the HOSTINGER_APP_DIR variable"; exit 1; }
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+      - name: Maintenance mode
+        run: ssh -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "cd '$APP_DIR' && [ -f artisan ] && $PHP artisan down --retry=30 || true"
+      - name: Upload
+        run: |
+          rsync -az --delete -e "ssh -p $SSH_PORT" \
+            --exclude='/.env' --exclude='/storage/' --exclude='/bootstrap/cache/*.php' \
+            --exclude='/database/*.sqlite' --exclude='/tests/' --exclude='/node_modules/' \
+            ./ "$SSH_USER@$SSH_HOST:$APP_DIR/"
+      - name: Migrate and cache
+        run: |
+          ssh -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "cd '$APP_DIR' \
+            && mkdir -p storage/app/private storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
+            && $PHP artisan migrate --force \
+            && $PHP artisan optimize \
+            && $PHP artisan up"
+      - name: Remove SSH key
+        if: always()
+        run: rm -f ~/.ssh/id_ed25519
+
+  web:
+    needs: [version, hub]
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - name: Check settings
+        env:
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+          PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT }}
+        working-directory: .
+        run: |
+          case "$API_BASE_URL" in https://*) ;; *) echo "::error::Set the API_BASE_URL variable to the hub's https:// address"; exit 1;; esac
+          [ -n "$PROJECT" ] || { echo "::error::Set the CLOUDFLARE_PAGES_PROJECT variable"; exit 1; }
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.1'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter test
+      - name: Build
+        run: >-
+          flutter build web --release
+          --build-name=${{ needs.version.outputs.version }} --build-number=${{ needs.version.outputs.build }}
+          --dart-define=APP_VERSION=${{ needs.version.outputs.version }}
+          --dart-define=API_BASE_URL=${{ vars.API_BASE_URL }}
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy app/build/web --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=main --commit-dirty=true --commit-message="${{ github.ref_name }}"
+
+  android:
+    needs: [version, hub]
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        working-directory: app
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - name: Check settings
+        working-directory: .
+        env:
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          case "$API_BASE_URL" in https://*) ;; *) echo "::error::Set the API_BASE_URL variable to the hub's https:// address"; exit 1;; esac
+          [ -n "$KEYSTORE" ] || { echo "::error::Set the ANDROID_KEYSTORE_BASE64 secret"; exit 1; }
+          [ -n "$PASSWORD" ] || { echo "::error::Set the ANDROID_KEYSTORE_PASSWORD secret"; exit 1; }
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.1'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter test
+      - name: Signing key
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ALIAS: ${{ vars.ANDROID_KEY_ALIAS || 'upload' }}
+        run: |
+          printf '%s' "$KEYSTORE" | tr -d ' \r\n' | base64 -d > "$RUNNER_TEMP/upload.jks"
+          {
+            echo "storeFile=$RUNNER_TEMP/upload.jks"
+            echo "storePassword=$PASSWORD"
+            echo "keyAlias=$ALIAS"
+            echo "keyPassword=$PASSWORD"
+          } > android/key.properties
+      - name: Build APK
+        run: >-
+          flutter build apk --release
+          --build-name=$VERSION --build-number=${{ needs.version.outputs.build }}
+          --dart-define=APP_VERSION=$VERSION
+          --dart-define=API_BASE_URL=${{ vars.API_BASE_URL }}
+      - name: Check signature
+        run: |
+          apksigner=$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)apksigner
+          certs=$("$apksigner" verify --print-certs build/app/outputs/flutter-apk/app-release.apk)
+          echo "$certs" | grep -E 'DN:|SHA-256'
+          if echo "$certs" | grep -q 'CN=Android Debug'; then echo "::error::APK is signed with the debug key"; exit 1; fi
+      - name: Remove signing key
+        if: always()
+        run: rm -f android/key.properties "$RUNNER_TEMP/upload.jks"
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          cp build/app/outputs/flutter-apk/app-release.apk "homesync-$VERSION.apk"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "homesync-$VERSION.apk" --clobber
+          else
+            gh release create "$TAG" "homesync-$VERSION.apk" --title "HomeSync $VERSION" --generate-notes --verify-tag
+          fi

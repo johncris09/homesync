@@ -176,6 +176,8 @@ The app bootstraps whenever its stored cursor is 0 (new install, or the hub's ch
 
 Every request sends header `X-HomeSync-Protocol: 1`. If the server no longer supports it, it responds `426 Upgrade Required` with `{ "min_protocol": 2 }`. The app pauses sync and shows "Update the app"; local data is untouched.
 
+Every response under `/api` (the 426 too) carries `X-HomeSync-Version: 1.2.3`, the hub's release version (`dev` outside a release), exposed to the web app through CORS. The app keeps the last one it saw in `sync_state` (`hub_version`) and shows it next to its own version. It is for people, not compatibility: only the protocol number decides whether a device may sync.
+
 ---
 
 ## 6. Conflict rules
