@@ -11,6 +11,8 @@ import '../../shared/pin_pad.dart';
 import '../../shared/money.dart';
 import '../bills/bills_providers.dart';
 import '../budget/budget_providers.dart';
+import '../calendar/calendar_providers.dart';
+import '../calendar/calendar_screen.dart' show dayLabel;
 import '../chores/chores_providers.dart';
 import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
@@ -48,6 +50,15 @@ class HomeScreen extends ConsumerWidget {
         : !adult && chores.mineLeft > 0
         ? l10n.choresTileMine(chores.mineLeft)
         : l10n.choresTileLeft(chores.left);
+    final agenda = ref.watch(upcomingAgendaProvider);
+    final today = ref.watch(calendarRepoProvider).today;
+    final todays = agenda.on(today).length;
+    final nextDay = agenda.daysAfter(today).firstOrNull;
+    final calendarCaption = todays > 0
+        ? l10n.calendarTileToday(todays)
+        : nextDay != null
+        ? l10n.calendarTileNext(nextDay.$2.first.title, dayLabel(context, nextDay.$1, today))
+        : l10n.calendarTileNone;
 
     return Scaffold(
       body: ListView(
@@ -108,6 +119,17 @@ class HomeScreen extends ConsumerWidget {
                         subtitle: Text(choresCaption),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () => context.push(Routes.chores),
+                      ),
+                      ListTile(
+                        leading: const CircleAvatar(
+                          backgroundColor: HomeColors.ube,
+                          foregroundColor: Colors.white,
+                          child: Icon(Icons.event_outlined),
+                        ),
+                        title: Text(l10n.calendarModule),
+                        subtitle: Text(calendarCaption),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(Routes.calendar),
                       ),
                       ListTile(
                         leading: const CircleAvatar(

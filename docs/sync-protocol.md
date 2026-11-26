@@ -194,6 +194,8 @@ Applied by the server when an incoming op's field HLC is older than or concurren
 
 A chore has no done flag: it is done for a day when it has a `chore_completions` row for that day, so two people doing it offline both keep their completion.
 
+A calendar event (`events`) stores its first date (`starts_on`) and a `repeat` of `none`, `weekly`, `monthly` or `yearly`; devices work out the other dates (monthly and yearly keep the day, clamped to short months). Times are local `HH:MM` text (`start_time` null = all day). Editing or removing a repeating event changes every date. Events follow the default field-level rule.
+
 Tombstones are kept 90 days, then pruned by the nightly job.
 
 ### 6.1 Conflict records

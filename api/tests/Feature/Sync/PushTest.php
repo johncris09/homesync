@@ -246,6 +246,22 @@ class PushTest extends SyncTestCase
         $this->assertSame(1, DB::table('chore_completions')->count());
     }
 
+    public function test_everyone_but_viewers_adds_events_and_everyone_reads_them(): void
+    {
+        $child = $this->device('child');
+        $viewer = $this->device('viewer');
+        $id = (string) Str::uuid7();
+        $fields = ['title' => 'School play', 'starts_on' => '2026-12-04', 'start_time' => '15:00', 'repeat' => 'none', 'member_id' => $child->member_id, 'created_by' => $child->member_id];
+
+        $this->assertSame(['applied'], $this->statuses($this->push($child, [$this->op('events', $id, 'insert', $fields, $this->hlc(1))])));
+        $this->assertSame('forbidden', $this->push($viewer, [$this->op('events', (string) Str::uuid7(), 'insert', $fields, $this->hlc(2))])->json('results.0.error'));
+
+        $pulled = collect($this->pull($viewer)->assertOk()->json('changes'))->firstWhere('entity', 'events');
+        $this->assertSame($id, $pulled['entity_id']);
+        $this->assertSame('15:00', $pulled['row']['start_time']);
+        $this->assertSame('2026-12-04', $pulled['row']['starts_on']);
+    }
+
     public function test_conflicts_sync_to_adults_and_can_be_resolved(): void
     {
         $john = $this->device('owner');

@@ -117,6 +117,27 @@ class ChoreCompletions extends Table with SyncColumns {
   TextColumn get doneOn => text()();
 }
 
+/// A calendar event on a local date, all day or at a local time, repeating
+/// `weekly`, `monthly` or `yearly` from [startsOn] (`none` = once).
+@DataClassName('CalendarEvent')
+class Events extends Table with SyncColumns {
+  TextColumn get title => text()();
+
+  /// Calendar date `YYYY-MM-DD` (the first occurrence).
+  TextColumn get startsOn => text()();
+
+  /// Local `HH:MM`; null = all day.
+  TextColumn get startTime => text().nullable()();
+  TextColumn get endTime => text().nullable()();
+  TextColumn get repeat => text().withDefault(const Constant('none'))();
+
+  /// Who it is for; null = the whole family.
+  TextColumn get memberId => text().nullable()();
+  TextColumn get location => text().nullable()();
+  TextColumn get note => text().nullable()();
+  TextColumn get createdBy => text().nullable()();
+}
+
 /// The money ledger. Append-only: only `note` and deletion change later.
 @DataClassName('LedgerEntry')
 class Transactions extends Table with SyncColumns {

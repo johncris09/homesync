@@ -241,7 +241,7 @@ abstract class AppLocalizations {
   /// No description provided for @modulesComingSoon.
   ///
   /// In en, this message translates to:
-  /// **'The calendar is coming next.'**
+  /// **'More modules are on the way.'**
   String get modulesComingSoon;
 
   /// No description provided for @syncSyncing.
@@ -1605,6 +1605,204 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only the person who did it can undo it.'**
   String get choreUndoOnlyDoer;
+
+  /// No description provided for @calendarModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get calendarModule;
+
+  /// No description provided for @calendarTileToday.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 thing today} other{{count} things today}}'**
+  String calendarTileToday(int count);
+
+  /// No description provided for @calendarTileNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {title}, {when}'**
+  String calendarTileNext(String title, String when);
+
+  /// No description provided for @calendarTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing coming up'**
+  String get calendarTileNone;
+
+  /// No description provided for @calendarFreeToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Free today'**
+  String get calendarFreeToday;
+
+  /// No description provided for @calendarCountToday.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 today} other{{count} today}}'**
+  String calendarCountToday(int count);
+
+  /// No description provided for @calendarNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {title}, {when}'**
+  String calendarNext(String title, String when);
+
+  /// No description provided for @calendarNothingAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in the next 30 days'**
+  String get calendarNothingAhead;
+
+  /// No description provided for @calendarToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get calendarToday;
+
+  /// No description provided for @calendarTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get calendarTomorrow;
+
+  /// No description provided for @calendarDayEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing on this day.'**
+  String get calendarDayEmpty;
+
+  /// No description provided for @calendarComingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get calendarComingUp;
+
+  /// No description provided for @calendarPrevMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get calendarPrevMonth;
+
+  /// No description provided for @calendarNextMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get calendarNextMonth;
+
+  /// No description provided for @calendarBillDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill due'**
+  String get calendarBillDue;
+
+  /// No description provided for @calendarSubscriptionDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription due'**
+  String get calendarSubscriptionDue;
+
+  /// No description provided for @eventAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add event'**
+  String get eventAdd;
+
+  /// No description provided for @eventEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit event'**
+  String get eventEdit;
+
+  /// No description provided for @eventRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove event'**
+  String get eventRemove;
+
+  /// No description provided for @eventTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get eventTitle;
+
+  /// No description provided for @eventTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Dentist, Lola\'s birthday'**
+  String get eventTitleHint;
+
+  /// No description provided for @eventTitleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a title.'**
+  String get eventTitleRequired;
+
+  /// No description provided for @eventAllDay.
+  ///
+  /// In en, this message translates to:
+  /// **'All day'**
+  String get eventAllDay;
+
+  /// No description provided for @eventEndTime.
+  ///
+  /// In en, this message translates to:
+  /// **'End time'**
+  String get eventEndTime;
+
+  /// No description provided for @eventOnce.
+  ///
+  /// In en, this message translates to:
+  /// **'Once'**
+  String get eventOnce;
+
+  /// No description provided for @eventWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get eventWeekly;
+
+  /// No description provided for @eventMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get eventMonthly;
+
+  /// No description provided for @eventYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get eventYearly;
+
+  /// No description provided for @eventForWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Who it\'s for'**
+  String get eventForWho;
+
+  /// No description provided for @eventEveryone.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone'**
+  String get eventEveryone;
+
+  /// No description provided for @eventLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Where'**
+  String get eventLocation;
+
+  /// No description provided for @eventNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get eventNote;
+
+  /// No description provided for @eventAddedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Added by {name}'**
+  String eventAddedBy(String name);
 }
 
 class _AppLocalizationsDelegate

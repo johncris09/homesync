@@ -106,6 +106,20 @@ const syncedEntities = <String, EntitySpec>{
     fields: {'chore_id', 'member_id', 'done_on'},
     appendOnly: true,
   ),
+  'events': EntitySpec(
+    name: 'events',
+    fields: {
+      'title',
+      'starts_on',
+      'start_time',
+      'end_time',
+      'repeat',
+      'member_id',
+      'location',
+      'note',
+      'created_by',
+    },
+  ),
   'transactions': EntitySpec(
     name: 'transactions',
     fields: {

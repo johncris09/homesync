@@ -90,7 +90,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeCaption => 'Everything here works offline.';
 
   @override
-  String get modulesComingSoon => 'The calendar is coming next.';
+  String get modulesComingSoon => 'More modules are on the way.';
 
   @override
   String get syncSyncing => 'Syncing…';
@@ -993,4 +993,125 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get choreUndoOnlyDoer => 'Only the person who did it can undo it.';
+
+  @override
+  String get calendarModule => 'Calendar';
+
+  @override
+  String calendarTileToday(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count things today',
+      one: '1 thing today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String calendarTileNext(String title, String when) {
+    return 'Next: $title, $when';
+  }
+
+  @override
+  String get calendarTileNone => 'Nothing coming up';
+
+  @override
+  String get calendarFreeToday => 'Free today';
+
+  @override
+  String calendarCountToday(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count today',
+      one: '1 today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String calendarNext(String title, String when) {
+    return 'Next: $title, $when';
+  }
+
+  @override
+  String get calendarNothingAhead => 'Nothing in the next 30 days';
+
+  @override
+  String get calendarToday => 'Today';
+
+  @override
+  String get calendarTomorrow => 'Tomorrow';
+
+  @override
+  String get calendarDayEmpty => 'Nothing on this day.';
+
+  @override
+  String get calendarComingUp => 'Coming up';
+
+  @override
+  String get calendarPrevMonth => 'Previous month';
+
+  @override
+  String get calendarNextMonth => 'Next month';
+
+  @override
+  String get calendarBillDue => 'Bill due';
+
+  @override
+  String get calendarSubscriptionDue => 'Subscription due';
+
+  @override
+  String get eventAdd => 'Add event';
+
+  @override
+  String get eventEdit => 'Edit event';
+
+  @override
+  String get eventRemove => 'Remove event';
+
+  @override
+  String get eventTitle => 'Title';
+
+  @override
+  String get eventTitleHint => 'e.g. Dentist, Lola\'s birthday';
+
+  @override
+  String get eventTitleRequired => 'Enter a title.';
+
+  @override
+  String get eventAllDay => 'All day';
+
+  @override
+  String get eventEndTime => 'End time';
+
+  @override
+  String get eventOnce => 'Once';
+
+  @override
+  String get eventWeekly => 'Weekly';
+
+  @override
+  String get eventMonthly => 'Monthly';
+
+  @override
+  String get eventYearly => 'Yearly';
+
+  @override
+  String get eventForWho => 'Who it\'s for';
+
+  @override
+  String get eventEveryone => 'Everyone';
+
+  @override
+  String get eventLocation => 'Where';
+
+  @override
+  String get eventNote => 'Note';
+
+  @override
+  String eventAddedBy(String name) {
+    return 'Added by $name';
+  }
 }
