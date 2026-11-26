@@ -62,7 +62,8 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Phase 1: Bills & Subscriptions | Done — `feature/bills`: bills (one row per due date, monthly series, pay with the actual amount, undo by the payer), subscriptions (monthly/yearly, pay moves the date on); payments post to the ledger (`source_type` `bill`/`subscription`) with derived ids; adults only; 153 app tests, 35 API tests |
 | Phase 1: Chores | Done — `feature/chores`: chores (daily, weekly on a day, once on a date; assigned or anyone; adults manage), today's list + coming up, tick off by whoever did it (`chore_completions`, append-only; undo by the doer); everyone but viewers ticks; 162 app tests, 36 API tests |
 | Phase 1: Calendar | Done — `feature/calendar`: events (all day or timed; once, weekly, monthly, yearly), month view with dots, the picked day and coming up; adults also see bills and subscriptions due; everyone but viewers adds, non-adults change only their own; 172 app tests, 37 API tests |
-| Deployment | Ready — `feature/deploy`: CI, Hostinger and Cloudflare Pages workflows, CORS by origin, scheduler, `docs/deploy.md`; hosting accounts and GitHub secrets still to be set up by the owner |
+| Deployment | Ready — `feature/deploy`: CI, Hostinger and Cloudflare Pages workflows, CORS by origin, scheduler, `docs/deploy.md`; live at Cloudflare Pages and Hostinger |
+| Android releases | Ready — `feature/android-release`: release APKs signed with the upload key (`android/key.properties`); pushing a `v1.2.3` tag on `main` publishes a signed APK as a GitHub Release (`release-android.yml`) |
 
 ### Phase 0 app notes (`feature/app-sync-core`)
 

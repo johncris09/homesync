@@ -4,6 +4,7 @@
 | --- | --- | --- |
 | Sync hub (`api/`) | Hostinger shared hosting, e.g. `https://api.example.com` | `.github/workflows/deploy-api.yml` on every push to `main` that touches `api/` |
 | Web app (`app/`) | Cloudflare Pages, e.g. `https://homesync.pages.dev` | `.github/workflows/deploy-web.yml` on every push to `main` that touches `app/` |
+| Android app | GitHub Releases (signed APK) | `.github/workflows/release-android.yml` when a version tag such as `v1.0.0` is pushed |
 | Tests | GitHub Actions | `.github/workflows/ci.yml` on every pull request and push to `develop` |
 
 Both deploy workflows run the tests first and use the GitHub environment **production**. Each can also be run by hand from the Actions tab (**Run workflow**).
@@ -86,6 +87,9 @@ Go to **Settings > Environments > New environment** and create `production`. You
 | Secret | `CLOUDFLARE_ACCOUNT_ID` | Account ID from section 2 |
 | Variable | `CLOUDFLARE_PAGES_PROJECT` | Pages project name, e.g. `homesync` |
 | Variable | `API_BASE_URL` | The hub address, e.g. `https://api.example.com` |
+| Secret | `ANDROID_KEYSTORE_BASE64` | The signing key file, base64 (section 4) |
+| Secret | `ANDROID_KEYSTORE_PASSWORD` | The signing key's password (section 4) |
+| Variable | `ANDROID_KEY_ALIAS` | Optional: key alias if not `upload` |
 
 The web build stops if `API_BASE_URL` is missing or not `https://`.
 
@@ -112,13 +116,39 @@ Android only installs an update signed with the same key as the installed app. I
 
 Without `key.properties` the build falls back to the debug key. Such APKs can't update ones signed with the release key.
 
-### Build
+### Releases on GitHub
+
+Pushing a version tag builds a signed APK in GitHub Actions and publishes it as a GitHub Release (`homesync-1.2.3.apk`), with notes listing the merged pull requests.
+
+Once, give GitHub the signing key (from `E:\homesync`, with the GitHub CLI signed in):
+
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("$HOME\.android\homesync-upload.jks")) | gh secret set ANDROID_KEYSTORE_BASE64
+```
+```powershell
+gh secret set ANDROID_KEYSTORE_PASSWORD
+```
+
+The second command asks for the password, so it stays out of your shell history.
+
+Each release:
+
+1. Merge `develop` into `main` (release pull request).
+2. Tag `main` with the next version and push the tag:
+   ```powershell
+   git fetch origin; git tag v1.0.0 origin/main; git push origin v1.0.0
+   ```
+3. When **Release Android** finishes, the APK is under the repository's **Releases**. Share that link with the family.
+
+Versions are `MAJOR.MINOR.PATCH`: raise PATCH for fixes, MINOR for new features, MAJOR for big changes. The tag sets the version shown in Android's app info; the build number is worked out from it (`1.2.3` is `10203`), so each release must have a higher version than the last, and MINOR and PATCH stay below 100. The workflow stops if the tag isn't on `main`, a secret is missing, or the APK came out signed with the debug key.
+
+### Build on this PC
 
 ```powershell
 flutter build apk --release --dart-define=API_BASE_URL=https://api.example.com
 ```
 
-The APK is `app/build/app/outputs/flutter-apk/app-release.apk`. A phone with an APK signed by a different key (e.g. an earlier debug-key build) must uninstall it first; sync before uninstalling.
+The APK is `app/build/app/outputs/flutter-apk/app-release.apk`. Its version is the one in `pubspec.yaml` (`1.0.0+1`), lower than any tagged release, so it can't update a phone that has a release installed; use it only for testing. A phone with an APK signed by a different key (e.g. an earlier debug-key build) must uninstall it first; sync before uninstalling.
 
 ## Not covered yet
 
