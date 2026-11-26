@@ -25,6 +25,11 @@ final lastSyncedProvider = StreamProvider<DateTime?>(
   (ref) => SyncStateStore(ref.watch(servicesProvider).db).watchLastSyncedAt(),
 );
 
+/// Release version the hub last reported; null until it has answered once.
+final hubVersionProvider = StreamProvider<String?>(
+  (ref) => SyncStateStore(ref.watch(servicesProvider).db).watchHubVersion(),
+);
+
 final syncStatusRepoProvider = Provider<SyncStatusRepository>(
   (ref) => SyncStatusRepository(ref.watch(servicesProvider).db),
 );

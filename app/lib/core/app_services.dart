@@ -42,14 +42,22 @@ class AppServices {
   static Future<AppServices> open({SecureStore? secureStore, AppDatabase? database}) async {
     final store = secureStore ?? FlutterSecureStore();
     final db = database ?? AppDatabase(openAppDatabase(encryptionKey: await _databaseKey(store)));
-    final dio = createApiClient();
+    final state = SyncStateStore(db);
+    var hubVersion = await state.hubVersion();
+    final dio = createApiClient(
+      onHubVersion: (v) {
+        if (v == hubVersion) return;
+        hubVersion = v;
+        state.setHubVersion(v);
+      },
+    );
 
     final auth = AuthService(store: store, api: DioAuthApi(dio));
     await auth.restore();
     final appLock = AppLock(store: store, biometricAuth: LocalAuthBiometrics());
     await appLock.load();
 
-    final clock = await SyncStateStore(db).loadClock(await auth.installId());
+    final clock = await state.loadClock(await auth.installId());
     final engine = SyncEngine(
       db: db,
       api: DioSyncApi(dio, tokenFor: auth.tokenFor, mainDeviceId: () => auth.session!.main.deviceId),

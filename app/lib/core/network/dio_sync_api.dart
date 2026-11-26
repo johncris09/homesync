@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../app_version.dart';
 import '../sync/sync_api.dart';
 
 /// Base URL of the sync hub, set at build time:
@@ -7,18 +8,41 @@ import '../sync/sync_api.dart';
 const apiBaseUrl = String.fromEnvironment('API_BASE_URL', defaultValue: 'http://localhost:8000');
 
 /// Dio client with the protocol header. Bearer tokens are added per request
-/// because a shared tablet holds one token per PIN profile.
-Dio createApiClient({String baseUrl = apiBaseUrl}) => Dio(
-  BaseOptions(
-    baseUrl: '$baseUrl/api',
-    connectTimeout: const Duration(seconds: 15),
-    receiveTimeout: const Duration(seconds: 60),
-    headers: {
-      'Accept': 'application/json',
-      'X-HomeSync-Protocol': '$syncProtocolVersion',
-    },
-  ),
-);
+/// because a shared tablet holds one token per PIN profile. [onHubVersion]
+/// gets the hub's release version from each response that names it.
+Dio createApiClient({String baseUrl = apiBaseUrl, void Function(String version)? onHubVersion}) {
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: '$baseUrl/api',
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 60),
+      headers: {
+        'Accept': 'application/json',
+        'X-HomeSync-Protocol': '$syncProtocolVersion',
+      },
+    ),
+  );
+  if (onHubVersion != null) {
+    void note(Response<dynamic>? res) {
+      final v = res?.headers.value(hubVersionHeader)?.trim();
+      if (v != null && v.isNotEmpty) onHubVersion(v);
+    }
+
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onResponse: (res, handler) {
+          note(res);
+          handler.next(res);
+        },
+        onError: (e, handler) {
+          note(e.response);
+          handler.next(e);
+        },
+      ),
+    );
+  }
+  return dio;
+}
 
 Options bearer(String token) => Options(headers: {'Authorization': 'Bearer $token'});
 

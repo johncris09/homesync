@@ -359,5 +359,9 @@
   "eventLocation": "Where",
   "eventNote": "Note",
   "eventAddedBy": "Added by {name}",
-  "@eventAddedBy": {"placeholders": {"name": {"type": "String"}}}
+  "@eventAddedBy": {"placeholders": {"name": {"type": "String"}}},
+  "versionLine": "Version {app} · hub {hub}",
+  "@versionLine": {"placeholders": {"app": {"type": "String"}, "hub": {"type": "String"}}},
+  "versionLineNoHub": "Version {app}",
+  "@versionLineNoHub": {"placeholders": {"app": {"type": "String"}}}
 }

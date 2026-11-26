@@ -67,6 +67,25 @@ class PullAndAuthTest extends SyncTestCase
         $this->getJson('/api/sync/pull', ['X-HomeSync-Protocol' => '0'])->assertStatus(426);
     }
 
+    public function test_every_response_names_the_hub_version(): void
+    {
+        config(['homesync.version' => '1.2.3']);
+        Sanctum::actingAs($this->device());
+
+        $this->getJson('/api/sync/pull', ['X-HomeSync-Protocol' => '1'])
+            ->assertOk()->assertHeader('X-HomeSync-Version', '1.2.3');
+        $this->getJson('/api/sync/pull')
+            ->assertStatus(426)->assertHeader('X-HomeSync-Version', '1.2.3');
+    }
+
+    public function test_signed_out_responses_name_the_hub_version_too(): void
+    {
+        config(['homesync.version' => '1.2.3']);
+
+        $this->getJson('/api/sync/pull', ['X-HomeSync-Protocol' => '1'])
+            ->assertUnauthorized()->assertHeader('X-HomeSync-Version', '1.2.3');
+    }
+
     public function test_email_login_creates_a_device_token(): void
     {
         $user = User::factory()->create(['email' => 'john@example.com', 'password' => Hash::make('secret123')]);
