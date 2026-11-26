@@ -94,6 +94,29 @@ class Subscriptions extends Table with SyncColumns {
   TextColumn get category => text().nullable()();
 }
 
+/// A household chore: `daily`, `weekly` on [weekday] (1 = Monday), or
+/// `once` on [dueOn]. Done for a day = a [ChoreCompletions] row that day.
+class Chores extends Table with SyncColumns {
+  TextColumn get name => text()();
+
+  /// Member id, or null for anyone.
+  TextColumn get assignedTo => text().nullable()();
+  TextColumn get repeat => text().withDefault(const Constant('daily'))();
+  IntColumn get weekday => integer().nullable()();
+
+  /// Calendar date `YYYY-MM-DD` (once).
+  TextColumn get dueOn => text().nullable()();
+}
+
+/// Who did a chore on which day. Append-only; undo is a delete.
+class ChoreCompletions extends Table with SyncColumns {
+  TextColumn get choreId => text()();
+  TextColumn get memberId => text().nullable()();
+
+  /// Calendar date `YYYY-MM-DD`.
+  TextColumn get doneOn => text()();
+}
+
 /// The money ledger. Append-only: only `note` and deletion change later.
 @DataClassName('LedgerEntry')
 class Transactions extends Table with SyncColumns {

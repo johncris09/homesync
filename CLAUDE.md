@@ -60,7 +60,8 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Phase 1: Pantry & Grocery | Done — `feature/pantry-grocery`: grocery list (quick add, bought, clear) and pantry (stock +/-, stock-take, running low, expiry, add to list); tested on web + emulator against a local hub; 124 app tests |
 | Phase 1: Budget | Done — `feature/budget`: `budgets` entity (derived id per category, reviewed limit), ledger entries (append-only), month view with category progress, money in/out; non-adults record and see only their own; 139 app tests, 33 API tests |
 | Phase 1: Bills & Subscriptions | Done — `feature/bills`: bills (one row per due date, monthly series, pay with the actual amount, undo by the payer), subscriptions (monthly/yearly, pay moves the date on); payments post to the ledger (`source_type` `bill`/`subscription`) with derived ids; adults only; 153 app tests, 35 API tests |
-| Phase 1: Chores, Calendar | Not started |
+| Phase 1: Chores | Done — `feature/chores`: chores (daily, weekly on a day, once on a date; assigned or anyone; adults manage), today's list + coming up, tick off by whoever did it (`chore_completions`, append-only; undo by the doer); everyone but viewers ticks; 162 app tests, 36 API tests |
+| Phase 1: Calendar | Not started |
 
 ### Phase 0 app notes (`feature/app-sync-core`)
 

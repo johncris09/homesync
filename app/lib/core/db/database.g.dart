@@ -4486,6 +4486,1529 @@ class SubscriptionsCompanion extends UpdateCompanion<Subscription> {
   }
 }
 
+class $ChoresTable extends Chores with TableInfo<$ChoresTable, Chore> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ChoresTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _assignedToMeta = const VerificationMeta(
+    'assignedTo',
+  );
+  @override
+  late final GeneratedColumn<String> assignedTo = GeneratedColumn<String>(
+    'assigned_to',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _repeatMeta = const VerificationMeta('repeat');
+  @override
+  late final GeneratedColumn<String> repeat = GeneratedColumn<String>(
+    'repeat',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('daily'),
+  );
+  static const VerificationMeta _weekdayMeta = const VerificationMeta(
+    'weekday',
+  );
+  @override
+  late final GeneratedColumn<int> weekday = GeneratedColumn<int>(
+    'weekday',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dueOnMeta = const VerificationMeta('dueOn');
+  @override
+  late final GeneratedColumn<String> dueOn = GeneratedColumn<String>(
+    'due_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    name,
+    assignedTo,
+    repeat,
+    weekday,
+    dueOn,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'chores';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Chore> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('assigned_to')) {
+      context.handle(
+        _assignedToMeta,
+        assignedTo.isAcceptableOrUnknown(data['assigned_to']!, _assignedToMeta),
+      );
+    }
+    if (data.containsKey('repeat')) {
+      context.handle(
+        _repeatMeta,
+        repeat.isAcceptableOrUnknown(data['repeat']!, _repeatMeta),
+      );
+    }
+    if (data.containsKey('weekday')) {
+      context.handle(
+        _weekdayMeta,
+        weekday.isAcceptableOrUnknown(data['weekday']!, _weekdayMeta),
+      );
+    }
+    if (data.containsKey('due_on')) {
+      context.handle(
+        _dueOnMeta,
+        dueOn.isAcceptableOrUnknown(data['due_on']!, _dueOnMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Chore map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Chore(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      assignedTo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}assigned_to'],
+      ),
+      repeat: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}repeat'],
+      )!,
+      weekday: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}weekday'],
+      ),
+      dueOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}due_on'],
+      ),
+    );
+  }
+
+  @override
+  $ChoresTable createAlias(String alias) {
+    return $ChoresTable(attachedDatabase, alias);
+  }
+}
+
+class Chore extends DataClass implements Insertable<Chore> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String name;
+
+  /// Member id, or null for anyone.
+  final String? assignedTo;
+  final String repeat;
+  final int? weekday;
+
+  /// Calendar date `YYYY-MM-DD` (once).
+  final String? dueOn;
+  const Chore({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.name,
+    this.assignedTo,
+    required this.repeat,
+    this.weekday,
+    this.dueOn,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || assignedTo != null) {
+      map['assigned_to'] = Variable<String>(assignedTo);
+    }
+    map['repeat'] = Variable<String>(repeat);
+    if (!nullToAbsent || weekday != null) {
+      map['weekday'] = Variable<int>(weekday);
+    }
+    if (!nullToAbsent || dueOn != null) {
+      map['due_on'] = Variable<String>(dueOn);
+    }
+    return map;
+  }
+
+  ChoresCompanion toCompanion(bool nullToAbsent) {
+    return ChoresCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      name: Value(name),
+      assignedTo: assignedTo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(assignedTo),
+      repeat: Value(repeat),
+      weekday: weekday == null && nullToAbsent
+          ? const Value.absent()
+          : Value(weekday),
+      dueOn: dueOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dueOn),
+    );
+  }
+
+  factory Chore.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Chore(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      name: serializer.fromJson<String>(json['name']),
+      assignedTo: serializer.fromJson<String?>(json['assignedTo']),
+      repeat: serializer.fromJson<String>(json['repeat']),
+      weekday: serializer.fromJson<int?>(json['weekday']),
+      dueOn: serializer.fromJson<String?>(json['dueOn']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'name': serializer.toJson<String>(name),
+      'assignedTo': serializer.toJson<String?>(assignedTo),
+      'repeat': serializer.toJson<String>(repeat),
+      'weekday': serializer.toJson<int?>(weekday),
+      'dueOn': serializer.toJson<String?>(dueOn),
+    };
+  }
+
+  Chore copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? name,
+    Value<String?> assignedTo = const Value.absent(),
+    String? repeat,
+    Value<int?> weekday = const Value.absent(),
+    Value<String?> dueOn = const Value.absent(),
+  }) => Chore(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    name: name ?? this.name,
+    assignedTo: assignedTo.present ? assignedTo.value : this.assignedTo,
+    repeat: repeat ?? this.repeat,
+    weekday: weekday.present ? weekday.value : this.weekday,
+    dueOn: dueOn.present ? dueOn.value : this.dueOn,
+  );
+  Chore copyWithCompanion(ChoresCompanion data) {
+    return Chore(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      name: data.name.present ? data.name.value : this.name,
+      assignedTo: data.assignedTo.present
+          ? data.assignedTo.value
+          : this.assignedTo,
+      repeat: data.repeat.present ? data.repeat.value : this.repeat,
+      weekday: data.weekday.present ? data.weekday.value : this.weekday,
+      dueOn: data.dueOn.present ? data.dueOn.value : this.dueOn,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Chore(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('name: $name, ')
+          ..write('assignedTo: $assignedTo, ')
+          ..write('repeat: $repeat, ')
+          ..write('weekday: $weekday, ')
+          ..write('dueOn: $dueOn')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    name,
+    assignedTo,
+    repeat,
+    weekday,
+    dueOn,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Chore &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.name == this.name &&
+          other.assignedTo == this.assignedTo &&
+          other.repeat == this.repeat &&
+          other.weekday == this.weekday &&
+          other.dueOn == this.dueOn);
+}
+
+class ChoresCompanion extends UpdateCompanion<Chore> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> name;
+  final Value<String?> assignedTo;
+  final Value<String> repeat;
+  final Value<int?> weekday;
+  final Value<String?> dueOn;
+  final Value<int> rowid;
+  const ChoresCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.assignedTo = const Value.absent(),
+    this.repeat = const Value.absent(),
+    this.weekday = const Value.absent(),
+    this.dueOn = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ChoresCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String name,
+    this.assignedTo = const Value.absent(),
+    this.repeat = const Value.absent(),
+    this.weekday = const Value.absent(),
+    this.dueOn = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       name = Value(name);
+  static Insertable<Chore> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? name,
+    Expression<String>? assignedTo,
+    Expression<String>? repeat,
+    Expression<int>? weekday,
+    Expression<String>? dueOn,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (name != null) 'name': name,
+      if (assignedTo != null) 'assigned_to': assignedTo,
+      if (repeat != null) 'repeat': repeat,
+      if (weekday != null) 'weekday': weekday,
+      if (dueOn != null) 'due_on': dueOn,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ChoresCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? name,
+    Value<String?>? assignedTo,
+    Value<String>? repeat,
+    Value<int?>? weekday,
+    Value<String?>? dueOn,
+    Value<int>? rowid,
+  }) {
+    return ChoresCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      name: name ?? this.name,
+      assignedTo: assignedTo ?? this.assignedTo,
+      repeat: repeat ?? this.repeat,
+      weekday: weekday ?? this.weekday,
+      dueOn: dueOn ?? this.dueOn,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (assignedTo.present) {
+      map['assigned_to'] = Variable<String>(assignedTo.value);
+    }
+    if (repeat.present) {
+      map['repeat'] = Variable<String>(repeat.value);
+    }
+    if (weekday.present) {
+      map['weekday'] = Variable<int>(weekday.value);
+    }
+    if (dueOn.present) {
+      map['due_on'] = Variable<String>(dueOn.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChoresCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('name: $name, ')
+          ..write('assignedTo: $assignedTo, ')
+          ..write('repeat: $repeat, ')
+          ..write('weekday: $weekday, ')
+          ..write('dueOn: $dueOn, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ChoreCompletionsTable extends ChoreCompletions
+    with TableInfo<$ChoreCompletionsTable, ChoreCompletion> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ChoreCompletionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _choreIdMeta = const VerificationMeta(
+    'choreId',
+  );
+  @override
+  late final GeneratedColumn<String> choreId = GeneratedColumn<String>(
+    'chore_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _memberIdMeta = const VerificationMeta(
+    'memberId',
+  );
+  @override
+  late final GeneratedColumn<String> memberId = GeneratedColumn<String>(
+    'member_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _doneOnMeta = const VerificationMeta('doneOn');
+  @override
+  late final GeneratedColumn<String> doneOn = GeneratedColumn<String>(
+    'done_on',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    choreId,
+    memberId,
+    doneOn,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'chore_completions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ChoreCompletion> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('chore_id')) {
+      context.handle(
+        _choreIdMeta,
+        choreId.isAcceptableOrUnknown(data['chore_id']!, _choreIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_choreIdMeta);
+    }
+    if (data.containsKey('member_id')) {
+      context.handle(
+        _memberIdMeta,
+        memberId.isAcceptableOrUnknown(data['member_id']!, _memberIdMeta),
+      );
+    }
+    if (data.containsKey('done_on')) {
+      context.handle(
+        _doneOnMeta,
+        doneOn.isAcceptableOrUnknown(data['done_on']!, _doneOnMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_doneOnMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ChoreCompletion map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ChoreCompletion(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      choreId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}chore_id'],
+      )!,
+      memberId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}member_id'],
+      ),
+      doneOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}done_on'],
+      )!,
+    );
+  }
+
+  @override
+  $ChoreCompletionsTable createAlias(String alias) {
+    return $ChoreCompletionsTable(attachedDatabase, alias);
+  }
+}
+
+class ChoreCompletion extends DataClass implements Insertable<ChoreCompletion> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String choreId;
+  final String? memberId;
+
+  /// Calendar date `YYYY-MM-DD`.
+  final String doneOn;
+  const ChoreCompletion({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.choreId,
+    this.memberId,
+    required this.doneOn,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['chore_id'] = Variable<String>(choreId);
+    if (!nullToAbsent || memberId != null) {
+      map['member_id'] = Variable<String>(memberId);
+    }
+    map['done_on'] = Variable<String>(doneOn);
+    return map;
+  }
+
+  ChoreCompletionsCompanion toCompanion(bool nullToAbsent) {
+    return ChoreCompletionsCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      choreId: Value(choreId),
+      memberId: memberId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(memberId),
+      doneOn: Value(doneOn),
+    );
+  }
+
+  factory ChoreCompletion.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ChoreCompletion(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      choreId: serializer.fromJson<String>(json['choreId']),
+      memberId: serializer.fromJson<String?>(json['memberId']),
+      doneOn: serializer.fromJson<String>(json['doneOn']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'choreId': serializer.toJson<String>(choreId),
+      'memberId': serializer.toJson<String?>(memberId),
+      'doneOn': serializer.toJson<String>(doneOn),
+    };
+  }
+
+  ChoreCompletion copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? choreId,
+    Value<String?> memberId = const Value.absent(),
+    String? doneOn,
+  }) => ChoreCompletion(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    choreId: choreId ?? this.choreId,
+    memberId: memberId.present ? memberId.value : this.memberId,
+    doneOn: doneOn ?? this.doneOn,
+  );
+  ChoreCompletion copyWithCompanion(ChoreCompletionsCompanion data) {
+    return ChoreCompletion(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      choreId: data.choreId.present ? data.choreId.value : this.choreId,
+      memberId: data.memberId.present ? data.memberId.value : this.memberId,
+      doneOn: data.doneOn.present ? data.doneOn.value : this.doneOn,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChoreCompletion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('choreId: $choreId, ')
+          ..write('memberId: $memberId, ')
+          ..write('doneOn: $doneOn')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    choreId,
+    memberId,
+    doneOn,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ChoreCompletion &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.choreId == this.choreId &&
+          other.memberId == this.memberId &&
+          other.doneOn == this.doneOn);
+}
+
+class ChoreCompletionsCompanion extends UpdateCompanion<ChoreCompletion> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> choreId;
+  final Value<String?> memberId;
+  final Value<String> doneOn;
+  final Value<int> rowid;
+  const ChoreCompletionsCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.choreId = const Value.absent(),
+    this.memberId = const Value.absent(),
+    this.doneOn = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ChoreCompletionsCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String choreId,
+    this.memberId = const Value.absent(),
+    required String doneOn,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       choreId = Value(choreId),
+       doneOn = Value(doneOn);
+  static Insertable<ChoreCompletion> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? choreId,
+    Expression<String>? memberId,
+    Expression<String>? doneOn,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (choreId != null) 'chore_id': choreId,
+      if (memberId != null) 'member_id': memberId,
+      if (doneOn != null) 'done_on': doneOn,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ChoreCompletionsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? choreId,
+    Value<String?>? memberId,
+    Value<String>? doneOn,
+    Value<int>? rowid,
+  }) {
+    return ChoreCompletionsCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      choreId: choreId ?? this.choreId,
+      memberId: memberId ?? this.memberId,
+      doneOn: doneOn ?? this.doneOn,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (choreId.present) {
+      map['chore_id'] = Variable<String>(choreId.value);
+    }
+    if (memberId.present) {
+      map['member_id'] = Variable<String>(memberId.value);
+    }
+    if (doneOn.present) {
+      map['done_on'] = Variable<String>(doneOn.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChoreCompletionsCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('choreId: $choreId, ')
+          ..write('memberId: $memberId, ')
+          ..write('doneOn: $doneOn, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $BudgetsTable extends Budgets with TableInfo<$BudgetsTable, Budget> {
   @override
   final GeneratedDatabase attachedDatabase;
@@ -9021,6 +10544,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $PantryItemsTable pantryItems = $PantryItemsTable(this);
   late final $BillsTable bills = $BillsTable(this);
   late final $SubscriptionsTable subscriptions = $SubscriptionsTable(this);
+  late final $ChoresTable chores = $ChoresTable(this);
+  late final $ChoreCompletionsTable choreCompletions = $ChoreCompletionsTable(
+    this,
+  );
   late final $BudgetsTable budgets = $BudgetsTable(this);
   late final $TransactionsTable transactions = $TransactionsTable(this);
   late final $ConflictsTable conflicts = $ConflictsTable(this);
@@ -9038,6 +10565,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     pantryItems,
     bills,
     subscriptions,
+    chores,
+    choreCompletions,
     budgets,
     transactions,
     conflicts,
@@ -11092,6 +12621,720 @@ typedef $$SubscriptionsTableProcessedTableManager =
         BaseReferences<_$AppDatabase, $SubscriptionsTable, Subscription>,
       ),
       Subscription,
+      PrefetchHooks Function()
+    >;
+typedef $$ChoresTableCreateCompanionBuilder =
+    ChoresCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String name,
+      Value<String?> assignedTo,
+      Value<String> repeat,
+      Value<int?> weekday,
+      Value<String?> dueOn,
+      Value<int> rowid,
+    });
+typedef $$ChoresTableUpdateCompanionBuilder =
+    ChoresCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> name,
+      Value<String?> assignedTo,
+      Value<String> repeat,
+      Value<int?> weekday,
+      Value<String?> dueOn,
+      Value<int> rowid,
+    });
+
+class $$ChoresTableFilterComposer
+    extends Composer<_$AppDatabase, $ChoresTable> {
+  $$ChoresTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get assignedTo => $composableBuilder(
+    column: $table.assignedTo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get repeat => $composableBuilder(
+    column: $table.repeat,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get weekday => $composableBuilder(
+    column: $table.weekday,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get dueOn => $composableBuilder(
+    column: $table.dueOn,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ChoresTableOrderingComposer
+    extends Composer<_$AppDatabase, $ChoresTable> {
+  $$ChoresTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get assignedTo => $composableBuilder(
+    column: $table.assignedTo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get repeat => $composableBuilder(
+    column: $table.repeat,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get weekday => $composableBuilder(
+    column: $table.weekday,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get dueOn => $composableBuilder(
+    column: $table.dueOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ChoresTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ChoresTable> {
+  $$ChoresTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get assignedTo => $composableBuilder(
+    column: $table.assignedTo,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get repeat =>
+      $composableBuilder(column: $table.repeat, builder: (column) => column);
+
+  GeneratedColumn<int> get weekday =>
+      $composableBuilder(column: $table.weekday, builder: (column) => column);
+
+  GeneratedColumn<String> get dueOn =>
+      $composableBuilder(column: $table.dueOn, builder: (column) => column);
+}
+
+class $$ChoresTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ChoresTable,
+          Chore,
+          $$ChoresTableFilterComposer,
+          $$ChoresTableOrderingComposer,
+          $$ChoresTableAnnotationComposer,
+          $$ChoresTableCreateCompanionBuilder,
+          $$ChoresTableUpdateCompanionBuilder,
+          (Chore, BaseReferences<_$AppDatabase, $ChoresTable, Chore>),
+          Chore,
+          PrefetchHooks Function()
+        > {
+  $$ChoresTableTableManager(_$AppDatabase db, $ChoresTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ChoresTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ChoresTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ChoresTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> assignedTo = const Value.absent(),
+                Value<String> repeat = const Value.absent(),
+                Value<int?> weekday = const Value.absent(),
+                Value<String?> dueOn = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ChoresCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                name: name,
+                assignedTo: assignedTo,
+                repeat: repeat,
+                weekday: weekday,
+                dueOn: dueOn,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String name,
+                Value<String?> assignedTo = const Value.absent(),
+                Value<String> repeat = const Value.absent(),
+                Value<int?> weekday = const Value.absent(),
+                Value<String?> dueOn = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ChoresCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                name: name,
+                assignedTo: assignedTo,
+                repeat: repeat,
+                weekday: weekday,
+                dueOn: dueOn,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ChoresTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ChoresTable,
+      Chore,
+      $$ChoresTableFilterComposer,
+      $$ChoresTableOrderingComposer,
+      $$ChoresTableAnnotationComposer,
+      $$ChoresTableCreateCompanionBuilder,
+      $$ChoresTableUpdateCompanionBuilder,
+      (Chore, BaseReferences<_$AppDatabase, $ChoresTable, Chore>),
+      Chore,
+      PrefetchHooks Function()
+    >;
+typedef $$ChoreCompletionsTableCreateCompanionBuilder =
+    ChoreCompletionsCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String choreId,
+      Value<String?> memberId,
+      required String doneOn,
+      Value<int> rowid,
+    });
+typedef $$ChoreCompletionsTableUpdateCompanionBuilder =
+    ChoreCompletionsCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> choreId,
+      Value<String?> memberId,
+      Value<String> doneOn,
+      Value<int> rowid,
+    });
+
+class $$ChoreCompletionsTableFilterComposer
+    extends Composer<_$AppDatabase, $ChoreCompletionsTable> {
+  $$ChoreCompletionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get choreId => $composableBuilder(
+    column: $table.choreId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get doneOn => $composableBuilder(
+    column: $table.doneOn,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ChoreCompletionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ChoreCompletionsTable> {
+  $$ChoreCompletionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get choreId => $composableBuilder(
+    column: $table.choreId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get doneOn => $composableBuilder(
+    column: $table.doneOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ChoreCompletionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ChoreCompletionsTable> {
+  $$ChoreCompletionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get choreId =>
+      $composableBuilder(column: $table.choreId, builder: (column) => column);
+
+  GeneratedColumn<String> get memberId =>
+      $composableBuilder(column: $table.memberId, builder: (column) => column);
+
+  GeneratedColumn<String> get doneOn =>
+      $composableBuilder(column: $table.doneOn, builder: (column) => column);
+}
+
+class $$ChoreCompletionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ChoreCompletionsTable,
+          ChoreCompletion,
+          $$ChoreCompletionsTableFilterComposer,
+          $$ChoreCompletionsTableOrderingComposer,
+          $$ChoreCompletionsTableAnnotationComposer,
+          $$ChoreCompletionsTableCreateCompanionBuilder,
+          $$ChoreCompletionsTableUpdateCompanionBuilder,
+          (
+            ChoreCompletion,
+            BaseReferences<
+              _$AppDatabase,
+              $ChoreCompletionsTable,
+              ChoreCompletion
+            >,
+          ),
+          ChoreCompletion,
+          PrefetchHooks Function()
+        > {
+  $$ChoreCompletionsTableTableManager(
+    _$AppDatabase db,
+    $ChoreCompletionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ChoreCompletionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ChoreCompletionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ChoreCompletionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> choreId = const Value.absent(),
+                Value<String?> memberId = const Value.absent(),
+                Value<String> doneOn = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ChoreCompletionsCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                choreId: choreId,
+                memberId: memberId,
+                doneOn: doneOn,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String choreId,
+                Value<String?> memberId = const Value.absent(),
+                required String doneOn,
+                Value<int> rowid = const Value.absent(),
+              }) => ChoreCompletionsCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                choreId: choreId,
+                memberId: memberId,
+                doneOn: doneOn,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ChoreCompletionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ChoreCompletionsTable,
+      ChoreCompletion,
+      $$ChoreCompletionsTableFilterComposer,
+      $$ChoreCompletionsTableOrderingComposer,
+      $$ChoreCompletionsTableAnnotationComposer,
+      $$ChoreCompletionsTableCreateCompanionBuilder,
+      $$ChoreCompletionsTableUpdateCompanionBuilder,
+      (
+        ChoreCompletion,
+        BaseReferences<_$AppDatabase, $ChoreCompletionsTable, ChoreCompletion>,
+      ),
+      ChoreCompletion,
       PrefetchHooks Function()
     >;
 typedef $$BudgetsTableCreateCompanionBuilder =
@@ -13282,6 +15525,10 @@ class $AppDatabaseManager {
       $$BillsTableTableManager(_db, _db.bills);
   $$SubscriptionsTableTableManager get subscriptions =>
       $$SubscriptionsTableTableManager(_db, _db.subscriptions);
+  $$ChoresTableTableManager get chores =>
+      $$ChoresTableTableManager(_db, _db.chores);
+  $$ChoreCompletionsTableTableManager get choreCompletions =>
+      $$ChoreCompletionsTableTableManager(_db, _db.choreCompletions);
   $$BudgetsTableTableManager get budgets =>
       $$BudgetsTableTableManager(_db, _db.budgets);
   $$TransactionsTableTableManager get transactions =>

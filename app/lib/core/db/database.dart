@@ -13,6 +13,8 @@ part 'database.g.dart';
     PantryItems,
     Bills,
     Subscriptions,
+    Chores,
+    ChoreCompletions,
     Budgets,
     Transactions,
     Conflicts,
@@ -26,7 +28,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -47,6 +49,11 @@ class AppDatabase extends _$AppDatabase {
         await m.addColumn(bills, bills.repeat);
         await m.addColumn(bills, bills.seriesId);
         await m.createTable(subscriptions);
+      }
+      if (from < 4) {
+        // Chores
+        await m.createTable(chores);
+        await m.createTable(choreCompletions);
       }
     },
   );

@@ -97,6 +97,15 @@ const syncedEntities = <String, EntitySpec>{
     fields: {'name', 'price_minor', 'currency', 'cycle', 'next_due_on', 'category'},
     reviewed: {'price_minor'},
   ),
+  'chores': EntitySpec(
+    name: 'chores',
+    fields: {'name', 'assigned_to', 'repeat', 'weekday', 'due_on'},
+  ),
+  'chore_completions': EntitySpec(
+    name: 'chore_completions',
+    fields: {'chore_id', 'member_id', 'done_on'},
+    appendOnly: true,
+  ),
   'transactions': EntitySpec(
     name: 'transactions',
     fields: {

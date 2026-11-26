@@ -228,6 +228,24 @@ class PushTest extends SyncTestCase
         $this->assertSame('forbidden', $res->json('results.0.error'));
     }
 
+    public function test_adults_manage_chores_and_everyone_but_viewers_marks_them_done(): void
+    {
+        $owner = $this->device('owner');
+        $child = $this->device('child');
+        $viewer = $this->device('viewer');
+        $choreId = (string) Str::uuid7();
+
+        $res = $this->push($child, [$this->op('chores', (string) Str::uuid7(), 'insert', ['name' => 'Sweep'], $this->hlc(1))]);
+        $this->assertSame('forbidden', $res->json('results.0.error'));
+
+        $this->push($owner, [$this->op('chores', $choreId, 'insert', ['name' => 'Wash dishes', 'repeat' => 'daily', 'assigned_to' => $child->member_id], $this->hlc(2))]);
+        $done = fn ($d, int $t) => $this->op('chore_completions', (string) Str::uuid7(), 'insert', ['chore_id' => $choreId, 'member_id' => $d->member_id, 'done_on' => '2026-11-26'], $this->hlc($t));
+
+        $this->assertSame(['applied'], $this->statuses($this->push($child, [$done($child, 3)])));
+        $this->assertSame('forbidden', $this->push($viewer, [$done($viewer, 4)])->json('results.0.error'));
+        $this->assertSame(1, DB::table('chore_completions')->count());
+    }
+
     public function test_conflicts_sync_to_adults_and_can_be_resolved(): void
     {
         $john = $this->device('owner');

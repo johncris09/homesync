@@ -31,7 +31,9 @@ void signedInAs(MemorySecureStore store, Profile p) {
 }
 
 Future<void> tapText(WidgetTester tester, String text) async {
+  await tester.pumpAndSettle(); // lists fill in from streams and can shift
   await tester.ensureVisible(find.text(text).last);
+  await tester.pumpAndSettle();
   await tester.tap(find.text(text).last);
   await tester.pumpAndSettle();
 }
