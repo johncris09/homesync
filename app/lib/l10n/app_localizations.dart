@@ -1815,6 +1815,282 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version {app}'**
   String versionLineNoHub(String app);
+
+  /// No description provided for @catDebt.
+  ///
+  /// In en, this message translates to:
+  /// **'Debt payments'**
+  String get catDebt;
+
+  /// No description provided for @debtsModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Debts & loans'**
+  String get debtsModule;
+
+  /// No description provided for @debtsTileOwed.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} owed'**
+  String debtsTileOwed(String amount);
+
+  /// No description provided for @debtsTileOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 payment overdue} other{{count} payments overdue}}'**
+  String debtsTileOverdue(int count);
+
+  /// No description provided for @debtsTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing owed'**
+  String get debtsTileNone;
+
+  /// No description provided for @debtsOwed.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} owed'**
+  String debtsOwed(String amount);
+
+  /// No description provided for @debtsOwedToUs.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} owed to you'**
+  String debtsOwedToUs(String amount);
+
+  /// No description provided for @debtsNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No debts'**
+  String get debtsNone;
+
+  /// No description provided for @debtsOverdueCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 payment overdue. Pay it soon.} other{{count} payments overdue. Pay them soon.}}'**
+  String debtsOverdueCaption(int count);
+
+  /// No description provided for @debtsEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Loans, cards, pawn tickets and money lent.'**
+  String get debtsEmptyCaption;
+
+  /// No description provided for @debtsYouOwe.
+  ///
+  /// In en, this message translates to:
+  /// **'You owe'**
+  String get debtsYouOwe;
+
+  /// No description provided for @debtsOwedToYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Owed to you'**
+  String get debtsOwedToYou;
+
+  /// No description provided for @debtsPaidOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid off'**
+  String get debtsPaidOff;
+
+  /// No description provided for @debtsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here yet. Add a loan, credit card, pawn ticket or money you lent.'**
+  String get debtsEmpty;
+
+  /// No description provided for @debtAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add debt'**
+  String get debtAdd;
+
+  /// No description provided for @debtKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, loan{Loan} card{Credit card} pawn{Pawn ticket} other{Money lent}}'**
+  String debtKind(String kind);
+
+  /// No description provided for @debtNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, loan{e.g. Pag-IBIG salary loan} card{e.g. BPI card} pawn{e.g. Gold ring} other{e.g. Tito Ben}}'**
+  String debtNameHint(String kind);
+
+  /// No description provided for @debtCounterpartyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, loan{Lender (optional)} card{Bank (optional)} pawn{Pawnshop (optional)} other{Who borrowed it (optional)}}'**
+  String debtCounterpartyLabel(String kind);
+
+  /// No description provided for @debtReferenceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, pawn{Ticket number (optional)} card{Last 4 digits (optional)} other{Account or reference (optional)}}'**
+  String debtReferenceLabel(String kind);
+
+  /// No description provided for @debtPrincipalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, loan{Amount borrowed} card{Balance now} pawn{Amount received} other{Amount lent}}'**
+  String debtPrincipalLabel(String kind);
+
+  /// No description provided for @debtInstallmentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, card{Minimum due (optional)} other{Monthly payment (optional)}}'**
+  String debtInstallmentLabel(String kind);
+
+  /// No description provided for @debtDueLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, pawn{Maturity: {date}} other{Next due: {date}}}'**
+  String debtDueLabel(String kind, String date);
+
+  /// No description provided for @debtSetDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a due date'**
+  String get debtSetDue;
+
+  /// No description provided for @debtClearDue.
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get debtClearDue;
+
+  /// No description provided for @debtRepeatMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Due every month'**
+  String get debtRepeatMonthly;
+
+  /// No description provided for @debtRepeatHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Paying near the due date moves it to next month.'**
+  String get debtRepeatHelp;
+
+  /// No description provided for @debtNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get debtNote;
+
+  /// No description provided for @debtBalanceLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{balance} left of {principal}'**
+  String debtBalanceLine(String balance, String principal);
+
+  /// No description provided for @debtInstallmentLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} a month'**
+  String debtInstallmentLine(String amount);
+
+  /// No description provided for @debtPay.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, lent{Got paid back} other{Record payment}}'**
+  String debtPay(String kind);
+
+  /// No description provided for @debtAddCharge.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, lent{Lent more} card{Add charges} other{Add to balance}}'**
+  String debtAddCharge(String kind);
+
+  /// No description provided for @debtInterestOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Interest only'**
+  String get debtInterestOnly;
+
+  /// No description provided for @debtInterestHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, pawn{Renewing the ticket? Pay the interest only: the balance stays.} other{The balance stays the same.}}'**
+  String debtInterestHelp(String kind);
+
+  /// No description provided for @debtPayHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded in Budget under Debt payments.'**
+  String get debtPayHint;
+
+  /// No description provided for @debtAmountPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount paid'**
+  String get debtAmountPaid;
+
+  /// No description provided for @debtAmountAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount added'**
+  String get debtAmountAdded;
+
+  /// No description provided for @debtClose.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, pawn{Mark redeemed} lent{Mark repaid} other{Mark paid off}}'**
+  String debtClose(String kind);
+
+  /// No description provided for @debtClosedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, pawn{Redeemed {date}} lent{Repaid {date}} other{Paid off {date}}}'**
+  String debtClosedOn(String kind, String date);
+
+  /// No description provided for @debtReopen.
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen'**
+  String get debtReopen;
+
+  /// No description provided for @debtReopenOnlyCloser.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the person who closed it can reopen it.'**
+  String get debtReopenOnlyCloser;
+
+  /// No description provided for @debtEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit debt'**
+  String get debtEdit;
+
+  /// No description provided for @debtRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove debt'**
+  String get debtRemove;
+
+  /// No description provided for @debtHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get debtHistory;
+
+  /// No description provided for @debtHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded yet.'**
+  String get debtHistoryEmpty;
+
+  /// No description provided for @debtEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, payment{Payment} interest{Interest} other{Added}}'**
+  String debtEntry(String kind);
+
+  /// No description provided for @debtRemoveEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this entry'**
+  String get debtRemoveEntry;
 }
 
 class _AppLocalizationsDelegate

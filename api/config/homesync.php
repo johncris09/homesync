@@ -182,6 +182,54 @@ return [
             'write' => $household,
         ],
 
+        // Debts & Loans: kind is loan, card, pawn (a pawn ticket; next_due_on is
+        // its maturity) or lent (money owed to the household). The balance is
+        // principal_minor plus charges minus payments in debt_payments. Paid off
+        // only moves forward; principal changes are reviewed.
+        'debts' => [
+            'table' => 'debts',
+            'fields' => [
+                'kind' => 'string',
+                'name' => 'string',
+                'counterparty' => 'string',
+                'reference' => 'string',
+                'principal_minor' => 'int',
+                'currency' => 'string',
+                'installment_minor' => 'int',
+                'next_due_on' => 'date',
+                'repeat' => 'string',
+                'started_on' => 'date',
+                'is_closed' => 'bool',
+                'closed_at' => 'datetime',
+                'closed_by' => 'uuid',
+                'note' => 'text',
+            ],
+            'forward_only' => ['is_closed'],
+            'reviewed' => ['principal_minor'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // What happened to a debt: kind payment (lowers the balance), interest
+        // (paid, balance unchanged, e.g. renewing a pawn ticket) or charge
+        // (raises it). amount_minor is positive. Append-only: undo is a delete.
+        'debt_payments' => [
+            'table' => 'debt_payments',
+            'fields' => [
+                'debt_id' => 'uuid',
+                'kind' => 'string',
+                'amount_minor' => 'int',
+                'currency' => 'string',
+                'paid_on' => 'date',
+                'member_id' => 'uuid',
+                'note' => 'text',
+            ],
+            'append_only' => true,
+            'mutable' => ['note'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',

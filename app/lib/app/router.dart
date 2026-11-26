@@ -8,6 +8,7 @@ import '../features/bills/bills_screen.dart';
 import '../features/budget/budget_screen.dart';
 import '../features/calendar/calendar_screen.dart';
 import '../features/chores/chores_screen.dart';
+import '../features/debts/debts_screen.dart';
 import '../features/auth/profile_picker_screen.dart';
 import '../features/auth/sign_in_screen.dart';
 import '../features/auth/tablet_pin_screen.dart';
@@ -31,6 +32,7 @@ abstract final class Routes {
   static const bills = '/bills';
   static const chores = '/chores';
   static const calendar = '/calendar';
+  static const debts = '/debts';
 }
 
 GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRouter(
@@ -57,5 +59,6 @@ GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRo
     GoRoute(path: Routes.bills, builder: (_, _) => const BillsScreen()),
     GoRoute(path: Routes.chores, builder: (_, _) => const ChoresScreen()),
     GoRoute(path: Routes.calendar, builder: (_, _) => const CalendarScreen()),
+    GoRoute(path: Routes.debts, builder: (_, _) => const DebtsScreen()),
   ],
 );

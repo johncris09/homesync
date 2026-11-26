@@ -120,6 +120,33 @@ const syncedEntities = <String, EntitySpec>{
       'created_by',
     },
   ),
+  'debts': EntitySpec(
+    name: 'debts',
+    fields: {
+      'kind',
+      'name',
+      'counterparty',
+      'reference',
+      'principal_minor',
+      'currency',
+      'installment_minor',
+      'next_due_on',
+      'repeat',
+      'started_on',
+      'is_closed',
+      'closed_at',
+      'closed_by',
+      'note',
+    },
+    forwardOnly: {'is_closed'},
+    reviewed: {'principal_minor'},
+  ),
+  'debt_payments': EntitySpec(
+    name: 'debt_payments',
+    fields: {'debt_id', 'kind', 'amount_minor', 'currency', 'paid_on', 'member_id', 'note'},
+    appendOnly: true,
+    mutable: {'note'},
+  ),
   'transactions': EntitySpec(
     name: 'transactions',
     fields: {

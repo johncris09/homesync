@@ -46,6 +46,7 @@ Some entities hold at most one row per natural key. Their id is not random: the 
 | `bills` (next occurrence of a monthly bill) | `<series_id>/<due_on>` |
 | `transactions` (bill payment) | `bill/<bill_id>` |
 | `transactions` (subscription payment) | `subscription/<subscription_id>/<due_on>` |
+| `transactions` (debt payment) | `debt/<debt_payment_id>` |
 
 An `insert` for an existing **append-only** record (two devices recording the same payment) changes nothing: the first record stays and the op is answered `merged`, so the second device pulls the first one. A payment re-recorded after its owner undid it uses a random id.
 
@@ -187,16 +188,18 @@ Applied by the server when an incoming op's field HLC is older than or concurren
 | Kind | Entities / fields | Rule |
 | --- | --- | --- |
 | Default | All fields not listed below | Field-level last-writer-wins by HLC |
-| Append-only | `transactions`, `loan_payments`, `card_payments`, `receivable_payments`, `pawn_renewals`, `chore_completions`, `med_doses`, `fuel_logs`, `rent_payments`, `stock_movements`, `safety_checkins`, `activity_log` | Inserts only; updates allowed only to `note` and `deleted_at`. Never conflict |
+| Append-only | `transactions`, `debt_payments`, `chore_completions`, `med_doses`, `fuel_logs`, `rent_payments`, `stock_movements`, `safety_checkins`, `activity_log` | Inserts only; updates allowed only to `note` and `deleted_at`. Never conflict |
 | Counters | `pantry_items.quantity`, `medicines.stock`, `go_bag_items.quantity` | `increment` ops summed; absolute `update` of a counter is rejected (`not_counter`) |
-| Forward-only status | `bills.is_paid`, `grocery_items.is_bought`, `pawn_tickets.is_redeemed`, `loans.is_closed` | `true` wins over `false`, unless the `false` has a newer HLC **and** the same `updated_by` as the `true` |
-| Reviewed money | `budgets.limit_minor`, `bills.amount_minor`, `subscriptions.price_minor`, `leases.rent_minor`, `loans.principal_minor`, `credit_cards.limit_minor` | LWW, and the losing value is stored in `conflicts` for an Adult/Owner to confirm or revert |
+| Forward-only status | `bills.is_paid`, `grocery_items.is_bought`, `debts.is_closed` | `true` wins over `false`, unless the `false` has a newer HLC **and** the same `updated_by` as the `true` |
+| Reviewed money | `budgets.limit_minor`, `bills.amount_minor`, `subscriptions.price_minor`, `leases.rent_minor`, `debts.principal_minor` | LWW, and the losing value is stored in `conflicts` for an Adult/Owner to confirm or revert |
 | Delete vs edit | All | Delete wins unless the edit's HLC is newer than the delete's |
 | Never auto-merged | `vault_items`, `vault_files`, `health_profiles` | Both versions kept; the newer is live, the older stored in `conflicts`; Owner chooses |
 
 A chore has no done flag: it is done for a day when it has a `chore_completions` row for that day, so two people doing it offline both keep their completion.
 
 A calendar event (`events`) stores its first date (`starts_on`) and a `repeat` of `none`, `weekly`, `monthly` or `yearly`; devices work out the other dates (monthly and yearly keep the day, clamped to short months). Times are local `HH:MM` text (`start_time` null = all day). Editing or removing a repeating event changes every date. Events follow the default field-level rule.
+
+A debt (`debts`) is one loan, credit card, pawn ticket or sum lent (`kind` `loan`, `card`, `pawn`, `lent`). Its balance is never stored: devices work it out as `principal_minor` plus `charge` rows minus `payment` rows in `debt_payments` (`interest` rows are paid but leave the balance alone, e.g. renewing a pawn ticket). Because those rows are append-only with random ids, two people recording payments offline both count. A payment or interest the household makes on a `loan`, `card` or `pawn` also posts an expense to `transactions` (category `debt`, `source_type` `debt`, `source_id` the debt, id derived from the payment, §2.1); money paid back on a `lent` debt does not. `is_closed` (paid off, redeemed, repaid) follows the forward-only rule; `closed_by` says who may reopen it.
 
 Tombstones are kept 90 days, then pruned by the nightly job.
 
