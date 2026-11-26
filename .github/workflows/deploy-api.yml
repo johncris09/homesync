@@ -1,0 +1,66 @@
+# Tests the hub, then uploads it to Hostinger over SSH and migrates, when main
+# changes. Needs (environment "production"): secrets HOSTINGER_SSH_HOST,
+# HOSTINGER_SSH_PORT, HOSTINGER_SSH_USER, HOSTINGER_SSH_KEY,
+# HOSTINGER_KNOWN_HOSTS; variable HOSTINGER_APP_DIR (and optionally
+# HOSTINGER_PHP). The server's .env is made once by hand. See docs/deploy.md.
+name: Deploy API (Hostinger)
+
+on:
+  push:
+    branches: [main]
+    paths: ['api/**', '.github/workflows/deploy-api.yml']
+  workflow_dispatch:
+
+concurrency: deploy-api
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        working-directory: api
+    env:
+      SSH_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+      SSH_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+      SSH_USER: ${{ secrets.HOSTINGER_SSH_USER }}
+      APP_DIR: ${{ vars.HOSTINGER_APP_DIR }}
+      PHP: ${{ vars.HOSTINGER_PHP || 'php' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_sqlite, sqlite3, bcmath, intl
+          tools: composer:v2
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: cp .env.example .env && php artisan key:generate && php artisan test
+      - name: Production dependencies only
+        run: |
+          rm .env
+          composer install --no-dev --no-interaction --prefer-dist --no-progress --optimize-autoloader
+      - name: SSH key
+        env:
+          SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.HOSTINGER_KNOWN_HOSTS }}
+        run: |
+          [ -n "$APP_DIR" ] || { echo "::error::Set the HOSTINGER_APP_DIR variable"; exit 1; }
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+      - name: Maintenance mode
+        run: ssh -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "cd '$APP_DIR' && [ -f artisan ] && $PHP artisan down --retry=30 || true"
+      - name: Upload
+        run: |
+          rsync -az --delete -e "ssh -p $SSH_PORT" \
+            --exclude='/.env' --exclude='/storage/' --exclude='/bootstrap/cache/*.php' \
+            --exclude='/database/*.sqlite' --exclude='/tests/' --exclude='/node_modules/' \
+            ./ "$SSH_USER@$SSH_HOST:$APP_DIR/"
+      - name: Migrate and cache
+        run: |
+          ssh -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "cd '$APP_DIR' \
+            && mkdir -p storage/app/private storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
+            && $PHP artisan migrate --force \
+            && $PHP artisan optimize \
+            && $PHP artisan up"
