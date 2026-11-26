@@ -91,11 +91,34 @@ The web build stops if `API_BASE_URL` is missing or not `https://`.
 
 ## 4. Android
 
-Release builds talk to the hub over HTTPS only:
+Release builds talk to the hub over HTTPS only.
+
+### Signing key (once)
+
+Android only installs an update signed with the same key as the installed app. If the key is lost, everyone must uninstall and reinstall, which deletes anything on their phone that has not synced yet. Make one key, keep it outside the repo, and back up the key file and its password (e.g. in a password manager).
+
+1. Create the key. `keytool` comes with Android Studio's Java (`C:\Program Files\Android\Android Studio\jbr\bin\keytool.exe`):
+   ```powershell
+   & "C:\Program Files\Android\Android Studio\jbr\bin\keytool.exe" -genkeypair -v -keystore $HOME\.android\homesync-upload.jks -storetype PKCS12 -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+   ```
+   It asks for a password and your name; the name is stored in the certificate.
+2. Create `app/android/key.properties` (ignored by git):
+   ```properties
+   storeFile=C:/Users/<you>/.android/homesync-upload.jks
+   storePassword=<the password>
+   keyAlias=upload
+   keyPassword=<the password>
+   ```
+
+Without `key.properties` the build falls back to the debug key. Such APKs can't update ones signed with the release key.
+
+### Build
 
 ```powershell
 flutter build apk --release --dart-define=API_BASE_URL=https://api.example.com
 ```
+
+The APK is `app/build/app/outputs/flutter-apk/app-release.apk`. A phone with an APK signed by a different key (e.g. an earlier debug-key build) must uninstall it first; sync before uninstalling.
 
 ## Not covered yet
 
