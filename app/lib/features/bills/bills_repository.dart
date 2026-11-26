@@ -166,26 +166,24 @@ class BillsRepository {
   Future<void> payBill(Bill b, {int? amountMinor}) async {
     final paid = amountMinor ?? b.amountMinor;
     final now = today;
-    await db.transaction(() async {
-      if (paid != b.amountMinor) await writer.update('bills', b.id, {'amount_minor': paid});
-      await writer.update('bills', b.id, {'is_paid': true, 'paid_at': now.toUtc()});
+    if (paid != b.amountMinor) await writer.update('bills', b.id, {'amount_minor': paid});
+    await writer.update('bills', b.id, {'is_paid': true, 'paid_at': now.toUtc()});
 
-      final derived = billPaymentId(_household, b.id);
-      // Re-paying after an undo: the derived entry exists (removed), so use a new id.
-      final reused = await _exists(db.transactions, derived);
-      await writer.insert('transactions', {
-        'amount_minor': -paid,
-        'category': b.category ?? defaultBillCategory,
-        'currency': b.currency,
-        'occurred_at': now.toUtc(),
-        'member_id': writer.identity.memberId,
-        'source_type': billSource,
-        'source_id': b.id,
-        'note': b.name,
-      }, id: reused ? null : derived);
+    final derived = billPaymentId(_household, b.id);
+    // Re-paying after an undo: the derived entry exists (removed), so use a new id.
+    final reused = await _exists(db.transactions, derived);
+    await writer.insert('transactions', {
+      'amount_minor': -paid,
+      'category': b.category ?? defaultBillCategory,
+      'currency': b.currency,
+      'occurred_at': now.toUtc(),
+      'member_id': writer.identity.memberId,
+      'source_type': billSource,
+      'source_id': b.id,
+      'note': b.name,
+    }, id: reused ? null : derived);
 
-      if (b.repeat == 'monthly') await _addNext(b, paid);
-    });
+    if (b.repeat == 'monthly') await _addNext(b, paid);
   }
 
   Future<void> _addNext(Bill b, int amountMinor) async {
@@ -226,11 +224,9 @@ class BillsRepository {
 
   /// Back to unpaid and the expense removed. Next month's bill stays.
   Future<void> undoPaid(Bill b) async {
-    await db.transaction(() async {
-      final p = await paymentOf(b);
-      await writer.update('bills', b.id, {'is_paid': false, 'paid_at': null});
-      if (p != null) await writer.delete('transactions', p.id);
-    });
+    final p = await paymentOf(b);
+    await writer.update('bills', b.id, {'is_paid': false, 'paid_at': null});
+    if (p != null) await writer.delete('transactions', p.id);
   }
 
   // -------------------------------------------------------- subscriptions
@@ -283,25 +279,23 @@ class BillsRepository {
     final now = today;
     final due = parseIsoDate(s.nextDueOn) ?? DateTime(now.year, now.month, now.day);
     final dueKey = isoDate(due);
-    await db.transaction(() async {
-      final derived = subscriptionPaymentId(_household, s.id, dueKey);
-      final existing = await (db.select(db.transactions)..where((t) => t.id.equals(derived))).getSingleOrNull();
-      // Already recorded for this due date (e.g. pulled from another device): just move on.
-      if (existing == null || existing.deletedAt != null) {
-        await writer.insert('transactions', {
-          'amount_minor': -s.priceMinor,
-          'category': s.category ?? defaultSubscriptionCategory,
-          'currency': s.currency,
-          'occurred_at': now.toUtc(),
-          'member_id': writer.identity.memberId,
-          'source_type': subscriptionSource,
-          'source_id': s.id,
-          'note': s.name,
-        }, id: existing == null ? derived : null);
-      }
-      await writer.update('subscriptions', s.id, {
-        'next_due_on': isoDate(addMonths(due, s.cycle == 'yearly' ? 12 : 1)),
-      });
+    final derived = subscriptionPaymentId(_household, s.id, dueKey);
+    final existing = await (db.select(db.transactions)..where((t) => t.id.equals(derived))).getSingleOrNull();
+    // Already recorded for this due date (e.g. pulled from another device): just move on.
+    if (existing == null || existing.deletedAt != null) {
+      await writer.insert('transactions', {
+        'amount_minor': -s.priceMinor,
+        'category': s.category ?? defaultSubscriptionCategory,
+        'currency': s.currency,
+        'occurred_at': now.toUtc(),
+        'member_id': writer.identity.memberId,
+        'source_type': subscriptionSource,
+        'source_id': s.id,
+        'note': s.name,
+      }, id: existing == null ? derived : null);
+    }
+    await writer.update('subscriptions', s.id, {
+      'next_due_on': isoDate(addMonths(due, s.cycle == 'yearly' ? 12 : 1)),
     });
   }
 
