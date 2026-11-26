@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../core/auth/app_lock.dart';
 import '../core/auth/auth_service.dart';
 import '../features/auth/lock_screen.dart';
+import '../features/budget/budget_screen.dart';
 import '../features/auth/profile_picker_screen.dart';
 import '../features/auth/sign_in_screen.dart';
 import '../features/auth/tablet_pin_screen.dart';
@@ -23,6 +24,7 @@ abstract final class Routes {
   static const members = '/members';
   static const tabletPin = '/tablet-pin';
   static const pantry = '/pantry';
+  static const budget = '/budget';
 }
 
 GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRouter(
@@ -45,5 +47,6 @@ GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRo
     GoRoute(path: Routes.members, builder: (_, _) => const MembersScreen()),
     GoRoute(path: Routes.tabletPin, builder: (_, _) => const TabletPinScreen()),
     GoRoute(path: Routes.pantry, builder: (_, _) => const PantryScreen()),
+    GoRoute(path: Routes.budget, builder: (_, _) => const BudgetScreen()),
   ],
 );

@@ -70,6 +70,11 @@ const syncedEntities = <String, EntitySpec>{
     fields: {'name', 'unit', 'quantity', 'min_quantity', 'location', 'expires_on'},
     counters: {'quantity'},
   ),
+  'budgets': EntitySpec(
+    name: 'budgets',
+    fields: {'category', 'limit_minor', 'currency'},
+    reviewed: {'limit_minor'},
+  ),
   'bills': EntitySpec(
     name: 'bills',
     fields: {

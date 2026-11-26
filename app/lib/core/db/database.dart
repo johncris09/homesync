@@ -12,6 +12,7 @@ part 'database.g.dart';
     GroceryItems,
     PantryItems,
     Bills,
+    Budgets,
     Transactions,
     Conflicts,
     Outbox,
@@ -24,7 +25,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -36,6 +37,9 @@ class AppDatabase extends _$AppDatabase {
           'CREATE INDEX outbox_entity ON outbox (entity, entity_id, seq)',
         ),
       );
+    },
+    onUpgrade: (m, from, to) async {
+      if (from < 2) await m.createTable(budgets); // Budget module
     },
   );
 

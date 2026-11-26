@@ -8,6 +8,8 @@ import '../../app/theme.dart';
 import '../../core/auth/pin_hash.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/pin_pad.dart';
+import '../../shared/money.dart';
+import '../budget/budget_providers.dart';
 import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
@@ -26,12 +28,25 @@ class HomeScreen extends ConsumerWidget {
     final adult = session.active.isAdult;
     final toBuy = ref.watch(toBuyProvider).value?.length ?? 0;
     final low = ref.watch(pantryItemsProvider).value?.where(isLow).length ?? 0;
+    final canRecord = ref.watch(canRecordSpendingProvider);
+    final money = ref.watch(currentMonthSummaryProvider).value;
+    final locale = Localizations.localeOf(context).toString();
+    String peso(int minor) => formatPeso(minor, locale: locale, whole: true);
+    final budgetCaption = !adult || money == null
+        ? l10n.budgetTileRecord
+        : money.hasBudget
+        ? (money.left >= 0 ? l10n.budgetTileLeft(peso(money.left)) : l10n.budgetTileOver(peso(-money.left)))
+        : l10n.budgetTileSpent(peso(money.spent));
 
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
-          ScreenHeader(figure: l10n.homeGreeting(session.active.name), caption: l10n.homeCaption, color: HomeColors.dahon),
+          ScreenHeader(
+            figure: l10n.homeGreeting(session.active.name),
+            caption: l10n.homeCaption,
+            color: HomeColors.dahon,
+          ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -40,16 +55,32 @@ class HomeScreen extends ConsumerWidget {
                 const SyncStatusCard(),
                 const SizedBox(height: 16),
                 Card(
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      backgroundColor: HomeColors.ube,
-                      foregroundColor: Colors.white,
-                      child: Icon(Icons.kitchen_outlined),
-                    ),
-                    title: Text(l10n.pantryModule),
-                    subtitle: Text(l10n.pantryModuleCaption(toBuy, low)),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () => context.push(Routes.pantry),
+                  child: Column(
+                    children: [
+                      if (canRecord)
+                        ListTile(
+                          leading: const CircleAvatar(
+                            backgroundColor: HomeColors.dahon,
+                            foregroundColor: Colors.white,
+                            child: Icon(Icons.account_balance_wallet_outlined),
+                          ),
+                          title: Text(l10n.budgetModule),
+                          subtitle: Text(budgetCaption),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => context.push(Routes.budget),
+                        ),
+                      ListTile(
+                        leading: const CircleAvatar(
+                          backgroundColor: HomeColors.ube,
+                          foregroundColor: Colors.white,
+                          child: Icon(Icons.kitchen_outlined),
+                        ),
+                        title: Text(l10n.pantryModule),
+                        subtitle: Text(l10n.pantryModuleCaption(toBuy, low)),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(Routes.pantry),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -116,7 +147,8 @@ class HomeScreen extends ConsumerWidget {
     final services = ref.read(servicesProvider);
     var biometrics = false;
     if (await services.appLock.biometricAuth.available() && context.mounted) {
-      biometrics = await showDialog<bool>(
+      biometrics =
+          await showDialog<bool>(
             context: context,
             builder: (d) => AlertDialog(
               content: Text(l10n.unlockWithBiometrics),
