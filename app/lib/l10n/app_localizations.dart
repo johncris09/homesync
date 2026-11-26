@@ -241,7 +241,7 @@ abstract class AppLocalizations {
   /// No description provided for @modulesComingSoon.
   ///
   /// In en, this message translates to:
-  /// **'Budget, bills, chores and calendar are coming next.'**
+  /// **'Bills, chores and calendar are coming next.'**
   String get modulesComingSoon;
 
   /// No description provided for @syncSyncing.
@@ -867,6 +867,294 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove from pantry'**
   String get pantryRemove;
+
+  /// No description provided for @budgetModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget'**
+  String get budgetModule;
+
+  /// No description provided for @budgetTileLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} left this month'**
+  String budgetTileLeft(String amount);
+
+  /// No description provided for @budgetTileOver.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} over this month'**
+  String budgetTileOver(String amount);
+
+  /// No description provided for @budgetTileSpent.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} spent this month'**
+  String budgetTileSpent(String amount);
+
+  /// No description provided for @budgetTileRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Record an expense'**
+  String get budgetTileRecord;
+
+  /// No description provided for @budgetLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} left'**
+  String budgetLeft(String amount);
+
+  /// No description provided for @budgetOver.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} over'**
+  String budgetOver(String amount);
+
+  /// No description provided for @budgetSpent.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} spent'**
+  String budgetSpent(String amount);
+
+  /// No description provided for @budgetSpentOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent {spent} of {budget} in {month}.'**
+  String budgetSpentOf(String spent, String budget, String month);
+
+  /// No description provided for @budgetNoLimitsCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent in {month}. Set budgets to see what\'s left.'**
+  String budgetNoLimitsCaption(String month);
+
+  /// No description provided for @budgetMineCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'What you recorded in {month}.'**
+  String budgetMineCaption(String month);
+
+  /// No description provided for @budgetPrevMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get budgetPrevMonth;
+
+  /// No description provided for @budgetNextMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get budgetNextMonth;
+
+  /// No description provided for @budgetSetFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a monthly budget'**
+  String get budgetSetFirst;
+
+  /// No description provided for @budgetSetAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget another category'**
+  String get budgetSetAnother;
+
+  /// No description provided for @budgetOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{spent} of {limit}'**
+  String budgetOf(String spent, String limit);
+
+  /// No description provided for @budgetNoLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'{spent} · no budget'**
+  String budgetNoLimit(String spent);
+
+  /// No description provided for @budgetLimitFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly budget for {category}'**
+  String budgetLimitFor(String category);
+
+  /// No description provided for @budgetMonthlyLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Each month'**
+  String get budgetMonthlyLimit;
+
+  /// No description provided for @budgetClear.
+  ///
+  /// In en, this message translates to:
+  /// **'No budget for this'**
+  String get budgetClear;
+
+  /// No description provided for @budgetMoneyIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Money in this month: {amount}'**
+  String budgetMoneyIn(String amount);
+
+  /// No description provided for @budgetEntriesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get budgetEntriesTitle;
+
+  /// No description provided for @budgetMyEntriesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What you recorded'**
+  String get budgetMyEntriesTitle;
+
+  /// No description provided for @budgetNoEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded this month.'**
+  String get budgetNoEntries;
+
+  /// No description provided for @budgetAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get budgetAdd;
+
+  /// No description provided for @budgetRecordExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Record expense'**
+  String get budgetRecordExpense;
+
+  /// No description provided for @budgetAddExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Money out'**
+  String get budgetAddExpense;
+
+  /// No description provided for @budgetAddIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Money in'**
+  String get budgetAddIncome;
+
+  /// No description provided for @budgetMoneyOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Out'**
+  String get budgetMoneyOut;
+
+  /// No description provided for @budgetMoneyInLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'In'**
+  String get budgetMoneyInLabel;
+
+  /// No description provided for @budgetNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. palengke, Meralco'**
+  String get budgetNoteHint;
+
+  /// No description provided for @budgetAppendOnlyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount, category and date can\'t be changed. If they are wrong, remove this and add it again.'**
+  String get budgetAppendOnlyHint;
+
+  /// No description provided for @budgetRemoveEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get budgetRemoveEntry;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amount;
+
+  /// No description provided for @amountInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount, e.g. 250 or 1,240.50.'**
+  String get amountInvalid;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @categoryRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a category.'**
+  String get categoryRequired;
+
+  /// No description provided for @catFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food & groceries'**
+  String get catFood;
+
+  /// No description provided for @catUtilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Utilities'**
+  String get catUtilities;
+
+  /// No description provided for @catTransport.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get catTransport;
+
+  /// No description provided for @catSchool.
+  ///
+  /// In en, this message translates to:
+  /// **'School'**
+  String get catSchool;
+
+  /// No description provided for @catHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get catHealth;
+
+  /// No description provided for @catHousehold.
+  ///
+  /// In en, this message translates to:
+  /// **'Household'**
+  String get catHousehold;
+
+  /// No description provided for @catLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Load & internet'**
+  String get catLoad;
+
+  /// No description provided for @catPersonal.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get catPersonal;
+
+  /// No description provided for @catGiving.
+  ///
+  /// In en, this message translates to:
+  /// **'Giving'**
+  String get catGiving;
+
+  /// No description provided for @catIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Money in'**
+  String get catIncome;
+
+  /// No description provided for @catOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get catOther;
 }
 
 class _AppLocalizationsDelegate

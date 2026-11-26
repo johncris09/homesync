@@ -90,8 +90,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeCaption => 'Everything here works offline.';
 
   @override
-  String get modulesComingSoon =>
-      'Budget, bills, chores and calendar are coming next.';
+  String get modulesComingSoon => 'Bills, chores and calendar are coming next.';
 
   @override
   String get syncSyncing => 'Syncing…';
@@ -492,4 +491,175 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pantryRemove => 'Remove from pantry';
+
+  @override
+  String get budgetModule => 'Budget';
+
+  @override
+  String budgetTileLeft(String amount) {
+    return '$amount left this month';
+  }
+
+  @override
+  String budgetTileOver(String amount) {
+    return '$amount over this month';
+  }
+
+  @override
+  String budgetTileSpent(String amount) {
+    return '$amount spent this month';
+  }
+
+  @override
+  String get budgetTileRecord => 'Record an expense';
+
+  @override
+  String budgetLeft(String amount) {
+    return '$amount left';
+  }
+
+  @override
+  String budgetOver(String amount) {
+    return '$amount over';
+  }
+
+  @override
+  String budgetSpent(String amount) {
+    return '$amount spent';
+  }
+
+  @override
+  String budgetSpentOf(String spent, String budget, String month) {
+    return 'Spent $spent of $budget in $month.';
+  }
+
+  @override
+  String budgetNoLimitsCaption(String month) {
+    return 'Spent in $month. Set budgets to see what\'s left.';
+  }
+
+  @override
+  String budgetMineCaption(String month) {
+    return 'What you recorded in $month.';
+  }
+
+  @override
+  String get budgetPrevMonth => 'Previous month';
+
+  @override
+  String get budgetNextMonth => 'Next month';
+
+  @override
+  String get budgetSetFirst => 'Set a monthly budget';
+
+  @override
+  String get budgetSetAnother => 'Budget another category';
+
+  @override
+  String budgetOf(String spent, String limit) {
+    return '$spent of $limit';
+  }
+
+  @override
+  String budgetNoLimit(String spent) {
+    return '$spent · no budget';
+  }
+
+  @override
+  String budgetLimitFor(String category) {
+    return 'Monthly budget for $category';
+  }
+
+  @override
+  String get budgetMonthlyLimit => 'Each month';
+
+  @override
+  String get budgetClear => 'No budget for this';
+
+  @override
+  String budgetMoneyIn(String amount) {
+    return 'Money in this month: $amount';
+  }
+
+  @override
+  String get budgetEntriesTitle => 'This month';
+
+  @override
+  String get budgetMyEntriesTitle => 'What you recorded';
+
+  @override
+  String get budgetNoEntries => 'Nothing recorded this month.';
+
+  @override
+  String get budgetAdd => 'Add';
+
+  @override
+  String get budgetRecordExpense => 'Record expense';
+
+  @override
+  String get budgetAddExpense => 'Money out';
+
+  @override
+  String get budgetAddIncome => 'Money in';
+
+  @override
+  String get budgetMoneyOut => 'Out';
+
+  @override
+  String get budgetMoneyInLabel => 'In';
+
+  @override
+  String get budgetNoteHint => 'e.g. palengke, Meralco';
+
+  @override
+  String get budgetAppendOnlyHint =>
+      'Amount, category and date can\'t be changed. If they are wrong, remove this and add it again.';
+
+  @override
+  String get budgetRemoveEntry => 'Remove';
+
+  @override
+  String get amount => 'Amount';
+
+  @override
+  String get amountInvalid => 'Enter an amount, e.g. 250 or 1,240.50.';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get categoryRequired => 'Pick a category.';
+
+  @override
+  String get catFood => 'Food & groceries';
+
+  @override
+  String get catUtilities => 'Utilities';
+
+  @override
+  String get catTransport => 'Transport';
+
+  @override
+  String get catSchool => 'School';
+
+  @override
+  String get catHealth => 'Health';
+
+  @override
+  String get catHousehold => 'Household';
+
+  @override
+  String get catLoad => 'Load & internet';
+
+  @override
+  String get catPersonal => 'Personal';
+
+  @override
+  String get catGiving => 'Giving';
+
+  @override
+  String get catIncome => 'Money in';
+
+  @override
+  String get catOther => 'Other';
 }

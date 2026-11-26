@@ -77,7 +77,10 @@ class FakeSyncServer {
     final table = rows.putIfAbsent(entity, () => {});
     final row = table[id];
 
-    final ctx = _Ctx(spec, id, hlc, memberId, deviceId, op['base_version'] as int?);
+    // An insert onto an existing row (derived ids, §2.1) comes from a device
+    // that never saw the row: base version 0, so reviewed values are kept.
+    final base = op['op'] == 'insert' && row != null ? 0 : op['base_version'] as int?;
+    final ctx = _Ctx(spec, id, hlc, memberId, deviceId, base);
     final (String status, String? conflictId) = switch (op['op']) {
       'insert' => row != null ? _update(ctx, row, fields) : _insert(ctx, table, fields),
       'update' => _update(ctx, _exists(row), fields),

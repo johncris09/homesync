@@ -52,6 +52,14 @@ class PantryItems extends Table with SyncColumns {
   TextColumn get expiresOn => text().nullable()();
 }
 
+/// Monthly limit per spending category. Id derived from household and
+/// category (sync-protocol §2.1), so there is one row per category.
+class Budgets extends Table with SyncColumns {
+  TextColumn get category => text()();
+  IntColumn get limitMinor => integer().withDefault(const Constant(0))();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+}
+
 class Bills extends Table with SyncColumns {
   TextColumn get name => text()();
   TextColumn get provider => text().nullable()();

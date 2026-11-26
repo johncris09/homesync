@@ -36,6 +36,14 @@ Server-only tables: `change_log`, `processed_ops`, `device_cursors`. `conflicts`
 
 Per-field HLCs for field-level merge are stored server-side in `change_log` payloads and on the device in a `field_clocks` table (`entity`, `entity_id`, `field`, `hlc`).
 
+### 2.1 Derived ids (one row per natural key)
+
+Some entities hold at most one row per natural key. Their id is not random: the device derives it as a UUIDv5 of the namespace `6f1c2b7e-3d4a-5e8f-9a0b-1c2d3e4f5a6b` and the name `<entity>/<household_id>/<key>`, so every device makes the same id. An `insert` for an id that already exists is applied as an `update` with the normal field rules (§6) and `base_version` 0 (the device never saw the row), so two devices creating the same row offline end up with one row, and a reviewed value that gets overwritten is kept in `conflicts` whichever device syncs first.
+
+| Entity | Key |
+| --- | --- |
+| `budgets` | `category` |
+
 ---
 
 ## 3. Op format (outbox entry)

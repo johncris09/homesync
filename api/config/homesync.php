@@ -93,6 +93,20 @@ return [
             'write' => $adults,
         ],
 
+        // Monthly limit per spending category. The id is derived from the
+        // household and category (sync-protocol §2.1); limit changes are reviewed.
+        'budgets' => [
+            'table' => 'budgets',
+            'fields' => [
+                'category' => 'string',
+                'limit_minor' => 'int',
+                'currency' => 'string',
+            ],
+            'reviewed' => ['limit_minor'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',

@@ -102,7 +102,11 @@ class SyncService
             throw new OpRejected('household_mismatch');
         }
 
-        $ctx = new OpContext($device, $member, $entity, $table, $id, $op['hlc'], $op['base_version'] ?? null);
+        // An insert onto an existing row (derived ids, sync-protocol §2.1) comes
+        // from a device that never saw the row: base version 0, so a reviewed
+        // value it overwrites is kept for review.
+        $base = $op['op'] === 'insert' && $row ? 0 : ($op['base_version'] ?? null);
+        $ctx = new OpContext($device, $member, $entity, $table, $id, $op['hlc'], $base);
         $fields = $op['fields'] ?? [];
 
         [$status, $conflictId] = match ($op['op']) {

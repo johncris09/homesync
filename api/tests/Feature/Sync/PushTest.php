@@ -154,6 +154,47 @@ class PushTest extends SyncTestCase
         $this->assertSame($ana->member_id, $conflict->lost_by);
     }
 
+    public function test_two_devices_setting_the_same_category_budget_share_one_row(): void
+    {
+        $john = $this->device('owner');
+        $ana = $this->device('adult');
+        // Both devices derive the same id for (household, "food") and insert offline.
+        $id = '5a1e3c9d-8f2b-5c47-9a10-3b6d2e8f4c71';
+        $this->push($john, [$this->op('budgets', $id, 'insert', ['category' => 'food', 'limit_minor' => 800000], $this->hlc(3))]);
+        $res = $this->push($ana, [$this->op('budgets', $id, 'insert', ['category' => 'food', 'limit_minor' => 650000], $this->hlc(2, 0, 'bbbbbbbb'))]);
+
+        $this->assertSame(['merged'], $this->statuses($res));
+        $this->assertSame(1, DB::table('budgets')->count());
+        $this->assertSame(800000, $this->latest($john, $id)['limit_minor']);
+        $conflict = DB::table('conflicts')->where('entity', 'budgets')->first();
+        $this->assertNotNull($conflict, 'the losing limit is kept for review');
+        $this->assertSame(650000, json_decode($conflict->lost_value));
+    }
+
+    public function test_same_category_budget_keeps_the_overwritten_limit_when_the_newer_arrives_second(): void
+    {
+        $john = $this->device('owner');
+        $ana = $this->device('adult');
+        $id = '5a1e3c9d-8f2b-5c47-9a10-3b6d2e8f4c71';
+        $this->push($ana, [$this->op('budgets', $id, 'insert', ['category' => 'food', 'limit_minor' => 650000], $this->hlc(2, 0, 'bbbbbbbb'))]);
+        $res = $this->push($john, [$this->op('budgets', $id, 'insert', ['category' => 'food', 'limit_minor' => 800000], $this->hlc(3))]);
+
+        $this->assertSame(['applied'], $this->statuses($res));
+        $this->assertNotNull($res->json('results.0.conflict_id'));
+        $this->assertSame(800000, $this->latest($john, $id)['limit_minor']);
+        $conflict = DB::table('conflicts')->where('entity', 'budgets')->first();
+        $this->assertSame(650000, json_decode($conflict->lost_value));
+        $this->assertSame($ana->member_id, $conflict->lost_by);
+    }
+
+    public function test_budgets_are_for_adults_only(): void
+    {
+        $helper = $this->device('helper');
+        $res = $this->push($helper, [$this->op('budgets', (string) Str::uuid7(), 'insert', ['category' => 'food', 'limit_minor' => 1], $this->hlc(1))]);
+        $this->assertSame(['rejected'], $this->statuses($res));
+        $this->assertSame('forbidden', $res->json('results.0.error'));
+    }
+
     public function test_conflicts_sync_to_adults_and_can_be_resolved(): void
     {
         $john = $this->device('owner');
