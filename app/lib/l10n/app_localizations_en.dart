@@ -91,7 +91,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get modulesComingSoon =>
-      'Budget, bills, chores, calendar and pantry arrive in Phase 1.';
+      'Budget, bills, chores and calendar are coming next.';
 
   @override
   String get syncSyncing => 'Syncing…';
@@ -320,4 +320,176 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roleViewer => 'Viewer';
+
+  @override
+  String get pantryModule => 'Pantry & grocery';
+
+  @override
+  String pantryModuleCaption(int toBuy, int low) {
+    return '$toBuy to buy · $low running low';
+  }
+
+  @override
+  String get groceryTab => 'Grocery list';
+
+  @override
+  String get pantryTab => 'Pantry';
+
+  @override
+  String groceryToBuy(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count to buy',
+      one: '1 to buy',
+      zero: 'Nothing to buy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String pantryLowCaption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items running low in the pantry.',
+      one: '1 item running low in the pantry.',
+      zero: 'Pantry is stocked.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get groceryAddHint => 'Add to the list, e.g. eggs';
+
+  @override
+  String get groceryAdd => 'Add';
+
+  @override
+  String get groceryEmpty => 'The list is empty.';
+
+  @override
+  String get groceryBought => 'Bought';
+
+  @override
+  String get groceryClearBought => 'Clear bought';
+
+  @override
+  String groceryFor(String name) {
+    return 'asked by $name';
+  }
+
+  @override
+  String get groceryEditTitle => 'Edit item';
+
+  @override
+  String get groceryQuantity => 'How much';
+
+  @override
+  String get groceryQuantityHint => 'e.g. 1 tray, 2 kg';
+
+  @override
+  String get groceryStore => 'Store';
+
+  @override
+  String get groceryStoreHint => 'e.g. palengke, SM';
+
+  @override
+  String get groceryRemove => 'Remove from list';
+
+  @override
+  String get itemName => 'Name';
+
+  @override
+  String get itemNameRequired => 'Enter a name.';
+
+  @override
+  String get itemNote => 'Note';
+
+  @override
+  String get pantryAdd => 'Add pantry item';
+
+  @override
+  String get pantryEditTitle => 'Edit pantry item';
+
+  @override
+  String get pantryEmpty => 'Nothing in the pantry yet.';
+
+  @override
+  String get pantryQuantity => 'How many now';
+
+  @override
+  String get pantryCountNow => 'Count now';
+
+  @override
+  String get pantryUnit => 'Unit';
+
+  @override
+  String get pantryUnitHint => 'e.g. kg, can, pack';
+
+  @override
+  String get pantryMin => 'Running low at';
+
+  @override
+  String get pantryMinHelp => 'Leave empty to never mark it low.';
+
+  @override
+  String get pantryNumber => 'Enter a number, 0 or more.';
+
+  @override
+  String get pantryLocation => 'Where';
+
+  @override
+  String get pantryLocationHint => 'e.g. ref, cabinet';
+
+  @override
+  String get pantryNoExpiry => 'No expiry date';
+
+  @override
+  String pantryExpiresOn(String date) {
+    return 'Expires $date';
+  }
+
+  @override
+  String get pantryClearExpiry => 'Clear expiry date';
+
+  @override
+  String get pantryExpired => 'Expired';
+
+  @override
+  String pantryExpiresIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Expires in $days days',
+      one: 'Expires tomorrow',
+      zero: 'Expires today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get pantryLow => 'Running low';
+
+  @override
+  String pantryUseOne(String name) {
+    return 'Use one $name';
+  }
+
+  @override
+  String pantryAddOne(String name) {
+    return 'Add one $name';
+  }
+
+  @override
+  String get pantryToGrocery => 'Add to grocery list';
+
+  @override
+  String get pantryAddedToList => 'Added to the grocery list.';
+
+  @override
+  String get pantryAlreadyOnList => 'Already on the grocery list.';
+
+  @override
+  String get pantryRemove => 'Remove from pantry';
 }

@@ -241,7 +241,7 @@ abstract class AppLocalizations {
   /// No description provided for @modulesComingSoon.
   ///
   /// In en, this message translates to:
-  /// **'Budget, bills, chores, calendar and pantry arrive in Phase 1.'**
+  /// **'Budget, bills, chores and calendar are coming next.'**
   String get modulesComingSoon;
 
   /// No description provided for @syncSyncing.
@@ -597,6 +597,276 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Viewer'**
   String get roleViewer;
+
+  /// No description provided for @pantryModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Pantry & grocery'**
+  String get pantryModule;
+
+  /// No description provided for @pantryModuleCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{toBuy} to buy · {low} running low'**
+  String pantryModuleCaption(int toBuy, int low);
+
+  /// No description provided for @groceryTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Grocery list'**
+  String get groceryTab;
+
+  /// No description provided for @pantryTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Pantry'**
+  String get pantryTab;
+
+  /// No description provided for @groceryToBuy.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing to buy} =1{1 to buy} other{{count} to buy}}'**
+  String groceryToBuy(int count);
+
+  /// No description provided for @pantryLowCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Pantry is stocked.} =1{1 item running low in the pantry.} other{{count} items running low in the pantry.}}'**
+  String pantryLowCaption(int count);
+
+  /// No description provided for @groceryAddHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to the list, e.g. eggs'**
+  String get groceryAddHint;
+
+  /// No description provided for @groceryAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get groceryAdd;
+
+  /// No description provided for @groceryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'The list is empty.'**
+  String get groceryEmpty;
+
+  /// No description provided for @groceryBought.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought'**
+  String get groceryBought;
+
+  /// No description provided for @groceryClearBought.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear bought'**
+  String get groceryClearBought;
+
+  /// No description provided for @groceryFor.
+  ///
+  /// In en, this message translates to:
+  /// **'asked by {name}'**
+  String groceryFor(String name);
+
+  /// No description provided for @groceryEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get groceryEditTitle;
+
+  /// No description provided for @groceryQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'How much'**
+  String get groceryQuantity;
+
+  /// No description provided for @groceryQuantityHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 1 tray, 2 kg'**
+  String get groceryQuantityHint;
+
+  /// No description provided for @groceryStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Store'**
+  String get groceryStore;
+
+  /// No description provided for @groceryStoreHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. palengke, SM'**
+  String get groceryStoreHint;
+
+  /// No description provided for @groceryRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from list'**
+  String get groceryRemove;
+
+  /// No description provided for @itemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get itemName;
+
+  /// No description provided for @itemNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name.'**
+  String get itemNameRequired;
+
+  /// No description provided for @itemNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get itemNote;
+
+  /// No description provided for @pantryAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add pantry item'**
+  String get pantryAdd;
+
+  /// No description provided for @pantryEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit pantry item'**
+  String get pantryEditTitle;
+
+  /// No description provided for @pantryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in the pantry yet.'**
+  String get pantryEmpty;
+
+  /// No description provided for @pantryQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'How many now'**
+  String get pantryQuantity;
+
+  /// No description provided for @pantryCountNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Count now'**
+  String get pantryCountNow;
+
+  /// No description provided for @pantryUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get pantryUnit;
+
+  /// No description provided for @pantryUnitHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. kg, can, pack'**
+  String get pantryUnitHint;
+
+  /// No description provided for @pantryMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Running low at'**
+  String get pantryMin;
+
+  /// No description provided for @pantryMinHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to never mark it low.'**
+  String get pantryMinHelp;
+
+  /// No description provided for @pantryNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number, 0 or more.'**
+  String get pantryNumber;
+
+  /// No description provided for @pantryLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Where'**
+  String get pantryLocation;
+
+  /// No description provided for @pantryLocationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. ref, cabinet'**
+  String get pantryLocationHint;
+
+  /// No description provided for @pantryNoExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'No expiry date'**
+  String get pantryNoExpiry;
+
+  /// No description provided for @pantryExpiresOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String pantryExpiresOn(String date);
+
+  /// No description provided for @pantryClearExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear expiry date'**
+  String get pantryClearExpiry;
+
+  /// No description provided for @pantryExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get pantryExpired;
+
+  /// No description provided for @pantryExpiresIn.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Expires today} =1{Expires tomorrow} other{Expires in {days} days}}'**
+  String pantryExpiresIn(int days);
+
+  /// No description provided for @pantryLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Running low'**
+  String get pantryLow;
+
+  /// No description provided for @pantryUseOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Use one {name}'**
+  String pantryUseOne(String name);
+
+  /// No description provided for @pantryAddOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Add one {name}'**
+  String pantryAddOne(String name);
+
+  /// No description provided for @pantryToGrocery.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to grocery list'**
+  String get pantryToGrocery;
+
+  /// No description provided for @pantryAddedToList.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to the grocery list.'**
+  String get pantryAddedToList;
+
+  /// No description provided for @pantryAlreadyOnList.
+  ///
+  /// In en, this message translates to:
+  /// **'Already on the grocery list.'**
+  String get pantryAlreadyOnList;
+
+  /// No description provided for @pantryRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from pantry'**
+  String get pantryRemove;
 }
 
 class _AppLocalizationsDelegate

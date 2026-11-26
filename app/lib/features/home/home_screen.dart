@@ -8,6 +8,8 @@ import '../../app/theme.dart';
 import '../../core/auth/pin_hash.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/pin_pad.dart';
+import '../pantry/pantry_providers.dart';
+import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -22,6 +24,8 @@ class HomeScreen extends ConsumerWidget {
     final conflicts = ref.watch(openConflictsProvider).value?.length ?? 0;
     final errors = ref.watch(syncErrorsProvider).value?.length ?? 0;
     final adult = session.active.isAdult;
+    final toBuy = ref.watch(toBuyProvider).value?.length ?? 0;
+    final low = ref.watch(pantryItemsProvider).value?.where(isLow).length ?? 0;
 
     return Scaffold(
       body: ListView(
@@ -34,6 +38,20 @@ class HomeScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SyncStatusCard(),
+                const SizedBox(height: 16),
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      backgroundColor: HomeColors.ube,
+                      foregroundColor: Colors.white,
+                      child: Icon(Icons.kitchen_outlined),
+                    ),
+                    title: Text(l10n.pantryModule),
+                    subtitle: Text(l10n.pantryModuleCaption(toBuy, low)),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => context.push(Routes.pantry),
+                  ),
+                ),
                 const SizedBox(height: 16),
                 Card(
                   child: Column(
