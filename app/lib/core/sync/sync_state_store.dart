@@ -11,6 +11,7 @@ class SyncStateStore {
   static const _lastSyncedAt = 'last_synced_at';
   static const _hlcLast = 'hlc_last';
   static const _hlcSkew = 'hlc_skew_ms';
+  static const _hubVersion = 'hub_version';
 
   Future<String?> read(String key) async {
     final row = await (_db.select(_db.syncState)..where((t) => t.key.equals(key)))
@@ -36,6 +37,14 @@ class SyncStateStore {
       (_db.select(_db.syncState)..where((t) => t.key.equals(_lastSyncedAt)))
           .watchSingleOrNull()
           .map((row) => row == null ? null : DateTime.tryParse(row.value));
+
+  /// Release version the hub last reported (X-HomeSync-Version).
+  Future<String?> hubVersion() => read(_hubVersion);
+
+  Future<void> setHubVersion(String version) => write(_hubVersion, version);
+
+  Stream<String?> watchHubVersion() =>
+      (_db.select(_db.syncState)..where((t) => t.key.equals(_hubVersion))).watchSingleOrNull().map((row) => row?.value);
 
   Future<HlcClock> loadClock(String deviceId, {int Function()? now}) async {
     return HlcClock(

@@ -1114,4 +1114,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String eventAddedBy(String name) {
     return 'Added by $name';
   }
+
+  @override
+  String versionLine(String app, String hub) {
+    return 'Version $app · hub $hub';
+  }
+
+  @override
+  String versionLineNoHub(String app) {
+    return 'Version $app';
+  }
 }
