@@ -158,6 +158,26 @@ return [
             'write' => $household,
         ],
 
+        // Calendar events: all day or at a local "HH:MM" time, once or
+        // repeating weekly, monthly or yearly from starts_on. member_id is who
+        // it is for (null = the whole family). Everyone but viewers adds them.
+        'events' => [
+            'table' => 'events',
+            'fields' => [
+                'title' => 'string',
+                'starts_on' => 'date',
+                'start_time' => 'string',
+                'end_time' => 'string',
+                'repeat' => 'string',
+                'member_id' => 'uuid',
+                'location' => 'string',
+                'note' => 'text',
+                'created_by' => 'uuid',
+            ],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',
