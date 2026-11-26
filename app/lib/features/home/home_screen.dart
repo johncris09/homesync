@@ -51,6 +51,12 @@ class HomeScreen extends ConsumerWidget {
                         subtitle: Text(l10n.syncErrorsCaption(errors)),
                         onTap: () => context.push(Routes.syncProblems),
                       ),
+                      if (session.active.role == 'owner')
+                        ListTile(
+                          leading: const Icon(Icons.group_outlined, color: HomeColors.dagat),
+                          title: Text(l10n.membersTitle),
+                          onTap: () => context.push(Routes.members),
+                        ),
                       if (session.isShared)
                         ListTile(
                           leading: const Icon(Icons.switch_account, color: HomeColors.dagat),

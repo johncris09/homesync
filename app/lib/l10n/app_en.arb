@@ -79,5 +79,31 @@
   "emptyValue": "empty",
 
   "pendingMarker": "Waiting to sync",
-  "conflictMarker": "Needs review"
+  "conflictMarker": "Needs review",
+
+  "membersTitle": "Household members",
+  "membersCount": "{count, plural, =1{1 person} other{{count} people}}",
+  "@membersCount": {"placeholders": {"count": {"type": "int"}}},
+  "membersCaption": "Who records things in this home.",
+  "membersOwnerOnly": "Only the owner can manage household members.",
+  "memberAdd": "Add person",
+  "memberEdit": "Edit",
+  "memberName": "Name",
+  "memberNameRequired": "Enter a name.",
+  "memberRole": "Role",
+  "memberColor": "Colour",
+  "memberNoPin": "no tablet PIN",
+  "memberHasPin": "tablet PIN set",
+  "memberSetPin": "Set tablet PIN",
+  "memberChangePin": "Change tablet PIN",
+  "memberClearPin": "Remove tablet PIN",
+  "memberRemove": "Remove",
+  "memberRemoveConfirm": "Remove {name} from the household? What they recorded stays.",
+  "@memberRemoveConfirm": {"placeholders": {"name": {"type": "String"}}},
+  "roleOwner": "Owner",
+  "roleAdult": "Adult",
+  "roleTeen": "Teen",
+  "roleChild": "Child",
+  "roleHelper": "Helper",
+  "roleViewer": "Viewer"
 }

@@ -19,3 +19,4 @@ Newest first. Each entry: what was decided, and what it changes in the build.
 | 2026-11-25 | Document vault: strong end-to-end encryption | AES-256-GCM on device; server stores ciphertext only; owner recovery code; on web the key is derived from a vault passphrase each session |
 | 2026-11-25 | Audience: this household only | No public sign-up, subscriptions or store listing; owner invites members |
 | 2026-11-25 | Offline-first with outbox + push/pull sync, HLC-based conflict rules | See `sync-protocol.md` |
+| 2026-11-26 | Members are managed by the owner in the app; the owner role is not assignable there | Household members screen (owner only, matches `members.write = ['owner']`): add/edit name, role (adult/teen/child/helper/viewer), colour as `#RRGGBB`; set/change/remove tablet PIN (entered twice); remove = soft delete; the owner can't remove themself or change their own role |

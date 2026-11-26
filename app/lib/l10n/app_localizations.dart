@@ -447,6 +447,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Needs review'**
   String get conflictMarker;
+
+  /// No description provided for @membersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Household members'**
+  String get membersTitle;
+
+  /// No description provided for @membersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 person} other{{count} people}}'**
+  String membersCount(int count);
+
+  /// No description provided for @membersCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Who records things in this home.'**
+  String get membersCaption;
+
+  /// No description provided for @membersOwnerOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the owner can manage household members.'**
+  String get membersOwnerOnly;
+
+  /// No description provided for @memberAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add person'**
+  String get memberAdd;
+
+  /// No description provided for @memberEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get memberEdit;
+
+  /// No description provided for @memberName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get memberName;
+
+  /// No description provided for @memberNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name.'**
+  String get memberNameRequired;
+
+  /// No description provided for @memberRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get memberRole;
+
+  /// No description provided for @memberColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Colour'**
+  String get memberColor;
+
+  /// No description provided for @memberNoPin.
+  ///
+  /// In en, this message translates to:
+  /// **'no tablet PIN'**
+  String get memberNoPin;
+
+  /// No description provided for @memberHasPin.
+  ///
+  /// In en, this message translates to:
+  /// **'tablet PIN set'**
+  String get memberHasPin;
+
+  /// No description provided for @memberSetPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Set tablet PIN'**
+  String get memberSetPin;
+
+  /// No description provided for @memberChangePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Change tablet PIN'**
+  String get memberChangePin;
+
+  /// No description provided for @memberClearPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove tablet PIN'**
+  String get memberClearPin;
+
+  /// No description provided for @memberRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get memberRemove;
+
+  /// No description provided for @memberRemoveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name} from the household? What they recorded stays.'**
+  String memberRemoveConfirm(String name);
+
+  /// No description provided for @roleOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get roleOwner;
+
+  /// No description provided for @roleAdult.
+  ///
+  /// In en, this message translates to:
+  /// **'Adult'**
+  String get roleAdult;
+
+  /// No description provided for @roleTeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Teen'**
+  String get roleTeen;
+
+  /// No description provided for @roleChild.
+  ///
+  /// In en, this message translates to:
+  /// **'Child'**
+  String get roleChild;
+
+  /// No description provided for @roleHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Helper'**
+  String get roleHelper;
+
+  /// No description provided for @roleViewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewer'**
+  String get roleViewer;
 }
 
 class _AppLocalizationsDelegate

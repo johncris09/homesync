@@ -234,4 +234,83 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get conflictMarker => 'Needs review';
+
+  @override
+  String get membersTitle => 'Household members';
+
+  @override
+  String membersCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count people',
+      one: '1 person',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get membersCaption => 'Who records things in this home.';
+
+  @override
+  String get membersOwnerOnly => 'Only the owner can manage household members.';
+
+  @override
+  String get memberAdd => 'Add person';
+
+  @override
+  String get memberEdit => 'Edit';
+
+  @override
+  String get memberName => 'Name';
+
+  @override
+  String get memberNameRequired => 'Enter a name.';
+
+  @override
+  String get memberRole => 'Role';
+
+  @override
+  String get memberColor => 'Colour';
+
+  @override
+  String get memberNoPin => 'no tablet PIN';
+
+  @override
+  String get memberHasPin => 'tablet PIN set';
+
+  @override
+  String get memberSetPin => 'Set tablet PIN';
+
+  @override
+  String get memberChangePin => 'Change tablet PIN';
+
+  @override
+  String get memberClearPin => 'Remove tablet PIN';
+
+  @override
+  String get memberRemove => 'Remove';
+
+  @override
+  String memberRemoveConfirm(String name) {
+    return 'Remove $name from the household? What they recorded stays.';
+  }
+
+  @override
+  String get roleOwner => 'Owner';
+
+  @override
+  String get roleAdult => 'Adult';
+
+  @override
+  String get roleTeen => 'Teen';
+
+  @override
+  String get roleChild => 'Child';
+
+  @override
+  String get roleHelper => 'Helper';
+
+  @override
+  String get roleViewer => 'Viewer';
 }

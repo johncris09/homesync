@@ -7,6 +7,7 @@ import '../features/auth/lock_screen.dart';
 import '../features/auth/profile_picker_screen.dart';
 import '../features/auth/sign_in_screen.dart';
 import '../features/home/home_screen.dart';
+import '../features/members/members_screen.dart';
 import '../features/sync/conflict_inbox_screen.dart';
 import '../features/sync/sync_problems_screen.dart';
 
@@ -17,6 +18,7 @@ abstract final class Routes {
   static const profiles = '/profiles';
   static const conflicts = '/conflicts';
   static const syncProblems = '/sync-problems';
+  static const members = '/members';
 }
 
 GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRouter(
@@ -35,5 +37,6 @@ GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRo
     GoRoute(path: Routes.profiles, builder: (_, _) => const ProfilePickerScreen()),
     GoRoute(path: Routes.conflicts, builder: (_, _) => const ConflictInboxScreen()),
     GoRoute(path: Routes.syncProblems, builder: (_, _) => const SyncProblemsScreen()),
+    GoRoute(path: Routes.members, builder: (_, _) => const MembersScreen()),
   ],
 );

@@ -50,8 +50,8 @@ The UI reads and writes only the local Drift database. Every local write updates
 | Plan, design, decisions | Done |
 | Repo scaffold (Flutter + Laravel generated) | Done — `feature/repo-scaffold` |
 | API sync engine: push/pull/bootstrap, all conflict rules, device tokens, email + PIN login, protocol check, setup command, 28 tests | Done — `feature/sync-core` |
-| **App sync engine** (steps 1–9) | Done — `feature/app-sync-core`: Drift DB (sqlite3mc), HLC, outbox (per-profile), sync engine, triggers + WorkManager, email/PIN-profile auth, app lock, synced conflicts + Conflict Inbox, sync status UI; 97 app tests, 30 API tests |
-| Phase 0 leftovers | **Next**: owner screens to add members and set PINs, test against a real hub |
+| **App sync engine** (steps 1–9) | Done — `feature/app-sync-core`: Drift DB (sqlite3mc), HLC, outbox (per-profile), sync engine, triggers + WorkManager, email/PIN-profile auth, app lock, synced conflicts + Conflict Inbox, sync status UI, owner Household members screen (add/edit/remove, set tablet PIN); 101 app tests, 30 API tests |
+| Phase 0 leftovers | **Next**: test against a real hub (setup → sign in → add members/PINs → tablet profiles → two-device sync) |
 | Phase 1 modules (Budget, Bills & Subscriptions, Chores, Calendar, Pantry & Grocery) | Not started |
 
 ### Phase 0 app notes (`feature/app-sync-core`)
