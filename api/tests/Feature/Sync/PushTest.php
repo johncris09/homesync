@@ -101,6 +101,19 @@ class PushTest extends SyncTestCase
         $this->assertStringStartsWith('2026-11-26T10:00:00', $row['cleared_at']);
     }
 
+    public function test_a_grocery_item_can_carry_a_planned_shopping_day(): void
+    {
+        $ana = $this->device('adult');
+        $id = (string) Str::uuid7();
+        $this->push($ana, [$this->op('grocery_items', $id, 'insert', ['name' => 'Rice', 'planned_on' => '2026-11-29'], $this->hlc(1))]);
+        $this->assertSame('2026-11-29', substr($this->latest($ana, $id)['planned_on'], 0, 10));
+
+        $res = $this->push($ana, [$this->op('grocery_items', $id, 'update', ['planned_on' => null], $this->hlc(2))]);
+
+        $this->assertSame(['applied'], $this->statuses($res));
+        $this->assertNull($this->latest($ana, $id)['planned_on']);
+    }
+
     public function test_the_person_who_marked_bought_can_undo_it(): void
     {
         $ana = $this->device('adult');

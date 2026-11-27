@@ -164,6 +164,7 @@ void main() {
     await v5.customStatement('SELECT 1');
     await v5.customStatement('DROP TABLE events');
     await v5.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
+    await v5.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on'); // added in v8
     await v5.customStatement('PRAGMA user_version = 4');
     await v5.close();
 

@@ -251,6 +251,7 @@ void main() {
       await v3.customStatement('ALTER TABLE bills DROP COLUMN "$c"');
     }
     await v3.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
+    await v3.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on'); // added in v8
     await v3.customStatement('PRAGMA user_version = 2');
     await v3.close();
 

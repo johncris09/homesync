@@ -195,7 +195,7 @@ Applied by the server when an incoming op's field HLC is older than or concurren
 | Delete vs edit | All | Delete wins unless the edit's HLC is newer than the delete's |
 | Never auto-merged | `vault_items`, `vault_files`, `health_profiles` | Both versions kept; the newer is live, the older stored in `conflicts`; Owner chooses |
 
-A grocery item (`grocery_items`) is ticked off with `is_bought` (forward-only) and `bought_at`, the moment it was bought; the person can move `bought_at` to another day. "Clear bought" does not delete: it sets `cleared_at`, which hides the item from the list but keeps it for the history screen (past groceries, grouped by the local day of `bought_at`). Ticking an item again sets `cleared_at` back to null. Removing an item from the list is still a delete. Both fields follow the default field-level rule.
+A grocery item (`grocery_items`) is ticked off with `is_bought` (forward-only) and `bought_at`, the moment it was bought; the person can move `bought_at` to another day. "Clear bought" does not delete: it sets `cleared_at`, which hides the item from the list but keeps it for the history screen (past groceries, grouped by the local day of `bought_at`). Ticking an item again sets `cleared_at` back to null. Removing an item from the list is still a delete. `planned_on` (`YYYY-MM-DD`, may be in the future, null = no date) is the day the household plans to buy an item still on the list; the list groups by it, soonest first. All three fields follow the default field-level rule.
 
 A chore has no done flag: it is done for a day when it has a `chore_completions` row for that day, so two people doing it offline both keep their completion.
 

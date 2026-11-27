@@ -40,6 +40,8 @@ class PantryRepository {
   SimpleSelectStatement<$GroceryItemsTable, GroceryItem> _toBuy() => db.select(db.groceryItems)
     ..where((g) => g.deletedAt.isNull() & g.isBought.equals(false))
     ..orderBy([
+      (g) => OrderingTerm(expression: g.plannedOn.isNull()),
+      (g) => OrderingTerm(expression: g.plannedOn),
       (g) => OrderingTerm(expression: g.store.isNull()),
       (g) => OrderingTerm(expression: g.store.lower()),
       (g) => OrderingTerm(expression: g.name.lower()),
@@ -49,9 +51,10 @@ class PantryRepository {
     ..where((g) => g.deletedAt.isNull() & g.isBought.equals(true) & g.clearedAt.isNull())
     ..orderBy([(g) => OrderingTerm.desc(g.boughtAt)]);
 
-  Future<String> addGrocery(String name, {String? quantityText, String? store, String? note}) =>
+  Future<String> addGrocery(String name, {String? quantityText, String? store, String? note, DateTime? plannedOn}) =>
       writer.insert('grocery_items', {
         'name': name.trim(),
+        'planned_on': plannedOn == null ? null : isoDate(plannedOn),
         'quantity_text': _blankToNull(quantityText),
         'store': _blankToNull(store),
         'note': _blankToNull(note),
@@ -66,6 +69,10 @@ class PantryRepository {
     'bought_at': bought ? _now().toUtc() : null,
     'cleared_at': null,
   });
+
+  /// Sets (or with null, removes) the day the item is to be bought.
+  Future<void> setPlannedOn(String id, DateTime? day) =>
+      writer.update('grocery_items', id, {'planned_on': day == null ? null : isoDate(day)});
 
   /// Changes the day an item was bought, keeping the time of day it was
   /// ticked (so items bought together stay in the same order).
@@ -197,6 +204,31 @@ class PantryRepository {
   }
 
   static String? _blankToNull(String? s) => s == null || s.trim().isEmpty ? null : s.trim();
+}
+
+/// Items still to buy grouped by planned day (as ordered by
+/// [PantryRepository.watchToBuy]: soonest first, no date last).
+List<({String? day, List<GroceryItem> items})> groupByPlannedDay(List<GroceryItem> items) {
+  final groups = <({String? day, List<GroceryItem> items})>[];
+  for (final g in items) {
+    if (groups.isNotEmpty && groups.last.day == g.plannedOn) {
+      groups.last.items.add(g);
+    } else {
+      groups.add((day: g.plannedOn, items: [g]));
+    }
+  }
+  return groups;
+}
+
+/// The soonest planned shopping day from [today] on, or null.
+DateTime? nextShoppingDay(List<GroceryItem> toBuy, DateTime today) {
+  DateTime? next;
+  for (final g in toBuy) {
+    final d = parseIsoDate(g.plannedOn);
+    if (d == null || daysUntil(d, today) < 0) continue;
+    if (next == null || d.isBefore(next)) next = d;
+  }
+  return next;
 }
 
 /// Bought items grouped by the local day they were bought, keeping the

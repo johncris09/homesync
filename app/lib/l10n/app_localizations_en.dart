@@ -449,6 +449,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groceryBuyAgain => 'Add to the list again';
 
   @override
+  String get groceryTomorrow => 'Tomorrow';
+
+  @override
+  String get groceryNoDate => 'No date';
+
+  @override
+  String get grocerySetDate => 'Set date';
+
+  @override
+  String get groceryPlanHelp => 'When will you buy it?';
+
+  @override
+  String groceryPlanFor(String day) {
+    return 'Shopping day: $day';
+  }
+
+  @override
+  String get groceryChangePlan => 'Change the shopping day';
+
+  @override
+  String get groceryRemovePlan => 'Remove the date';
+
+  @override
+  String groceryNextShopping(String day) {
+    return 'Next shopping: $day';
+  }
+
+  @override
   String get itemName => 'Name';
 
   @override

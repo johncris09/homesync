@@ -6,31 +6,9 @@ import '../../app/theme.dart';
 import '../../core/db/database.dart';
 import '../../l10n/app_localizations.dart';
 import '../sync/sync_widgets.dart';
+import 'grocery_dates.dart';
 import 'pantry_providers.dart';
 import 'pantry_repository.dart';
-
-/// "Today", "Yesterday" or "Wed, Nov 26" for the day an item was bought.
-String boughtDayLabel(BuildContext context, DateTime day, DateTime today) {
-  final l10n = AppLocalizations.of(context);
-  return switch (daysUntil(day, today)) {
-    0 => l10n.groceryToday,
-    -1 => l10n.groceryYesterday,
-    _ => DateFormat.MMMEd(Localizations.localeOf(context).toString()).format(day),
-  };
-}
-
-/// Asks for the day an item was bought (today at the latest).
-Future<DateTime?> pickBoughtDay(BuildContext context, DateTime current) {
-  final now = DateTime.now();
-  final today = DateTime(now.year, now.month, now.day);
-  return showDatePicker(
-    context: context,
-    initialDate: current.isAfter(today) ? today : current,
-    firstDate: DateTime(today.year - 5),
-    lastDate: today,
-    helpText: AppLocalizations.of(context).groceryChangeDate,
-  );
-}
 
 /// Past groceries: everything bought (cleared or not), grouped by the day it
 /// was bought, newest first. Items can be put back on the list from here.

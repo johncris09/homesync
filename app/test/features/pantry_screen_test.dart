@@ -105,6 +105,39 @@ void main() {
     await app.finish(tester, s);
   });
 
+  testWidgets('a shopping day set in the add field goes on new items, groups the list and can be removed', (
+    tester,
+  ) async {
+    final store = MemorySecureStore();
+    app.signedIn(store);
+    final s = (await tester.runAsync(() => open(store, seed: (r) => r.addGrocery('Soap'))))!;
+    await app.pumpApp(tester, s);
+    await openPantry(tester);
+    expect(find.text('No date'), findsNothing, reason: 'no headings while nothing has a date');
+
+    // Pick today in the add field's date chip, then add an item.
+    await tester.tap(find.descendant(of: find.byKey(const Key('grocery-add-date')), matching: find.text('Set date')));
+    await tester.pumpAndSettle();
+    expect(find.text('When will you buy it?'), findsOneWidget);
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('grocery-add')), 'Eggs');
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Next shopping: Today'), findsOneWidget);
+    expect(find.text('No date'), findsOneWidget); // Soap's group heading
+    final eggs = (await tester.runAsync(() => s.db.select(s.db.groceryItems).get()))!.firstWhere((g) => g.name == 'Eggs');
+    expect(eggs.plannedOn, isNotNull);
+
+    // Remove Eggs' date with the chip's x.
+    await tester.tap(find.descendant(of: find.byKey(Key('plan-${eggs.id}')), matching: find.byIcon(Icons.close)));
+    await tester.pumpAndSettle();
+    expect(find.text('Next shopping: Today'), findsNothing);
+    expect(find.text('No date'), findsNothing);
+    await app.finish(tester, s);
+  });
+
   testWidgets('history is empty until something is bought', (tester) async {
     final store = MemorySecureStore();
     app.signedIn(store);

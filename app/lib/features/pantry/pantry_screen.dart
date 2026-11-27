@@ -8,7 +8,7 @@ import '../../app/theme.dart';
 import '../../core/db/database.dart';
 import '../../l10n/app_localizations.dart';
 import '../sync/sync_widgets.dart';
-import 'grocery_history_screen.dart';
+import 'grocery_dates.dart';
 import 'pantry_providers.dart';
 import 'pantry_repository.dart';
 
@@ -21,8 +21,11 @@ class PantryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final toBuy = ref.watch(toBuyProvider).value?.length ?? 0;
+    final toBuyItems = ref.watch(toBuyProvider).value ?? const <GroceryItem>[];
+    final toBuy = toBuyItems.length;
     final low = ref.watch(pantryItemsProvider).value?.where(isLow).length ?? 0;
+    final now = DateTime.now();
+    final next = nextShoppingDay(toBuyItems, now);
 
     return DefaultTabController(
       length: 2,
@@ -33,7 +36,9 @@ class PantryScreen extends ConsumerWidget {
           children: [
             ScreenHeader(
               figure: l10n.groceryToBuy(toBuy),
-              caption: l10n.pantryLowCaption(low),
+              caption: next == null
+                  ? l10n.pantryLowCaption(low)
+                  : l10n.groceryNextShopping(plannedDayLabel(context, next, now)),
               color: HomeColors.ube,
               leading: const BackButton(color: Colors.white),
             ),
@@ -71,6 +76,9 @@ class GroceryTab extends ConsumerStatefulWidget {
 class _GroceryTabState extends ConsumerState<GroceryTab> {
   final _add = TextEditingController();
 
+  /// Shopping day for the items typed next (null = no date).
+  DateTime? _planned;
+
   @override
   void dispose() {
     _add.dispose();
@@ -81,7 +89,7 @@ class _GroceryTabState extends ConsumerState<GroceryTab> {
     final name = _add.text.trim();
     if (name.isEmpty) return;
     _add.clear();
-    await ref.read(pantryRepoProvider).addGrocery(name);
+    await ref.read(pantryRepoProvider).addGrocery(name, plannedOn: _planned);
   }
 
   @override
@@ -103,10 +111,20 @@ class _GroceryTabState extends ConsumerState<GroceryTab> {
             textInputAction: TextInputAction.done,
             decoration: InputDecoration(
               hintText: l10n.groceryAddHint,
-              suffixIcon: IconButton(
-                tooltip: l10n.groceryAdd,
-                icon: const Icon(Icons.add_circle, color: HomeColors.ube),
-                onPressed: _quickAdd,
+              suffixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _PlanChip(
+                    key: const Key('grocery-add-date'),
+                    day: _planned,
+                    onPick: (d) => setState(() => _planned = d),
+                  ),
+                  IconButton(
+                    tooltip: l10n.groceryAdd,
+                    icon: const Icon(Icons.add_circle, color: HomeColors.ube),
+                    onPressed: _quickAdd,
+                  ),
+                ],
               ),
             ),
             // Keeps the field focused so several items can be typed in a row.
@@ -120,13 +138,27 @@ class _GroceryTabState extends ConsumerState<GroceryTab> {
             child: Text(l10n.groceryEmpty, textAlign: TextAlign.center),
           )
         else
-          Card(
-            child: Column(
-              children: [
-                for (final g in toBuy) _GroceryTile(item: g, requester: names[g.requestedBy], canEdit: canEdit),
-              ],
+          for (final (i, group) in groupByPlannedDay(toBuy).indexed) ...[
+            if (toBuy.any((g) => g.plannedOn != null))
+              Padding(
+                padding: EdgeInsets.fromLTRB(4, i == 0 ? 0 : 8, 4, 8),
+                child: Text(
+                  group.day == null
+                      ? l10n.groceryNoDate
+                      : plannedDayLabel(context, parseIsoDate(group.day)!, DateTime.now()),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleMedium?.copyWith(color: _isPast(group.day) ? HomeColors.gumamela : null),
+                ),
+              ),
+            Card(
+              child: Column(
+                children: [
+                  for (final g in group.items) _GroceryTile(item: g, requester: names[g.requestedBy], canEdit: canEdit),
+                ],
+              ),
             ),
-          ),
+          ],
         if (bought.isNotEmpty) ...[
           const SizedBox(height: 24),
           Row(
@@ -192,7 +224,18 @@ class _GroceryTile extends ConsumerWidget {
                 SyncMarker(entity: 'grocery_items', id: item.id),
               ],
             )
-          : SyncMarker(entity: 'grocery_items', id: item.id),
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (canEdit || item.plannedOn != null)
+                  _PlanChip(
+                    key: Key('plan-${item.id}'),
+                    day: parseIsoDate(item.plannedOn),
+                    onPick: canEdit ? (d) => ref.read(pantryRepoProvider).setPlannedOn(item.id, d) : null,
+                  ),
+                SyncMarker(entity: 'grocery_items', id: item.id),
+              ],
+            ),
       onTap: canEdit
           ? () => showModalBottomSheet<void>(
               context: context,
@@ -200,6 +243,65 @@ class _GroceryTile extends ConsumerWidget {
               builder: (_) => GroceryForm(item: item),
             )
           : null,
+    );
+  }
+}
+
+bool _isPast(String? day) {
+  final d = parseIsoDate(day);
+  return d != null && daysUntil(d, DateTime.now()) < 0;
+}
+
+/// Planned shopping day of an item (or of the items about to be added).
+/// Tap to pick a day; the x removes it. Shows "Set date" when empty.
+class _PlanChip extends StatelessWidget {
+  const _PlanChip({super.key, required this.day, required this.onPick});
+
+  final DateTime? day;
+  final ValueChanged<DateTime?>? onPick;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final now = DateTime.now();
+    final past = day != null && daysUntil(day!, now) < 0;
+    final pick = onPick == null
+        ? null
+        : () async {
+            final picked = await pickPlannedDay(context, day);
+            if (picked != null) onPick!(picked);
+          };
+    final label = Text(
+      day == null ? l10n.grocerySetDate : plannedDayLabel(context, day!, now),
+      style: TextStyle(color: past ? Colors.white : (day == null ? Colors.black54 : null)),
+    );
+    final background = past
+        ? HomeColors.gumamela
+        : (day == null ? Colors.transparent : HomeColors.mangga.withValues(alpha: 0.25));
+    if (day == null) {
+      return ActionChip(
+        avatar: const Icon(Icons.edit_calendar_outlined, size: 16, color: Colors.black54),
+        label: label,
+        tooltip: onPick == null ? null : l10n.groceryChangePlan,
+        backgroundColor: background,
+        side: BorderSide.none,
+        shape: const StadiumBorder(),
+        visualDensity: VisualDensity.compact,
+        onPressed: pick,
+      );
+    }
+    return InputChip(
+      label: label,
+      tooltip: onPick == null ? null : l10n.groceryChangePlan,
+      backgroundColor: background,
+      side: BorderSide.none,
+      shape: const StadiumBorder(),
+      visualDensity: VisualDensity.compact,
+      onPressed: pick,
+      isEnabled: true,
+      deleteIcon: Icon(Icons.close, size: 16, color: past ? Colors.white : null),
+      deleteButtonTooltipMessage: l10n.groceryRemovePlan,
+      onDeleted: onPick == null ? null : () => onPick!(null),
     );
   }
 }
@@ -250,6 +352,8 @@ class _GroceryFormState extends ConsumerState<GroceryForm> {
   late final _note = TextEditingController(text: widget.item.note ?? '');
   late final DateTime? _boughtDay = _dayOf(widget.item.boughtAt);
   late DateTime? _day = _boughtDay;
+  late final DateTime? _plannedDay = parseIsoDate(widget.item.plannedOn);
+  late DateTime? _plan = _plannedDay;
   bool _tried = false;
 
   static DateTime? _dayOf(DateTime? at) {
@@ -280,6 +384,7 @@ class _GroceryFormState extends ConsumerState<GroceryForm> {
       note: _note.text,
     );
     if (widget.item.isBought && _day != null && _day != _boughtDay) await repo.setBoughtOn(widget.item, _day!);
+    if (!widget.item.isBought && _plan != _plannedDay) await repo.setPlannedOn(widget.item.id, _plan);
     if (mounted) Navigator.pop(context);
   }
 
@@ -319,6 +424,30 @@ class _GroceryFormState extends ConsumerState<GroceryForm> {
           controller: _note,
           decoration: InputDecoration(labelText: l10n.itemNote),
         ),
+        if (!widget.item.isBought) ...[
+          const SizedBox(height: 8),
+          ListTile(
+            key: const Key('grocery-plan'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.event_outlined),
+            title: Text(
+              _plan == null
+                  ? l10n.groceryPlanFor(l10n.groceryNoDate)
+                  : l10n.groceryPlanFor(plannedDayLabel(context, _plan!, DateTime.now())),
+            ),
+            trailing: _plan == null
+                ? const Icon(Icons.edit_calendar_outlined)
+                : IconButton(
+                    tooltip: l10n.groceryRemovePlan,
+                    icon: const Icon(Icons.close),
+                    onPressed: () => setState(() => _plan = null),
+                  ),
+            onTap: () async {
+              final picked = await pickPlannedDay(context, _plan);
+              if (picked != null) setState(() => _plan = picked);
+            },
+          ),
+        ],
         if (widget.item.isBought && _day != null) ...[
           const SizedBox(height: 8),
           ListTile(

@@ -766,6 +766,54 @@ abstract class AppLocalizations {
   /// **'Add to the list again'**
   String get groceryBuyAgain;
 
+  /// No description provided for @groceryTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get groceryTomorrow;
+
+  /// No description provided for @groceryNoDate.
+  ///
+  /// In en, this message translates to:
+  /// **'No date'**
+  String get groceryNoDate;
+
+  /// No description provided for @grocerySetDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Set date'**
+  String get grocerySetDate;
+
+  /// No description provided for @groceryPlanHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'When will you buy it?'**
+  String get groceryPlanHelp;
+
+  /// No description provided for @groceryPlanFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping day: {day}'**
+  String groceryPlanFor(String day);
+
+  /// No description provided for @groceryChangePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the shopping day'**
+  String get groceryChangePlan;
+
+  /// No description provided for @groceryRemovePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the date'**
+  String get groceryRemovePlan;
+
+  /// No description provided for @groceryNextShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Next shopping: {day}'**
+  String groceryNextShopping(String day);
+
   /// No description provided for @itemName.
   ///
   /// In en, this message translates to:

@@ -57,6 +57,7 @@ return [
                 'is_bought' => 'bool',
                 'bought_at' => 'datetime',
                 'cleared_at' => 'datetime',
+                'planned_on' => 'date',
                 'requested_by' => 'uuid',
                 'note' => 'text',
             ],

@@ -69,6 +69,37 @@ void main() {
       expect(await repo.watchBought().first, isEmpty);
     });
 
+    test('planned day: soonest first, no date last, and it can be changed or removed', () async {
+      await repo.addGrocery('Soap');
+      final rice = await repo.addGrocery('Rice', plannedOn: DateTime(2026, 11, 29));
+      await repo.addGrocery('Kangkong', plannedOn: DateTime(2026, 12, 1));
+      await repo.addGrocery('Eggs', plannedOn: DateTime(2026, 11, 29));
+
+      var toBuy = await repo.watchToBuy().first;
+      expect(toBuy.map((g) => g.name), ['Eggs', 'Rice', 'Kangkong', 'Soap']);
+      expect(toBuy.firstWhere((g) => g.id == rice).plannedOn, '2026-11-29');
+      expect(groupByPlannedDay(toBuy).map((d) => (d.day, d.items.length)), [
+        ('2026-11-29', 2),
+        ('2026-12-01', 1),
+        (null, 1),
+      ]);
+      expect(nextShoppingDay(toBuy, now), DateTime(2026, 11, 29));
+
+      await db.delete(db.outbox).go();
+      await repo.setPlannedOn(rice, null);
+      expect((await ops()).single['fields'], {'planned_on': null});
+      toBuy = await repo.watchToBuy().first;
+      expect(toBuy.map((g) => g.name), ['Eggs', 'Kangkong', 'Rice', 'Soap']);
+    });
+
+    test('next shopping day skips days already past', () async {
+      await repo.addGrocery('Rice', plannedOn: DateTime(2026, 11, 20));
+      await repo.addGrocery('Eggs', plannedOn: DateTime(2026, 11, 26));
+      expect(nextShoppingDay(await repo.watchToBuy().first, now), DateTime(2026, 11, 26));
+      now = DateTime(2026, 11, 27);
+      expect(nextShoppingDay(await repo.watchToBuy().first, now), isNull);
+    });
+
     test('editing sends only the fields that changed', () async {
       final id = await repo.addGrocery('Eggs', store: 'SM');
       await db.delete(db.outbox).go();
@@ -293,6 +324,7 @@ void main() {
     final old = PantryRepository(v6, writer(v6, identity(memberId: memberA, deviceId: deviceA)));
     final id = await old.addGrocery('Eggs');
     await v6.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at');
+    await v6.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on');
     await v6.customStatement('PRAGMA user_version = 6');
     await v6.close();
 
