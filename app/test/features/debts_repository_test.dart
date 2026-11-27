@@ -255,6 +255,10 @@ void main() {
     for (final t in ['vault_keys', 'vault_items', 'vault_files', 'vault_blobs']) {
       await v5.customStatement('DROP TABLE "$t"'); // added in v11
     }
+    await v5.customStatement('DROP TABLE health_profiles'); // added in v13
+    await v5.customStatement('DROP TABLE medicines');
+    await v5.customStatement('DROP TABLE med_doses');
+    await v5.customStatement('DROP TABLE checkups');
     await v5.customStatement('PRAGMA user_version = 5');
     await v5.close();
 
