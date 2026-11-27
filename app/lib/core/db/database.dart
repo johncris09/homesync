@@ -42,6 +42,9 @@ part 'database.g.dart';
     Recipes,
     RecipeIngredients,
     Meals,
+    Contractors,
+    MaintenanceTasks,
+    MaintenanceLogs,
     Conflicts,
     Outbox,
     FieldClocks,
@@ -53,7 +56,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 17;
+  int get schemaVersion => 18;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -133,6 +136,12 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(recipes);
         await m.createTable(recipeIngredients);
         await m.createTable(meals);
+      }
+      if (from < 18) {
+        // Home Maintenance (new tables only)
+        await m.createTable(contractors);
+        await m.createTable(maintenanceTasks);
+        await m.createTable(maintenanceLogs);
       }
     },
   );

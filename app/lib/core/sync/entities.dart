@@ -257,6 +257,42 @@ const syncedEntities = <String, EntitySpec>{
     name: 'meals',
     fields: {'planned_on', 'slot', 'recipe_id', 'dish', 'note'},
   ),
+  'contractors': EntitySpec(
+    name: 'contractors',
+    fields: {'name', 'trade', 'phone', 'note'},
+  ),
+  'maintenance_tasks': EntitySpec(
+    name: 'maintenance_tasks',
+    fields: {
+      'name',
+      'area',
+      'every_months',
+      'next_due_on',
+      'last_done_on',
+      'inventory_item_id',
+      'contractor_id',
+      'note',
+    },
+  ),
+  'maintenance_logs': EntitySpec(
+    name: 'maintenance_logs',
+    fields: {
+      'kind',
+      'task_id',
+      'area',
+      'title',
+      'done_on',
+      'due_on',
+      'cost_minor',
+      'currency',
+      'member_id',
+      'contractor_id',
+      'inventory_item_id',
+      'note',
+    },
+    appendOnly: true,
+    mutable: {'note'},
+  ),
   'transactions': EntitySpec(
     name: 'transactions',
     fields: {

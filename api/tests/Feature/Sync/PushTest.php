@@ -446,6 +446,35 @@ class PushTest extends SyncTestCase
         $this->assertSame(2899900, $row['price_minor']);
     }
 
+    public function test_everyone_sees_maintenance_adults_record_it_and_the_log_is_append_only(): void
+    {
+        $john = $this->device('owner');
+        $teen = $this->device('teen');
+        $viewer = $this->device('viewer');
+        $task = (string) Str::uuid7();
+        $log = (string) Str::uuid7();
+        $tech = (string) Str::uuid7();
+
+        $this->assertSame('forbidden', $this->push($teen, [$this->op('maintenance_tasks', (string) Str::uuid7(), 'insert', ['name' => 'Aircon cleaning', 'area' => 'aircon', 'every_months' => 3], $this->hlc(1))])->json('results.0.error'));
+        $this->assertSame(['applied', 'applied', 'applied', 'applied'], $this->statuses($this->push($john, [
+            $this->op('contractors', $tech, 'insert', ['name' => 'Mang Ben', 'trade' => 'aircon', 'phone' => '0917 555 0123'], $this->hlc(2)),
+            $this->op('maintenance_tasks', $task, 'insert', ['name' => 'Aircon cleaning', 'area' => 'aircon', 'every_months' => 3, 'next_due_on' => '2026-12-02', 'contractor_id' => $tech], $this->hlc(3)),
+            $this->op('maintenance_logs', $log, 'insert', ['kind' => 'upkeep', 'task_id' => $task, 'area' => 'aircon', 'title' => 'Aircon cleaning', 'done_on' => '2026-12-01', 'due_on' => '2026-12-02', 'cost_minor' => 150000, 'member_id' => $john->member_id, 'contractor_id' => $tech], $this->hlc(4)),
+            $this->op('maintenance_tasks', $task, 'update', ['last_done_on' => '2026-12-01', 'next_due_on' => '2027-03-01'], $this->hlc(5)),
+        ])));
+
+        // The cost stays as recorded; the note can change.
+        $this->assertSame('rejected', $this->push($john, [$this->op('maintenance_logs', $log, 'update', ['cost_minor' => 100000], $this->hlc(6), 1)])->json('results.0.status'));
+        $this->assertSame(['applied'], $this->statuses($this->push($john, [$this->op('maintenance_logs', $log, 'update', ['note' => 'Both units'], $this->hlc(7), 1)])));
+
+        $changes = collect($this->pull($viewer)->assertOk()->json('changes'));
+        $this->assertSame('2027-03-01', $changes->where('entity', 'maintenance_tasks')->last()['row']['next_due_on']);
+        $row = $changes->where('entity', 'maintenance_logs')->last()['row'];
+        $this->assertSame(150000, $row['cost_minor']);
+        $this->assertSame('Both units', $row['note']);
+        $this->assertSame('0917 555 0123', $changes->firstWhere('entity', 'contractors')['row']['phone']);
+    }
+
     public function test_the_household_plans_meals_and_adds_recipes_viewers_only_see_them(): void
     {
         $helper = $this->device('helper');

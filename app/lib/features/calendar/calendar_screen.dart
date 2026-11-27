@@ -412,6 +412,7 @@ class _DayCell extends StatelessWidget {
                       color: switch (i.kind) {
                         CalendarKind.event => eventColor(i.event?.color) ?? HomeColors.ube,
                         CalendarKind.vehicle || CalendarKind.checkup => HomeColors.dagat,
+                        CalendarKind.upkeep => HomeColors.narra,
                         CalendarKind.rent => HomeColors.dahon,
                         CalendarKind.warranty => HomeColors.ube,
                         _ => HomeColors.mangga,
@@ -472,6 +473,20 @@ class _ItemTile extends ConsumerWidget {
         ),
         trailing: const Icon(Icons.chevron_right),
         onTap: () => context.push(Routes.rent),
+      );
+    }
+
+    if (item.kind == CalendarKind.upkeep) {
+      return ListTile(
+        leading: const CircleAvatar(
+          backgroundColor: HomeColors.narra,
+          foregroundColor: Colors.white,
+          child: Icon(Icons.home_repair_service_outlined),
+        ),
+        title: Text(item.title),
+        subtitle: Text([?showDay, l10n.calendarUpkeepDue].join(' · ')),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => context.push(Routes.maintenance),
       );
     }
 

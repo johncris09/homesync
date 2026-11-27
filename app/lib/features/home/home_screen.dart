@@ -24,6 +24,9 @@ import '../health/health_providers.dart';
 import '../emergency/emergency_providers.dart';
 import '../food/food_providers.dart';
 import '../inventory/inventory_providers.dart';
+import '../maintenance/maintenance_providers.dart';
+import '../maintenance/maintenance_screen.dart' show upkeepWhen;
+import '../../shared/dates.dart' show parseIsoDate;
 import '../rent/rent_providers.dart';
 import '../vehicles/vehicles_providers.dart';
 import '../vehicles/vehicles_screen.dart' show dueWhen;
@@ -60,6 +63,15 @@ class HomeScreen extends ConsumerWidget {
     final rent = adult ? ref.watch(rentSummaryProvider) : null;
     final inventory = ref.watch(inventorySummaryProvider);
     final tonight = ref.watch(tonightProvider);
+    final upkeep = ref.watch(maintenanceSummaryProvider);
+    final upkeepNext = upkeep.next;
+    final upkeepCaption = upkeep.tasks.isEmpty
+        ? l10n.maintTileNone
+        : upkeep.overdue.isNotEmpty
+        ? l10n.maintTileOverdue(upkeep.overdue.length)
+        : upkeepNext != null
+        ? l10n.maintTileNext(upkeepNext.name, upkeepWhen(l10n, locale, parseIsoDate(upkeepNext.nextDueOn)!, upkeep.today))
+        : l10n.maintTileNothingDue;
     final board = ref.watch(checkinBoardProvider);
     final bagsWithItems = ref.watch(goBagsProvider).where((b) => b.memberId != null && b.items.isNotEmpty).toList();
     final help = board.needHelp;
@@ -300,6 +312,22 @@ class HomeScreen extends ConsumerWidget {
                         ),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () => context.push(Routes.inventory),
+                      ),
+                      ListTile(
+                        key: const Key('maintenance-tile'),
+                        leading: CircleAvatar(
+                          backgroundColor: upkeep.overdue.isNotEmpty
+                              ? HomeColors.gumamela
+                              : upkeep.soonCount > 0
+                              ? HomeColors.mangga
+                              : HomeColors.narra,
+                          foregroundColor: upkeep.soonCount > 0 && upkeep.overdue.isEmpty ? HomeColors.narra : Colors.white,
+                          child: const Icon(Icons.home_repair_service_outlined),
+                        ),
+                        title: Text(l10n.maintModule),
+                        subtitle: Text(upkeepCaption),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(Routes.maintenance),
                       ),
                       ListTile(
                         leading: const CircleAvatar(

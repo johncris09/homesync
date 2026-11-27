@@ -390,6 +390,51 @@ class Meals extends Table with SyncColumns {
   TextColumn get note => text().nullable()();
 }
 
+/// Someone the household calls for work on the house. [trade] is one of
+/// `contractorTrades`.
+class Contractors extends Table with SyncColumns {
+  TextColumn get name => text()();
+  TextColumn get trade => text()();
+  TextColumn get phone => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// Upkeep that repeats every [everyMonths] months (null = once). Marking it
+/// done adds a [MaintenanceLogs] row and moves [nextDueOn] on.
+class MaintenanceTasks extends Table with SyncColumns {
+  TextColumn get name => text()();
+
+  /// One of `maintenanceAreas`.
+  TextColumn get area => text()();
+  IntColumn get everyMonths => integer().nullable()();
+
+  /// Calendar dates `YYYY-MM-DD`.
+  TextColumn get nextDueOn => text().nullable()();
+  TextColumn get lastDoneOn => text().nullable()();
+  TextColumn get inventoryItemId => text().nullable()();
+  TextColumn get contractorId => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// Upkeep done ([kind] `upkeep`, with its [taskId] and the [dueOn] it was
+/// for) or a repair (`repair`). Append-only; a cost is also in the ledger.
+class MaintenanceLogs extends Table with SyncColumns {
+  TextColumn get kind => text()();
+  TextColumn get taskId => text().nullable()();
+  TextColumn get area => text()();
+  TextColumn get title => text()();
+
+  /// Calendar dates `YYYY-MM-DD`.
+  TextColumn get doneOn => text()();
+  TextColumn get dueOn => text().nullable()();
+  IntColumn get costMinor => integer().nullable()();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+  TextColumn get memberId => text().nullable()();
+  TextColumn get contractorId => text().nullable()();
+  TextColumn get inventoryItemId => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
 /// A member's health profile; [sealed] is blood type, allergies, conditions,
 /// maintenance medicines, PhilHealth/HMO numbers and doctor, encrypted with
 /// the vault key. One row per member (derived id).

@@ -10,6 +10,8 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/dates.dart';
 import '../../shared/money.dart';
 import '../../shared/sheet_body.dart';
+import '../maintenance/maintenance_providers.dart';
+import '../maintenance/maintenance_screen.dart' show LogTile, RepairForm, upkeepWhen;
 import '../sync/sync_widgets.dart';
 import 'inventory_providers.dart';
 import 'inventory_repository.dart';
@@ -373,6 +375,7 @@ class ItemSheet extends ConsumerWidget {
             style: text.bodyMedium?.copyWith(color: HomeColors.dagat, fontWeight: FontWeight.w600),
           ),
         if (item.note != null) Text(item.note!, style: text.bodySmall),
+        ..._maintenance(context, ref, item, adult, replace),
         if (adult) ...[
           const SizedBox(height: 16),
           if (item.lentTo == null)
@@ -418,6 +421,45 @@ class ItemSheet extends ConsumerWidget {
       ],
     );
   }
+}
+
+/// The item's upkeep tasks and the upkeep and repairs logged for it.
+List<Widget> _maintenance(
+  BuildContext context,
+  WidgetRef ref,
+  InventoryItem item,
+  bool adult,
+  void Function(Widget) replace,
+) {
+  final l10n = AppLocalizations.of(context);
+  final locale = Localizations.localeOf(context).toString();
+  final s = ref.watch(maintenanceSummaryProvider);
+  final tasks = s.tasks.where((t) => t.inventoryItemId == item.id && t.nextDueOn != null).toList();
+  final logs = s.logs.where((l) => l.inventoryItemId == item.id).take(5).toList();
+  if (tasks.isEmpty && logs.isEmpty && !adult) return const [];
+  return [
+    const SizedBox(height: 16),
+    Text(l10n.maintItemHistory, style: Theme.of(context).textTheme.titleMedium),
+    for (final t in tasks)
+      ListTile(
+        key: Key('item-task-${t.name}'),
+        contentPadding: EdgeInsets.zero,
+        leading: const Icon(Icons.home_repair_service_outlined),
+        title: Text(t.name),
+        subtitle: Text(l10n.maintDueOn(upkeepWhen(l10n, locale, parseIsoDate(t.nextDueOn)!, s.today))),
+      ),
+    for (final l in logs) LogTile(log: l),
+    if (adult)
+      Align(
+        alignment: Alignment.centerLeft,
+        child: TextButton.icon(
+          key: const Key('item-log-repair'),
+          onPressed: () => replace(RepairForm(inventoryItemId: item.id)),
+          icon: const Icon(Icons.build_outlined),
+          label: Text(l10n.maintLogRepair),
+        ),
+      ),
+  ];
 }
 
 /// A date that can be left empty.
