@@ -183,11 +183,7 @@ class _MonthCard extends ConsumerWidget {
     final days = DateTime(month.year, month.month + 1, 0).day;
     final rows = (lead + days + 6) ~/ 7;
 
-    // Multi-day events on a day, to join the band to the next day.
-    Set<String> spanning(DateTime d) => {
-      for (final i in agenda.on(d))
-        if (i.multiDay) i.event!.id,
-    };
+    final layout = BandLayout(agenda, month, DateTime(month.year, month.month, days));
 
     void moveMonth(int by) {
       final next = DateTime(month.year, month.month + by);
@@ -245,19 +241,26 @@ class _MonthCard extends ConsumerWidget {
                           final n = row * 7 + col - lead + 1;
                           if (n < 1 || n > days) return const SizedBox(height: 44);
                           final d = DateTime(month.year, month.month, n);
-                          final here = spanning(d);
-                          bool joins(int by) =>
-                              here.isNotEmpty &&
-                              spanning(DateTime(d.year, d.month, d.day + by)).intersection(here).isNotEmpty;
+                          final here = layout.on(d);
+                          final left = col > 0 && n > 1 ? layout.on(DateTime(d.year, d.month, n - 1)) : null;
+                          final right = col < 6 && n < days ? layout.on(DateTime(d.year, d.month, n + 1)) : null;
                           return _DayCell(
                             day: d,
-                            band: agenda
-                                .on(d)
-                                .where((i) => i.multiDay)
-                                .map((i) => bandTint(eventColor(i.event!.color) ?? HomeColors.ube))
-                                .firstOrNull,
-                            joinLeft: col > 0 && n > 1 && joins(-1),
-                            joinRight: col < 6 && n < days && joins(1),
+                            bands: [
+                              for (var l = 0; l < here.length; l++)
+                                if (here[l] case final i?)
+                                  _Band(
+                                    color: bandTint(
+                                      eventColor(i.event!.color) ?? HomeColors.ube,
+                                      stacked: layout.lanes > 1,
+                                    ),
+                                    joinLeft: BandLayout.same(i, left?[l]),
+                                    joinRight: BandLayout.same(i, right?[l]),
+                                  )
+                                else
+                                  null,
+                            ],
+                            more: layout.hiddenOn(d),
                             selected: daysUntil(d, day) == 0,
                             isToday: daysUntil(d, today) == 0,
                             items: agenda.on(d),
@@ -275,6 +278,17 @@ class _MonthCard extends ConsumerWidget {
   }
 }
 
+/// One lane of a multi-day band in a day cell.
+class _Band {
+  const _Band({required this.color, required this.joinLeft, required this.joinRight});
+
+  final Color color;
+
+  /// The same occurrence goes on to the neighbouring day in the same row.
+  final bool joinLeft;
+  final bool joinRight;
+}
+
 class _DayCell extends StatelessWidget {
   const _DayCell({
     required this.day,
@@ -282,22 +296,53 @@ class _DayCell extends StatelessWidget {
     required this.isToday,
     required this.items,
     required this.onTap,
-    this.band,
-    this.joinLeft = false,
-    this.joinRight = false,
+    this.bands = const [],
+    this.more = 0,
   });
 
   final DateTime day;
 
-  /// A multi-day event covers this day: a soft band behind the number,
-  /// joined to the neighbouring days it shares an event with.
-  final Color? band;
-  final bool joinLeft;
-  final bool joinRight;
+  /// Multi-day events on this day, one per lane (null = free lane): soft bands
+  /// stacked behind the number, joined to the days they go on to.
+  final List<_Band?> bands;
+
+  /// Multi-day events here that have no lane (shown as "+").
+  final int more;
   final bool selected;
   final bool isToday;
   final List<CalendarItem> items;
   final VoidCallback onTap;
+
+  /// Lane [l] of [bands]: lanes share the 26 px behind the number.
+  Widget _lane(int l, _Band b) {
+    const gap = 2.0;
+    final height = (26 - gap * (bands.length - 1)) / bands.length;
+    final radius = Radius.circular(height / 2);
+    return Positioned(
+      key: Key('band-${isoDate(day)}-$l'),
+      left: 0,
+      right: 0,
+      top: 2 + l * (height + gap),
+      height: height,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(child: b.joinLeft ? ColoredBox(color: b.color) : const SizedBox()),
+          Container(
+            width: 30,
+            decoration: BoxDecoration(
+              color: b.color,
+              borderRadius: BorderRadius.horizontal(
+                left: b.joinLeft ? Radius.zero : radius,
+                right: b.joinRight ? Radius.zero : radius,
+              ),
+            ),
+          ),
+          Expanded(child: b.joinRight ? ColoredBox(color: b.color) : const SizedBox()),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -316,29 +361,8 @@ class _DayCell extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  if (band case final band?)
-                    Positioned.fill(
-                      key: Key('band-${isoDate(day)}'),
-                      top: 2,
-                      bottom: 2,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(child: joinLeft ? ColoredBox(color: band) : const SizedBox()),
-                          Container(
-                            width: 30,
-                            decoration: BoxDecoration(
-                              color: band,
-                              borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(joinLeft ? 0 : 13),
-                                right: Radius.circular(joinRight ? 0 : 13),
-                              ),
-                            ),
-                          ),
-                          Expanded(child: joinRight ? ColoredBox(color: band) : const SizedBox()),
-                        ],
-                      ),
-                    ),
+                  for (var l = 0; l < bands.length; l++)
+                    if (bands[l] case final b?) _lane(l, b),
                   Container(
                     width: 30,
                     height: 30,
@@ -363,6 +387,7 @@ class _DayCell extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                if (more > 0) Icon(Icons.add, key: Key('more-${isoDate(day)}'), size: 9, color: HomeColors.narra),
                 for (final i in items.where((i) => !i.multiDay).take(3))
                   Container(
                     width: 5,

@@ -183,6 +183,70 @@ void main() {
     });
   });
 
+  group('band lanes', () {
+    final from = DateTime(2026, 11, 1);
+    final to = DateTime(2026, 11, 30);
+    String? at(BandLayout l, int day, int lane) => l.on(DateTime(2026, 11, day))[lane]?.title;
+
+    test('overlapping ranges stack, and each keeps its lane on every day', () {
+      final agenda = Agenda(
+        [
+          event('2026-11-01', endsOn: '2026-11-03', title: 'Retreat'),
+          event('2026-11-02', endsOn: '2026-11-05', title: 'Fiesta'),
+          event('2026-11-02', title: 'Dentist'),
+        ],
+        from,
+        to,
+      );
+      final layout = BandLayout(agenda, from, to);
+      expect(layout.lanes, 2);
+      expect([at(layout, 1, 0), at(layout, 1, 1)], ['Retreat', null]);
+      expect([at(layout, 3, 0), at(layout, 3, 1)], ['Retreat', 'Fiesta']);
+      expect([at(layout, 4, 0), at(layout, 4, 1)], [null, 'Fiesta'], reason: 'Fiesta stays in its lane');
+      expect(
+        layout.on(DateTime(2026, 11, 2)).whereType<CalendarItem>().map((i) => i.title),
+        isNot(contains('Dentist')),
+      );
+      expect(BandLayout.same(layout.on(DateTime(2026, 11, 3))[1], layout.on(DateTime(2026, 11, 4))[1]), isTrue);
+    });
+
+    test('a freed lane is reused; one range keeps a single full lane', () {
+      final layout = BandLayout(
+        Agenda(
+          [
+            event('2026-11-01', endsOn: '2026-11-03', title: 'A'),
+            event('2026-11-02', endsOn: '2026-11-04', title: 'B'),
+            event('2026-11-05', endsOn: '2026-11-06', title: 'C'),
+          ],
+          from,
+          to,
+        ),
+        from,
+        to,
+      );
+      expect(layout.lanes, 2);
+      expect(at(layout, 5, 0), 'C');
+      expect(BandLayout(Agenda([event('2026-11-01', endsOn: '2026-11-03')], from, to), from, to).lanes, 1);
+    });
+
+    test('at most three lanes; the rest are counted', () {
+      final layout = BandLayout(
+        Agenda(
+          [
+            for (final t in ['A', 'B', 'C', 'D']) event('2026-11-10', endsOn: '2026-11-12', title: t),
+          ],
+          from,
+          to,
+        ),
+        from,
+        to,
+      );
+      expect(layout.lanes, 3);
+      expect(layout.hiddenOn(DateTime(2026, 11, 11)), 1);
+      expect(layout.hiddenOn(DateTime(2026, 11, 13)), 0);
+    });
+  });
+
   group('repository', () {
     late AppDatabase db;
     late CalendarRepository repo;
@@ -429,14 +493,14 @@ void main() {
     final e = (await tester.runAsync(() => s.db.select(s.db.events).getSingle()))!;
     expect(e.endsOn, isoDate(DateTime(d.year, d.month, d.day + 1)));
     expect(find.text('1 today'), findsOneWidget);
-    expect(find.byKey(Key('band-${isoDate(d)}')), findsOneWidget);
+    expect(find.byKey(Key('band-${isoDate(d)}-0')), findsOneWidget);
     expect(
-      tester.getSize(find.byKey(Key('band-${isoDate(d)}'))).width,
+      tester.getSize(find.byKey(Key('band-${isoDate(d)}-0'))).width,
       tester.getSize(find.byKey(Key('day-${isoDate(d)}'))).width,
       reason: 'the band fills the cell so joined days meet',
     );
     if (joinsTomorrow(d)) {
-      final join = find.descendant(of: find.byKey(Key('band-${isoDate(d)}')), matching: find.byType(ColoredBox));
+      final join = find.descendant(of: find.byKey(Key('band-${isoDate(d)}-0')), matching: find.byType(ColoredBox));
       expect(tester.getSize(join.first).height, greaterThan(20), reason: 'the join to the next day is visible');
     }
     // Next week's copy comes up once, with its range.
@@ -478,12 +542,47 @@ void main() {
       find.descendant(of: find.widgetWithText(ListTile, 'School fair'), matching: find.byType(CircleAvatar)),
     );
     expect(avatar.backgroundColor, HomeColors.dagat);
-    final pieces = find.descendant(of: find.byKey(Key('band-${isoDate(d)}')), matching: find.byType(Container));
+    final pieces = find.descendant(of: find.byKey(Key('band-${isoDate(d)}-0')), matching: find.byType(Container));
     expect((tester.widget<Container>(pieces.first).decoration! as BoxDecoration).color, bandTint(HomeColors.dagat));
     if (joinsTomorrow(d)) {
-      final join = find.descendant(of: find.byKey(Key('band-${isoDate(d)}')), matching: find.byType(ColoredBox));
+      final join = find.descendant(of: find.byKey(Key('band-${isoDate(d)}-0')), matching: find.byType(ColoredBox));
       expect(tester.widget<ColoredBox>(join.first).color, bandTint(HomeColors.dagat));
     }
+    await app.finish(tester, s);
+  });
+
+  testWidgets('overlapping ranges show stacked bands in their colours, and + for a fourth', (tester) async {
+    final store = MemorySecureStore();
+    app.signedIn(store);
+    final t = DateTime.now();
+    final d = DateTime(t.year, t.month, t.day);
+    final s = (await tester.runAsync(() async {
+      final s = await open(store);
+      final repo = CalendarRepository(s.db, s.writer);
+      for (final (title, color) in [('Retreat', 'rosas'), ('Fiesta', 'dagat'), ('Camp', 'dahon'), ('Visit', 'tubig')]) {
+        await repo.addEvent(title: title, startsOn: d, endsOn: DateTime(d.year, d.month, d.day + 1), color: color);
+      }
+      return s;
+    }))!;
+    await app.pumpApp(tester, s);
+    await tapText(tester, 'Calendar');
+    Color laneColor(int lane) =>
+        (tester
+                    .widget<Container>(
+                      find
+                          .descendant(of: find.byKey(Key('band-${isoDate(d)}-$lane')), matching: find.byType(Container))
+                          .first,
+                    )
+                    .decoration!
+                as BoxDecoration)
+            .color!;
+    // Same start and end: lanes by title (Camp, Fiesta, Retreat); Visit has none.
+    expect(laneColor(0), bandTint(HomeColors.dahon, stacked: true));
+    expect(laneColor(1), bandTint(HomeColors.dagat, stacked: true));
+    expect(laneColor(2), bandTint(eventColor('rosas')!, stacked: true));
+    expect(find.byKey(Key('band-${isoDate(d)}-3')), findsNothing);
+    expect(find.byKey(Key('more-${isoDate(d)}')), findsOneWidget);
+    expect(tester.getSize(find.byKey(Key('band-${isoDate(d)}-0'))).height, lessThan(10));
     await app.finish(tester, s);
   });
 

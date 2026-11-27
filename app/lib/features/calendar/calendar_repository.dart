@@ -186,6 +186,72 @@ class Agenda {
   }
 }
 
+/// Multi-day items from [first] to [last] laid out in lanes, so overlapping
+/// ranges are drawn as stacked bands and each occurrence keeps its lane on
+/// every day it covers. At most [maxLanes] are drawn; the rest are counted.
+class BandLayout {
+  BandLayout(Agenda agenda, DateTime first, DateTime last, {this.maxLanes = 3}) {
+    final seen = <String, CalendarItem>{};
+    for (var d = _day(first); !d.isAfter(_day(last)); d = DateTime(d.year, d.month, d.day + 1)) {
+      final items = [
+        for (final i in agenda.on(d))
+          if (i.multiDay) i,
+      ];
+      if (items.isNotEmpty) _byDay[isoDate(d)] = items;
+      for (final i in items) {
+        seen.putIfAbsent(_key(i), () => i);
+      }
+    }
+    // Earlier first, then longer first, so a long range sits on top.
+    final order = seen.values.toList()
+      ..sort((x, y) {
+        final s = x.spanStart.compareTo(y.spanStart);
+        if (s != 0) return s;
+        final l = y.spanEnd.compareTo(x.spanEnd);
+        return l != 0 ? l : x.title.toLowerCase().compareTo(y.title.toLowerCase());
+      });
+    final laneEnds = <DateTime>[];
+    for (final i in order) {
+      var lane = laneEnds.indexWhere((end) => end.isBefore(i.spanStart));
+      if (lane < 0) {
+        lane = laneEnds.length;
+        laneEnds.add(i.spanEnd);
+      } else {
+        laneEnds[lane] = i.spanEnd;
+      }
+      _lane[_key(i)] = lane;
+    }
+    lanes = laneEnds.length < maxLanes ? laneEnds.length : maxLanes;
+  }
+
+  final int maxLanes;
+
+  /// Lanes drawn in each day cell (0 when nothing spans several days).
+  late final int lanes;
+
+  final _byDay = <String, List<CalendarItem>>{};
+  final _lane = <String, int>{};
+
+  static String _key(CalendarItem i) => '${i.event?.id}|${isoDate(i.spanStart)}';
+
+  /// The item in each drawn lane on [day] (null = free), [lanes] long.
+  List<CalendarItem?> on(DateTime day) {
+    final out = List<CalendarItem?>.filled(lanes, null);
+    for (final i in _byDay[isoDate(day)] ?? const <CalendarItem>[]) {
+      final lane = _lane[_key(i)]!;
+      if (lane < lanes) out[lane] = i;
+    }
+    return out;
+  }
+
+  /// Multi-day items on [day] that did not get a lane.
+  int hiddenOn(DateTime day) =>
+      (_byDay[isoDate(day)] ?? const <CalendarItem>[]).where((i) => _lane[_key(i)]! >= lanes).length;
+
+  /// Whether [a] and [b] are the same occurrence (to join bands across days).
+  static bool same(CalendarItem? a, CalendarItem? b) => a != null && b != null && _key(a) == _key(b);
+}
+
 /// Calendar events. Anyone but viewers adds them; adults change any, others
 /// only the ones they added (enforced in the app).
 class CalendarRepository {

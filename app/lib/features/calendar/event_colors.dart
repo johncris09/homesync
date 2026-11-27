@@ -29,5 +29,6 @@ String eventColorLabel(AppLocalizations l10n, String name) => switch (name) {
   _ => l10n.eventColourUbe,
 };
 
-/// A light tint of [c] on a card, for the multi-day band.
-Color bandTint(Color c) => Color.lerp(const Color(0xFFFBFCF8), c, 0.18)!;
+/// A light tint of [c] on a card, for the multi-day band; stronger when the
+/// bands are stacked and thin.
+Color bandTint(Color c, {bool stacked = false}) => Color.lerp(const Color(0xFFFBFCF8), c, stacked ? 0.32 : 0.18)!;
