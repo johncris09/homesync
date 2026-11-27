@@ -4407,6 +4407,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Warranty ends'**
   String get calendarWarrantyEnds;
+
+  /// No description provided for @emergencyModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get emergencyModule;
+
+  /// No description provided for @emergencyTileHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} needs help'**
+  String emergencyTileHelp(String name);
+
+  /// No description provided for @emergencyTileSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'{safe} of {total} safe today'**
+  String emergencyTileSafe(int safe, int total);
+
+  /// No description provided for @emergencyTileBags.
+  ///
+  /// In en, this message translates to:
+  /// **'{ready} of {total} go-bags packed'**
+  String emergencyTileBags(int ready, int total);
+
+  /// No description provided for @emergencyTileSetUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts, meeting point, go-bags'**
+  String get emergencyTileSetUp;
+
+  /// No description provided for @emergencyNeedsHelpFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} needs help'**
+  String emergencyNeedsHelpFigure(String name);
+
+  /// No description provided for @emergencyManyNeedHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} need help'**
+  String emergencyManyNeedHelp(int count);
+
+  /// No description provided for @emergencySafeFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{safe} of {total} safe'**
+  String emergencySafeFigure(int safe, int total);
+
+  /// No description provided for @emergencySafeCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{safe} of {total} checked in safe'**
+  String emergencySafeCaption(int safe, int total);
+
+  /// No description provided for @emergencyLast24h.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-ins from the last 24 hours'**
+  String get emergencyLast24h;
+
+  /// No description provided for @emergencyReadyFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'Be ready'**
+  String get emergencyReadyFigure;
+
+  /// No description provided for @emergencyReadyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap I\'m safe when something happens'**
+  String get emergencyReadyCaption;
+
+  /// No description provided for @emergencyBagsPacked.
+  ///
+  /// In en, this message translates to:
+  /// **'{ready} of {total} go-bags packed'**
+  String emergencyBagsPacked(int ready, int total);
+
+  /// No description provided for @emergencyImSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m safe'**
+  String get emergencyImSafe;
+
+  /// No description provided for @emergencyNeedHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Need help'**
+  String get emergencyNeedHelp;
+
+  /// No description provided for @emergencyCheckedInSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in as safe. It reaches everyone when you have signal.'**
+  String get emergencyCheckedInSafe;
+
+  /// No description provided for @emergencyWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Who\'s checked in'**
+  String get emergencyWho;
+
+  /// No description provided for @emergencyStatusSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Safe'**
+  String get emergencyStatusSafe;
+
+  /// No description provided for @emergencyStatusHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs help'**
+  String get emergencyStatusHelp;
+
+  /// No description provided for @emergencyLastCheckin.
+  ///
+  /// In en, this message translates to:
+  /// **'Last check-in {date}'**
+  String emergencyLastCheckin(String date);
+
+  /// No description provided for @emergencyNoCheckin.
+  ///
+  /// In en, this message translates to:
+  /// **'No check-in yet'**
+  String get emergencyNoCheckin;
+
+  /// No description provided for @emergencyHelpNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Where are you, what\'s wrong?'**
+  String get emergencyHelpNote;
+
+  /// No description provided for @emergencyHelpNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Stuck at school, road flooded'**
+  String get emergencyHelpNoteHint;
+
+  /// No description provided for @emergencyHelpSyncs.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this phone now and sent as soon as there is signal. In danger, call 911.'**
+  String get emergencyHelpSyncs;
+
+  /// No description provided for @emergencySendHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get emergencySendHelp;
+
+  /// No description provided for @emergencyCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Numbers to call'**
+  String get emergencyCall;
+
+  /// No description provided for @emergencyHotline.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, emergency{National emergency hotline} redCross{Philippine Red Cross} other{Hotline}}'**
+  String emergencyHotline(String key);
+
+  /// No description provided for @emergencyCallNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Call {number}'**
+  String emergencyCallNumber(String number);
+
+  /// No description provided for @emergencyContactKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, family{Family} barangay{Barangay} hospital{Hospital} doctor{Doctor} other{Other}}'**
+  String emergencyContactKind(String kind);
+
+  /// No description provided for @emergencyAddContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Add contact'**
+  String get emergencyAddContact;
+
+  /// No description provided for @emergencyEditContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit contact'**
+  String get emergencyEditContact;
+
+  /// No description provided for @emergencyRemoveContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove contact'**
+  String get emergencyRemoveContact;
+
+  /// No description provided for @emergencyContactName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get emergencyContactName;
+
+  /// No description provided for @emergencyContactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get emergencyContactPhone;
+
+  /// No description provided for @emergencyPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a phone number.'**
+  String get emergencyPhoneInvalid;
+
+  /// No description provided for @emergencyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get emergencyNote;
+
+  /// No description provided for @emergencyWhereToMeet.
+  ///
+  /// In en, this message translates to:
+  /// **'Where to meet'**
+  String get emergencyWhereToMeet;
+
+  /// No description provided for @emergencyNoPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'No meeting point yet'**
+  String get emergencyNoPlan;
+
+  /// No description provided for @emergencyNoPlanAdult.
+  ///
+  /// In en, this message translates to:
+  /// **'Agree where everyone goes if you\'re apart.'**
+  String get emergencyNoPlanAdult;
+
+  /// No description provided for @emergencyNoPlanOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask an adult to set one.'**
+  String get emergencyNoPlanOthers;
+
+  /// No description provided for @emergencyMeetingPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting point nearby'**
+  String get emergencyMeetingPoint;
+
+  /// No description provided for @emergencyMeetingPointHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. the covered court'**
+  String get emergencyMeetingPointHint;
+
+  /// No description provided for @emergencyMeetingPointFar.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting point outside the area'**
+  String get emergencyMeetingPointFar;
+
+  /// No description provided for @emergencyMeetingPointFarHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Lola\'s house in town'**
+  String get emergencyMeetingPointFarHint;
+
+  /// No description provided for @emergencyEvacuationCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Evacuation centre'**
+  String get emergencyEvacuationCenter;
+
+  /// No description provided for @emergencyEvacuationCenterHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. the elementary school'**
+  String get emergencyEvacuationCenterHint;
+
+  /// No description provided for @emergencyEditPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit meeting points'**
+  String get emergencyEditPlan;
+
+  /// No description provided for @emergencyGoBags.
+  ///
+  /// In en, this message translates to:
+  /// **'Go-bags'**
+  String get emergencyGoBags;
+
+  /// No description provided for @emergencyHouseholdBag.
+  ///
+  /// In en, this message translates to:
+  /// **'Household'**
+  String get emergencyHouseholdBag;
+
+  /// No description provided for @emergencyUnknownMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get emergencyUnknownMember;
+
+  /// No description provided for @emergencyBagTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s go-bag'**
+  String emergencyBagTitle(String name);
+
+  /// No description provided for @emergencyBagEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing listed yet'**
+  String get emergencyBagEmpty;
+
+  /// No description provided for @emergencyBagPacked.
+  ///
+  /// In en, this message translates to:
+  /// **'{packed} of {total} packed'**
+  String emergencyBagPacked(int packed, int total);
+
+  /// No description provided for @emergencyBagExpiring.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} to replace'**
+  String emergencyBagExpiring(int count);
+
+  /// No description provided for @emergencyAddToBag.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an item'**
+  String get emergencyAddToBag;
+
+  /// No description provided for @emergencyAddStarter.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the starter list'**
+  String get emergencyAddStarter;
+
+  /// No description provided for @emergencyStarterItem.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, water{Drinking water} food{Ready-to-eat food} flashlight{Flashlight} batteries{Extra batteries} whistle{Whistle} firstAid{First aid kit} medicines{Maintenance medicines} ids{Copies of IDs} cash{Cash in small bills} powerBank{Power bank} clothes{Change of clothes} raincoat{Raincoat} other{Item}}'**
+  String emergencyStarterItem(String key);
+
+  /// No description provided for @emergencyEditItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get emergencyEditItem;
+
+  /// No description provided for @emergencyRemoveItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove item'**
+  String get emergencyRemoveItem;
+
+  /// No description provided for @emergencyItemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get emergencyItemName;
+
+  /// No description provided for @emergencyExpiresField.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires'**
+  String get emergencyExpiresField;
+
+  /// No description provided for @emergencyNoExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'No expiry'**
+  String get emergencyNoExpiry;
+
+  /// No description provided for @emergencyExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'expires {date}'**
+  String emergencyExpires(String date);
+
+  /// No description provided for @emergencyExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'expired {date}'**
+  String emergencyExpired(String date);
+
+  /// No description provided for @emergencyChecklists.
+  ///
+  /// In en, this message translates to:
+  /// **'Be ready for'**
+  String get emergencyChecklists;
+
+  /// No description provided for @emergencyHazard.
+  ///
+  /// In en, this message translates to:
+  /// **'{hazard, select, typhoon{Typhoon} flood{Flood} earthquake{Earthquake} other{Hazard}}'**
+  String emergencyHazard(String hazard);
+
+  /// No description provided for @emergencyHazardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{hazard, select, typhoon{Before a typhoon} flood{Before a flood} earthquake{Before an earthquake} other{Checklist}}'**
+  String emergencyHazardTitle(String hazard);
+
+  /// No description provided for @emergencyChecksDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} done'**
+  String emergencyChecksDone(int done, int total);
+
+  /// No description provided for @emergencyClearChecks.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear ticks'**
+  String get emergencyClearChecks;
+
+  /// No description provided for @emergencyCheckItem.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, typhoon_charge{Charge phones and power banks} typhoon_water{Store drinking water for at least 3 days} typhoon_food{Stock ready-to-eat food for at least 3 days} typhoon_secure{Secure the roof, windows and loose things outside} typhoon_drains{Clear drains and gutters} typhoon_bags{Keep go-bags by the door} typhoon_center{Know the way to the evacuation centre} typhoon_updates{Follow PAGASA updates on radio or TV} flood_upHigh{Move appliances, documents and valuables up high} flood_power{Switch off the main power if water starts coming in} flood_documents{Keep IDs and documents in a waterproof bag} flood_noWading{Don\'t walk or drive through floodwater} flood_highGround{Know the way to higher ground} flood_bags{Keep go-bags by the door} earthquake_furniture{Fasten tall furniture and shelves to the wall} earthquake_safeSpots{Know the safe spot in each room, like under a sturdy table} earthquake_drill{Practise Duck, Cover and Hold} earthquake_shutOff{Know how to turn off gas, water and power} earthquake_bedside{Keep shoes and a flashlight by each bed} earthquake_meet{Agree where to meet outside} other{Item}}'**
+  String emergencyCheckItem(String key);
+
+  /// No description provided for @emergencyWorksOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything here is on this phone and works without signal.'**
+  String get emergencyWorksOffline;
 }
 
 class _AppLocalizationsDelegate
