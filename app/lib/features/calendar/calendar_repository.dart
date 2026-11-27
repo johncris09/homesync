@@ -69,7 +69,7 @@ List<DateTime> occurrences(CalendarEvent e, DateTime from, DateTime to) {
   return out;
 }
 
-enum CalendarKind { event, bill, subscription, vehicle }
+enum CalendarKind { event, bill, subscription, vehicle, checkup }
 
 /// One thing on one day: an event occurrence, a bill or subscription due, or
 /// a vehicle's registration, insurance or PMS date.
@@ -102,7 +102,8 @@ class CalendarItem {
   final String? memberId;
   final int? amountMinor;
 
-  /// For a vehicle: `registration`, `insurance` or `pms`.
+  /// For a vehicle: `registration`, `insurance` or `pms`; for a checkup:
+  /// `checkup` or `vaccine`.
   final String? dueKind;
 
   /// First and last day of this occurrence (both [day] for a one-day item).
@@ -126,6 +127,7 @@ class Agenda {
     List<Bill> bills = const [],
     List<Subscription> subscriptions = const [],
     List<Vehicle> vehicles = const [],
+    List<Checkup> checkups = const [],
   }) {
     final a = _day(from);
     final b = _day(to);
@@ -176,6 +178,20 @@ class Agenda {
         if (d == null || !inRange(d)) continue;
         add(CalendarItem(day: d, kind: CalendarKind.vehicle, title: v.name, dueKind: kind));
       }
+    }
+    for (final c in checkups) {
+      final d = parseIsoDate(c.dueOn);
+      if (c.doneAt != null || d == null || !inRange(d)) continue;
+      add(
+        CalendarItem(
+          day: d,
+          kind: CalendarKind.checkup,
+          title: c.title,
+          dueKind: c.kind,
+          startTime: c.dueTime,
+          memberId: c.memberId,
+        ),
+      );
     }
     for (final list in _byDay.values) {
       list.sort((x, y) {

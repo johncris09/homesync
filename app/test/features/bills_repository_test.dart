@@ -260,6 +260,10 @@ void main() {
     }
     await v3.customStatement('DROP TABLE vehicles'); // added in v11
     await v3.customStatement('DROP TABLE vehicle_logs');
+    await v3.customStatement('DROP TABLE health_profiles'); // added in v13
+    await v3.customStatement('DROP TABLE medicines');
+    await v3.customStatement('DROP TABLE med_doses');
+    await v3.customStatement('DROP TABLE checkups');
     await v3.customStatement('PRAGMA user_version = 2');
     await v3.close();
 

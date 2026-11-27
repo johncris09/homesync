@@ -208,6 +208,34 @@ const syncedEntities = <String, EntitySpec>{
     fields: {'item_id', 'sha256', 'size', 'key_wrap', 'sealed', 'position'},
     neverMerged: true,
   ),
+  'health_profiles': EntitySpec(name: 'health_profiles', fields: {'member_id', 'sealed'}, neverMerged: true),
+  'medicines': EntitySpec(
+    name: 'medicines',
+    fields: {
+      'name',
+      'strength',
+      'member_id',
+      'times',
+      'dose_qty',
+      'ends_on',
+      'stock',
+      'min_stock',
+      'unit',
+      'expires_on',
+      'note',
+    },
+    counters: {'stock'},
+  ),
+  'med_doses': EntitySpec(
+    name: 'med_doses',
+    fields: {'medicine_id', 'member_id', 'given_by', 'taken_on', 'slot', 'taken_at', 'note'},
+    appendOnly: true,
+    mutable: {'note'},
+  ),
+  'checkups': EntitySpec(
+    name: 'checkups',
+    fields: {'member_id', 'kind', 'title', 'due_on', 'due_time', 'place', 'done_at', 'done_by', 'note'},
+  ),
   'conflicts': EntitySpec(
     name: 'conflicts',
     fields: {

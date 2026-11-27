@@ -3189,6 +3189,498 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{kind, select, registration{Registration due} insurance{Insurance due} other{PMS due}}'**
   String calendarVehicleDue(String kind);
+
+  /// No description provided for @healthModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get healthModule;
+
+  /// No description provided for @healthTileDosesLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 dose left today} other{{count} doses left today}}'**
+  String healthTileDosesLeft(int count);
+
+  /// No description provided for @healthTileLow.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 medicine running low} other{{count} medicines running low}}'**
+  String healthTileLow(int count);
+
+  /// No description provided for @healthTileCheckup.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} {date}'**
+  String healthTileCheckup(String title, String date);
+
+  /// No description provided for @healthTileNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No doses or checkups due'**
+  String get healthTileNothing;
+
+  /// No description provided for @healthNoMedicines.
+  ///
+  /// In en, this message translates to:
+  /// **'No medicines yet'**
+  String get healthNoMedicines;
+
+  /// No description provided for @healthNoDosesToday.
+  ///
+  /// In en, this message translates to:
+  /// **'No doses today'**
+  String get healthNoDosesToday;
+
+  /// No description provided for @healthEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Medicines, checkups and the family\'s health'**
+  String get healthEmptyCaption;
+
+  /// No description provided for @healthCheckupCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {title} on {date}'**
+  String healthCheckupCaption(String title, String date);
+
+  /// No description provided for @healthAllGiven.
+  ///
+  /// In en, this message translates to:
+  /// **'All doses given'**
+  String get healthAllGiven;
+
+  /// No description provided for @healthAllGivenCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 dose given today} other{{count} doses given today}}'**
+  String healthAllGivenCaption(int count);
+
+  /// No description provided for @healthDosesLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 dose left} other{{count} doses left}}'**
+  String healthDosesLeft(int count);
+
+  /// No description provided for @healthNextDose.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {what} at {time}'**
+  String healthNextDose(String what, String time);
+
+  /// No description provided for @healthToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get healthToday;
+
+  /// No description provided for @healthRunningLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Running low'**
+  String get healthRunningLow;
+
+  /// No description provided for @healthCheckups.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkups and vaccines'**
+  String get healthCheckups;
+
+  /// No description provided for @healthNoCheckups.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing coming up.'**
+  String get healthNoCheckups;
+
+  /// No description provided for @healthMedicines.
+  ///
+  /// In en, this message translates to:
+  /// **'Medicines'**
+  String get healthMedicines;
+
+  /// No description provided for @healthMedicinesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the medicines the family takes to tick off doses and know when to restock.'**
+  String get healthMedicinesEmpty;
+
+  /// No description provided for @healthFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get healthFamily;
+
+  /// No description provided for @healthProfilesLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the vault to see blood types, allergies and conditions'**
+  String get healthProfilesLocked;
+
+  /// No description provided for @healthProfilesNoVault.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up the vault to keep health profiles'**
+  String get healthProfilesNoVault;
+
+  /// No description provided for @doseGivenBy.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} · given by {name}'**
+  String doseGivenBy(String time, String name);
+
+  /// No description provided for @doseGivenByName.
+  ///
+  /// In en, this message translates to:
+  /// **'Given by {name}'**
+  String doseGivenByName(String name);
+
+  /// No description provided for @doseUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo this dose'**
+  String get doseUndo;
+
+  /// No description provided for @medicineAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add medicine'**
+  String get medicineAdd;
+
+  /// No description provided for @medicineEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit medicine'**
+  String get medicineEdit;
+
+  /// No description provided for @medicineRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove medicine'**
+  String get medicineRemove;
+
+  /// No description provided for @medicineLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} left'**
+  String medicineLeft(String count);
+
+  /// No description provided for @medicineExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String medicineExpires(String date);
+
+  /// No description provided for @medicineExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired {date}'**
+  String medicineExpired(String date);
+
+  /// No description provided for @medicineAddToList.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to list'**
+  String get medicineAddToList;
+
+  /// No description provided for @medicineForAnyone.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone'**
+  String get medicineForAnyone;
+
+  /// No description provided for @medicineAsNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'As needed'**
+  String get medicineAsNeeded;
+
+  /// No description provided for @medicineUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'until {date}'**
+  String medicineUntil(String date);
+
+  /// No description provided for @medicineStockLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} {unit} left'**
+  String medicineStockLine(String count, String unit);
+
+  /// No description provided for @medicineUnitDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'tablets'**
+  String get medicineUnitDefault;
+
+  /// No description provided for @medicineGiveDose.
+  ///
+  /// In en, this message translates to:
+  /// **'Give a dose'**
+  String get medicineGiveDose;
+
+  /// No description provided for @medicineRestock.
+  ///
+  /// In en, this message translates to:
+  /// **'Restock'**
+  String get medicineRestock;
+
+  /// No description provided for @medicineStockTake.
+  ///
+  /// In en, this message translates to:
+  /// **'Count what\'s left'**
+  String get medicineStockTake;
+
+  /// No description provided for @medicineDoses.
+  ///
+  /// In en, this message translates to:
+  /// **'Doses'**
+  String get medicineDoses;
+
+  /// No description provided for @medicineDosesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No doses given yet.'**
+  String get medicineDosesEmpty;
+
+  /// No description provided for @medicineExtraDose.
+  ///
+  /// In en, this message translates to:
+  /// **'extra dose'**
+  String get medicineExtraDose;
+
+  /// No description provided for @medicineCounted.
+  ///
+  /// In en, this message translates to:
+  /// **'How many are left'**
+  String get medicineCounted;
+
+  /// No description provided for @medicineAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'How many you bought'**
+  String get medicineAdded;
+
+  /// No description provided for @medicineCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost (optional)'**
+  String get medicineCost;
+
+  /// No description provided for @medicineNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Losartan'**
+  String get medicineNameHint;
+
+  /// No description provided for @medicineStrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Strength (optional)'**
+  String get medicineStrength;
+
+  /// No description provided for @medicineForWhom.
+  ///
+  /// In en, this message translates to:
+  /// **'Who is it for?'**
+  String get medicineForWhom;
+
+  /// No description provided for @medicineTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Dose times (optional)'**
+  String get medicineTimes;
+
+  /// No description provided for @medicineTimesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Like 8:00, 20:00. Leave empty for as needed.'**
+  String get medicineTimesHelp;
+
+  /// No description provided for @medicineTimesInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Use times like 8:00 or 20:30'**
+  String get medicineTimesInvalid;
+
+  /// No description provided for @medicineStockNow.
+  ///
+  /// In en, this message translates to:
+  /// **'How many you have now'**
+  String get medicineStockNow;
+
+  /// No description provided for @medicineMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Running low at (optional)'**
+  String get medicineMin;
+
+  /// No description provided for @medicineUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit (optional)'**
+  String get medicineUnit;
+
+  /// No description provided for @medicineEndsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Last day'**
+  String get medicineEndsOn;
+
+  /// No description provided for @medicineOngoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Ongoing'**
+  String get medicineOngoing;
+
+  /// No description provided for @medicineExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry date'**
+  String get medicineExpiry;
+
+  /// No description provided for @checkupAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add checkup'**
+  String get checkupAdd;
+
+  /// No description provided for @checkupEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit checkup'**
+  String get checkupEdit;
+
+  /// No description provided for @checkupRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove checkup'**
+  String get checkupRemove;
+
+  /// No description provided for @checkupKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, vaccine{Vaccine} other{Checkup}}'**
+  String checkupKind(String kind);
+
+  /// No description provided for @checkupTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, vaccine{e.g. Flu vaccine} other{e.g. Cardiology checkup}}'**
+  String checkupTitleHint(String kind);
+
+  /// No description provided for @checkupDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get checkupDate;
+
+  /// No description provided for @checkupTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time (optional)'**
+  String get checkupTime;
+
+  /// No description provided for @checkupTimeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Like 9:30 or 14:00'**
+  String get checkupTimeHelp;
+
+  /// No description provided for @checkupPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor or place (optional)'**
+  String get checkupPlace;
+
+  /// No description provided for @checkupCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost (optional)'**
+  String get checkupCost;
+
+  /// No description provided for @checkupMarkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark done'**
+  String get checkupMarkDone;
+
+  /// No description provided for @calendarCheckupDue.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, vaccine{Vaccine} other{Checkup}}'**
+  String calendarCheckupDue(String kind);
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s health'**
+  String profileTitle(String name);
+
+  /// No description provided for @profileSealedHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Only adults with the vault passphrase can read this.'**
+  String get profileSealedHelp;
+
+  /// No description provided for @profileEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No profile yet'**
+  String get profileEmpty;
+
+  /// No description provided for @profileBloodLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood type {type}'**
+  String profileBloodLine(String type);
+
+  /// No description provided for @profileAllergyLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Allergic: {what}'**
+  String profileAllergyLine(String what);
+
+  /// No description provided for @profileBlood.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood type (optional)'**
+  String get profileBlood;
+
+  /// No description provided for @profileAllergies.
+  ///
+  /// In en, this message translates to:
+  /// **'Allergies (optional)'**
+  String get profileAllergies;
+
+  /// No description provided for @profileConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Conditions (optional)'**
+  String get profileConditions;
+
+  /// No description provided for @profileMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance medicines (optional)'**
+  String get profileMaintenance;
+
+  /// No description provided for @profilePhilhealth.
+  ///
+  /// In en, this message translates to:
+  /// **'PhilHealth number (optional)'**
+  String get profilePhilhealth;
+
+  /// No description provided for @profileHmo.
+  ///
+  /// In en, this message translates to:
+  /// **'HMO and card number (optional)'**
+  String get profileHmo;
+
+  /// No description provided for @profileDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor (optional)'**
+  String get profileDoctor;
 }
 
 class _AppLocalizationsDelegate

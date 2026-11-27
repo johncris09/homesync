@@ -237,6 +237,58 @@ class VehicleLogs extends Table with SyncColumns {
   TextColumn get note => text().nullable()();
 }
 
+/// A member's health profile; [sealed] is blood type, allergies, conditions,
+/// maintenance medicines, PhilHealth/HMO numbers and doctor, encrypted with
+/// the vault key. One row per member (derived id).
+class HealthProfiles extends Table with SyncColumns {
+  TextColumn get memberId => text()();
+  TextColumn get sealed => text()();
+}
+
+/// A medicine for a member (null = anyone), taken at local `HH:MM` [times]
+/// (comma-separated; null = as needed). [stock] is a counter.
+class Medicines extends Table with SyncColumns {
+  TextColumn get name => text()();
+  TextColumn get strength => text().nullable()();
+  TextColumn get memberId => text().nullable()();
+  TextColumn get times => text().nullable()();
+  RealColumn get doseQty => real().withDefault(const Constant(1))();
+
+  /// Last day of a course `YYYY-MM-DD`; null = ongoing.
+  TextColumn get endsOn => text().nullable()();
+  RealColumn get stock => real().withDefault(const Constant(0))();
+  RealColumn get minStock => real().nullable()();
+  TextColumn get unit => text().nullable()();
+  TextColumn get expiresOn => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// A dose given. Append-only; a scheduled dose has a derived id.
+class MedDoses extends Table with SyncColumns {
+  TextColumn get medicineId => text()();
+  TextColumn get memberId => text().nullable()();
+  TextColumn get givenBy => text().nullable()();
+
+  /// Calendar date `YYYY-MM-DD` and the scheduled `HH:MM` (null = as needed).
+  TextColumn get takenOn => text()();
+  TextColumn get slot => text().nullable()();
+  DateTimeColumn get takenAt => dateTime().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// A checkup or vaccine ([kind] `checkup`, `vaccine`), done when [doneAt] is set.
+class Checkups extends Table with SyncColumns {
+  TextColumn get memberId => text().nullable()();
+  TextColumn get kind => text()();
+  TextColumn get title => text()();
+  TextColumn get dueOn => text().nullable()();
+  TextColumn get dueTime => text().nullable()();
+  TextColumn get place => text().nullable()();
+  DateTimeColumn get doneAt => dateTime().nullable()();
+  TextColumn get doneBy => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
 /// The money ledger. Append-only: only `note` and deletion change later.
 @DataClassName('LedgerEntry')
 class Transactions extends Table with SyncColumns {

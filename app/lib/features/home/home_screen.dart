@@ -20,6 +20,7 @@ import '../debts/debts_providers.dart';
 import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
+import '../health/health_providers.dart';
 import '../vehicles/vehicles_providers.dart';
 import '../vehicles/vehicles_screen.dart' show dueWhen;
 import '../vault/vault_providers.dart';
@@ -52,6 +53,15 @@ class HomeScreen extends ConsumerWidget {
     final debts = adult ? ref.watch(debtsSummaryProvider) : null;
     final vehicles = adult ? ref.watch(vehiclesProvider).value ?? const [] : const [];
     final cars = adult ? ref.watch(vehiclesSummaryProvider) : null;
+    final health = ref.watch(healthSummaryProvider);
+    final checkup = health.upcoming.firstOrNull;
+    final healthCaption = health.left > 0
+        ? l10n.healthTileDosesLeft(health.left)
+        : health.low.isNotEmpty
+        ? l10n.healthTileLow(health.low.length)
+        : checkup != null
+        ? l10n.healthTileCheckup(checkup.title, dayLabel(context, DateTime.parse(checkup.dueOn!), ref.read(healthRepoProvider).today))
+        : l10n.healthTileNothing;
     final carNext = cars?.next;
     final carWhen = carNext == null ? null : dueWhen(l10n, locale, carNext, ref.read(vehiclesRepoProvider).today);
     final vaultItems = adult ? (ref.watch(vaultItemsProvider).value ?? const <VaultItem>[]) : const <VaultItem>[];
@@ -142,6 +152,18 @@ class HomeScreen extends ConsumerWidget {
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => context.push(Routes.debts),
                         ),
+                      ListTile(
+                        key: const Key('health-tile'),
+                        leading: const CircleAvatar(
+                          backgroundColor: HomeColors.dagat,
+                          foregroundColor: Colors.white,
+                          child: Icon(Icons.medication_outlined),
+                        ),
+                        title: Text(l10n.healthModule),
+                        subtitle: Text(healthCaption),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(Routes.health),
+                      ),
                       if (cars != null)
                         ListTile(
                           key: const Key('vehicles-tile'),

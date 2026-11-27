@@ -26,6 +26,10 @@ part 'database.g.dart';
     VaultItems,
     VaultFiles,
     VaultBlobs,
+    HealthProfiles,
+    Medicines,
+    MedDoses,
+    Checkups,
     Conflicts,
     Outbox,
     FieldClocks,
@@ -37,7 +41,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 12;
+  int get schemaVersion => 13;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -86,6 +90,13 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(vaultItems);
         await m.createTable(vaultFiles);
         await m.createTable(vaultBlobs);
+      }
+      if (from < 13) {
+        // Health (new tables only, so this step can be renumbered freely)
+        await m.createTable(healthProfiles);
+        await m.createTable(medicines);
+        await m.createTable(medDoses);
+        await m.createTable(checkups);
       }
     },
   );

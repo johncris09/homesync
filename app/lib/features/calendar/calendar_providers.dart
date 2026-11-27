@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
 import '../../core/db/database.dart';
 import '../bills/bills_providers.dart';
+import '../health/health_providers.dart';
 import '../vehicles/vehicles_providers.dart';
 import 'calendar_repository.dart';
 
@@ -57,6 +58,7 @@ final agendaProvider = Provider.autoDispose<Agenda>((ref) {
     bills: adult ? ref.watch(unpaidBillsProvider).value ?? const <Bill>[] : const [],
     subscriptions: adult ? ref.watch(subscriptionsProvider).value ?? const <Subscription>[] : const [],
     vehicles: ref.watch(canSeeVehiclesProvider) ? ref.watch(vehiclesProvider).value ?? const <Vehicle>[] : const [],
+    checkups: ref.watch(checkupsProvider).value ?? const <Checkup>[],
   );
 });
 
@@ -71,5 +73,6 @@ final upcomingAgendaProvider = Provider<Agenda>((ref) {
     bills: adult ? ref.watch(unpaidBillsProvider).value ?? const <Bill>[] : const [],
     subscriptions: adult ? ref.watch(subscriptionsProvider).value ?? const <Subscription>[] : const [],
     vehicles: ref.watch(canSeeVehiclesProvider) ? ref.watch(vehiclesProvider).value ?? const <Vehicle>[] : const [],
+    checkups: ref.watch(checkupsProvider).value ?? const <Checkup>[],
   );
 });

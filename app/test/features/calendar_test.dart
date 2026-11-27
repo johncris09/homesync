@@ -338,6 +338,10 @@ void main() {
     }
     await v5.customStatement('DROP TABLE vehicles'); // added in v11
     await v5.customStatement('DROP TABLE vehicle_logs');
+    await v5.customStatement('DROP TABLE health_profiles'); // added in v13
+    await v5.customStatement('DROP TABLE medicines');
+    await v5.customStatement('DROP TABLE med_doses');
+    await v5.customStatement('DROP TABLE checkups');
     await v5.customStatement('PRAGMA user_version = 4');
     await v5.close();
 
@@ -364,6 +368,10 @@ void main() {
     }
     await v6.customStatement('DROP TABLE vehicles'); // added in v11
     await v6.customStatement('DROP TABLE vehicle_logs');
+    await v6.customStatement('DROP TABLE health_profiles'); // added in v13
+    await v6.customStatement('DROP TABLE medicines');
+    await v6.customStatement('DROP TABLE med_doses');
+    await v6.customStatement('DROP TABLE checkups');
     await v6.customStatement('PRAGMA user_version = 6');
     await v6.close();
 
@@ -396,6 +404,10 @@ void main() {
     }
     await v9.customStatement('DROP TABLE vehicles'); // added in v11
     await v9.customStatement('DROP TABLE vehicle_logs');
+    await v9.customStatement('DROP TABLE health_profiles'); // added in v13
+    await v9.customStatement('DROP TABLE medicines');
+    await v9.customStatement('DROP TABLE med_doses');
+    await v9.customStatement('DROP TABLE checkups');
     await v9.customStatement('PRAGMA user_version = 9');
     await v9.close();
 
