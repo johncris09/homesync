@@ -197,9 +197,12 @@ class PantryRepository {
 
   /// Puts a pantry item on the grocery list unless it is already there
   /// (same name, not bought). Returns false when it was already listed.
-  Future<bool> addToGrocery(PantryItem item) async {
-    if (await _isListed(item.name)) return false;
-    await addGrocery(item.name);
+  Future<bool> addToGrocery(PantryItem item) => addToGroceryByName(item.name);
+
+  /// Puts [name] on the list unless it is already there; false if it was.
+  Future<bool> addToGroceryByName(String name) async {
+    if (await _isListed(name)) return false;
+    await addGrocery(name);
     return true;
   }
 

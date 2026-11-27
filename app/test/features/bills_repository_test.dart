@@ -255,6 +255,15 @@ void main() {
     // Also undo version 9 (multi-day events).
     await v3.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
     await v3.customStatement('ALTER TABLE events DROP COLUMN "color"');
+    for (final t in ['vault_keys', 'vault_items', 'vault_files', 'vault_blobs']) {
+      await v3.customStatement('DROP TABLE "$t"'); // added in v12
+    }
+    await v3.customStatement('DROP TABLE vehicles'); // added in v11
+    await v3.customStatement('DROP TABLE vehicle_logs');
+    await v3.customStatement('DROP TABLE health_profiles'); // added in v13
+    await v3.customStatement('DROP TABLE medicines');
+    await v3.customStatement('DROP TABLE med_doses');
+    await v3.customStatement('DROP TABLE checkups');
     await v3.customStatement('PRAGMA user_version = 2');
     await v3.close();
 

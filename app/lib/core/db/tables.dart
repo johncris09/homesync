@@ -197,6 +197,98 @@ class DebtPayments extends Table with SyncColumns {
   TextColumn get note => text().nullable()();
 }
 
+/// A car or motorcycle ([kind] `car`, `motorcycle`) with its due dates. The
+/// odometer is the highest reading in [VehicleLogs]; it is never stored here.
+class Vehicles extends Table with SyncColumns {
+  TextColumn get kind => text()();
+  TextColumn get name => text()();
+  TextColumn get plate => text().nullable()();
+  TextColumn get color => text().nullable()();
+
+  /// Calendar dates `YYYY-MM-DD`; registration and insurance are yearly.
+  TextColumn get registrationDueOn => text().nullable()();
+  TextColumn get insuranceDueOn => text().nullable()();
+
+  /// PMS / change oil: due at this date or this odometer reading, whichever
+  /// comes first.
+  TextColumn get pmsDueOn => text().nullable()();
+  IntColumn get pmsDueKm => integer().nullable()();
+
+  /// How often PMS is done; logging one sets the next date and reading.
+  IntColumn get pmsEveryMonths => integer().nullable()();
+  IntColumn get pmsEveryKm => integer().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// A cost ([kind] `fuel`, `repair`, `pms`, `registration`, `insurance`;
+/// [amountMinor] positive) or an odometer reading ([kind] `odometer`, no
+/// amount) for a vehicle. Append-only.
+class VehicleLogs extends Table with SyncColumns {
+  TextColumn get vehicleId => text()();
+  TextColumn get kind => text()();
+  IntColumn get amountMinor => integer().nullable()();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+
+  /// Calendar date `YYYY-MM-DD`.
+  TextColumn get loggedOn => text()();
+  IntColumn get odometerKm => integer().nullable()();
+  RealColumn get litres => real().nullable()();
+  TextColumn get memberId => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// A member's health profile; [sealed] is blood type, allergies, conditions,
+/// maintenance medicines, PhilHealth/HMO numbers and doctor, encrypted with
+/// the vault key. One row per member (derived id).
+class HealthProfiles extends Table with SyncColumns {
+  TextColumn get memberId => text()();
+  TextColumn get sealed => text()();
+}
+
+/// A medicine for a member (null = anyone), taken at local `HH:MM` [times]
+/// (comma-separated; null = as needed). [stock] is a counter.
+class Medicines extends Table with SyncColumns {
+  TextColumn get name => text()();
+  TextColumn get strength => text().nullable()();
+  TextColumn get memberId => text().nullable()();
+  TextColumn get times => text().nullable()();
+  RealColumn get doseQty => real().withDefault(const Constant(1))();
+
+  /// Last day of a course `YYYY-MM-DD`; null = ongoing.
+  TextColumn get endsOn => text().nullable()();
+  RealColumn get stock => real().withDefault(const Constant(0))();
+  RealColumn get minStock => real().nullable()();
+  TextColumn get unit => text().nullable()();
+  TextColumn get expiresOn => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// A dose given. Append-only; a scheduled dose has a derived id.
+class MedDoses extends Table with SyncColumns {
+  TextColumn get medicineId => text()();
+  TextColumn get memberId => text().nullable()();
+  TextColumn get givenBy => text().nullable()();
+
+  /// Calendar date `YYYY-MM-DD` and the scheduled `HH:MM` (null = as needed).
+  TextColumn get takenOn => text()();
+  TextColumn get slot => text().nullable()();
+  DateTimeColumn get takenAt => dateTime().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// A checkup or vaccine ([kind] `checkup`, `vaccine`), done when [doneAt] is set.
+class Checkups extends Table with SyncColumns {
+  TextColumn get memberId => text().nullable()();
+  TextColumn get kind => text()();
+  TextColumn get title => text()();
+  TextColumn get dueOn => text().nullable()();
+  TextColumn get dueTime => text().nullable()();
+  TextColumn get place => text().nullable()();
+  DateTimeColumn get doneAt => dateTime().nullable()();
+  TextColumn get doneBy => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
 /// The money ledger. Append-only: only `note` and deletion change later.
 @DataClassName('LedgerEntry')
 class Transactions extends Table with SyncColumns {
@@ -209,6 +301,58 @@ class Transactions extends Table with SyncColumns {
   TextColumn get sourceType => text().nullable()();
   TextColumn get sourceId => text().nullable()();
   TextColumn get note => text().nullable()();
+}
+
+// ------------------------------------------------------------- vault
+// Document Vault (docs/vault.md). Secrets are encrypted on the device with
+// the household vault key before they reach this database; the hub only
+// ever sees ciphertext. All three are never auto-merged (sync-protocol §6).
+
+/// The household vault key, wrapped by the vault passphrase and by the
+/// owner's recovery code. One row per household (derived id).
+class VaultKeys extends Table with SyncColumns {
+  /// base64 of version byte, nonce, ciphertext and tag (see VaultCrypto).
+  TextColumn get passphraseWrap => text()();
+  TextColumn get kdfSalt => text()();
+  IntColumn get kdfIterations => integer()();
+  TextColumn get recoveryWrap => text()();
+  TextColumn get recoverySalt => text()();
+  TextColumn get createdBy => text().nullable()();
+}
+
+/// A document. [sealed] is the encrypted title, number, issuer and note.
+class VaultItems extends Table with SyncColumns {
+  TextColumn get kind => text()();
+  TextColumn get memberId => text().nullable()();
+
+  /// Calendar date `YYYY-MM-DD`; plain so reminders work while locked.
+  TextColumn get expiresOn => text().nullable()();
+  TextColumn get sealed => text()();
+  TextColumn get createdBy => text().nullable()();
+}
+
+/// A photo or PDF of a document: its own key ([keyWrap], wrapped by the
+/// vault key), the SHA-256 and size of its ciphertext, and its encrypted
+/// name and type ([sealed]).
+class VaultFiles extends Table with SyncColumns {
+  TextColumn get itemId => text()();
+  TextColumn get sha256 => text()();
+  IntColumn get size => integer()();
+  TextColumn get keyWrap => text()();
+  TextColumn get sealed => text()();
+  IntColumn get position => integer().withDefault(const Constant(0))();
+}
+
+/// Local only: encrypted file bytes kept on this device, by SHA-256 of the
+/// ciphertext. [needsUpload] until the hub has them.
+class VaultBlobs extends Table {
+  TextColumn get sha256 => text()();
+  BlobColumn get data => blob()();
+  BoolColumn get needsUpload => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get createdAt => dateTime().clientDefault(DateTime.now)();
+
+  @override
+  Set<Column> get primaryKey => {sha256};
 }
 
 /// Values kept for review (sync-protocol §6.1). Created by the hub only.

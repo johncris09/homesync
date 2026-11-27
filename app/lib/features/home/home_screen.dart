@@ -6,6 +6,7 @@ import '../../app/providers.dart';
 import '../../app/router.dart';
 import '../../app/theme.dart';
 import '../../core/app_version.dart';
+import '../../core/db/database.dart';
 import '../../core/auth/pin_hash.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/pin_pad.dart';
@@ -19,6 +20,10 @@ import '../debts/debts_providers.dart';
 import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
+import '../health/health_providers.dart';
+import '../vehicles/vehicles_providers.dart';
+import '../vehicles/vehicles_screen.dart' show dueWhen;
+import '../vault/vault_providers.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -46,6 +51,22 @@ class HomeScreen extends ConsumerWidget {
         : l10n.budgetTileSpent(peso(money.spent));
     final bills = adult ? ref.watch(billsSummaryProvider) : null;
     final debts = adult ? ref.watch(debtsSummaryProvider) : null;
+    final vehicles = adult ? ref.watch(vehiclesProvider).value ?? const [] : const [];
+    final cars = adult ? ref.watch(vehiclesSummaryProvider) : null;
+    final health = ref.watch(healthSummaryProvider);
+    final checkup = health.upcoming.firstOrNull;
+    final healthCaption = health.left > 0
+        ? l10n.healthTileDosesLeft(health.left)
+        : health.low.isNotEmpty
+        ? l10n.healthTileLow(health.low.length)
+        : checkup != null
+        ? l10n.healthTileCheckup(checkup.title, dayLabel(context, DateTime.parse(checkup.dueOn!), ref.read(healthRepoProvider).today))
+        : l10n.healthTileNothing;
+    final carNext = cars?.next;
+    final carWhen = carNext == null ? null : dueWhen(l10n, locale, carNext, ref.read(vehiclesRepoProvider).today);
+    final vaultItems = adult ? (ref.watch(vaultItemsProvider).value ?? const <VaultItem>[]) : const <VaultItem>[];
+    final vaultReady = adult && ref.watch(vaultKeyRowProvider).value != null;
+    final vaultRenew = adult ? vaultItems.where(ref.watch(vaultRepoProvider).renewSoon).length : 0;
     final chores = ref.watch(choreBoardProvider);
     final choresCaption = chores.today.isEmpty
         ? l10n.choresTileNone
@@ -130,6 +151,57 @@ class HomeScreen extends ConsumerWidget {
                           ),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => context.push(Routes.debts),
+                        ),
+                      ListTile(
+                        key: const Key('health-tile'),
+                        leading: const CircleAvatar(
+                          backgroundColor: HomeColors.dagat,
+                          foregroundColor: Colors.white,
+                          child: Icon(Icons.medication_outlined),
+                        ),
+                        title: Text(l10n.healthModule),
+                        subtitle: Text(healthCaption),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(Routes.health),
+                      ),
+                      if (cars != null)
+                        ListTile(
+                          key: const Key('vehicles-tile'),
+                          leading: CircleAvatar(
+                            backgroundColor: cars.overdue > 0 ? HomeColors.gumamela : HomeColors.dagat,
+                            foregroundColor: Colors.white,
+                            child: const Icon(Icons.directions_car_outlined),
+                          ),
+                          title: Text(l10n.vehiclesModule),
+                          subtitle: Text(
+                            vehicles.isEmpty
+                                ? l10n.vehiclesTileNone
+                                : cars.overdue > 1
+                                ? l10n.vehiclesTileOverdue(cars.overdue)
+                                : carNext != null
+                                ? '${carNext.vehicle.name} · ${l10n.vehiclesNextFigure(l10n.vehicleDueKind(carNext.kind), carWhen!.when)}'
+                                : l10n.vehiclesTileNothingDue,
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => context.push(Routes.vehicles),
+                        ),
+                      if (adult)
+                        ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: vaultRenew > 0 ? HomeColors.mangga : HomeColors.narra,
+                            foregroundColor: vaultRenew > 0 ? HomeColors.narra : Colors.white,
+                            child: const Icon(Icons.lock_outline),
+                          ),
+                          title: Text(l10n.vaultModule),
+                          subtitle: Text(
+                            !vaultReady
+                                ? l10n.vaultTileSetUp
+                                : vaultRenew > 0
+                                ? l10n.vaultTileRenew(vaultRenew)
+                                : l10n.vaultTileDocs(vaultItems.length),
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => context.push(Routes.vault),
                         ),
                       ListTile(
                         leading: const CircleAvatar(

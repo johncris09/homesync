@@ -14,6 +14,7 @@ class EntitySpec {
     this.mutable = const {},
     this.jsonFields = const {},
     this.serverCreated = false,
+    this.neverMerged = false,
   });
 
   /// Wire and table name, e.g. `grocery_items`.
@@ -40,6 +41,9 @@ class EntitySpec {
 
   /// Rows only the hub creates; devices may not insert them.
   final bool serverCreated;
+
+  /// Concurrent edits keep both versions; the older goes to conflicts.
+  final bool neverMerged;
 
   bool canUpdate(String field) =>
       fields.contains(field) &&
@@ -151,6 +155,28 @@ const syncedEntities = <String, EntitySpec>{
     appendOnly: true,
     mutable: {'note'},
   ),
+  'vehicles': EntitySpec(
+    name: 'vehicles',
+    fields: {
+      'kind',
+      'name',
+      'plate',
+      'color',
+      'registration_due_on',
+      'insurance_due_on',
+      'pms_due_on',
+      'pms_due_km',
+      'pms_every_months',
+      'pms_every_km',
+      'note',
+    },
+  ),
+  'vehicle_logs': EntitySpec(
+    name: 'vehicle_logs',
+    fields: {'vehicle_id', 'kind', 'amount_minor', 'currency', 'logged_on', 'odometer_km', 'litres', 'member_id', 'note'},
+    appendOnly: true,
+    mutable: {'note'},
+  ),
   'transactions': EntitySpec(
     name: 'transactions',
     fields: {
@@ -166,6 +192,49 @@ const syncedEntities = <String, EntitySpec>{
     },
     appendOnly: true,
     mutable: {'note'},
+  ),
+  'vault_keys': EntitySpec(
+    name: 'vault_keys',
+    fields: {'passphrase_wrap', 'kdf_salt', 'kdf_iterations', 'recovery_wrap', 'recovery_salt', 'created_by'},
+    neverMerged: true,
+  ),
+  'vault_items': EntitySpec(
+    name: 'vault_items',
+    fields: {'kind', 'member_id', 'expires_on', 'sealed', 'created_by'},
+    neverMerged: true,
+  ),
+  'vault_files': EntitySpec(
+    name: 'vault_files',
+    fields: {'item_id', 'sha256', 'size', 'key_wrap', 'sealed', 'position'},
+    neverMerged: true,
+  ),
+  'health_profiles': EntitySpec(name: 'health_profiles', fields: {'member_id', 'sealed'}, neverMerged: true),
+  'medicines': EntitySpec(
+    name: 'medicines',
+    fields: {
+      'name',
+      'strength',
+      'member_id',
+      'times',
+      'dose_qty',
+      'ends_on',
+      'stock',
+      'min_stock',
+      'unit',
+      'expires_on',
+      'note',
+    },
+    counters: {'stock'},
+  ),
+  'med_doses': EntitySpec(
+    name: 'med_doses',
+    fields: {'medicine_id', 'member_id', 'given_by', 'taken_on', 'slot', 'taken_at', 'note'},
+    appendOnly: true,
+    mutable: {'note'},
+  ),
+  'checkups': EntitySpec(
+    name: 'checkups',
+    fields: {'member_id', 'kind', 'title', 'due_on', 'due_time', 'place', 'done_at', 'done_by', 'note'},
   ),
   'conflicts': EntitySpec(
     name: 'conflicts',

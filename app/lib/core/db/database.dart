@@ -18,8 +18,18 @@ part 'database.g.dart';
     Events,
     Debts,
     DebtPayments,
+    Vehicles,
+    VehicleLogs,
     Budgets,
     Transactions,
+    VaultKeys,
+    VaultItems,
+    VaultFiles,
+    VaultBlobs,
+    HealthProfiles,
+    Medicines,
+    MedDoses,
+    Checkups,
     Conflicts,
     Outbox,
     FieldClocks,
@@ -31,7 +41,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 10;
+  int get schemaVersion => 13;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -69,6 +79,25 @@ class AppDatabase extends _$AppDatabase {
       // Multi-day events; databases older than 5 got events with ends_on above.
       if (from >= 5 && from < 9) await m.addColumn(events, events.endsOn);
       if (from >= 5 && from < 10) await m.addColumn(events, events.color); // event colours
+      if (from < 11) {
+        // Vehicles (new tables only, so this step can be renumbered freely)
+        await m.createTable(vehicles);
+        await m.createTable(vehicleLogs);
+      }
+      if (from < 12) {
+        // Document Vault
+        await m.createTable(vaultKeys);
+        await m.createTable(vaultItems);
+        await m.createTable(vaultFiles);
+        await m.createTable(vaultBlobs);
+      }
+      if (from < 13) {
+        // Health (new tables only, so this step can be renumbered freely)
+        await m.createTable(healthProfiles);
+        await m.createTable(medicines);
+        await m.createTable(medDoses);
+        await m.createTable(checkups);
+      }
     },
   );
 

@@ -34,7 +34,7 @@ The contract between the Flutter app (`app/`) and the Laravel API (`api/`). Any 
 
 Server-only tables: `change_log`, `processed_ops`, `device_cursors`. `conflicts` is synced but server-created (§6.1).
 
-Per-field HLCs for field-level merge are stored server-side in `change_log` payloads and on the device in a `field_clocks` table (`entity`, `entity_id`, `field`, `hlc`).
+Per-field HLCs for field-level merge are stored server-side in a `field_clocks` table (`entity`, `entity_id`, `field`, `hlc`, `updated_by`, `seq` = the change-log entry that last set the field) and on the device in a `field_clocks` table (`entity`, `entity_id`, `field`, `hlc`).
 
 ### 2.1 Derived ids (one row per natural key)
 
@@ -47,6 +47,11 @@ Some entities hold at most one row per natural key. Their id is not random: the 
 | `transactions` (bill payment) | `bill/<bill_id>` |
 | `transactions` (subscription payment) | `subscription/<subscription_id>/<due_on>` |
 | `transactions` (debt payment) | `debt/<debt_payment_id>` |
+| `transactions` (vehicle cost) | `vehicle/<vehicle_log_id>` |
+| `vault_keys` | `household` |
+| `health_profiles` | `<member_id>` |
+| `med_doses` (scheduled dose) | `<medicine_id>/<taken_on>/<slot>` |
+| `transactions` (checkup cost) | `checkup/<checkup_id>` |
 
 An `insert` for an existing **append-only** record (two devices recording the same payment) changes nothing: the first record stays and the op is answered `merged`, so the second device pulls the first one. A payment re-recorded after its owner undid it uses a random id.
 
@@ -188,12 +193,12 @@ Applied by the server when an incoming op's field HLC is older than or concurren
 | Kind | Entities / fields | Rule |
 | --- | --- | --- |
 | Default | All fields not listed below | Field-level last-writer-wins by HLC |
-| Append-only | `transactions`, `debt_payments`, `chore_completions`, `med_doses`, `fuel_logs`, `rent_payments`, `stock_movements`, `safety_checkins`, `activity_log` | Inserts only; updates allowed only to `note` and `deleted_at`. Never conflict |
+| Append-only | `transactions`, `debt_payments`, `chore_completions`, `med_doses`, `vehicle_logs`, `rent_payments`, `stock_movements`, `safety_checkins`, `activity_log` | Inserts only; updates allowed only to `note` and `deleted_at`. Never conflict |
 | Counters | `pantry_items.quantity`, `medicines.stock`, `go_bag_items.quantity` | `increment` ops summed; absolute `update` of a counter is rejected (`not_counter`) |
 | Forward-only status | `bills.is_paid`, `grocery_items.is_bought`, `debts.is_closed` | `true` wins over `false`, unless the `false` has a newer HLC **and** the same `updated_by` as the `true` |
 | Reviewed money | `budgets.limit_minor`, `bills.amount_minor`, `subscriptions.price_minor`, `leases.rent_minor`, `debts.principal_minor` | LWW, and the losing value is stored in `conflicts` for an Adult/Owner to confirm or revert |
 | Delete vs edit | All | Delete wins unless the edit's HLC is newer than the delete's |
-| Never auto-merged | `vault_items`, `vault_files`, `health_profiles` | Both versions kept; the newer is live, the older stored in `conflicts`; Owner chooses |
+| Never auto-merged | `vault_keys`, `vault_items`, `vault_files`, `health_profiles` | Both versions kept; the newer is live, the older stored in `conflicts`; Owner chooses |
 
 A grocery item (`grocery_items`) is ticked off with `is_bought` (forward-only) and `bought_at`, the moment it was bought; the person can move `bought_at` to another day. "Clear bought" does not delete: it sets `cleared_at`, which hides the item from the list but keeps it for the history screen (past groceries, grouped by the local day of `bought_at`). Ticking an item again sets `cleared_at` back to null. Removing an item from the list is still a delete. `planned_on` (`YYYY-MM-DD`, may be in the future, null = no date) is the day the household plans to buy an item still on the list; the list groups by it, soonest first. All three fields follow the default field-level rule.
 
@@ -202,6 +207,13 @@ A chore has no done flag: it is done for a day when it has a `chore_completions`
 A calendar event (`events`) stores its first date (`starts_on`) and a `repeat` of `none`, `weekly`, `monthly` or `yearly`; devices work out the other dates (monthly and yearly keep the day, clamped to short months). A multi-day event also stores `ends_on`, the last day of its first occurrence (null = one day); every repeat copies the whole span, which must fit inside the repeat (weekly up to 7 days, monthly up to 28, yearly up to 365). Times are local `HH:MM` text (`start_time` null = all day); on a multi-day event `start_time` is on the first day and `end_time` on the last. `color` is a palette name (`ube`, `dagat`, `dahon`, `narra`, `rosas`, `tubig`; null = the default look); devices show an unknown name as the default. Editing or removing a repeating event changes every date. Events follow the default field-level rule.
 
 A debt (`debts`) is one loan, credit card, pawn ticket or sum lent (`kind` `loan`, `card`, `pawn`, `lent`). Its balance is never stored: devices work it out as `principal_minor` plus `charge` rows minus `payment` rows in `debt_payments` (`interest` rows are paid but leave the balance alone, e.g. renewing a pawn ticket). Because those rows are append-only with random ids, two people recording payments offline both count. A payment or interest the household makes on a `loan`, `card` or `pawn` also posts an expense to `transactions` (category `debt`, `source_type` `debt`, `source_id` the debt, id derived from the payment, §2.1); money paid back on a `lent` debt does not. `is_closed` (paid off, redeemed, repaid) follows the forward-only rule; `closed_by` says who may reopen it.
+
+A vehicle (`vehicles`, `kind` `car` or `motorcycle`) keeps its due dates on the row: `registration_due_on` and `insurance_due_on` (yearly), and PMS / change oil by `pms_due_on` and/or `pms_due_km` (whichever comes first). Everything that happens to it is an append-only `vehicle_logs` row (`kind` `fuel`, `repair`, `pms`, `registration`, `insurance` with a positive `amount_minor`, or `odometer` with no amount; `litres` optional on fuel). The odometer is never stored on the vehicle: devices take the highest `odometer_km` in its logs, so readings from two devices offline both count. Every cost also posts an expense to `transactions` (category `transport`, `source_type` `vehicle`, `source_id` the vehicle, id derived from the log, §2.1). Logging a registration or insurance cost moves that due date one year on; logging a PMS sets `pms_due_on` to the log date plus `pms_every_months` and `pms_due_km` to its reading plus `pms_every_km` (when those are set). The due fields follow the default field-level rule.
+A field of a never-auto-merged entity is in conflict when an op changes it to a different value and the field was last set by a change the device had not seen (its `seq` is above the op's `base_version`; an insert onto an existing derived-id row counts as base 0). The newer HLC is live and the other value is stored in `conflicts`, whichever arrives first; the op is answered `merged`. Edits made after pulling the latest version, and concurrent edits of different fields, apply normally. Vault values are ciphertext, so the conflict holds ciphertext too and only a device with the vault key can show it.
+
+The Document Vault (`docs/vault.md`) keeps secrets encrypted on the device with the household vault key: `vault_keys` holds that key wrapped by the vault passphrase and by the owner's recovery code (owner writes; adults read). A document (`vault_items`) has a plain `kind` (`id`, `certificate`, `property`, `contract`, `warranty`, `insurance`, `pawn`, `vehicle`, `other`), `member_id` (whose it is, null = the household) and `expires_on`; its title, number, issuer, issue date and note are one sealed `sealed` field. A file (`vault_files`) names its ciphertext by `sha256` and `size`, carries its own key wrapped by the vault key (`key_wrap`) and a sealed name and type, and is ordered by `position`. Owner and adults only.
+
+Health (`docs/vault.md` for the key): a member's `health_profiles` row holds blood type, allergies, conditions, maintenance medicines, PhilHealth and HMO numbers and the doctor in `sealed`, encrypted with the vault key (additional data `homesync/health_profiles/<id>/sealed`); only `member_id` is plain. It follows the never-auto-merged rule. A medicine (`medicines`) is for a member (null = anyone), taken at local `HH:MM` `times` (comma-separated; null = as needed) until `ends_on`; `stock` is a counter: a dose sends `-dose_qty`, a restock or stock-take sends the difference, so use and restocking on two devices both count. Everyone but viewers writes `medicines` because a dose changes the stock; only adults edit a medicine (checked in the app). A dose given is an append-only `med_doses` row; a scheduled dose's id is derived from the medicine, day and slot (§2.1), so two people ticking it offline record it once (both stock decrements still count; a stock-take corrects that rare case); an as-needed dose has a random id. Undo is a delete by the person who gave it, with the stock sent back. A restock may post an expense (category `health`, `source_type` `medicine`, random id: it is one device's action). `checkups` (`kind` `checkup` or `vaccine`) have a due date and optional time, are done when `done_at` is set, and marking one done may post its cost (`source_type` `checkup`, id derived from the checkup). Health fields otherwise follow the default rule.
 
 Tombstones are kept 90 days, then pruned by the nightly job.
 
@@ -222,13 +234,22 @@ Every value stored for review (reviewed money, never-auto-merged) is a row in th
 
 ---
 
-## 7. Attachments
+## 7. Files (vault)
 
-1. Device stores the file locally, named by SHA-256 of its (encrypted, for vault) bytes.
-2. The `attachments` row syncs like any record (`sha256`, `size`, `mime`, `entity`, `entity_id`, `uploaded`=false).
-3. Upload queue: `POST /api/files/{sha256}/chunks/{index}` with 1 MB chunks, then `POST /api/files/{sha256}/complete`. `HEAD /api/files/{sha256}` tells which chunks the server already has (resume).
-4. Download: `GET /api/files/{sha256}` (auth-checked, served from object storage via a short-lived signed URL redirect).
-5. Vault files are encrypted on the device (AES-256-GCM with the household vault key) before hashing and upload. The server only ever sees ciphertext.
+Encrypted vault files live on the hub's private disk, named by the SHA-256 of their ciphertext. The device encrypts before hashing and uploading (`docs/vault.md`), so the hub only ever sees ciphertext. Every call is authenticated; uploads need `write` on `vault_files`, downloads `read`.
+
+| Endpoint | Body | Returns |
+| --- | --- | --- |
+| `GET /api/files/{sha256}/chunks` | — | `{ "complete": bool, "chunks": [0, 1] }`: which chunks the hub already has (resume) |
+| `PUT /api/files/{sha256}/chunks/{index}` | raw bytes, 1 B – 1 MiB (`application/octet-stream`) | `{ "received": index }` |
+| `POST /api/files/{sha256}/complete` | `{ "chunks": n }` | `{ "sha256", "size" }`, or `422` if chunks are missing, the file is over 20 MB or the hash does not match (the chunks are then discarded) |
+| `GET /api/files/{sha256}` | — | the ciphertext, if a live `vault_files` row in the household names it; else `404` |
+
+1. The device stores the ciphertext locally first and writes the `vault_files` row through the outbox.
+2. After a sync it uploads every file still waiting, chunk by chunk, then calls `complete`. A file already on the hub answers `complete: true` and needs no upload.
+3. Other devices download a file when it is opened and keep the ciphertext locally. A `404` means the device that added it has not uploaded it yet.
+
+Files no live row names are kept for now; pruning them is a later job.
 
 ---
 

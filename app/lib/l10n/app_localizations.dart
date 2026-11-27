@@ -2277,6 +2277,1410 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove this entry'**
   String get debtRemoveEntry;
+
+  /// No description provided for @vaultModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Document vault'**
+  String get vaultModule;
+
+  /// No description provided for @vaultTileDocs.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing kept yet} =1{1 document} other{{count} documents}}'**
+  String vaultTileDocs(int count);
+
+  /// No description provided for @vaultTileRenew.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 to renew soon} other{{count} to renew soon}}'**
+  String vaultTileRenew(int count);
+
+  /// No description provided for @vaultTileSetUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set up yet'**
+  String get vaultTileSetUp;
+
+  /// No description provided for @vaultInboxNote.
+  ///
+  /// In en, this message translates to:
+  /// **'A vault document was changed on two devices. Open it in the vault to compare.'**
+  String get vaultInboxNote;
+
+  /// No description provided for @vaultDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No documents} =1{1 document} other{{count} documents}}'**
+  String vaultDocuments(int count);
+
+  /// No description provided for @vaultLockedCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked. Encrypted on this device.'**
+  String get vaultLockedCaption;
+
+  /// No description provided for @vaultLockedRenew.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Locked · 1 to renew soon} other{Locked · {count} to renew soon}}'**
+  String vaultLockedRenew(int count);
+
+  /// No description provided for @vaultKeptSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted before it leaves this device'**
+  String get vaultKeptSafe;
+
+  /// No description provided for @vaultExpiresOn.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} expires {date}'**
+  String vaultExpiresOn(String title, String date);
+
+  /// No description provided for @vaultRenewSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew soon'**
+  String get vaultRenewSoon;
+
+  /// No description provided for @vaultEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add IDs, birth certificates, land titles, contracts and warranties. Only adults can open them.'**
+  String get vaultEmpty;
+
+  /// No description provided for @vaultAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add document'**
+  String get vaultAdd;
+
+  /// No description provided for @vaultEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit document'**
+  String get vaultEdit;
+
+  /// No description provided for @vaultDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get vaultDelete;
+
+  /// No description provided for @vaultDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {title} and its files from the vault?'**
+  String vaultDeleteConfirm(String title);
+
+  /// No description provided for @vaultLock.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock'**
+  String get vaultLock;
+
+  /// No description provided for @vaultUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock'**
+  String get vaultUnlock;
+
+  /// No description provided for @vaultOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening the vault. This takes a few seconds.'**
+  String get vaultOpening;
+
+  /// No description provided for @vaultPassphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Vault passphrase'**
+  String get vaultPassphrase;
+
+  /// No description provided for @vaultPassphraseAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Passphrase again'**
+  String get vaultPassphraseAgain;
+
+  /// No description provided for @vaultPassphraseTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least {count} characters. A few words work well.'**
+  String vaultPassphraseTooShort(int count);
+
+  /// No description provided for @vaultPassphrasesDontMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The passphrases don\'t match'**
+  String get vaultPassphrasesDontMatch;
+
+  /// No description provided for @vaultWrongPassphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'That passphrase didn\'t open the vault'**
+  String get vaultWrongPassphrase;
+
+  /// No description provided for @vaultAppLockHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on app lock on Home to open the vault with your PIN instead of the passphrase.'**
+  String get vaultAppLockHint;
+
+  /// No description provided for @vaultBiometricReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the document vault'**
+  String get vaultBiometricReason;
+
+  /// No description provided for @vaultPinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your app PIN'**
+  String get vaultPinTitle;
+
+  /// No description provided for @vaultUseRecovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Use recovery code'**
+  String get vaultUseRecovery;
+
+  /// No description provided for @vaultRecoveryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'K7QM-3XRT-9WHD-PC2E-VN6A-YB4F'**
+  String get vaultRecoveryHint;
+
+  /// No description provided for @vaultWrongRecovery.
+  ///
+  /// In en, this message translates to:
+  /// **'That recovery code didn\'t open the vault'**
+  String get vaultWrongRecovery;
+
+  /// No description provided for @vaultNewPassphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'New vault passphrase'**
+  String get vaultNewPassphrase;
+
+  /// No description provided for @vaultNewPassphraseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell the other adults the new passphrase. Phones that already opened the vault keep working.'**
+  String get vaultNewPassphraseBody;
+
+  /// No description provided for @vaultChangePassphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Change passphrase'**
+  String get vaultChangePassphrase;
+
+  /// No description provided for @vaultNewRecoveryCode.
+  ///
+  /// In en, this message translates to:
+  /// **'New recovery code'**
+  String get vaultNewRecoveryCode;
+
+  /// No description provided for @vaultSetUpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up the vault'**
+  String get vaultSetUpTitle;
+
+  /// No description provided for @vaultSetUpCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'For IDs, titles and certificates'**
+  String get vaultSetUpCaption;
+
+  /// No description provided for @vaultSetUpBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a vault passphrase for the household and tell the other adults in person. Documents are encrypted on this device before they sync; the hub never sees them.'**
+  String get vaultSetUpBody;
+
+  /// No description provided for @vaultSetUpButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up'**
+  String get vaultSetUpButton;
+
+  /// No description provided for @vaultSetUpOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to the internet to set up the vault, so every device gets the same key.'**
+  String get vaultSetUpOffline;
+
+  /// No description provided for @vaultNotSetUp.
+  ///
+  /// In en, this message translates to:
+  /// **'The owner hasn\'t set up the vault yet.'**
+  String get vaultNotSetUp;
+
+  /// No description provided for @vaultRecoveryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recovery code'**
+  String get vaultRecoveryTitle;
+
+  /// No description provided for @vaultRecoveryCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'The only way back if the passphrase is lost'**
+  String get vaultRecoveryCaption;
+
+  /// No description provided for @vaultRecoveryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Print it or write it down and keep it with the land titles. If the passphrase and this code are both lost, no one can open the documents again, not even HomeSync.'**
+  String get vaultRecoveryBody;
+
+  /// No description provided for @vaultRecoverySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'ve saved it somewhere safe'**
+  String get vaultRecoverySaved;
+
+  /// No description provided for @vaultFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get vaultFinish;
+
+  /// No description provided for @vaultCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get vaultCopy;
+
+  /// No description provided for @vaultKindId.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get vaultKindId;
+
+  /// No description provided for @vaultKindCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate'**
+  String get vaultKindCertificate;
+
+  /// No description provided for @vaultKindProperty.
+  ///
+  /// In en, this message translates to:
+  /// **'Property'**
+  String get vaultKindProperty;
+
+  /// No description provided for @vaultKindContract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contract'**
+  String get vaultKindContract;
+
+  /// No description provided for @vaultKindInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance'**
+  String get vaultKindInsurance;
+
+  /// No description provided for @vaultKindWarranty.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty'**
+  String get vaultKindWarranty;
+
+  /// No description provided for @vaultKindVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle'**
+  String get vaultKindVehicle;
+
+  /// No description provided for @vaultKindPawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Pawn ticket'**
+  String get vaultKindPawn;
+
+  /// No description provided for @vaultKindOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get vaultKindOther;
+
+  /// No description provided for @vaultGroupId.
+  ///
+  /// In en, this message translates to:
+  /// **'IDs'**
+  String get vaultGroupId;
+
+  /// No description provided for @vaultGroupCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificates'**
+  String get vaultGroupCertificate;
+
+  /// No description provided for @vaultGroupProperty.
+  ///
+  /// In en, this message translates to:
+  /// **'Property'**
+  String get vaultGroupProperty;
+
+  /// No description provided for @vaultGroupContract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contracts'**
+  String get vaultGroupContract;
+
+  /// No description provided for @vaultGroupInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance'**
+  String get vaultGroupInsurance;
+
+  /// No description provided for @vaultGroupWarranty.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranties'**
+  String get vaultGroupWarranty;
+
+  /// No description provided for @vaultGroupVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicles'**
+  String get vaultGroupVehicle;
+
+  /// No description provided for @vaultGroupPawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Pawn tickets'**
+  String get vaultGroupPawn;
+
+  /// No description provided for @vaultGroupOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other documents'**
+  String get vaultGroupOther;
+
+  /// No description provided for @vaultTitleOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} · {name}'**
+  String vaultTitleOf(String title, String name);
+
+  /// No description provided for @vaultUnreadable.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t open this document'**
+  String get vaultUnreadable;
+
+  /// No description provided for @vaultDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Expires today} =1{1 day left} other{{count} days left}}'**
+  String vaultDaysLeft(int count);
+
+  /// No description provided for @vaultExpiredDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Expired yesterday} other{Expired {count} days ago}}'**
+  String vaultExpiredDaysAgo(int count);
+
+  /// No description provided for @vaultExpiresCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String vaultExpiresCaption(String date);
+
+  /// No description provided for @vaultExpiredOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired {date}'**
+  String vaultExpiredOn(String date);
+
+  /// No description provided for @vaultNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Number'**
+  String get vaultNumber;
+
+  /// No description provided for @vaultShowNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Show number'**
+  String get vaultShowNumber;
+
+  /// No description provided for @vaultHideNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide number'**
+  String get vaultHideNumber;
+
+  /// No description provided for @vaultKind.
+  ///
+  /// In en, this message translates to:
+  /// **'Kind'**
+  String get vaultKind;
+
+  /// No description provided for @vaultWhose.
+  ///
+  /// In en, this message translates to:
+  /// **'Whose'**
+  String get vaultWhose;
+
+  /// No description provided for @vaultWholeFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole family'**
+  String get vaultWholeFamily;
+
+  /// No description provided for @vaultIssuer.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued by'**
+  String get vaultIssuer;
+
+  /// No description provided for @vaultIssuerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'DFA, PSA, LTO'**
+  String get vaultIssuerHint;
+
+  /// No description provided for @vaultIssuedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get vaultIssuedOn;
+
+  /// No description provided for @vaultExpiresOnLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires'**
+  String get vaultExpiresOnLabel;
+
+  /// No description provided for @vaultNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get vaultNote;
+
+  /// No description provided for @vaultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get vaultTitle;
+
+  /// No description provided for @vaultTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport'**
+  String get vaultTitleHint;
+
+  /// No description provided for @vaultTitleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the document a name'**
+  String get vaultTitleRequired;
+
+  /// No description provided for @vaultEncryptedNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, number, issuer and note are encrypted. Kind, whose and the expiry date are not, so reminders work while the vault is locked.'**
+  String get vaultEncryptedNote;
+
+  /// No description provided for @vaultFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos and files'**
+  String get vaultFiles;
+
+  /// No description provided for @vaultTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get vaultTakePhoto;
+
+  /// No description provided for @vaultAddPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo'**
+  String get vaultAddPhoto;
+
+  /// No description provided for @vaultAddPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Add PDF'**
+  String get vaultAddPdf;
+
+  /// No description provided for @vaultRemoveFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from the document'**
+  String get vaultRemoveFile;
+
+  /// No description provided for @vaultFileTooBig.
+  ///
+  /// In en, this message translates to:
+  /// **'That file is over 20 MB'**
+  String get vaultFileTooBig;
+
+  /// No description provided for @vaultFileOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t reach the hub to get this file. Try again when online.'**
+  String get vaultFileOffline;
+
+  /// No description provided for @vaultFileNotUploaded.
+  ///
+  /// In en, this message translates to:
+  /// **'This file hasn\'t been uploaded yet from the device that added it.'**
+  String get vaultFileNotUploaded;
+
+  /// No description provided for @vaultConflictTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Changed on two devices at once'**
+  String get vaultConflictTitle;
+
+  /// No description provided for @vaultUseOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the other'**
+  String get vaultUseOther;
+
+  /// No description provided for @vaultConflictOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'The owner will choose which version to keep.'**
+  String get vaultConflictOwner;
+
+  /// No description provided for @vehiclesModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicles'**
+  String get vehiclesModule;
+
+  /// No description provided for @vehiclesTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No vehicles yet'**
+  String get vehiclesTileNone;
+
+  /// No description provided for @vehiclesTileNothingDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing due'**
+  String get vehiclesTileNothingDue;
+
+  /// No description provided for @vehiclesTileOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 thing overdue} other{{count} things overdue}}'**
+  String vehiclesTileOverdue(int count);
+
+  /// No description provided for @vehiclesNoneFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'No vehicles yet'**
+  String get vehiclesNoneFigure;
+
+  /// No description provided for @vehiclesEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Cars and motorcycles: papers, PMS and costs'**
+  String get vehiclesEmptyCaption;
+
+  /// No description provided for @vehiclesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your car or motorcycle to keep track of its registration, insurance, PMS and costs.'**
+  String get vehiclesEmpty;
+
+  /// No description provided for @vehiclesNothingDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing due'**
+  String get vehiclesNothingDue;
+
+  /// No description provided for @vehiclesNextFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{what} {when}'**
+  String vehiclesNextFigure(String what, String when);
+
+  /// No description provided for @vehiclesMoreOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 more overdue} other{{count} more overdue}}'**
+  String vehiclesMoreOverdue(int count);
+
+  /// No description provided for @vehiclesSpentLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent this month: {amount}'**
+  String vehiclesSpentLine(String amount);
+
+  /// No description provided for @vehiclesComingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get vehiclesComingUp;
+
+  /// No description provided for @vehiclesOurs.
+  ///
+  /// In en, this message translates to:
+  /// **'Our vehicles'**
+  String get vehiclesOurs;
+
+  /// No description provided for @vehicleDueKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, registration{Registration} insurance{Insurance} other{PMS}}'**
+  String vehicleDueKind(String kind);
+
+  /// No description provided for @vehicleDueOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{overdue by 1 day} other{overdue by {count} days}}'**
+  String vehicleDueOverdue(int count);
+
+  /// No description provided for @vehicleDueIn.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{due today} =1{due tomorrow} other{in {count} days}}'**
+  String vehicleDueIn(int count);
+
+  /// No description provided for @vehicleDueOn.
+  ///
+  /// In en, this message translates to:
+  /// **'on {date}'**
+  String vehicleDueOn(String date);
+
+  /// No description provided for @vehicleKmLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'in {km} km'**
+  String vehicleKmLeft(String km);
+
+  /// No description provided for @vehicleKmPast.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km past due'**
+  String vehicleKmPast(String km);
+
+  /// No description provided for @vehicleAtKm.
+  ///
+  /// In en, this message translates to:
+  /// **'at {km} km'**
+  String vehicleAtKm(String km);
+
+  /// No description provided for @vehicleOrAt.
+  ///
+  /// In en, this message translates to:
+  /// **'or at {km} km'**
+  String vehicleOrAt(String km);
+
+  /// No description provided for @vehicleOrOn.
+  ///
+  /// In en, this message translates to:
+  /// **'or by {date}'**
+  String vehicleOrOn(String date);
+
+  /// No description provided for @vehicleKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, car{Car} other{Motorcycle}}'**
+  String vehicleKind(String kind);
+
+  /// No description provided for @vehicleLogKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, fuel{Fuel} pms{PMS} repair{Repair} registration{Registration} insurance{Insurance} other{Odometer}}'**
+  String vehicleLogKind(String kind);
+
+  /// No description provided for @vehicleAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add vehicle'**
+  String get vehicleAdd;
+
+  /// No description provided for @vehicleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit vehicle'**
+  String get vehicleEdit;
+
+  /// No description provided for @vehicleRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove vehicle'**
+  String get vehicleRemove;
+
+  /// No description provided for @vehicleLogFuel.
+  ///
+  /// In en, this message translates to:
+  /// **'Log fuel'**
+  String get vehicleLogFuel;
+
+  /// No description provided for @vehicleAddCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Add cost'**
+  String get vehicleAddCost;
+
+  /// No description provided for @vehicleUpdateOdometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Update odometer'**
+  String get vehicleUpdateOdometer;
+
+  /// No description provided for @vehicleOdometer.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String vehicleOdometer(String km);
+
+  /// No description provided for @vehicleNoOdometer.
+  ///
+  /// In en, this message translates to:
+  /// **'No odometer reading yet'**
+  String get vehicleNoOdometer;
+
+  /// No description provided for @vehicleLastReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Last reading {km} km'**
+  String vehicleLastReading(String km);
+
+  /// No description provided for @vehicleNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, car{e.g. Innova} other{e.g. Mio}}'**
+  String vehicleNameHint(String kind);
+
+  /// No description provided for @vehiclePlate.
+  ///
+  /// In en, this message translates to:
+  /// **'Plate number (optional)'**
+  String get vehiclePlate;
+
+  /// No description provided for @vehicleColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Colour (optional)'**
+  String get vehicleColor;
+
+  /// No description provided for @vehicleOdometerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer'**
+  String get vehicleOdometerLabel;
+
+  /// No description provided for @vehicleOdometerOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer (optional)'**
+  String get vehicleOdometerOptional;
+
+  /// No description provided for @vehicleOdometerInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number above zero'**
+  String get vehicleOdometerInvalid;
+
+  /// No description provided for @vehicleDueDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, registration{LTO registration due} insurance{Insurance due} other{Next PMS date}}'**
+  String vehicleDueDateLabel(String kind);
+
+  /// No description provided for @vehicleNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get vehicleNotSet;
+
+  /// No description provided for @vehicleClearDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear date'**
+  String get vehicleClearDate;
+
+  /// No description provided for @vehiclePmsKm.
+  ///
+  /// In en, this message translates to:
+  /// **'Next PMS at (optional)'**
+  String get vehiclePmsKm;
+
+  /// No description provided for @vehiclePmsEveryMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'PMS every how many months (optional)'**
+  String get vehiclePmsEveryMonths;
+
+  /// No description provided for @vehiclePmsEveryKm.
+  ///
+  /// In en, this message translates to:
+  /// **'PMS every how many km (optional)'**
+  String get vehiclePmsEveryKm;
+
+  /// No description provided for @vehiclePmsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'PMS is due at its date or km, whichever comes first. Logging a PMS sets the next one from these.'**
+  String get vehiclePmsHelp;
+
+  /// No description provided for @vehicleNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get vehicleNote;
+
+  /// No description provided for @vehicleAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get vehicleAmount;
+
+  /// No description provided for @vehicleLitres.
+  ///
+  /// In en, this message translates to:
+  /// **'Litres (optional)'**
+  String get vehicleLitres;
+
+  /// No description provided for @vehicleLitresLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{litres} L'**
+  String vehicleLitresLine(String litres);
+
+  /// No description provided for @vehicleRenewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, registration{Moves the registration due date one year on.} insurance{Moves the insurance due date one year on.} other{Sets the next PMS from its interval.}}'**
+  String vehicleRenewHint(String kind);
+
+  /// No description provided for @vehicleWhich.
+  ///
+  /// In en, this message translates to:
+  /// **'Which vehicle?'**
+  String get vehicleWhich;
+
+  /// No description provided for @vehicleHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get vehicleHistory;
+
+  /// No description provided for @vehicleHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded yet.'**
+  String get vehicleHistoryEmpty;
+
+  /// No description provided for @vehicleRemoveEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this entry'**
+  String get vehicleRemoveEntry;
+
+  /// No description provided for @calendarVehicleDue.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, registration{Registration due} insurance{Insurance due} other{PMS due}}'**
+  String calendarVehicleDue(String kind);
+
+  /// No description provided for @healthModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get healthModule;
+
+  /// No description provided for @healthTileDosesLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 dose left today} other{{count} doses left today}}'**
+  String healthTileDosesLeft(int count);
+
+  /// No description provided for @healthTileLow.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 medicine running low} other{{count} medicines running low}}'**
+  String healthTileLow(int count);
+
+  /// No description provided for @healthTileCheckup.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} {date}'**
+  String healthTileCheckup(String title, String date);
+
+  /// No description provided for @healthTileNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No doses or checkups due'**
+  String get healthTileNothing;
+
+  /// No description provided for @healthNoMedicines.
+  ///
+  /// In en, this message translates to:
+  /// **'No medicines yet'**
+  String get healthNoMedicines;
+
+  /// No description provided for @healthNoDosesToday.
+  ///
+  /// In en, this message translates to:
+  /// **'No doses today'**
+  String get healthNoDosesToday;
+
+  /// No description provided for @healthEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Medicines, checkups and the family\'s health'**
+  String get healthEmptyCaption;
+
+  /// No description provided for @healthCheckupCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {title} on {date}'**
+  String healthCheckupCaption(String title, String date);
+
+  /// No description provided for @healthAllGiven.
+  ///
+  /// In en, this message translates to:
+  /// **'All doses given'**
+  String get healthAllGiven;
+
+  /// No description provided for @healthAllGivenCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 dose given today} other{{count} doses given today}}'**
+  String healthAllGivenCaption(int count);
+
+  /// No description provided for @healthDosesLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 dose left} other{{count} doses left}}'**
+  String healthDosesLeft(int count);
+
+  /// No description provided for @healthNextDose.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {what} at {time}'**
+  String healthNextDose(String what, String time);
+
+  /// No description provided for @healthToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get healthToday;
+
+  /// No description provided for @healthRunningLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Running low'**
+  String get healthRunningLow;
+
+  /// No description provided for @healthCheckups.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkups and vaccines'**
+  String get healthCheckups;
+
+  /// No description provided for @healthNoCheckups.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing coming up.'**
+  String get healthNoCheckups;
+
+  /// No description provided for @healthMedicines.
+  ///
+  /// In en, this message translates to:
+  /// **'Medicines'**
+  String get healthMedicines;
+
+  /// No description provided for @healthMedicinesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the medicines the family takes to tick off doses and know when to restock.'**
+  String get healthMedicinesEmpty;
+
+  /// No description provided for @healthFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get healthFamily;
+
+  /// No description provided for @healthProfilesLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the vault to see blood types, allergies and conditions'**
+  String get healthProfilesLocked;
+
+  /// No description provided for @healthProfilesNoVault.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up the vault to keep health profiles'**
+  String get healthProfilesNoVault;
+
+  /// No description provided for @doseGivenBy.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} · given by {name}'**
+  String doseGivenBy(String time, String name);
+
+  /// No description provided for @doseGivenByName.
+  ///
+  /// In en, this message translates to:
+  /// **'Given by {name}'**
+  String doseGivenByName(String name);
+
+  /// No description provided for @doseUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo this dose'**
+  String get doseUndo;
+
+  /// No description provided for @medicineAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add medicine'**
+  String get medicineAdd;
+
+  /// No description provided for @medicineEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit medicine'**
+  String get medicineEdit;
+
+  /// No description provided for @medicineRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove medicine'**
+  String get medicineRemove;
+
+  /// No description provided for @medicineLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} left'**
+  String medicineLeft(String count);
+
+  /// No description provided for @medicineExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String medicineExpires(String date);
+
+  /// No description provided for @medicineExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired {date}'**
+  String medicineExpired(String date);
+
+  /// No description provided for @medicineAddToList.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to list'**
+  String get medicineAddToList;
+
+  /// No description provided for @medicineForAnyone.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone'**
+  String get medicineForAnyone;
+
+  /// No description provided for @medicineAsNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'As needed'**
+  String get medicineAsNeeded;
+
+  /// No description provided for @medicineUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'until {date}'**
+  String medicineUntil(String date);
+
+  /// No description provided for @medicineStockLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} {unit} left'**
+  String medicineStockLine(String count, String unit);
+
+  /// No description provided for @medicineUnitDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'tablets'**
+  String get medicineUnitDefault;
+
+  /// No description provided for @medicineGiveDose.
+  ///
+  /// In en, this message translates to:
+  /// **'Give a dose'**
+  String get medicineGiveDose;
+
+  /// No description provided for @medicineRestock.
+  ///
+  /// In en, this message translates to:
+  /// **'Restock'**
+  String get medicineRestock;
+
+  /// No description provided for @medicineStockTake.
+  ///
+  /// In en, this message translates to:
+  /// **'Count what\'s left'**
+  String get medicineStockTake;
+
+  /// No description provided for @medicineDoses.
+  ///
+  /// In en, this message translates to:
+  /// **'Doses'**
+  String get medicineDoses;
+
+  /// No description provided for @medicineDosesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No doses given yet.'**
+  String get medicineDosesEmpty;
+
+  /// No description provided for @medicineExtraDose.
+  ///
+  /// In en, this message translates to:
+  /// **'extra dose'**
+  String get medicineExtraDose;
+
+  /// No description provided for @medicineCounted.
+  ///
+  /// In en, this message translates to:
+  /// **'How many are left'**
+  String get medicineCounted;
+
+  /// No description provided for @medicineAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'How many you bought'**
+  String get medicineAdded;
+
+  /// No description provided for @medicineCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost (optional)'**
+  String get medicineCost;
+
+  /// No description provided for @medicineNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Losartan'**
+  String get medicineNameHint;
+
+  /// No description provided for @medicineStrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Strength (optional)'**
+  String get medicineStrength;
+
+  /// No description provided for @medicineForWhom.
+  ///
+  /// In en, this message translates to:
+  /// **'Who is it for?'**
+  String get medicineForWhom;
+
+  /// No description provided for @medicineTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Dose times (optional)'**
+  String get medicineTimes;
+
+  /// No description provided for @medicineTimesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Like 8:00, 20:00. Leave empty for as needed.'**
+  String get medicineTimesHelp;
+
+  /// No description provided for @medicineTimesInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Use times like 8:00 or 20:30'**
+  String get medicineTimesInvalid;
+
+  /// No description provided for @medicineStockNow.
+  ///
+  /// In en, this message translates to:
+  /// **'How many you have now'**
+  String get medicineStockNow;
+
+  /// No description provided for @medicineMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Running low at (optional)'**
+  String get medicineMin;
+
+  /// No description provided for @medicineUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit (optional)'**
+  String get medicineUnit;
+
+  /// No description provided for @medicineEndsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Last day'**
+  String get medicineEndsOn;
+
+  /// No description provided for @medicineOngoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Ongoing'**
+  String get medicineOngoing;
+
+  /// No description provided for @medicineExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry date'**
+  String get medicineExpiry;
+
+  /// No description provided for @checkupAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add checkup'**
+  String get checkupAdd;
+
+  /// No description provided for @checkupEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit checkup'**
+  String get checkupEdit;
+
+  /// No description provided for @checkupRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove checkup'**
+  String get checkupRemove;
+
+  /// No description provided for @checkupKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, vaccine{Vaccine} other{Checkup}}'**
+  String checkupKind(String kind);
+
+  /// No description provided for @checkupTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, vaccine{e.g. Flu vaccine} other{e.g. Cardiology checkup}}'**
+  String checkupTitleHint(String kind);
+
+  /// No description provided for @checkupDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get checkupDate;
+
+  /// No description provided for @checkupTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time (optional)'**
+  String get checkupTime;
+
+  /// No description provided for @checkupTimeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Like 9:30 or 14:00'**
+  String get checkupTimeHelp;
+
+  /// No description provided for @checkupPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor or place (optional)'**
+  String get checkupPlace;
+
+  /// No description provided for @checkupCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost (optional)'**
+  String get checkupCost;
+
+  /// No description provided for @checkupMarkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark done'**
+  String get checkupMarkDone;
+
+  /// No description provided for @calendarCheckupDue.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, vaccine{Vaccine} other{Checkup}}'**
+  String calendarCheckupDue(String kind);
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s health'**
+  String profileTitle(String name);
+
+  /// No description provided for @profileSealedHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Only adults with the vault passphrase can read this.'**
+  String get profileSealedHelp;
+
+  /// No description provided for @profileEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No profile yet'**
+  String get profileEmpty;
+
+  /// No description provided for @profileBloodLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood type {type}'**
+  String profileBloodLine(String type);
+
+  /// No description provided for @profileAllergyLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Allergic: {what}'**
+  String profileAllergyLine(String what);
+
+  /// No description provided for @profileBlood.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood type (optional)'**
+  String get profileBlood;
+
+  /// No description provided for @profileAllergies.
+  ///
+  /// In en, this message translates to:
+  /// **'Allergies (optional)'**
+  String get profileAllergies;
+
+  /// No description provided for @profileConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Conditions (optional)'**
+  String get profileConditions;
+
+  /// No description provided for @profileMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance medicines (optional)'**
+  String get profileMaintenance;
+
+  /// No description provided for @profilePhilhealth.
+  ///
+  /// In en, this message translates to:
+  /// **'PhilHealth number (optional)'**
+  String get profilePhilhealth;
+
+  /// No description provided for @profileHmo.
+  ///
+  /// In en, this message translates to:
+  /// **'HMO and card number (optional)'**
+  String get profileHmo;
+
+  /// No description provided for @profileDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor (optional)'**
+  String get profileDoctor;
 }
 
 class _AppLocalizationsDelegate

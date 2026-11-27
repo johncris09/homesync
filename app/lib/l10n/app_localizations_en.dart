@@ -1517,4 +1517,971 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get debtRemoveEntry => 'Remove this entry';
+
+  @override
+  String get vaultModule => 'Document vault';
+
+  @override
+  String vaultTileDocs(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count documents',
+      one: '1 document',
+      zero: 'Nothing kept yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vaultTileRenew(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count to renew soon',
+      one: '1 to renew soon',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vaultTileSetUp => 'Not set up yet';
+
+  @override
+  String get vaultInboxNote =>
+      'A vault document was changed on two devices. Open it in the vault to compare.';
+
+  @override
+  String vaultDocuments(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count documents',
+      one: '1 document',
+      zero: 'No documents',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vaultLockedCaption => 'Locked. Encrypted on this device.';
+
+  @override
+  String vaultLockedRenew(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Locked · $count to renew soon',
+      one: 'Locked · 1 to renew soon',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vaultKeptSafe => 'Encrypted before it leaves this device';
+
+  @override
+  String vaultExpiresOn(String title, String date) {
+    return '$title expires $date';
+  }
+
+  @override
+  String get vaultRenewSoon => 'Renew soon';
+
+  @override
+  String get vaultEmpty =>
+      'Add IDs, birth certificates, land titles, contracts and warranties. Only adults can open them.';
+
+  @override
+  String get vaultAdd => 'Add document';
+
+  @override
+  String get vaultEdit => 'Edit document';
+
+  @override
+  String get vaultDelete => 'Delete';
+
+  @override
+  String vaultDeleteConfirm(String title) {
+    return 'Delete $title and its files from the vault?';
+  }
+
+  @override
+  String get vaultLock => 'Lock';
+
+  @override
+  String get vaultUnlock => 'Unlock';
+
+  @override
+  String get vaultOpening => 'Opening the vault. This takes a few seconds.';
+
+  @override
+  String get vaultPassphrase => 'Vault passphrase';
+
+  @override
+  String get vaultPassphraseAgain => 'Passphrase again';
+
+  @override
+  String vaultPassphraseTooShort(int count) {
+    return 'Use at least $count characters. A few words work well.';
+  }
+
+  @override
+  String get vaultPassphrasesDontMatch => 'The passphrases don\'t match';
+
+  @override
+  String get vaultWrongPassphrase => 'That passphrase didn\'t open the vault';
+
+  @override
+  String get vaultAppLockHint =>
+      'Turn on app lock on Home to open the vault with your PIN instead of the passphrase.';
+
+  @override
+  String get vaultBiometricReason => 'Open the document vault';
+
+  @override
+  String get vaultPinTitle => 'Enter your app PIN';
+
+  @override
+  String get vaultUseRecovery => 'Use recovery code';
+
+  @override
+  String get vaultRecoveryHint => 'K7QM-3XRT-9WHD-PC2E-VN6A-YB4F';
+
+  @override
+  String get vaultWrongRecovery => 'That recovery code didn\'t open the vault';
+
+  @override
+  String get vaultNewPassphrase => 'New vault passphrase';
+
+  @override
+  String get vaultNewPassphraseBody =>
+      'Tell the other adults the new passphrase. Phones that already opened the vault keep working.';
+
+  @override
+  String get vaultChangePassphrase => 'Change passphrase';
+
+  @override
+  String get vaultNewRecoveryCode => 'New recovery code';
+
+  @override
+  String get vaultSetUpTitle => 'Set up the vault';
+
+  @override
+  String get vaultSetUpCaption => 'For IDs, titles and certificates';
+
+  @override
+  String get vaultSetUpBody =>
+      'Choose a vault passphrase for the household and tell the other adults in person. Documents are encrypted on this device before they sync; the hub never sees them.';
+
+  @override
+  String get vaultSetUpButton => 'Set up';
+
+  @override
+  String get vaultSetUpOffline =>
+      'Connect to the internet to set up the vault, so every device gets the same key.';
+
+  @override
+  String get vaultNotSetUp => 'The owner hasn\'t set up the vault yet.';
+
+  @override
+  String get vaultRecoveryTitle => 'Your recovery code';
+
+  @override
+  String get vaultRecoveryCaption =>
+      'The only way back if the passphrase is lost';
+
+  @override
+  String get vaultRecoveryBody =>
+      'Print it or write it down and keep it with the land titles. If the passphrase and this code are both lost, no one can open the documents again, not even HomeSync.';
+
+  @override
+  String get vaultRecoverySaved => 'I\'ve saved it somewhere safe';
+
+  @override
+  String get vaultFinish => 'Finish';
+
+  @override
+  String get vaultCopy => 'Copy';
+
+  @override
+  String get vaultKindId => 'ID';
+
+  @override
+  String get vaultKindCertificate => 'Certificate';
+
+  @override
+  String get vaultKindProperty => 'Property';
+
+  @override
+  String get vaultKindContract => 'Contract';
+
+  @override
+  String get vaultKindInsurance => 'Insurance';
+
+  @override
+  String get vaultKindWarranty => 'Warranty';
+
+  @override
+  String get vaultKindVehicle => 'Vehicle';
+
+  @override
+  String get vaultKindPawn => 'Pawn ticket';
+
+  @override
+  String get vaultKindOther => 'Other';
+
+  @override
+  String get vaultGroupId => 'IDs';
+
+  @override
+  String get vaultGroupCertificate => 'Certificates';
+
+  @override
+  String get vaultGroupProperty => 'Property';
+
+  @override
+  String get vaultGroupContract => 'Contracts';
+
+  @override
+  String get vaultGroupInsurance => 'Insurance';
+
+  @override
+  String get vaultGroupWarranty => 'Warranties';
+
+  @override
+  String get vaultGroupVehicle => 'Vehicles';
+
+  @override
+  String get vaultGroupPawn => 'Pawn tickets';
+
+  @override
+  String get vaultGroupOther => 'Other documents';
+
+  @override
+  String vaultTitleOf(String title, String name) {
+    return '$title · $name';
+  }
+
+  @override
+  String get vaultUnreadable => 'Can\'t open this document';
+
+  @override
+  String vaultDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days left',
+      one: '1 day left',
+      zero: 'Expires today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vaultExpiredDaysAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Expired $count days ago',
+      one: 'Expired yesterday',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vaultExpiresCaption(String date) {
+    return 'Expires $date';
+  }
+
+  @override
+  String vaultExpiredOn(String date) {
+    return 'Expired $date';
+  }
+
+  @override
+  String get vaultNumber => 'Number';
+
+  @override
+  String get vaultShowNumber => 'Show number';
+
+  @override
+  String get vaultHideNumber => 'Hide number';
+
+  @override
+  String get vaultKind => 'Kind';
+
+  @override
+  String get vaultWhose => 'Whose';
+
+  @override
+  String get vaultWholeFamily => 'Whole family';
+
+  @override
+  String get vaultIssuer => 'Issued by';
+
+  @override
+  String get vaultIssuerHint => 'DFA, PSA, LTO';
+
+  @override
+  String get vaultIssuedOn => 'Issued';
+
+  @override
+  String get vaultExpiresOnLabel => 'Expires';
+
+  @override
+  String get vaultNote => 'Note';
+
+  @override
+  String get vaultTitle => 'Name';
+
+  @override
+  String get vaultTitleHint => 'Passport';
+
+  @override
+  String get vaultTitleRequired => 'Give the document a name';
+
+  @override
+  String get vaultEncryptedNote =>
+      'Name, number, issuer and note are encrypted. Kind, whose and the expiry date are not, so reminders work while the vault is locked.';
+
+  @override
+  String get vaultFiles => 'Photos and files';
+
+  @override
+  String get vaultTakePhoto => 'Take photo';
+
+  @override
+  String get vaultAddPhoto => 'Add photo';
+
+  @override
+  String get vaultAddPdf => 'Add PDF';
+
+  @override
+  String get vaultRemoveFile => 'Remove from the document';
+
+  @override
+  String get vaultFileTooBig => 'That file is over 20 MB';
+
+  @override
+  String get vaultFileOffline =>
+      'Can\'t reach the hub to get this file. Try again when online.';
+
+  @override
+  String get vaultFileNotUploaded =>
+      'This file hasn\'t been uploaded yet from the device that added it.';
+
+  @override
+  String get vaultConflictTitle => 'Changed on two devices at once';
+
+  @override
+  String get vaultUseOther => 'Use the other';
+
+  @override
+  String get vaultConflictOwner =>
+      'The owner will choose which version to keep.';
+
+  @override
+  String get vehiclesModule => 'Vehicles';
+
+  @override
+  String get vehiclesTileNone => 'No vehicles yet';
+
+  @override
+  String get vehiclesTileNothingDue => 'Nothing due';
+
+  @override
+  String vehiclesTileOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count things overdue',
+      one: '1 thing overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vehiclesNoneFigure => 'No vehicles yet';
+
+  @override
+  String get vehiclesEmptyCaption =>
+      'Cars and motorcycles: papers, PMS and costs';
+
+  @override
+  String get vehiclesEmpty =>
+      'Add your car or motorcycle to keep track of its registration, insurance, PMS and costs.';
+
+  @override
+  String get vehiclesNothingDue => 'Nothing due';
+
+  @override
+  String vehiclesNextFigure(String what, String when) {
+    return '$what $when';
+  }
+
+  @override
+  String vehiclesMoreOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count more overdue',
+      one: '1 more overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vehiclesSpentLine(String amount) {
+    return 'Spent this month: $amount';
+  }
+
+  @override
+  String get vehiclesComingUp => 'Coming up';
+
+  @override
+  String get vehiclesOurs => 'Our vehicles';
+
+  @override
+  String vehicleDueKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'registration': 'Registration',
+      'insurance': 'Insurance',
+      'other': 'PMS',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String vehicleDueOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'overdue by $count days',
+      one: 'overdue by 1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vehicleDueIn(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'in $count days',
+      one: 'due tomorrow',
+      zero: 'due today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vehicleDueOn(String date) {
+    return 'on $date';
+  }
+
+  @override
+  String vehicleKmLeft(String km) {
+    return 'in $km km';
+  }
+
+  @override
+  String vehicleKmPast(String km) {
+    return '$km km past due';
+  }
+
+  @override
+  String vehicleAtKm(String km) {
+    return 'at $km km';
+  }
+
+  @override
+  String vehicleOrAt(String km) {
+    return 'or at $km km';
+  }
+
+  @override
+  String vehicleOrOn(String date) {
+    return 'or by $date';
+  }
+
+  @override
+  String vehicleKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'car': 'Car',
+      'other': 'Motorcycle',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String vehicleLogKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'fuel': 'Fuel',
+      'pms': 'PMS',
+      'repair': 'Repair',
+      'registration': 'Registration',
+      'insurance': 'Insurance',
+      'other': 'Odometer',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get vehicleAdd => 'Add vehicle';
+
+  @override
+  String get vehicleEdit => 'Edit vehicle';
+
+  @override
+  String get vehicleRemove => 'Remove vehicle';
+
+  @override
+  String get vehicleLogFuel => 'Log fuel';
+
+  @override
+  String get vehicleAddCost => 'Add cost';
+
+  @override
+  String get vehicleUpdateOdometer => 'Update odometer';
+
+  @override
+  String vehicleOdometer(String km) {
+    return '$km km';
+  }
+
+  @override
+  String get vehicleNoOdometer => 'No odometer reading yet';
+
+  @override
+  String vehicleLastReading(String km) {
+    return 'Last reading $km km';
+  }
+
+  @override
+  String vehicleNameHint(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'car': 'e.g. Innova',
+      'other': 'e.g. Mio',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get vehiclePlate => 'Plate number (optional)';
+
+  @override
+  String get vehicleColor => 'Colour (optional)';
+
+  @override
+  String get vehicleOdometerLabel => 'Odometer';
+
+  @override
+  String get vehicleOdometerOptional => 'Odometer (optional)';
+
+  @override
+  String get vehicleOdometerInvalid => 'Enter a whole number above zero';
+
+  @override
+  String vehicleDueDateLabel(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'registration': 'LTO registration due',
+      'insurance': 'Insurance due',
+      'other': 'Next PMS date',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get vehicleNotSet => 'Not set';
+
+  @override
+  String get vehicleClearDate => 'Clear date';
+
+  @override
+  String get vehiclePmsKm => 'Next PMS at (optional)';
+
+  @override
+  String get vehiclePmsEveryMonths => 'PMS every how many months (optional)';
+
+  @override
+  String get vehiclePmsEveryKm => 'PMS every how many km (optional)';
+
+  @override
+  String get vehiclePmsHelp =>
+      'PMS is due at its date or km, whichever comes first. Logging a PMS sets the next one from these.';
+
+  @override
+  String get vehicleNote => 'Note (optional)';
+
+  @override
+  String get vehicleAmount => 'Amount';
+
+  @override
+  String get vehicleLitres => 'Litres (optional)';
+
+  @override
+  String vehicleLitresLine(String litres) {
+    return '$litres L';
+  }
+
+  @override
+  String vehicleRenewHint(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'registration': 'Moves the registration due date one year on.',
+      'insurance': 'Moves the insurance due date one year on.',
+      'other': 'Sets the next PMS from its interval.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get vehicleWhich => 'Which vehicle?';
+
+  @override
+  String get vehicleHistory => 'History';
+
+  @override
+  String get vehicleHistoryEmpty => 'Nothing recorded yet.';
+
+  @override
+  String get vehicleRemoveEntry => 'Remove this entry';
+
+  @override
+  String calendarVehicleDue(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'registration': 'Registration due',
+      'insurance': 'Insurance due',
+      'other': 'PMS due',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get healthModule => 'Health';
+
+  @override
+  String healthTileDosesLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count doses left today',
+      one: '1 dose left today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String healthTileLow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count medicines running low',
+      one: '1 medicine running low',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String healthTileCheckup(String title, String date) {
+    return '$title $date';
+  }
+
+  @override
+  String get healthTileNothing => 'No doses or checkups due';
+
+  @override
+  String get healthNoMedicines => 'No medicines yet';
+
+  @override
+  String get healthNoDosesToday => 'No doses today';
+
+  @override
+  String get healthEmptyCaption =>
+      'Medicines, checkups and the family\'s health';
+
+  @override
+  String healthCheckupCaption(String title, String date) {
+    return 'Next: $title on $date';
+  }
+
+  @override
+  String get healthAllGiven => 'All doses given';
+
+  @override
+  String healthAllGivenCaption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count doses given today',
+      one: '1 dose given today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String healthDosesLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count doses left',
+      one: '1 dose left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String healthNextDose(String what, String time) {
+    return 'Next: $what at $time';
+  }
+
+  @override
+  String get healthToday => 'Today';
+
+  @override
+  String get healthRunningLow => 'Running low';
+
+  @override
+  String get healthCheckups => 'Checkups and vaccines';
+
+  @override
+  String get healthNoCheckups => 'Nothing coming up.';
+
+  @override
+  String get healthMedicines => 'Medicines';
+
+  @override
+  String get healthMedicinesEmpty =>
+      'Add the medicines the family takes to tick off doses and know when to restock.';
+
+  @override
+  String get healthFamily => 'Family';
+
+  @override
+  String get healthProfilesLocked =>
+      'Open the vault to see blood types, allergies and conditions';
+
+  @override
+  String get healthProfilesNoVault =>
+      'Set up the vault to keep health profiles';
+
+  @override
+  String doseGivenBy(String time, String name) {
+    return '$time · given by $name';
+  }
+
+  @override
+  String doseGivenByName(String name) {
+    return 'Given by $name';
+  }
+
+  @override
+  String get doseUndo => 'Undo this dose';
+
+  @override
+  String get medicineAdd => 'Add medicine';
+
+  @override
+  String get medicineEdit => 'Edit medicine';
+
+  @override
+  String get medicineRemove => 'Remove medicine';
+
+  @override
+  String medicineLeft(String count) {
+    return '$count left';
+  }
+
+  @override
+  String medicineExpires(String date) {
+    return 'Expires $date';
+  }
+
+  @override
+  String medicineExpired(String date) {
+    return 'Expired $date';
+  }
+
+  @override
+  String get medicineAddToList => 'Add to list';
+
+  @override
+  String get medicineForAnyone => 'Anyone';
+
+  @override
+  String get medicineAsNeeded => 'As needed';
+
+  @override
+  String medicineUntil(String date) {
+    return 'until $date';
+  }
+
+  @override
+  String medicineStockLine(String count, String unit) {
+    return '$count $unit left';
+  }
+
+  @override
+  String get medicineUnitDefault => 'tablets';
+
+  @override
+  String get medicineGiveDose => 'Give a dose';
+
+  @override
+  String get medicineRestock => 'Restock';
+
+  @override
+  String get medicineStockTake => 'Count what\'s left';
+
+  @override
+  String get medicineDoses => 'Doses';
+
+  @override
+  String get medicineDosesEmpty => 'No doses given yet.';
+
+  @override
+  String get medicineExtraDose => 'extra dose';
+
+  @override
+  String get medicineCounted => 'How many are left';
+
+  @override
+  String get medicineAdded => 'How many you bought';
+
+  @override
+  String get medicineCost => 'Cost (optional)';
+
+  @override
+  String get medicineNameHint => 'e.g. Losartan';
+
+  @override
+  String get medicineStrength => 'Strength (optional)';
+
+  @override
+  String get medicineForWhom => 'Who is it for?';
+
+  @override
+  String get medicineTimes => 'Dose times (optional)';
+
+  @override
+  String get medicineTimesHelp =>
+      'Like 8:00, 20:00. Leave empty for as needed.';
+
+  @override
+  String get medicineTimesInvalid => 'Use times like 8:00 or 20:30';
+
+  @override
+  String get medicineStockNow => 'How many you have now';
+
+  @override
+  String get medicineMin => 'Running low at (optional)';
+
+  @override
+  String get medicineUnit => 'Unit (optional)';
+
+  @override
+  String get medicineEndsOn => 'Last day';
+
+  @override
+  String get medicineOngoing => 'Ongoing';
+
+  @override
+  String get medicineExpiry => 'Expiry date';
+
+  @override
+  String get checkupAdd => 'Add checkup';
+
+  @override
+  String get checkupEdit => 'Edit checkup';
+
+  @override
+  String get checkupRemove => 'Remove checkup';
+
+  @override
+  String checkupKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'vaccine': 'Vaccine',
+      'other': 'Checkup',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String checkupTitleHint(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'vaccine': 'e.g. Flu vaccine',
+      'other': 'e.g. Cardiology checkup',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get checkupDate => 'Date';
+
+  @override
+  String get checkupTime => 'Time (optional)';
+
+  @override
+  String get checkupTimeHelp => 'Like 9:30 or 14:00';
+
+  @override
+  String get checkupPlace => 'Doctor or place (optional)';
+
+  @override
+  String get checkupCost => 'Cost (optional)';
+
+  @override
+  String get checkupMarkDone => 'Mark done';
+
+  @override
+  String calendarCheckupDue(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'vaccine': 'Vaccine',
+      'other': 'Checkup',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String profileTitle(String name) {
+    return '$name\'s health';
+  }
+
+  @override
+  String get profileSealedHelp =>
+      'Only adults with the vault passphrase can read this.';
+
+  @override
+  String get profileEmpty => 'No profile yet';
+
+  @override
+  String profileBloodLine(String type) {
+    return 'Blood type $type';
+  }
+
+  @override
+  String profileAllergyLine(String what) {
+    return 'Allergic: $what';
+  }
+
+  @override
+  String get profileBlood => 'Blood type (optional)';
+
+  @override
+  String get profileAllergies => 'Allergies (optional)';
+
+  @override
+  String get profileConditions => 'Conditions (optional)';
+
+  @override
+  String get profileMaintenance => 'Maintenance medicines (optional)';
+
+  @override
+  String get profilePhilhealth => 'PhilHealth number (optional)';
+
+  @override
+  String get profileHmo => 'HMO and card number (optional)';
+
+  @override
+  String get profileDoctor => 'Doctor (optional)';
 }

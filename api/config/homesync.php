@@ -30,6 +30,11 @@ return [
     'push_max_ops' => 200,
     'pull_max_limit' => 500,
 
+    // Encrypted vault files (/api/files): uploaded in chunks of at most
+    // file_chunk_bytes, up to file_max_bytes per file.
+    'file_chunk_bytes' => 1024 * 1024,
+    'file_max_bytes' => 20 * 1024 * 1024,
+
     'entities' => [
 
         // Household members and PIN profiles. Owner manages them.
@@ -237,6 +242,128 @@ return [
             'write' => $adults,
         ],
 
+        // Vehicles: kind is car or motorcycle. Due dates for LTO registration
+        // and insurance (yearly) and PMS / change oil by date and/or odometer
+        // (pms_due_km); pms_every_* set the next PMS when one is logged.
+        'vehicles' => [
+            'table' => 'vehicles',
+            'fields' => [
+                'kind' => 'string',
+                'name' => 'string',
+                'plate' => 'string',
+                'color' => 'string',
+                'registration_due_on' => 'date',
+                'insurance_due_on' => 'date',
+                'pms_due_on' => 'date',
+                'pms_due_km' => 'int',
+                'pms_every_months' => 'int',
+                'pms_every_km' => 'int',
+                'note' => 'text',
+            ],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // What happened to a vehicle: kind fuel, repair, pms, registration,
+        // insurance (costs, amount_minor positive) or odometer (a reading
+        // only). The odometer is the highest odometer_km. Append-only.
+        'vehicle_logs' => [
+            'table' => 'vehicle_logs',
+            'fields' => [
+                'vehicle_id' => 'uuid',
+                'kind' => 'string',
+                'amount_minor' => 'int',
+                'currency' => 'string',
+                'logged_on' => 'date',
+                'odometer_km' => 'int',
+                'litres' => 'decimal',
+                'member_id' => 'uuid',
+                'note' => 'text',
+            ],
+            'append_only' => true,
+            'mutable' => ['note'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // One health profile per member (id derived from the member,
+        // sync-protocol §2.1). Blood type, allergies, conditions, PhilHealth
+        // and HMO numbers are in `sealed`, encrypted with the vault key.
+        'health_profiles' => [
+            'table' => 'health_profiles',
+            'fields' => [
+                'member_id' => 'uuid',
+                'sealed' => 'text',
+            ],
+            'never_merged' => true,
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // Medicines: for a member (null = anyone), taken at local "HH:MM"
+        // times (comma-separated; null = as needed) until ends_on. Stock is a
+        // counter: a dose sends -dose_qty, a restock or stock-take the
+        // difference. Everyone but viewers writes it (doses change the
+        // stock); only adults edit a medicine, checked in the app.
+        'medicines' => [
+            'table' => 'medicines',
+            'fields' => [
+                'name' => 'string',
+                'strength' => 'string',
+                'member_id' => 'uuid',
+                'times' => 'string',
+                'dose_qty' => 'decimal',
+                'ends_on' => 'date',
+                'stock' => 'decimal',
+                'min_stock' => 'decimal',
+                'unit' => 'string',
+                'expires_on' => 'date',
+                'note' => 'text',
+            ],
+            'counters' => ['stock'],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
+        // A dose given. A scheduled dose's id is derived from the medicine,
+        // day and slot (sync-protocol §2.1), so two people ticking it offline
+        // record it once. Append-only: undo is a delete.
+        'med_doses' => [
+            'table' => 'med_doses',
+            'fields' => [
+                'medicine_id' => 'uuid',
+                'member_id' => 'uuid',
+                'given_by' => 'uuid',
+                'taken_on' => 'date',
+                'slot' => 'string',
+                'taken_at' => 'datetime',
+                'note' => 'text',
+            ],
+            'append_only' => true,
+            'mutable' => ['note'],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
+        // Checkups and vaccines (kind checkup or vaccine) with a due date and
+        // optional local time; done_at marks it done. Adults manage them.
+        'checkups' => [
+            'table' => 'checkups',
+            'fields' => [
+                'member_id' => 'uuid',
+                'kind' => 'string',
+                'title' => 'string',
+                'due_on' => 'date',
+                'due_time' => 'string',
+                'place' => 'string',
+                'done_at' => 'datetime',
+                'done_by' => 'uuid',
+                'note' => 'text',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',
@@ -255,6 +382,61 @@ return [
             'mutable' => ['note'],
             'read' => $adults,
             'write' => $household,
+        ],
+
+        // Document Vault (docs/vault.md). The household vault key, wrapped by
+        // the vault passphrase (PBKDF2) and by the owner's recovery code. One
+        // row per household, id derived from the household (sync-protocol
+        // §2.1). Only the owner sets it up or changes the passphrase.
+        'vault_keys' => [
+            'table' => 'vault_keys',
+            'fields' => [
+                'passphrase_wrap' => 'text',
+                'kdf_salt' => 'string',
+                'kdf_iterations' => 'int',
+                'recovery_wrap' => 'text',
+                'recovery_salt' => 'string',
+                'created_by' => 'uuid',
+            ],
+            'never_merged' => true,
+            'read' => $adults,
+            'write' => ['owner'],
+        ],
+
+        // A document: kind, whose it is and when it expires are plain so
+        // reminders work while the vault is locked; the title, number,
+        // issuer and note are one encrypted `sealed` blob.
+        'vault_items' => [
+            'table' => 'vault_items',
+            'fields' => [
+                'kind' => 'string',
+                'member_id' => 'uuid',
+                'expires_on' => 'date',
+                'sealed' => 'text',
+                'created_by' => 'uuid',
+            ],
+            'never_merged' => true,
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // A photo or PDF of a document. The bytes are encrypted on the device
+        // with their own key (key_wrap, wrapped by the vault key) and uploaded
+        // to /api/files/{sha256}; sha256 is of the ciphertext. The file name
+        // and type are in `sealed`.
+        'vault_files' => [
+            'table' => 'vault_files',
+            'fields' => [
+                'item_id' => 'uuid',
+                'sha256' => 'string',
+                'size' => 'int',
+                'key_wrap' => 'text',
+                'sealed' => 'text',
+                'position' => 'int',
+            ],
+            'never_merged' => true,
+            'read' => $adults,
+            'write' => $adults,
         ],
 
         // Reviewed-money and never-auto-merged losers, for the Conflict Inbox.

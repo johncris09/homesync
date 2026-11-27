@@ -3,9 +3,11 @@
 | Part | Where | How it updates |
 | --- | --- | --- |
 | Sync hub (`api/`) | Hostinger shared hosting, e.g. `https://api.example.com` | `.github/workflows/release.yml` when a version tag such as `v1.0.0` is pushed on `main` |
-| Web app (`app/`) | Cloudflare Pages, e.g. `https://homesync.pages.dev` | Same release, after the hub |
+| Web app (`app/`) | Cloudflare Pages, e.g. `https://homesync-4vq.pages.dev` | Same release, after the hub |
 | Android app | GitHub Releases (signed APK) | Same release, after the hub |
 | Tests | GitHub Actions | `.github/workflows/ci.yml` on every pull request and push to `develop` |
+
+This household's live addresses: hub `https://homesyncapi.asenso-oroquieta.com`, web app `https://homesync-4vq.pages.dev`. (`https://homesync.pages.dev` is someone else's site.)
 
 A release ships the whole system with one version (section 5). Each part runs its tests first and uses the GitHub environment **production**. Merging to `main` alone deploys nothing.
 
@@ -51,7 +53,7 @@ You need a plan with **SSH access** (Premium or higher). PHP 8.2 or newer.
    php artisan up
    php artisan homesync:setup     # one time: the household and the owner's account
    ```
-   - `CORS_ALLOWED_ORIGINS` is the Pages address from section 2, e.g. `https://homesync.pages.dev`.
+   - `CORS_ALLOWED_ORIGINS` is the Pages address from section 2, e.g. `https://homesync-4vq.pages.dev`.
    - If `php -v` shows an old version, use the full path instead, e.g. `/opt/alt/php82/usr/bin/php`, and set it as the `HOSTINGER_PHP` variable in GitHub.
 9. **Cron.** In **Advanced > Cron Jobs**, add a job that runs every minute:
    ```
@@ -64,7 +66,7 @@ Later releases put the hub in maintenance mode (devices retry), upload the code 
 
 ## 2. Cloudflare Pages: the web app
 
-1. In the Cloudflare dashboard, go to **Workers & Pages > Create > Pages > Upload assets**. Create a project named, for example, `homesync`, with production branch `main`. Upload any placeholder file; the workflow replaces it. Its address is `https://<project>.pages.dev`; a custom domain can be added under the project's **Custom domains**.
+1. In the Cloudflare dashboard, go to **Workers & Pages > Create > Pages > Upload assets**. Create a project named, for example, `homesync`, with production branch `main`. Upload any placeholder file; the workflow replaces it. Its address is the `*.pages.dev` one the dashboard shows: `https://<project>.pages.dev` only if that name is free, otherwise Cloudflare adds a suffix (this project's is `https://homesync-4vq.pages.dev`). Use that exact address for `CORS_ALLOWED_ORIGINS`. A custom domain can be added under the project's **Custom domains**.
 2. **API token.** Under **My Profile > API Tokens > Create token**, choose **Custom token** with permission **Account > Cloudflare Pages > Edit** for your account.
 3. **Account ID.** Copy it from **Workers & Pages** (right-hand side).
 
