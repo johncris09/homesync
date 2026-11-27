@@ -566,6 +566,62 @@ return [
             'write' => $household,
         ],
 
+        // Home Maintenance: the household's contractors.
+        'contractors' => [
+            'table' => 'contractors',
+            'fields' => [
+                'name' => 'string',
+                'trade' => 'string',
+                'phone' => 'string',
+                'note' => 'text',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
+        // Upkeep tasks: every_months null = once. Marking one done moves
+        // next_due_on on (or clears it) and adds a maintenance_logs row.
+        'maintenance_tasks' => [
+            'table' => 'maintenance_tasks',
+            'fields' => [
+                'name' => 'string',
+                'area' => 'string',
+                'every_months' => 'int',
+                'next_due_on' => 'date',
+                'last_done_on' => 'date',
+                'inventory_item_id' => 'uuid',
+                'contractor_id' => 'uuid',
+                'note' => 'text',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
+        // Upkeep done and repairs. Append-only: what was done, when and the
+        // cost stay as recorded; an upkeep entry's id is derived from its
+        // task and due date (§2.1), so marking it done on two phones is one.
+        'maintenance_logs' => [
+            'table' => 'maintenance_logs',
+            'fields' => [
+                'kind' => 'string',
+                'task_id' => 'uuid',
+                'area' => 'string',
+                'title' => 'string',
+                'done_on' => 'date',
+                'due_on' => 'date',
+                'cost_minor' => 'int',
+                'currency' => 'string',
+                'member_id' => 'uuid',
+                'contractor_id' => 'uuid',
+                'inventory_item_id' => 'uuid',
+                'note' => 'text',
+            ],
+            'append_only' => true,
+            'mutable' => ['note'],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',
