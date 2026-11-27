@@ -6172,6 +6172,15 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
     requiredDuringInsert: false,
     defaultValue: const Constant('none'),
   );
+  static const VerificationMeta _colorMeta = const VerificationMeta('color');
+  @override
+  late final GeneratedColumn<String> color = GeneratedColumn<String>(
+    'color',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _memberIdMeta = const VerificationMeta(
     'memberId',
   );
@@ -6231,6 +6240,7 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
     startTime,
     endTime,
     repeat,
+    color,
     memberId,
     location,
     note,
@@ -6349,6 +6359,12 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
         repeat.isAcceptableOrUnknown(data['repeat']!, _repeatMeta),
       );
     }
+    if (data.containsKey('color')) {
+      context.handle(
+        _colorMeta,
+        color.isAcceptableOrUnknown(data['color']!, _colorMeta),
+      );
+    }
     if (data.containsKey('member_id')) {
       context.handle(
         _memberIdMeta,
@@ -6442,6 +6458,10 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
         DriftSqlType.string,
         data['${effectivePrefix}repeat'],
       )!,
+      color: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}color'],
+      ),
       memberId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}member_id'],
@@ -6492,6 +6512,10 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
   final String? endTime;
   final String repeat;
 
+  /// Palette name (`ube`, `dagat`, `dahon`, `narra`, `rosas`, `tubig`); null =
+  /// the default look.
+  final String? color;
+
   /// Who it is for; null = the whole family.
   final String? memberId;
   final String? location;
@@ -6513,6 +6537,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     this.startTime,
     this.endTime,
     required this.repeat,
+    this.color,
     this.memberId,
     this.location,
     this.note,
@@ -6552,6 +6577,9 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       map['end_time'] = Variable<String>(endTime);
     }
     map['repeat'] = Variable<String>(repeat);
+    if (!nullToAbsent || color != null) {
+      map['color'] = Variable<String>(color);
+    }
     if (!nullToAbsent || memberId != null) {
       map['member_id'] = Variable<String>(memberId);
     }
@@ -6598,6 +6626,9 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
           ? const Value.absent()
           : Value(endTime),
       repeat: Value(repeat),
+      color: color == null && nullToAbsent
+          ? const Value.absent()
+          : Value(color),
       memberId: memberId == null && nullToAbsent
           ? const Value.absent()
           : Value(memberId),
@@ -6632,6 +6663,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       startTime: serializer.fromJson<String?>(json['startTime']),
       endTime: serializer.fromJson<String?>(json['endTime']),
       repeat: serializer.fromJson<String>(json['repeat']),
+      color: serializer.fromJson<String?>(json['color']),
       memberId: serializer.fromJson<String?>(json['memberId']),
       location: serializer.fromJson<String?>(json['location']),
       note: serializer.fromJson<String?>(json['note']),
@@ -6657,6 +6689,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       'startTime': serializer.toJson<String?>(startTime),
       'endTime': serializer.toJson<String?>(endTime),
       'repeat': serializer.toJson<String>(repeat),
+      'color': serializer.toJson<String?>(color),
       'memberId': serializer.toJson<String?>(memberId),
       'location': serializer.toJson<String?>(location),
       'note': serializer.toJson<String?>(note),
@@ -6680,6 +6713,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     Value<String?> startTime = const Value.absent(),
     Value<String?> endTime = const Value.absent(),
     String? repeat,
+    Value<String?> color = const Value.absent(),
     Value<String?> memberId = const Value.absent(),
     Value<String?> location = const Value.absent(),
     Value<String?> note = const Value.absent(),
@@ -6702,6 +6736,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     startTime: startTime.present ? startTime.value : this.startTime,
     endTime: endTime.present ? endTime.value : this.endTime,
     repeat: repeat ?? this.repeat,
+    color: color.present ? color.value : this.color,
     memberId: memberId.present ? memberId.value : this.memberId,
     location: location.present ? location.value : this.location,
     note: note.present ? note.value : this.note,
@@ -6728,6 +6763,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       startTime: data.startTime.present ? data.startTime.value : this.startTime,
       endTime: data.endTime.present ? data.endTime.value : this.endTime,
       repeat: data.repeat.present ? data.repeat.value : this.repeat,
+      color: data.color.present ? data.color.value : this.color,
       memberId: data.memberId.present ? data.memberId.value : this.memberId,
       location: data.location.present ? data.location.value : this.location,
       note: data.note.present ? data.note.value : this.note,
@@ -6753,6 +6789,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
           ..write('startTime: $startTime, ')
           ..write('endTime: $endTime, ')
           ..write('repeat: $repeat, ')
+          ..write('color: $color, ')
           ..write('memberId: $memberId, ')
           ..write('location: $location, ')
           ..write('note: $note, ')
@@ -6778,6 +6815,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     startTime,
     endTime,
     repeat,
+    color,
     memberId,
     location,
     note,
@@ -6802,6 +6840,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
           other.startTime == this.startTime &&
           other.endTime == this.endTime &&
           other.repeat == this.repeat &&
+          other.color == this.color &&
           other.memberId == this.memberId &&
           other.location == this.location &&
           other.note == this.note &&
@@ -6824,6 +6863,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
   final Value<String?> startTime;
   final Value<String?> endTime;
   final Value<String> repeat;
+  final Value<String?> color;
   final Value<String?> memberId;
   final Value<String?> location;
   final Value<String?> note;
@@ -6845,6 +6885,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     this.startTime = const Value.absent(),
     this.endTime = const Value.absent(),
     this.repeat = const Value.absent(),
+    this.color = const Value.absent(),
     this.memberId = const Value.absent(),
     this.location = const Value.absent(),
     this.note = const Value.absent(),
@@ -6867,6 +6908,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     this.startTime = const Value.absent(),
     this.endTime = const Value.absent(),
     this.repeat = const Value.absent(),
+    this.color = const Value.absent(),
     this.memberId = const Value.absent(),
     this.location = const Value.absent(),
     this.note = const Value.absent(),
@@ -6892,6 +6934,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     Expression<String>? startTime,
     Expression<String>? endTime,
     Expression<String>? repeat,
+    Expression<String>? color,
     Expression<String>? memberId,
     Expression<String>? location,
     Expression<String>? note,
@@ -6914,6 +6957,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
       if (startTime != null) 'start_time': startTime,
       if (endTime != null) 'end_time': endTime,
       if (repeat != null) 'repeat': repeat,
+      if (color != null) 'color': color,
       if (memberId != null) 'member_id': memberId,
       if (location != null) 'location': location,
       if (note != null) 'note': note,
@@ -6938,6 +6982,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     Value<String?>? startTime,
     Value<String?>? endTime,
     Value<String>? repeat,
+    Value<String?>? color,
     Value<String?>? memberId,
     Value<String?>? location,
     Value<String?>? note,
@@ -6960,6 +7005,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       repeat: repeat ?? this.repeat,
+      color: color ?? this.color,
       memberId: memberId ?? this.memberId,
       location: location ?? this.location,
       note: note ?? this.note,
@@ -7016,6 +7062,9 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     if (repeat.present) {
       map['repeat'] = Variable<String>(repeat.value);
     }
+    if (color.present) {
+      map['color'] = Variable<String>(color.value);
+    }
     if (memberId.present) {
       map['member_id'] = Variable<String>(memberId.value);
     }
@@ -7052,6 +7101,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
           ..write('startTime: $startTime, ')
           ..write('endTime: $endTime, ')
           ..write('repeat: $repeat, ')
+          ..write('color: $color, ')
           ..write('memberId: $memberId, ')
           ..write('location: $location, ')
           ..write('note: $note, ')
@@ -16578,6 +16628,7 @@ typedef $$EventsTableCreateCompanionBuilder =
       Value<String?> startTime,
       Value<String?> endTime,
       Value<String> repeat,
+      Value<String?> color,
       Value<String?> memberId,
       Value<String?> location,
       Value<String?> note,
@@ -16601,6 +16652,7 @@ typedef $$EventsTableUpdateCompanionBuilder =
       Value<String?> startTime,
       Value<String?> endTime,
       Value<String> repeat,
+      Value<String?> color,
       Value<String?> memberId,
       Value<String?> location,
       Value<String?> note,
@@ -16689,6 +16741,11 @@ class $$EventsTableFilterComposer
 
   ColumnFilters<String> get repeat => $composableBuilder(
     column: $table.repeat,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get color => $composableBuilder(
+    column: $table.color,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -16797,6 +16854,11 @@ class $$EventsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get color => $composableBuilder(
+    column: $table.color,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get memberId => $composableBuilder(
     column: $table.memberId,
     builder: (column) => ColumnOrderings(column),
@@ -16876,6 +16938,9 @@ class $$EventsTableAnnotationComposer
   GeneratedColumn<String> get repeat =>
       $composableBuilder(column: $table.repeat, builder: (column) => column);
 
+  GeneratedColumn<String> get color =>
+      $composableBuilder(column: $table.color, builder: (column) => column);
+
   GeneratedColumn<String> get memberId =>
       $composableBuilder(column: $table.memberId, builder: (column) => column);
 
@@ -16935,6 +17000,7 @@ class $$EventsTableTableManager
                 Value<String?> startTime = const Value.absent(),
                 Value<String?> endTime = const Value.absent(),
                 Value<String> repeat = const Value.absent(),
+                Value<String?> color = const Value.absent(),
                 Value<String?> memberId = const Value.absent(),
                 Value<String?> location = const Value.absent(),
                 Value<String?> note = const Value.absent(),
@@ -16956,6 +17022,7 @@ class $$EventsTableTableManager
                 startTime: startTime,
                 endTime: endTime,
                 repeat: repeat,
+                color: color,
                 memberId: memberId,
                 location: location,
                 note: note,
@@ -16979,6 +17046,7 @@ class $$EventsTableTableManager
                 Value<String?> startTime = const Value.absent(),
                 Value<String?> endTime = const Value.absent(),
                 Value<String> repeat = const Value.absent(),
+                Value<String?> color = const Value.absent(),
                 Value<String?> memberId = const Value.absent(),
                 Value<String?> location = const Value.absent(),
                 Value<String?> note = const Value.absent(),
@@ -17000,6 +17068,7 @@ class $$EventsTableTableManager
                 startTime: startTime,
                 endTime: endTime,
                 repeat: repeat,
+                color: color,
                 memberId: memberId,
                 location: location,
                 note: note,

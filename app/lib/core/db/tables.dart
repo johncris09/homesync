@@ -136,6 +136,10 @@ class Events extends Table with SyncColumns {
   TextColumn get endTime => text().nullable()();
   TextColumn get repeat => text().withDefault(const Constant('none'))();
 
+  /// Palette name (`ube`, `dagat`, `dahon`, `narra`, `rosas`, `tubig`); null =
+  /// the default look.
+  TextColumn get color => text().nullable()();
+
   /// Who it is for; null = the whole family.
   TextColumn get memberId => text().nullable()();
   TextColumn get location => text().nullable()();

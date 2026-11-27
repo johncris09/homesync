@@ -115,6 +115,7 @@ const syncedEntities = <String, EntitySpec>{
       'start_time',
       'end_time',
       'repeat',
+      'color',
       'member_id',
       'location',
       'note',

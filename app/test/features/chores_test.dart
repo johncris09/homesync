@@ -158,6 +158,7 @@ void main() {
     await v4.customStatement('DROP TABLE chore_completions');
     // Also undo version 9 (multi-day events).
     await v4.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
+    await v4.customStatement('ALTER TABLE events DROP COLUMN "color"');
     await v4.customStatement('PRAGMA user_version = 3');
     await v4.close();
 

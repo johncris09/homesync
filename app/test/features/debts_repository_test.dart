@@ -249,6 +249,7 @@ void main() {
     await v5.customStatement('DROP TABLE debt_payments');
     // Also undo version 9 (multi-day events).
     await v5.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
+    await v5.customStatement('ALTER TABLE events DROP COLUMN "color"');
     await v5.customStatement('PRAGMA user_version = 5');
     await v5.close();
 

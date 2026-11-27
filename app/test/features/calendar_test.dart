@@ -266,6 +266,7 @@ void main() {
     final v6 = AppDatabase(NativeDatabase(file));
     await v6.customStatement('SELECT 1');
     await v6.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
+    await v6.customStatement('ALTER TABLE events DROP COLUMN "color"');
     await v6.customStatement('PRAGMA user_version = 6');
     await v6.close();
 
@@ -282,6 +283,33 @@ void main() {
           ),
         );
     expect((await reopened.select(reopened.events).getSingle()).endsOn, '2026-12-06');
+    await reopened.close();
+    await dir.delete(recursive: true);
+  });
+
+  test('upgrading a version 9 database adds color to events', () async {
+    final dir = await Directory.systemTemp.createTemp('hs-migrate');
+    final file = File('${dir.path}/db.sqlite');
+    driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
+    final v9 = AppDatabase(NativeDatabase(file));
+    await v9.customStatement('SELECT 1');
+    await v9.customStatement('ALTER TABLE events DROP COLUMN "color"');
+    await v9.customStatement('PRAGMA user_version = 9');
+    await v9.close();
+
+    final reopened = AppDatabase(NativeDatabase(file));
+    await reopened
+        .into(reopened.events)
+        .insert(
+          EventsCompanion.insert(
+            id: 'x',
+            householdId: householdId,
+            title: 'Fair',
+            startsOn: '2026-12-04',
+            color: const Value('dagat'),
+          ),
+        );
+    expect((await reopened.select(reopened.events).getSingle()).color, 'dagat');
     await reopened.close();
     await dir.delete(recursive: true);
   });
