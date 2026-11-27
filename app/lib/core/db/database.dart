@@ -31,7 +31,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 7;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -64,6 +64,7 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(debts);
         await m.createTable(debtPayments);
       }
+      if (from < 7) await m.addColumn(groceryItems, groceryItems.clearedAt); // Grocery history
     },
   );
 

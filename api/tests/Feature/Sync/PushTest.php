@@ -81,6 +81,26 @@ class PushTest extends SyncTestCase
         $this->assertTrue($this->latest($ana, $id)['is_bought']);
     }
 
+    public function test_clearing_a_bought_item_keeps_it_with_cleared_at_for_history(): void
+    {
+        $ana = $this->device('adult');
+        $id = (string) Str::uuid7();
+        $this->push($ana, [$this->op('grocery_items', $id, 'insert', ['name' => 'Eggs'], $this->hlc(1))]);
+        $this->push($ana, [$this->op('grocery_items', $id, 'update', ['is_bought' => true, 'bought_at' => '2026-11-26T01:00:00.000Z'], $this->hlc(2))]);
+
+        $res = $this->push($ana, [$this->op('grocery_items', $id, 'update', [
+            'bought_at' => '2026-11-24T01:00:00.000Z',
+            'cleared_at' => '2026-11-26T10:00:00.000Z',
+        ], $this->hlc(3))]);
+
+        $this->assertSame(['applied'], $this->statuses($res));
+        $row = $this->latest($ana, $id);
+        $this->assertTrue($row['is_bought']);
+        $this->assertNull($row['deleted_at']);
+        $this->assertStringStartsWith('2026-11-24T01:00:00', $row['bought_at']);
+        $this->assertStringStartsWith('2026-11-26T10:00:00', $row['cleared_at']);
+    }
+
     public function test_the_person_who_marked_bought_can_undo_it(): void
     {
         $ana = $this->device('adult');

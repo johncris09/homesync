@@ -250,6 +250,7 @@ void main() {
     for (final c in ['category', 'repeat', 'series_id']) {
       await v3.customStatement('ALTER TABLE bills DROP COLUMN "$c"');
     }
+    await v3.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
     await v3.customStatement('PRAGMA user_version = 2');
     await v3.close();
 
