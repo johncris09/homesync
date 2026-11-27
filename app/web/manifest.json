@@ -1,11 +1,11 @@
 {
-    "name": "homesync",
-    "short_name": "homesync",
+    "name": "HomeSync",
+    "short_name": "HomeSync",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#E9EEE7",
+    "theme_color": "#2A1E17",
+    "description": "Offline-first household management for one family.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
