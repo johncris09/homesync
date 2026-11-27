@@ -4714,6 +4714,12 @@ abstract class AppLocalizations {
   /// **'{name}\'s go-bag'**
   String emergencyBagTitle(String name);
 
+  /// No description provided for @emergencyHouseholdBagTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Household go-bag'**
+  String get emergencyHouseholdBagTitle;
+
   /// No description provided for @emergencyBagEmpty.
   ///
   /// In en, this message translates to:

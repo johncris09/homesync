@@ -3185,6 +3185,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get emergencyHouseholdBagTitle => 'Household go-bag';
+
+  @override
   String get emergencyBagEmpty => 'Nothing listed yet';
 
   @override

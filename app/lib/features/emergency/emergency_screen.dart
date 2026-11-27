@@ -622,7 +622,9 @@ class _GoBagSheetState extends ConsumerState<GoBagSheet> {
     }
 
     return SheetBody(
-      title: l10n.emergencyBagTitle(bagTitle(l10n, members, widget.memberId)),
+      title: widget.memberId == null
+          ? l10n.emergencyHouseholdBagTitle
+          : l10n.emergencyBagTitle(bagTitle(l10n, members, widget.memberId)),
       children: [
         if (bag.items.isNotEmpty)
           Text(l10n.emergencyBagPacked(bag.packed, bag.items.length), key: const Key('bag-count')),

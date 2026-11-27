@@ -53,6 +53,7 @@ void main() {
 
     // The household go-bag from the starter list.
     await tapText(tester, 'Household');
+    expect(find.text('Household go-bag'), findsOneWidget);
     await tester.tap(find.byKey(const Key('bag-starter')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('bag-count')), findsOneWidget);

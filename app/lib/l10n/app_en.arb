@@ -981,6 +981,7 @@
   "emergencyUnknownMember": "Member",
   "emergencyBagTitle": "{name}'s go-bag",
   "@emergencyBagTitle": {"placeholders": {"name": {"type": "String"}}},
+  "emergencyHouseholdBagTitle": "Household go-bag",
   "emergencyBagEmpty": "Nothing listed yet",
   "emergencyBagPacked": "{packed} of {total} packed",
   "@emergencyBagPacked": {"placeholders": {"packed": {"type": "int"}, "total": {"type": "int"}}},
