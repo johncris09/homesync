@@ -54,6 +54,7 @@ class DueItem {
     this.on,
     this.km,
     this.kmLeft,
+    this.kmFirst = false,
   });
 
   final Vehicle vehicle;
@@ -66,6 +67,9 @@ class DueItem {
   /// PMS odometer reading, and how far away it is (negative = past it).
   final int? km;
   final int? kmLeft;
+
+  /// A PMS whose km limit is more urgent than its date.
+  final bool kmFirst;
 }
 
 /// The due items of [v]; PMS is due at its date or reading, whichever first.
@@ -93,7 +97,17 @@ List<DueItem> dueItemsOf(Vehicle v, int? odometer, DateTime today) {
         : VehicleDue.later;
     final dated = pmsOn == null ? VehicleDue.later : byDate(pmsOn);
     final status = byKm.index < dated.index ? byKm : dated;
-    out.add(DueItem(vehicle: v, kind: 'pms', status: status, on: pmsOn, km: v.pmsDueKm, kmLeft: kmLeft));
+    out.add(
+      DueItem(
+        vehicle: v,
+        kind: 'pms',
+        status: status,
+        on: pmsOn,
+        km: v.pmsDueKm,
+        kmLeft: kmLeft,
+        kmFirst: kmLeft != null && byKm.index < dated.index,
+      ),
+    );
   }
   return out;
 }

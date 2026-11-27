@@ -5,6 +5,7 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:homesync/core/db/database.dart';
 import 'package:homesync/core/sync/sync_engine.dart';
+import 'package:homesync/features/calendar/calendar_repository.dart';
 import 'package:homesync/features/vehicles/vehicles_repository.dart';
 
 import '../support/fake_server.dart';
@@ -24,7 +25,11 @@ void main() {
     setUp(() {
       db = memoryDb();
       now = DateTime(2026, 11, 27, 9);
-      repo = VehiclesRepository(db, writer(db, identity(memberId: memberA, deviceId: deviceA)), now: () => now);
+      repo = VehiclesRepository(
+        db,
+        writer(db, identity(memberId: memberA, deviceId: deviceA)),
+        now: () => now,
+      );
     });
     tearDown(() => db.close());
 
@@ -99,7 +104,11 @@ void main() {
       await repo.logCost(await vehicle(id), 'repair', 420000, note: 'aircon');
       final log = (await repo.watchHistory(id).first).single;
       expect(log.note, 'aircon');
-      final other = VehiclesRepository(db, writer(db, identity(memberId: memberB, deviceId: deviceB)), now: () => now);
+      final other = VehiclesRepository(
+        db,
+        writer(db, identity(memberId: memberB, deviceId: deviceB)),
+        now: () => now,
+      );
       expect(other.canRemove(log), isFalse);
       expect(repo.canRemove(log), isTrue);
       await repo.removeLog(log);
@@ -119,7 +128,11 @@ void main() {
   test('summary sorts due items: overdue, soon (date or km), later; and sums this month', () async {
     final db = memoryDb();
     final now = DateTime(2026, 11, 27, 9);
-    final repo = VehiclesRepository(db, writer(db, identity(memberId: memberA, deviceId: deviceA)), now: () => now);
+    final repo = VehiclesRepository(
+      db,
+      writer(db, identity(memberId: memberA, deviceId: deviceA)),
+      now: () => now,
+    );
     final innova = await repo.addVehicle(
       kind: 'car',
       name: 'Innova',
@@ -148,6 +161,32 @@ void main() {
     await db.close();
   });
 
+  test('the calendar shows registration, insurance and PMS dates', () async {
+    final db = memoryDb();
+    final repo = VehiclesRepository(db, writer(db, identity(memberId: memberA, deviceId: deviceA)));
+    await repo.addVehicle(
+      kind: 'car',
+      name: 'Innova',
+      registrationDueOn: DateTime(2026, 12, 3),
+      insuranceDueOn: DateTime(2027, 3, 2),
+      pmsDueOn: DateTime(2026, 12, 6),
+      pmsDueKm: 45000,
+    );
+    final agenda = Agenda(
+      const [],
+      DateTime(2026, 12, 1),
+      DateTime(2026, 12, 31),
+      vehicles: await repo.watchVehicles().first,
+    );
+    final reg = agenda.on(DateTime(2026, 12, 3)).single;
+    expect(reg.kind, CalendarKind.vehicle);
+    expect(reg.title, 'Innova');
+    expect(reg.dueKind, 'registration');
+    expect(agenda.on(DateTime(2026, 12, 6)).single.dueKind, 'pms');
+    expect(agenda.on(DateTime(2027, 3, 2)), isEmpty, reason: 'outside the range');
+    await db.close();
+  });
+
   test('two adults log fuel offline: both count', () async {
     final server = FakeSyncServer();
     final dbA = memoryDb();
@@ -157,8 +196,16 @@ void main() {
     final now = DateTime(2026, 11, 27, 9);
     final a = VehiclesRepository(dbA, wA, now: () => now);
     final b = VehiclesRepository(dbB, wB, now: () => now);
-    final syncA = SyncEngine(db: dbA, api: server.apiFor(memberId: memberA, deviceId: deviceA), clock: wA.clock);
-    final syncB = SyncEngine(db: dbB, api: server.apiFor(memberId: memberB, deviceId: deviceB), clock: wB.clock);
+    final syncA = SyncEngine(
+      db: dbA,
+      api: server.apiFor(memberId: memberA, deviceId: deviceA),
+      clock: wA.clock,
+    );
+    final syncB = SyncEngine(
+      db: dbB,
+      api: server.apiFor(memberId: memberB, deviceId: deviceB),
+      clock: wB.clock,
+    );
 
     final id = await a.addVehicle(kind: 'car', name: 'Innova', odometerKm: 44000);
     await syncA.sync();
