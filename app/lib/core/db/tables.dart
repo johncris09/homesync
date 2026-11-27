@@ -37,6 +37,12 @@ class GroceryItems extends Table with SyncColumns {
   TextColumn get store => text().nullable()();
   BoolColumn get isBought => boolean().withDefault(const Constant(false))();
   DateTimeColumn get boughtAt => dateTime().nullable()();
+
+  /// Set by "clear bought": hidden from the list, kept for history.
+  DateTimeColumn get clearedAt => dateTime().nullable()();
+
+  /// Planned shopping day (`YYYY-MM-DD`) while still to buy; null = no date.
+  TextColumn get plannedOn => text().nullable()();
   TextColumn get requestedBy => text().nullable()();
   TextColumn get note => text().nullable()();
 }

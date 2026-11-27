@@ -250,6 +250,8 @@ void main() {
     for (final c in ['category', 'repeat', 'series_id']) {
       await v3.customStatement('ALTER TABLE bills DROP COLUMN "$c"');
     }
+    await v3.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
+    await v3.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on'); // added in v8
     // Also undo version 9 (multi-day events).
     await v3.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
     await v3.customStatement('ALTER TABLE events DROP COLUMN "color"');

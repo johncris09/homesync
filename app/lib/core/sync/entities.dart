@@ -60,6 +60,8 @@ const syncedEntities = <String, EntitySpec>{
       'store',
       'is_bought',
       'bought_at',
+      'cleared_at',
+      'planned_on',
       'requested_by',
       'note',
     },

@@ -64,7 +64,8 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(debts);
         await m.createTable(debtPayments);
       }
-      // 7 and 8 are taken by other branches in flight.
+      if (from < 7) await m.addColumn(groceryItems, groceryItems.clearedAt); // Grocery history
+      if (from < 8) await m.addColumn(groceryItems, groceryItems.plannedOn); // Planned shopping day
       // Multi-day events; databases older than 5 got events with ends_on above.
       if (from >= 5 && from < 9) await m.addColumn(events, events.endsOn);
       if (from >= 5 && from < 10) await m.addColumn(events, events.color); // event colours

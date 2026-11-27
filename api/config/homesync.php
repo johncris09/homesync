@@ -47,6 +47,7 @@ return [
         ],
 
         // Shared grocery list. "Bought" only moves forward (see sync-protocol §6).
+        // "Clear bought" sets cleared_at (kept for history), it does not delete.
         'grocery_items' => [
             'table' => 'grocery_items',
             'fields' => [
@@ -55,6 +56,8 @@ return [
                 'store' => 'string',
                 'is_bought' => 'bool',
                 'bought_at' => 'datetime',
+                'cleared_at' => 'datetime',
+                'planned_on' => 'date',
                 'requested_by' => 'uuid',
                 'note' => 'text',
             ],

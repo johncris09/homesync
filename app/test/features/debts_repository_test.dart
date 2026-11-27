@@ -247,6 +247,8 @@ void main() {
     await v5.customStatement('SELECT 1');
     await v5.customStatement('DROP TABLE debts');
     await v5.customStatement('DROP TABLE debt_payments');
+    await v5.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
+    await v5.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on'); // added in v8
     // Also undo version 9 (multi-day events).
     await v5.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
     await v5.customStatement('ALTER TABLE events DROP COLUMN "color"');

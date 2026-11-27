@@ -964,6 +964,28 @@ class $GroceryItemsTable extends GroceryItems
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _clearedAtMeta = const VerificationMeta(
+    'clearedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> clearedAt = GeneratedColumn<DateTime>(
+    'cleared_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _plannedOnMeta = const VerificationMeta(
+    'plannedOn',
+  );
+  @override
+  late final GeneratedColumn<String> plannedOn = GeneratedColumn<String>(
+    'planned_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _requestedByMeta = const VerificationMeta(
     'requestedBy',
   );
@@ -1000,6 +1022,8 @@ class $GroceryItemsTable extends GroceryItems
     store,
     isBought,
     boughtAt,
+    clearedAt,
+    plannedOn,
     requestedBy,
     note,
   ];
@@ -1111,6 +1135,18 @@ class $GroceryItemsTable extends GroceryItems
         boughtAt.isAcceptableOrUnknown(data['bought_at']!, _boughtAtMeta),
       );
     }
+    if (data.containsKey('cleared_at')) {
+      context.handle(
+        _clearedAtMeta,
+        clearedAt.isAcceptableOrUnknown(data['cleared_at']!, _clearedAtMeta),
+      );
+    }
+    if (data.containsKey('planned_on')) {
+      context.handle(
+        _plannedOnMeta,
+        plannedOn.isAcceptableOrUnknown(data['planned_on']!, _plannedOnMeta),
+      );
+    }
     if (data.containsKey('requested_by')) {
       context.handle(
         _requestedByMeta,
@@ -1191,6 +1227,14 @@ class $GroceryItemsTable extends GroceryItems
         DriftSqlType.dateTime,
         data['${effectivePrefix}bought_at'],
       ),
+      clearedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}cleared_at'],
+      ),
+      plannedOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}planned_on'],
+      ),
       requestedBy: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}requested_by'],
@@ -1223,6 +1267,12 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
   final String? store;
   final bool isBought;
   final DateTime? boughtAt;
+
+  /// Set by "clear bought": hidden from the list, kept for history.
+  final DateTime? clearedAt;
+
+  /// Planned shopping day (`YYYY-MM-DD`) while still to buy; null = no date.
+  final String? plannedOn;
   final String? requestedBy;
   final String? note;
   const GroceryItem({
@@ -1240,6 +1290,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
     this.store,
     required this.isBought,
     this.boughtAt,
+    this.clearedAt,
+    this.plannedOn,
     this.requestedBy,
     this.note,
   });
@@ -1275,6 +1327,12 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
     map['is_bought'] = Variable<bool>(isBought);
     if (!nullToAbsent || boughtAt != null) {
       map['bought_at'] = Variable<DateTime>(boughtAt);
+    }
+    if (!nullToAbsent || clearedAt != null) {
+      map['cleared_at'] = Variable<DateTime>(clearedAt);
+    }
+    if (!nullToAbsent || plannedOn != null) {
+      map['planned_on'] = Variable<String>(plannedOn);
     }
     if (!nullToAbsent || requestedBy != null) {
       map['requested_by'] = Variable<String>(requestedBy);
@@ -1315,6 +1373,12 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
       boughtAt: boughtAt == null && nullToAbsent
           ? const Value.absent()
           : Value(boughtAt),
+      clearedAt: clearedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(clearedAt),
+      plannedOn: plannedOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(plannedOn),
       requestedBy: requestedBy == null && nullToAbsent
           ? const Value.absent()
           : Value(requestedBy),
@@ -1342,6 +1406,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
       store: serializer.fromJson<String?>(json['store']),
       isBought: serializer.fromJson<bool>(json['isBought']),
       boughtAt: serializer.fromJson<DateTime?>(json['boughtAt']),
+      clearedAt: serializer.fromJson<DateTime?>(json['clearedAt']),
+      plannedOn: serializer.fromJson<String?>(json['plannedOn']),
       requestedBy: serializer.fromJson<String?>(json['requestedBy']),
       note: serializer.fromJson<String?>(json['note']),
     );
@@ -1364,6 +1430,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
       'store': serializer.toJson<String?>(store),
       'isBought': serializer.toJson<bool>(isBought),
       'boughtAt': serializer.toJson<DateTime?>(boughtAt),
+      'clearedAt': serializer.toJson<DateTime?>(clearedAt),
+      'plannedOn': serializer.toJson<String?>(plannedOn),
       'requestedBy': serializer.toJson<String?>(requestedBy),
       'note': serializer.toJson<String?>(note),
     };
@@ -1384,6 +1452,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
     Value<String?> store = const Value.absent(),
     bool? isBought,
     Value<DateTime?> boughtAt = const Value.absent(),
+    Value<DateTime?> clearedAt = const Value.absent(),
+    Value<String?> plannedOn = const Value.absent(),
     Value<String?> requestedBy = const Value.absent(),
     Value<String?> note = const Value.absent(),
   }) => GroceryItem(
@@ -1403,6 +1473,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
     store: store.present ? store.value : this.store,
     isBought: isBought ?? this.isBought,
     boughtAt: boughtAt.present ? boughtAt.value : this.boughtAt,
+    clearedAt: clearedAt.present ? clearedAt.value : this.clearedAt,
+    plannedOn: plannedOn.present ? plannedOn.value : this.plannedOn,
     requestedBy: requestedBy.present ? requestedBy.value : this.requestedBy,
     note: note.present ? note.value : this.note,
   );
@@ -1428,6 +1500,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
       store: data.store.present ? data.store.value : this.store,
       isBought: data.isBought.present ? data.isBought.value : this.isBought,
       boughtAt: data.boughtAt.present ? data.boughtAt.value : this.boughtAt,
+      clearedAt: data.clearedAt.present ? data.clearedAt.value : this.clearedAt,
+      plannedOn: data.plannedOn.present ? data.plannedOn.value : this.plannedOn,
       requestedBy: data.requestedBy.present
           ? data.requestedBy.value
           : this.requestedBy,
@@ -1452,6 +1526,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
           ..write('store: $store, ')
           ..write('isBought: $isBought, ')
           ..write('boughtAt: $boughtAt, ')
+          ..write('clearedAt: $clearedAt, ')
+          ..write('plannedOn: $plannedOn, ')
           ..write('requestedBy: $requestedBy, ')
           ..write('note: $note')
           ..write(')'))
@@ -1474,6 +1550,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
     store,
     isBought,
     boughtAt,
+    clearedAt,
+    plannedOn,
     requestedBy,
     note,
   );
@@ -1495,6 +1573,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
           other.store == this.store &&
           other.isBought == this.isBought &&
           other.boughtAt == this.boughtAt &&
+          other.clearedAt == this.clearedAt &&
+          other.plannedOn == this.plannedOn &&
           other.requestedBy == this.requestedBy &&
           other.note == this.note);
 }
@@ -1514,6 +1594,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
   final Value<String?> store;
   final Value<bool> isBought;
   final Value<DateTime?> boughtAt;
+  final Value<DateTime?> clearedAt;
+  final Value<String?> plannedOn;
   final Value<String?> requestedBy;
   final Value<String?> note;
   final Value<int> rowid;
@@ -1532,6 +1614,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
     this.store = const Value.absent(),
     this.isBought = const Value.absent(),
     this.boughtAt = const Value.absent(),
+    this.clearedAt = const Value.absent(),
+    this.plannedOn = const Value.absent(),
     this.requestedBy = const Value.absent(),
     this.note = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1551,6 +1635,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
     this.store = const Value.absent(),
     this.isBought = const Value.absent(),
     this.boughtAt = const Value.absent(),
+    this.clearedAt = const Value.absent(),
+    this.plannedOn = const Value.absent(),
     this.requestedBy = const Value.absent(),
     this.note = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1572,6 +1658,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
     Expression<String>? store,
     Expression<bool>? isBought,
     Expression<DateTime>? boughtAt,
+    Expression<DateTime>? clearedAt,
+    Expression<String>? plannedOn,
     Expression<String>? requestedBy,
     Expression<String>? note,
     Expression<int>? rowid,
@@ -1591,6 +1679,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
       if (store != null) 'store': store,
       if (isBought != null) 'is_bought': isBought,
       if (boughtAt != null) 'bought_at': boughtAt,
+      if (clearedAt != null) 'cleared_at': clearedAt,
+      if (plannedOn != null) 'planned_on': plannedOn,
       if (requestedBy != null) 'requested_by': requestedBy,
       if (note != null) 'note': note,
       if (rowid != null) 'rowid': rowid,
@@ -1612,6 +1702,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
     Value<String?>? store,
     Value<bool>? isBought,
     Value<DateTime?>? boughtAt,
+    Value<DateTime?>? clearedAt,
+    Value<String?>? plannedOn,
     Value<String?>? requestedBy,
     Value<String?>? note,
     Value<int>? rowid,
@@ -1631,6 +1723,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
       store: store ?? this.store,
       isBought: isBought ?? this.isBought,
       boughtAt: boughtAt ?? this.boughtAt,
+      clearedAt: clearedAt ?? this.clearedAt,
+      plannedOn: plannedOn ?? this.plannedOn,
       requestedBy: requestedBy ?? this.requestedBy,
       note: note ?? this.note,
       rowid: rowid ?? this.rowid,
@@ -1682,6 +1776,12 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
     if (boughtAt.present) {
       map['bought_at'] = Variable<DateTime>(boughtAt.value);
     }
+    if (clearedAt.present) {
+      map['cleared_at'] = Variable<DateTime>(clearedAt.value);
+    }
+    if (plannedOn.present) {
+      map['planned_on'] = Variable<String>(plannedOn.value);
+    }
     if (requestedBy.present) {
       map['requested_by'] = Variable<String>(requestedBy.value);
     }
@@ -1711,6 +1811,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
           ..write('store: $store, ')
           ..write('isBought: $isBought, ')
           ..write('boughtAt: $boughtAt, ')
+          ..write('clearedAt: $clearedAt, ')
+          ..write('plannedOn: $plannedOn, ')
           ..write('requestedBy: $requestedBy, ')
           ..write('note: $note, ')
           ..write('rowid: $rowid')
@@ -14239,6 +14341,8 @@ typedef $$GroceryItemsTableCreateCompanionBuilder =
       Value<String?> store,
       Value<bool> isBought,
       Value<DateTime?> boughtAt,
+      Value<DateTime?> clearedAt,
+      Value<String?> plannedOn,
       Value<String?> requestedBy,
       Value<String?> note,
       Value<int> rowid,
@@ -14259,6 +14363,8 @@ typedef $$GroceryItemsTableUpdateCompanionBuilder =
       Value<String?> store,
       Value<bool> isBought,
       Value<DateTime?> boughtAt,
+      Value<DateTime?> clearedAt,
+      Value<String?> plannedOn,
       Value<String?> requestedBy,
       Value<String?> note,
       Value<int> rowid,
@@ -14340,6 +14446,16 @@ class $$GroceryItemsTableFilterComposer
 
   ColumnFilters<DateTime> get boughtAt => $composableBuilder(
     column: $table.boughtAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get clearedAt => $composableBuilder(
+    column: $table.clearedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get plannedOn => $composableBuilder(
+    column: $table.plannedOn,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -14433,6 +14549,16 @@ class $$GroceryItemsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get clearedAt => $composableBuilder(
+    column: $table.clearedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get plannedOn => $composableBuilder(
+    column: $table.plannedOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get requestedBy => $composableBuilder(
     column: $table.requestedBy,
     builder: (column) => ColumnOrderings(column),
@@ -14501,6 +14627,12 @@ class $$GroceryItemsTableAnnotationComposer
   GeneratedColumn<DateTime> get boughtAt =>
       $composableBuilder(column: $table.boughtAt, builder: (column) => column);
 
+  GeneratedColumn<DateTime> get clearedAt =>
+      $composableBuilder(column: $table.clearedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get plannedOn =>
+      $composableBuilder(column: $table.plannedOn, builder: (column) => column);
+
   GeneratedColumn<String> get requestedBy => $composableBuilder(
     column: $table.requestedBy,
     builder: (column) => column,
@@ -14555,6 +14687,8 @@ class $$GroceryItemsTableTableManager
                 Value<String?> store = const Value.absent(),
                 Value<bool> isBought = const Value.absent(),
                 Value<DateTime?> boughtAt = const Value.absent(),
+                Value<DateTime?> clearedAt = const Value.absent(),
+                Value<String?> plannedOn = const Value.absent(),
                 Value<String?> requestedBy = const Value.absent(),
                 Value<String?> note = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -14573,6 +14707,8 @@ class $$GroceryItemsTableTableManager
                 store: store,
                 isBought: isBought,
                 boughtAt: boughtAt,
+                clearedAt: clearedAt,
+                plannedOn: plannedOn,
                 requestedBy: requestedBy,
                 note: note,
                 rowid: rowid,
@@ -14593,6 +14729,8 @@ class $$GroceryItemsTableTableManager
                 Value<String?> store = const Value.absent(),
                 Value<bool> isBought = const Value.absent(),
                 Value<DateTime?> boughtAt = const Value.absent(),
+                Value<DateTime?> clearedAt = const Value.absent(),
+                Value<String?> plannedOn = const Value.absent(),
                 Value<String?> requestedBy = const Value.absent(),
                 Value<String?> note = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -14611,6 +14749,8 @@ class $$GroceryItemsTableTableManager
                 store: store,
                 isBought: isBought,
                 boughtAt: boughtAt,
+                clearedAt: clearedAt,
+                plannedOn: plannedOn,
                 requestedBy: requestedBy,
                 note: note,
                 rowid: rowid,

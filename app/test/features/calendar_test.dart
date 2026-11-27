@@ -331,6 +331,8 @@ void main() {
     final v5 = AppDatabase(NativeDatabase(file));
     await v5.customStatement('SELECT 1');
     await v5.customStatement('DROP TABLE events');
+    await v5.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
+    await v5.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on'); // added in v8
     await v5.customStatement('PRAGMA user_version = 4');
     await v5.close();
 
@@ -350,6 +352,8 @@ void main() {
     await v6.customStatement('SELECT 1');
     await v6.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
     await v6.customStatement('ALTER TABLE events DROP COLUMN "color"');
+    await v6.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
+    await v6.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on'); // added in v8
     await v6.customStatement('PRAGMA user_version = 6');
     await v6.close();
 
