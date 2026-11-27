@@ -237,6 +237,52 @@ class VehicleLogs extends Table with SyncColumns {
   TextColumn get note => text().nullable()();
 }
 
+/// A room, house or stall the household rents out; kept while vacant.
+class RentalUnits extends Table with SyncColumns {
+  TextColumn get name => text()();
+  TextColumn get note => text().nullable()();
+}
+
+/// One tenant in a [RentalUnits] row. Rent is due every month on [dueDay]
+/// (the last day of a shorter month) from the month of [startsOn] up to the
+/// month of [endsOn]. [rentMinor] applies from the month of [rentSince]
+/// (from the start when null); earlier months use [prevRentMinor].
+class Leases extends Table with SyncColumns {
+  TextColumn get unitId => text()();
+  TextColumn get tenantName => text()();
+  TextColumn get phone => text().nullable()();
+  IntColumn get rentMinor => integer()();
+  IntColumn get prevRentMinor => integer().nullable()();
+  TextColumn get rentSince => text().nullable()();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+  IntColumn get dueDay => integer()();
+
+  /// Calendar dates `YYYY-MM-DD`.
+  TextColumn get startsOn => text()();
+  TextColumn get endsOn => text().nullable()();
+  IntColumn get depositMinor => integer().nullable()();
+  IntColumn get depositReturnedMinor => integer().nullable()();
+  TextColumn get depositReturnedOn => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// Money received for a lease ([kind] `payment`) or rent forgiven
+/// (`waived`). Covers the oldest month first. Append-only.
+class RentPayments extends Table with SyncColumns {
+  TextColumn get leaseId => text()();
+  TextColumn get kind => text()();
+  IntColumn get amountMinor => integer()();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+
+  /// Calendar date `YYYY-MM-DD`.
+  TextColumn get paidOn => text()();
+
+  /// `cash`, `gcash` or `bank` (optional).
+  TextColumn get method => text().nullable()();
+  TextColumn get memberId => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
 /// A member's health profile; [sealed] is blood type, allergies, conditions,
 /// maintenance medicines, PhilHealth/HMO numbers and doctor, encrypted with
 /// the vault key. One row per member (derived id).

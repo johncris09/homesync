@@ -19736,6 +19736,2888 @@ class CheckupsCompanion extends UpdateCompanion<Checkup> {
   }
 }
 
+class $RentalUnitsTable extends RentalUnits
+    with TableInfo<$RentalUnitsTable, RentalUnit> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RentalUnitsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    name,
+    note,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'rental_units';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RentalUnit> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RentalUnit map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RentalUnit(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
+  }
+
+  @override
+  $RentalUnitsTable createAlias(String alias) {
+    return $RentalUnitsTable(attachedDatabase, alias);
+  }
+}
+
+class RentalUnit extends DataClass implements Insertable<RentalUnit> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String name;
+  final String? note;
+  const RentalUnit({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.name,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  RentalUnitsCompanion toCompanion(bool nullToAbsent) {
+    return RentalUnitsCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      name: Value(name),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory RentalUnit.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RentalUnit(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      name: serializer.fromJson<String>(json['name']),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'name': serializer.toJson<String>(name),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  RentalUnit copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? name,
+    Value<String?> note = const Value.absent(),
+  }) => RentalUnit(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    name: name ?? this.name,
+    note: note.present ? note.value : this.note,
+  );
+  RentalUnit copyWithCompanion(RentalUnitsCompanion data) {
+    return RentalUnit(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      name: data.name.present ? data.name.value : this.name,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RentalUnit(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('name: $name, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    name,
+    note,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RentalUnit &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.name == this.name &&
+          other.note == this.note);
+}
+
+class RentalUnitsCompanion extends UpdateCompanion<RentalUnit> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> name;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const RentalUnitsCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RentalUnitsCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String name,
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       name = Value(name);
+  static Insertable<RentalUnit> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? name,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (name != null) 'name': name,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RentalUnitsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? name,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return RentalUnitsCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      name: name ?? this.name,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RentalUnitsCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('name: $name, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LeasesTable extends Leases with TableInfo<$LeasesTable, Lease> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LeasesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _unitIdMeta = const VerificationMeta('unitId');
+  @override
+  late final GeneratedColumn<String> unitId = GeneratedColumn<String>(
+    'unit_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tenantNameMeta = const VerificationMeta(
+    'tenantName',
+  );
+  @override
+  late final GeneratedColumn<String> tenantName = GeneratedColumn<String>(
+    'tenant_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _phoneMeta = const VerificationMeta('phone');
+  @override
+  late final GeneratedColumn<String> phone = GeneratedColumn<String>(
+    'phone',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _rentMinorMeta = const VerificationMeta(
+    'rentMinor',
+  );
+  @override
+  late final GeneratedColumn<int> rentMinor = GeneratedColumn<int>(
+    'rent_minor',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _prevRentMinorMeta = const VerificationMeta(
+    'prevRentMinor',
+  );
+  @override
+  late final GeneratedColumn<int> prevRentMinor = GeneratedColumn<int>(
+    'prev_rent_minor',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _rentSinceMeta = const VerificationMeta(
+    'rentSince',
+  );
+  @override
+  late final GeneratedColumn<String> rentSince = GeneratedColumn<String>(
+    'rent_since',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _currencyMeta = const VerificationMeta(
+    'currency',
+  );
+  @override
+  late final GeneratedColumn<String> currency = GeneratedColumn<String>(
+    'currency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('PHP'),
+  );
+  static const VerificationMeta _dueDayMeta = const VerificationMeta('dueDay');
+  @override
+  late final GeneratedColumn<int> dueDay = GeneratedColumn<int>(
+    'due_day',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _startsOnMeta = const VerificationMeta(
+    'startsOn',
+  );
+  @override
+  late final GeneratedColumn<String> startsOn = GeneratedColumn<String>(
+    'starts_on',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _endsOnMeta = const VerificationMeta('endsOn');
+  @override
+  late final GeneratedColumn<String> endsOn = GeneratedColumn<String>(
+    'ends_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _depositMinorMeta = const VerificationMeta(
+    'depositMinor',
+  );
+  @override
+  late final GeneratedColumn<int> depositMinor = GeneratedColumn<int>(
+    'deposit_minor',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _depositReturnedMinorMeta =
+      const VerificationMeta('depositReturnedMinor');
+  @override
+  late final GeneratedColumn<int> depositReturnedMinor = GeneratedColumn<int>(
+    'deposit_returned_minor',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _depositReturnedOnMeta = const VerificationMeta(
+    'depositReturnedOn',
+  );
+  @override
+  late final GeneratedColumn<String> depositReturnedOn =
+      GeneratedColumn<String>(
+        'deposit_returned_on',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    unitId,
+    tenantName,
+    phone,
+    rentMinor,
+    prevRentMinor,
+    rentSince,
+    currency,
+    dueDay,
+    startsOn,
+    endsOn,
+    depositMinor,
+    depositReturnedMinor,
+    depositReturnedOn,
+    note,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'leases';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Lease> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('unit_id')) {
+      context.handle(
+        _unitIdMeta,
+        unitId.isAcceptableOrUnknown(data['unit_id']!, _unitIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_unitIdMeta);
+    }
+    if (data.containsKey('tenant_name')) {
+      context.handle(
+        _tenantNameMeta,
+        tenantName.isAcceptableOrUnknown(data['tenant_name']!, _tenantNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tenantNameMeta);
+    }
+    if (data.containsKey('phone')) {
+      context.handle(
+        _phoneMeta,
+        phone.isAcceptableOrUnknown(data['phone']!, _phoneMeta),
+      );
+    }
+    if (data.containsKey('rent_minor')) {
+      context.handle(
+        _rentMinorMeta,
+        rentMinor.isAcceptableOrUnknown(data['rent_minor']!, _rentMinorMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_rentMinorMeta);
+    }
+    if (data.containsKey('prev_rent_minor')) {
+      context.handle(
+        _prevRentMinorMeta,
+        prevRentMinor.isAcceptableOrUnknown(
+          data['prev_rent_minor']!,
+          _prevRentMinorMeta,
+        ),
+      );
+    }
+    if (data.containsKey('rent_since')) {
+      context.handle(
+        _rentSinceMeta,
+        rentSince.isAcceptableOrUnknown(data['rent_since']!, _rentSinceMeta),
+      );
+    }
+    if (data.containsKey('currency')) {
+      context.handle(
+        _currencyMeta,
+        currency.isAcceptableOrUnknown(data['currency']!, _currencyMeta),
+      );
+    }
+    if (data.containsKey('due_day')) {
+      context.handle(
+        _dueDayMeta,
+        dueDay.isAcceptableOrUnknown(data['due_day']!, _dueDayMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dueDayMeta);
+    }
+    if (data.containsKey('starts_on')) {
+      context.handle(
+        _startsOnMeta,
+        startsOn.isAcceptableOrUnknown(data['starts_on']!, _startsOnMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_startsOnMeta);
+    }
+    if (data.containsKey('ends_on')) {
+      context.handle(
+        _endsOnMeta,
+        endsOn.isAcceptableOrUnknown(data['ends_on']!, _endsOnMeta),
+      );
+    }
+    if (data.containsKey('deposit_minor')) {
+      context.handle(
+        _depositMinorMeta,
+        depositMinor.isAcceptableOrUnknown(
+          data['deposit_minor']!,
+          _depositMinorMeta,
+        ),
+      );
+    }
+    if (data.containsKey('deposit_returned_minor')) {
+      context.handle(
+        _depositReturnedMinorMeta,
+        depositReturnedMinor.isAcceptableOrUnknown(
+          data['deposit_returned_minor']!,
+          _depositReturnedMinorMeta,
+        ),
+      );
+    }
+    if (data.containsKey('deposit_returned_on')) {
+      context.handle(
+        _depositReturnedOnMeta,
+        depositReturnedOn.isAcceptableOrUnknown(
+          data['deposit_returned_on']!,
+          _depositReturnedOnMeta,
+        ),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Lease map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Lease(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      unitId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit_id'],
+      )!,
+      tenantName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tenant_name'],
+      )!,
+      phone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}phone'],
+      ),
+      rentMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rent_minor'],
+      )!,
+      prevRentMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}prev_rent_minor'],
+      ),
+      rentSince: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}rent_since'],
+      ),
+      currency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}currency'],
+      )!,
+      dueDay: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}due_day'],
+      )!,
+      startsOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}starts_on'],
+      )!,
+      endsOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ends_on'],
+      ),
+      depositMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deposit_minor'],
+      ),
+      depositReturnedMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deposit_returned_minor'],
+      ),
+      depositReturnedOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deposit_returned_on'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
+  }
+
+  @override
+  $LeasesTable createAlias(String alias) {
+    return $LeasesTable(attachedDatabase, alias);
+  }
+}
+
+class Lease extends DataClass implements Insertable<Lease> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String unitId;
+  final String tenantName;
+  final String? phone;
+  final int rentMinor;
+  final int? prevRentMinor;
+  final String? rentSince;
+  final String currency;
+  final int dueDay;
+
+  /// Calendar dates `YYYY-MM-DD`.
+  final String startsOn;
+  final String? endsOn;
+  final int? depositMinor;
+  final int? depositReturnedMinor;
+  final String? depositReturnedOn;
+  final String? note;
+  const Lease({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.unitId,
+    required this.tenantName,
+    this.phone,
+    required this.rentMinor,
+    this.prevRentMinor,
+    this.rentSince,
+    required this.currency,
+    required this.dueDay,
+    required this.startsOn,
+    this.endsOn,
+    this.depositMinor,
+    this.depositReturnedMinor,
+    this.depositReturnedOn,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['unit_id'] = Variable<String>(unitId);
+    map['tenant_name'] = Variable<String>(tenantName);
+    if (!nullToAbsent || phone != null) {
+      map['phone'] = Variable<String>(phone);
+    }
+    map['rent_minor'] = Variable<int>(rentMinor);
+    if (!nullToAbsent || prevRentMinor != null) {
+      map['prev_rent_minor'] = Variable<int>(prevRentMinor);
+    }
+    if (!nullToAbsent || rentSince != null) {
+      map['rent_since'] = Variable<String>(rentSince);
+    }
+    map['currency'] = Variable<String>(currency);
+    map['due_day'] = Variable<int>(dueDay);
+    map['starts_on'] = Variable<String>(startsOn);
+    if (!nullToAbsent || endsOn != null) {
+      map['ends_on'] = Variable<String>(endsOn);
+    }
+    if (!nullToAbsent || depositMinor != null) {
+      map['deposit_minor'] = Variable<int>(depositMinor);
+    }
+    if (!nullToAbsent || depositReturnedMinor != null) {
+      map['deposit_returned_minor'] = Variable<int>(depositReturnedMinor);
+    }
+    if (!nullToAbsent || depositReturnedOn != null) {
+      map['deposit_returned_on'] = Variable<String>(depositReturnedOn);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  LeasesCompanion toCompanion(bool nullToAbsent) {
+    return LeasesCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      unitId: Value(unitId),
+      tenantName: Value(tenantName),
+      phone: phone == null && nullToAbsent
+          ? const Value.absent()
+          : Value(phone),
+      rentMinor: Value(rentMinor),
+      prevRentMinor: prevRentMinor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(prevRentMinor),
+      rentSince: rentSince == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rentSince),
+      currency: Value(currency),
+      dueDay: Value(dueDay),
+      startsOn: Value(startsOn),
+      endsOn: endsOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endsOn),
+      depositMinor: depositMinor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(depositMinor),
+      depositReturnedMinor: depositReturnedMinor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(depositReturnedMinor),
+      depositReturnedOn: depositReturnedOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(depositReturnedOn),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory Lease.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Lease(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      unitId: serializer.fromJson<String>(json['unitId']),
+      tenantName: serializer.fromJson<String>(json['tenantName']),
+      phone: serializer.fromJson<String?>(json['phone']),
+      rentMinor: serializer.fromJson<int>(json['rentMinor']),
+      prevRentMinor: serializer.fromJson<int?>(json['prevRentMinor']),
+      rentSince: serializer.fromJson<String?>(json['rentSince']),
+      currency: serializer.fromJson<String>(json['currency']),
+      dueDay: serializer.fromJson<int>(json['dueDay']),
+      startsOn: serializer.fromJson<String>(json['startsOn']),
+      endsOn: serializer.fromJson<String?>(json['endsOn']),
+      depositMinor: serializer.fromJson<int?>(json['depositMinor']),
+      depositReturnedMinor: serializer.fromJson<int?>(
+        json['depositReturnedMinor'],
+      ),
+      depositReturnedOn: serializer.fromJson<String?>(
+        json['depositReturnedOn'],
+      ),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'unitId': serializer.toJson<String>(unitId),
+      'tenantName': serializer.toJson<String>(tenantName),
+      'phone': serializer.toJson<String?>(phone),
+      'rentMinor': serializer.toJson<int>(rentMinor),
+      'prevRentMinor': serializer.toJson<int?>(prevRentMinor),
+      'rentSince': serializer.toJson<String?>(rentSince),
+      'currency': serializer.toJson<String>(currency),
+      'dueDay': serializer.toJson<int>(dueDay),
+      'startsOn': serializer.toJson<String>(startsOn),
+      'endsOn': serializer.toJson<String?>(endsOn),
+      'depositMinor': serializer.toJson<int?>(depositMinor),
+      'depositReturnedMinor': serializer.toJson<int?>(depositReturnedMinor),
+      'depositReturnedOn': serializer.toJson<String?>(depositReturnedOn),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  Lease copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? unitId,
+    String? tenantName,
+    Value<String?> phone = const Value.absent(),
+    int? rentMinor,
+    Value<int?> prevRentMinor = const Value.absent(),
+    Value<String?> rentSince = const Value.absent(),
+    String? currency,
+    int? dueDay,
+    String? startsOn,
+    Value<String?> endsOn = const Value.absent(),
+    Value<int?> depositMinor = const Value.absent(),
+    Value<int?> depositReturnedMinor = const Value.absent(),
+    Value<String?> depositReturnedOn = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+  }) => Lease(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    unitId: unitId ?? this.unitId,
+    tenantName: tenantName ?? this.tenantName,
+    phone: phone.present ? phone.value : this.phone,
+    rentMinor: rentMinor ?? this.rentMinor,
+    prevRentMinor: prevRentMinor.present
+        ? prevRentMinor.value
+        : this.prevRentMinor,
+    rentSince: rentSince.present ? rentSince.value : this.rentSince,
+    currency: currency ?? this.currency,
+    dueDay: dueDay ?? this.dueDay,
+    startsOn: startsOn ?? this.startsOn,
+    endsOn: endsOn.present ? endsOn.value : this.endsOn,
+    depositMinor: depositMinor.present ? depositMinor.value : this.depositMinor,
+    depositReturnedMinor: depositReturnedMinor.present
+        ? depositReturnedMinor.value
+        : this.depositReturnedMinor,
+    depositReturnedOn: depositReturnedOn.present
+        ? depositReturnedOn.value
+        : this.depositReturnedOn,
+    note: note.present ? note.value : this.note,
+  );
+  Lease copyWithCompanion(LeasesCompanion data) {
+    return Lease(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      unitId: data.unitId.present ? data.unitId.value : this.unitId,
+      tenantName: data.tenantName.present
+          ? data.tenantName.value
+          : this.tenantName,
+      phone: data.phone.present ? data.phone.value : this.phone,
+      rentMinor: data.rentMinor.present ? data.rentMinor.value : this.rentMinor,
+      prevRentMinor: data.prevRentMinor.present
+          ? data.prevRentMinor.value
+          : this.prevRentMinor,
+      rentSince: data.rentSince.present ? data.rentSince.value : this.rentSince,
+      currency: data.currency.present ? data.currency.value : this.currency,
+      dueDay: data.dueDay.present ? data.dueDay.value : this.dueDay,
+      startsOn: data.startsOn.present ? data.startsOn.value : this.startsOn,
+      endsOn: data.endsOn.present ? data.endsOn.value : this.endsOn,
+      depositMinor: data.depositMinor.present
+          ? data.depositMinor.value
+          : this.depositMinor,
+      depositReturnedMinor: data.depositReturnedMinor.present
+          ? data.depositReturnedMinor.value
+          : this.depositReturnedMinor,
+      depositReturnedOn: data.depositReturnedOn.present
+          ? data.depositReturnedOn.value
+          : this.depositReturnedOn,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Lease(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('unitId: $unitId, ')
+          ..write('tenantName: $tenantName, ')
+          ..write('phone: $phone, ')
+          ..write('rentMinor: $rentMinor, ')
+          ..write('prevRentMinor: $prevRentMinor, ')
+          ..write('rentSince: $rentSince, ')
+          ..write('currency: $currency, ')
+          ..write('dueDay: $dueDay, ')
+          ..write('startsOn: $startsOn, ')
+          ..write('endsOn: $endsOn, ')
+          ..write('depositMinor: $depositMinor, ')
+          ..write('depositReturnedMinor: $depositReturnedMinor, ')
+          ..write('depositReturnedOn: $depositReturnedOn, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    unitId,
+    tenantName,
+    phone,
+    rentMinor,
+    prevRentMinor,
+    rentSince,
+    currency,
+    dueDay,
+    startsOn,
+    endsOn,
+    depositMinor,
+    depositReturnedMinor,
+    depositReturnedOn,
+    note,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Lease &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.unitId == this.unitId &&
+          other.tenantName == this.tenantName &&
+          other.phone == this.phone &&
+          other.rentMinor == this.rentMinor &&
+          other.prevRentMinor == this.prevRentMinor &&
+          other.rentSince == this.rentSince &&
+          other.currency == this.currency &&
+          other.dueDay == this.dueDay &&
+          other.startsOn == this.startsOn &&
+          other.endsOn == this.endsOn &&
+          other.depositMinor == this.depositMinor &&
+          other.depositReturnedMinor == this.depositReturnedMinor &&
+          other.depositReturnedOn == this.depositReturnedOn &&
+          other.note == this.note);
+}
+
+class LeasesCompanion extends UpdateCompanion<Lease> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> unitId;
+  final Value<String> tenantName;
+  final Value<String?> phone;
+  final Value<int> rentMinor;
+  final Value<int?> prevRentMinor;
+  final Value<String?> rentSince;
+  final Value<String> currency;
+  final Value<int> dueDay;
+  final Value<String> startsOn;
+  final Value<String?> endsOn;
+  final Value<int?> depositMinor;
+  final Value<int?> depositReturnedMinor;
+  final Value<String?> depositReturnedOn;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const LeasesCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.unitId = const Value.absent(),
+    this.tenantName = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.rentMinor = const Value.absent(),
+    this.prevRentMinor = const Value.absent(),
+    this.rentSince = const Value.absent(),
+    this.currency = const Value.absent(),
+    this.dueDay = const Value.absent(),
+    this.startsOn = const Value.absent(),
+    this.endsOn = const Value.absent(),
+    this.depositMinor = const Value.absent(),
+    this.depositReturnedMinor = const Value.absent(),
+    this.depositReturnedOn = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LeasesCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String unitId,
+    required String tenantName,
+    this.phone = const Value.absent(),
+    required int rentMinor,
+    this.prevRentMinor = const Value.absent(),
+    this.rentSince = const Value.absent(),
+    this.currency = const Value.absent(),
+    required int dueDay,
+    required String startsOn,
+    this.endsOn = const Value.absent(),
+    this.depositMinor = const Value.absent(),
+    this.depositReturnedMinor = const Value.absent(),
+    this.depositReturnedOn = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       unitId = Value(unitId),
+       tenantName = Value(tenantName),
+       rentMinor = Value(rentMinor),
+       dueDay = Value(dueDay),
+       startsOn = Value(startsOn);
+  static Insertable<Lease> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? unitId,
+    Expression<String>? tenantName,
+    Expression<String>? phone,
+    Expression<int>? rentMinor,
+    Expression<int>? prevRentMinor,
+    Expression<String>? rentSince,
+    Expression<String>? currency,
+    Expression<int>? dueDay,
+    Expression<String>? startsOn,
+    Expression<String>? endsOn,
+    Expression<int>? depositMinor,
+    Expression<int>? depositReturnedMinor,
+    Expression<String>? depositReturnedOn,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (unitId != null) 'unit_id': unitId,
+      if (tenantName != null) 'tenant_name': tenantName,
+      if (phone != null) 'phone': phone,
+      if (rentMinor != null) 'rent_minor': rentMinor,
+      if (prevRentMinor != null) 'prev_rent_minor': prevRentMinor,
+      if (rentSince != null) 'rent_since': rentSince,
+      if (currency != null) 'currency': currency,
+      if (dueDay != null) 'due_day': dueDay,
+      if (startsOn != null) 'starts_on': startsOn,
+      if (endsOn != null) 'ends_on': endsOn,
+      if (depositMinor != null) 'deposit_minor': depositMinor,
+      if (depositReturnedMinor != null)
+        'deposit_returned_minor': depositReturnedMinor,
+      if (depositReturnedOn != null) 'deposit_returned_on': depositReturnedOn,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LeasesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? unitId,
+    Value<String>? tenantName,
+    Value<String?>? phone,
+    Value<int>? rentMinor,
+    Value<int?>? prevRentMinor,
+    Value<String?>? rentSince,
+    Value<String>? currency,
+    Value<int>? dueDay,
+    Value<String>? startsOn,
+    Value<String?>? endsOn,
+    Value<int?>? depositMinor,
+    Value<int?>? depositReturnedMinor,
+    Value<String?>? depositReturnedOn,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return LeasesCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      unitId: unitId ?? this.unitId,
+      tenantName: tenantName ?? this.tenantName,
+      phone: phone ?? this.phone,
+      rentMinor: rentMinor ?? this.rentMinor,
+      prevRentMinor: prevRentMinor ?? this.prevRentMinor,
+      rentSince: rentSince ?? this.rentSince,
+      currency: currency ?? this.currency,
+      dueDay: dueDay ?? this.dueDay,
+      startsOn: startsOn ?? this.startsOn,
+      endsOn: endsOn ?? this.endsOn,
+      depositMinor: depositMinor ?? this.depositMinor,
+      depositReturnedMinor: depositReturnedMinor ?? this.depositReturnedMinor,
+      depositReturnedOn: depositReturnedOn ?? this.depositReturnedOn,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (unitId.present) {
+      map['unit_id'] = Variable<String>(unitId.value);
+    }
+    if (tenantName.present) {
+      map['tenant_name'] = Variable<String>(tenantName.value);
+    }
+    if (phone.present) {
+      map['phone'] = Variable<String>(phone.value);
+    }
+    if (rentMinor.present) {
+      map['rent_minor'] = Variable<int>(rentMinor.value);
+    }
+    if (prevRentMinor.present) {
+      map['prev_rent_minor'] = Variable<int>(prevRentMinor.value);
+    }
+    if (rentSince.present) {
+      map['rent_since'] = Variable<String>(rentSince.value);
+    }
+    if (currency.present) {
+      map['currency'] = Variable<String>(currency.value);
+    }
+    if (dueDay.present) {
+      map['due_day'] = Variable<int>(dueDay.value);
+    }
+    if (startsOn.present) {
+      map['starts_on'] = Variable<String>(startsOn.value);
+    }
+    if (endsOn.present) {
+      map['ends_on'] = Variable<String>(endsOn.value);
+    }
+    if (depositMinor.present) {
+      map['deposit_minor'] = Variable<int>(depositMinor.value);
+    }
+    if (depositReturnedMinor.present) {
+      map['deposit_returned_minor'] = Variable<int>(depositReturnedMinor.value);
+    }
+    if (depositReturnedOn.present) {
+      map['deposit_returned_on'] = Variable<String>(depositReturnedOn.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LeasesCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('unitId: $unitId, ')
+          ..write('tenantName: $tenantName, ')
+          ..write('phone: $phone, ')
+          ..write('rentMinor: $rentMinor, ')
+          ..write('prevRentMinor: $prevRentMinor, ')
+          ..write('rentSince: $rentSince, ')
+          ..write('currency: $currency, ')
+          ..write('dueDay: $dueDay, ')
+          ..write('startsOn: $startsOn, ')
+          ..write('endsOn: $endsOn, ')
+          ..write('depositMinor: $depositMinor, ')
+          ..write('depositReturnedMinor: $depositReturnedMinor, ')
+          ..write('depositReturnedOn: $depositReturnedOn, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RentPaymentsTable extends RentPayments
+    with TableInfo<$RentPaymentsTable, RentPayment> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RentPaymentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _leaseIdMeta = const VerificationMeta(
+    'leaseId',
+  );
+  @override
+  late final GeneratedColumn<String> leaseId = GeneratedColumn<String>(
+    'lease_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _amountMinorMeta = const VerificationMeta(
+    'amountMinor',
+  );
+  @override
+  late final GeneratedColumn<int> amountMinor = GeneratedColumn<int>(
+    'amount_minor',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _currencyMeta = const VerificationMeta(
+    'currency',
+  );
+  @override
+  late final GeneratedColumn<String> currency = GeneratedColumn<String>(
+    'currency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('PHP'),
+  );
+  static const VerificationMeta _paidOnMeta = const VerificationMeta('paidOn');
+  @override
+  late final GeneratedColumn<String> paidOn = GeneratedColumn<String>(
+    'paid_on',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _methodMeta = const VerificationMeta('method');
+  @override
+  late final GeneratedColumn<String> method = GeneratedColumn<String>(
+    'method',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _memberIdMeta = const VerificationMeta(
+    'memberId',
+  );
+  @override
+  late final GeneratedColumn<String> memberId = GeneratedColumn<String>(
+    'member_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    leaseId,
+    kind,
+    amountMinor,
+    currency,
+    paidOn,
+    method,
+    memberId,
+    note,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'rent_payments';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RentPayment> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('lease_id')) {
+      context.handle(
+        _leaseIdMeta,
+        leaseId.isAcceptableOrUnknown(data['lease_id']!, _leaseIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_leaseIdMeta);
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('amount_minor')) {
+      context.handle(
+        _amountMinorMeta,
+        amountMinor.isAcceptableOrUnknown(
+          data['amount_minor']!,
+          _amountMinorMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_amountMinorMeta);
+    }
+    if (data.containsKey('currency')) {
+      context.handle(
+        _currencyMeta,
+        currency.isAcceptableOrUnknown(data['currency']!, _currencyMeta),
+      );
+    }
+    if (data.containsKey('paid_on')) {
+      context.handle(
+        _paidOnMeta,
+        paidOn.isAcceptableOrUnknown(data['paid_on']!, _paidOnMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_paidOnMeta);
+    }
+    if (data.containsKey('method')) {
+      context.handle(
+        _methodMeta,
+        method.isAcceptableOrUnknown(data['method']!, _methodMeta),
+      );
+    }
+    if (data.containsKey('member_id')) {
+      context.handle(
+        _memberIdMeta,
+        memberId.isAcceptableOrUnknown(data['member_id']!, _memberIdMeta),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RentPayment map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RentPayment(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      leaseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lease_id'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      amountMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_minor'],
+      )!,
+      currency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}currency'],
+      )!,
+      paidOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}paid_on'],
+      )!,
+      method: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}method'],
+      ),
+      memberId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}member_id'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
+  }
+
+  @override
+  $RentPaymentsTable createAlias(String alias) {
+    return $RentPaymentsTable(attachedDatabase, alias);
+  }
+}
+
+class RentPayment extends DataClass implements Insertable<RentPayment> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String leaseId;
+  final String kind;
+  final int amountMinor;
+  final String currency;
+
+  /// Calendar date `YYYY-MM-DD`.
+  final String paidOn;
+
+  /// `cash`, `gcash` or `bank` (optional).
+  final String? method;
+  final String? memberId;
+  final String? note;
+  const RentPayment({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.leaseId,
+    required this.kind,
+    required this.amountMinor,
+    required this.currency,
+    required this.paidOn,
+    this.method,
+    this.memberId,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['lease_id'] = Variable<String>(leaseId);
+    map['kind'] = Variable<String>(kind);
+    map['amount_minor'] = Variable<int>(amountMinor);
+    map['currency'] = Variable<String>(currency);
+    map['paid_on'] = Variable<String>(paidOn);
+    if (!nullToAbsent || method != null) {
+      map['method'] = Variable<String>(method);
+    }
+    if (!nullToAbsent || memberId != null) {
+      map['member_id'] = Variable<String>(memberId);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  RentPaymentsCompanion toCompanion(bool nullToAbsent) {
+    return RentPaymentsCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      leaseId: Value(leaseId),
+      kind: Value(kind),
+      amountMinor: Value(amountMinor),
+      currency: Value(currency),
+      paidOn: Value(paidOn),
+      method: method == null && nullToAbsent
+          ? const Value.absent()
+          : Value(method),
+      memberId: memberId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(memberId),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory RentPayment.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RentPayment(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      leaseId: serializer.fromJson<String>(json['leaseId']),
+      kind: serializer.fromJson<String>(json['kind']),
+      amountMinor: serializer.fromJson<int>(json['amountMinor']),
+      currency: serializer.fromJson<String>(json['currency']),
+      paidOn: serializer.fromJson<String>(json['paidOn']),
+      method: serializer.fromJson<String?>(json['method']),
+      memberId: serializer.fromJson<String?>(json['memberId']),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'leaseId': serializer.toJson<String>(leaseId),
+      'kind': serializer.toJson<String>(kind),
+      'amountMinor': serializer.toJson<int>(amountMinor),
+      'currency': serializer.toJson<String>(currency),
+      'paidOn': serializer.toJson<String>(paidOn),
+      'method': serializer.toJson<String?>(method),
+      'memberId': serializer.toJson<String?>(memberId),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  RentPayment copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? leaseId,
+    String? kind,
+    int? amountMinor,
+    String? currency,
+    String? paidOn,
+    Value<String?> method = const Value.absent(),
+    Value<String?> memberId = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+  }) => RentPayment(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    leaseId: leaseId ?? this.leaseId,
+    kind: kind ?? this.kind,
+    amountMinor: amountMinor ?? this.amountMinor,
+    currency: currency ?? this.currency,
+    paidOn: paidOn ?? this.paidOn,
+    method: method.present ? method.value : this.method,
+    memberId: memberId.present ? memberId.value : this.memberId,
+    note: note.present ? note.value : this.note,
+  );
+  RentPayment copyWithCompanion(RentPaymentsCompanion data) {
+    return RentPayment(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      leaseId: data.leaseId.present ? data.leaseId.value : this.leaseId,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      amountMinor: data.amountMinor.present
+          ? data.amountMinor.value
+          : this.amountMinor,
+      currency: data.currency.present ? data.currency.value : this.currency,
+      paidOn: data.paidOn.present ? data.paidOn.value : this.paidOn,
+      method: data.method.present ? data.method.value : this.method,
+      memberId: data.memberId.present ? data.memberId.value : this.memberId,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RentPayment(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('leaseId: $leaseId, ')
+          ..write('kind: $kind, ')
+          ..write('amountMinor: $amountMinor, ')
+          ..write('currency: $currency, ')
+          ..write('paidOn: $paidOn, ')
+          ..write('method: $method, ')
+          ..write('memberId: $memberId, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    leaseId,
+    kind,
+    amountMinor,
+    currency,
+    paidOn,
+    method,
+    memberId,
+    note,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RentPayment &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.leaseId == this.leaseId &&
+          other.kind == this.kind &&
+          other.amountMinor == this.amountMinor &&
+          other.currency == this.currency &&
+          other.paidOn == this.paidOn &&
+          other.method == this.method &&
+          other.memberId == this.memberId &&
+          other.note == this.note);
+}
+
+class RentPaymentsCompanion extends UpdateCompanion<RentPayment> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> leaseId;
+  final Value<String> kind;
+  final Value<int> amountMinor;
+  final Value<String> currency;
+  final Value<String> paidOn;
+  final Value<String?> method;
+  final Value<String?> memberId;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const RentPaymentsCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.leaseId = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.amountMinor = const Value.absent(),
+    this.currency = const Value.absent(),
+    this.paidOn = const Value.absent(),
+    this.method = const Value.absent(),
+    this.memberId = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RentPaymentsCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String leaseId,
+    required String kind,
+    required int amountMinor,
+    this.currency = const Value.absent(),
+    required String paidOn,
+    this.method = const Value.absent(),
+    this.memberId = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       leaseId = Value(leaseId),
+       kind = Value(kind),
+       amountMinor = Value(amountMinor),
+       paidOn = Value(paidOn);
+  static Insertable<RentPayment> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? leaseId,
+    Expression<String>? kind,
+    Expression<int>? amountMinor,
+    Expression<String>? currency,
+    Expression<String>? paidOn,
+    Expression<String>? method,
+    Expression<String>? memberId,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (leaseId != null) 'lease_id': leaseId,
+      if (kind != null) 'kind': kind,
+      if (amountMinor != null) 'amount_minor': amountMinor,
+      if (currency != null) 'currency': currency,
+      if (paidOn != null) 'paid_on': paidOn,
+      if (method != null) 'method': method,
+      if (memberId != null) 'member_id': memberId,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RentPaymentsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? leaseId,
+    Value<String>? kind,
+    Value<int>? amountMinor,
+    Value<String>? currency,
+    Value<String>? paidOn,
+    Value<String?>? method,
+    Value<String?>? memberId,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return RentPaymentsCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      leaseId: leaseId ?? this.leaseId,
+      kind: kind ?? this.kind,
+      amountMinor: amountMinor ?? this.amountMinor,
+      currency: currency ?? this.currency,
+      paidOn: paidOn ?? this.paidOn,
+      method: method ?? this.method,
+      memberId: memberId ?? this.memberId,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (leaseId.present) {
+      map['lease_id'] = Variable<String>(leaseId.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (amountMinor.present) {
+      map['amount_minor'] = Variable<int>(amountMinor.value);
+    }
+    if (currency.present) {
+      map['currency'] = Variable<String>(currency.value);
+    }
+    if (paidOn.present) {
+      map['paid_on'] = Variable<String>(paidOn.value);
+    }
+    if (method.present) {
+      map['method'] = Variable<String>(method.value);
+    }
+    if (memberId.present) {
+      map['member_id'] = Variable<String>(memberId.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RentPaymentsCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('leaseId: $leaseId, ')
+          ..write('kind: $kind, ')
+          ..write('amountMinor: $amountMinor, ')
+          ..write('currency: $currency, ')
+          ..write('paidOn: $paidOn, ')
+          ..write('method: $method, ')
+          ..write('memberId: $memberId, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $ConflictsTable extends Conflicts
     with TableInfo<$ConflictsTable, ConflictRecord> {
   @override
@@ -22570,6 +25452,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $MedicinesTable medicines = $MedicinesTable(this);
   late final $MedDosesTable medDoses = $MedDosesTable(this);
   late final $CheckupsTable checkups = $CheckupsTable(this);
+  late final $RentalUnitsTable rentalUnits = $RentalUnitsTable(this);
+  late final $LeasesTable leases = $LeasesTable(this);
+  late final $RentPaymentsTable rentPayments = $RentPaymentsTable(this);
   late final $ConflictsTable conflicts = $ConflictsTable(this);
   late final $OutboxTable outbox = $OutboxTable(this);
   late final $FieldClocksTable fieldClocks = $FieldClocksTable(this);
@@ -22602,6 +25487,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     medicines,
     medDoses,
     checkups,
+    rentalUnits,
+    leases,
+    rentPayments,
     conflicts,
     outbox,
     fieldClocks,
@@ -31589,6 +34477,1308 @@ typedef $$CheckupsTableProcessedTableManager =
       Checkup,
       PrefetchHooks Function()
     >;
+typedef $$RentalUnitsTableCreateCompanionBuilder =
+    RentalUnitsCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String name,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+typedef $$RentalUnitsTableUpdateCompanionBuilder =
+    RentalUnitsCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> name,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+
+class $$RentalUnitsTableFilterComposer
+    extends Composer<_$AppDatabase, $RentalUnitsTable> {
+  $$RentalUnitsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$RentalUnitsTableOrderingComposer
+    extends Composer<_$AppDatabase, $RentalUnitsTable> {
+  $$RentalUnitsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$RentalUnitsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $RentalUnitsTable> {
+  $$RentalUnitsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+}
+
+class $$RentalUnitsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $RentalUnitsTable,
+          RentalUnit,
+          $$RentalUnitsTableFilterComposer,
+          $$RentalUnitsTableOrderingComposer,
+          $$RentalUnitsTableAnnotationComposer,
+          $$RentalUnitsTableCreateCompanionBuilder,
+          $$RentalUnitsTableUpdateCompanionBuilder,
+          (
+            RentalUnit,
+            BaseReferences<_$AppDatabase, $RentalUnitsTable, RentalUnit>,
+          ),
+          RentalUnit,
+          PrefetchHooks Function()
+        > {
+  $$RentalUnitsTableTableManager(_$AppDatabase db, $RentalUnitsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RentalUnitsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RentalUnitsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RentalUnitsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RentalUnitsCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                name: name,
+                note: note,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String name,
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RentalUnitsCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                name: name,
+                note: note,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$RentalUnitsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $RentalUnitsTable,
+      RentalUnit,
+      $$RentalUnitsTableFilterComposer,
+      $$RentalUnitsTableOrderingComposer,
+      $$RentalUnitsTableAnnotationComposer,
+      $$RentalUnitsTableCreateCompanionBuilder,
+      $$RentalUnitsTableUpdateCompanionBuilder,
+      (
+        RentalUnit,
+        BaseReferences<_$AppDatabase, $RentalUnitsTable, RentalUnit>,
+      ),
+      RentalUnit,
+      PrefetchHooks Function()
+    >;
+typedef $$LeasesTableCreateCompanionBuilder =
+    LeasesCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String unitId,
+      required String tenantName,
+      Value<String?> phone,
+      required int rentMinor,
+      Value<int?> prevRentMinor,
+      Value<String?> rentSince,
+      Value<String> currency,
+      required int dueDay,
+      required String startsOn,
+      Value<String?> endsOn,
+      Value<int?> depositMinor,
+      Value<int?> depositReturnedMinor,
+      Value<String?> depositReturnedOn,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+typedef $$LeasesTableUpdateCompanionBuilder =
+    LeasesCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> unitId,
+      Value<String> tenantName,
+      Value<String?> phone,
+      Value<int> rentMinor,
+      Value<int?> prevRentMinor,
+      Value<String?> rentSince,
+      Value<String> currency,
+      Value<int> dueDay,
+      Value<String> startsOn,
+      Value<String?> endsOn,
+      Value<int?> depositMinor,
+      Value<int?> depositReturnedMinor,
+      Value<String?> depositReturnedOn,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+
+class $$LeasesTableFilterComposer
+    extends Composer<_$AppDatabase, $LeasesTable> {
+  $$LeasesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unitId => $composableBuilder(
+    column: $table.unitId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tenantName => $composableBuilder(
+    column: $table.tenantName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get rentMinor => $composableBuilder(
+    column: $table.rentMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get prevRentMinor => $composableBuilder(
+    column: $table.prevRentMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get rentSince => $composableBuilder(
+    column: $table.rentSince,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get dueDay => $composableBuilder(
+    column: $table.dueDay,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get startsOn => $composableBuilder(
+    column: $table.startsOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get endsOn => $composableBuilder(
+    column: $table.endsOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get depositMinor => $composableBuilder(
+    column: $table.depositMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get depositReturnedMinor => $composableBuilder(
+    column: $table.depositReturnedMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get depositReturnedOn => $composableBuilder(
+    column: $table.depositReturnedOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$LeasesTableOrderingComposer
+    extends Composer<_$AppDatabase, $LeasesTable> {
+  $$LeasesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unitId => $composableBuilder(
+    column: $table.unitId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tenantName => $composableBuilder(
+    column: $table.tenantName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get rentMinor => $composableBuilder(
+    column: $table.rentMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get prevRentMinor => $composableBuilder(
+    column: $table.prevRentMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get rentSince => $composableBuilder(
+    column: $table.rentSince,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get dueDay => $composableBuilder(
+    column: $table.dueDay,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get startsOn => $composableBuilder(
+    column: $table.startsOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get endsOn => $composableBuilder(
+    column: $table.endsOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get depositMinor => $composableBuilder(
+    column: $table.depositMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get depositReturnedMinor => $composableBuilder(
+    column: $table.depositReturnedMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get depositReturnedOn => $composableBuilder(
+    column: $table.depositReturnedOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LeasesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $LeasesTable> {
+  $$LeasesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get unitId =>
+      $composableBuilder(column: $table.unitId, builder: (column) => column);
+
+  GeneratedColumn<String> get tenantName => $composableBuilder(
+    column: $table.tenantName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get phone =>
+      $composableBuilder(column: $table.phone, builder: (column) => column);
+
+  GeneratedColumn<int> get rentMinor =>
+      $composableBuilder(column: $table.rentMinor, builder: (column) => column);
+
+  GeneratedColumn<int> get prevRentMinor => $composableBuilder(
+    column: $table.prevRentMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get rentSince =>
+      $composableBuilder(column: $table.rentSince, builder: (column) => column);
+
+  GeneratedColumn<String> get currency =>
+      $composableBuilder(column: $table.currency, builder: (column) => column);
+
+  GeneratedColumn<int> get dueDay =>
+      $composableBuilder(column: $table.dueDay, builder: (column) => column);
+
+  GeneratedColumn<String> get startsOn =>
+      $composableBuilder(column: $table.startsOn, builder: (column) => column);
+
+  GeneratedColumn<String> get endsOn =>
+      $composableBuilder(column: $table.endsOn, builder: (column) => column);
+
+  GeneratedColumn<int> get depositMinor => $composableBuilder(
+    column: $table.depositMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get depositReturnedMinor => $composableBuilder(
+    column: $table.depositReturnedMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get depositReturnedOn => $composableBuilder(
+    column: $table.depositReturnedOn,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+}
+
+class $$LeasesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $LeasesTable,
+          Lease,
+          $$LeasesTableFilterComposer,
+          $$LeasesTableOrderingComposer,
+          $$LeasesTableAnnotationComposer,
+          $$LeasesTableCreateCompanionBuilder,
+          $$LeasesTableUpdateCompanionBuilder,
+          (Lease, BaseReferences<_$AppDatabase, $LeasesTable, Lease>),
+          Lease,
+          PrefetchHooks Function()
+        > {
+  $$LeasesTableTableManager(_$AppDatabase db, $LeasesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LeasesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LeasesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LeasesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> unitId = const Value.absent(),
+                Value<String> tenantName = const Value.absent(),
+                Value<String?> phone = const Value.absent(),
+                Value<int> rentMinor = const Value.absent(),
+                Value<int?> prevRentMinor = const Value.absent(),
+                Value<String?> rentSince = const Value.absent(),
+                Value<String> currency = const Value.absent(),
+                Value<int> dueDay = const Value.absent(),
+                Value<String> startsOn = const Value.absent(),
+                Value<String?> endsOn = const Value.absent(),
+                Value<int?> depositMinor = const Value.absent(),
+                Value<int?> depositReturnedMinor = const Value.absent(),
+                Value<String?> depositReturnedOn = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LeasesCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                unitId: unitId,
+                tenantName: tenantName,
+                phone: phone,
+                rentMinor: rentMinor,
+                prevRentMinor: prevRentMinor,
+                rentSince: rentSince,
+                currency: currency,
+                dueDay: dueDay,
+                startsOn: startsOn,
+                endsOn: endsOn,
+                depositMinor: depositMinor,
+                depositReturnedMinor: depositReturnedMinor,
+                depositReturnedOn: depositReturnedOn,
+                note: note,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String unitId,
+                required String tenantName,
+                Value<String?> phone = const Value.absent(),
+                required int rentMinor,
+                Value<int?> prevRentMinor = const Value.absent(),
+                Value<String?> rentSince = const Value.absent(),
+                Value<String> currency = const Value.absent(),
+                required int dueDay,
+                required String startsOn,
+                Value<String?> endsOn = const Value.absent(),
+                Value<int?> depositMinor = const Value.absent(),
+                Value<int?> depositReturnedMinor = const Value.absent(),
+                Value<String?> depositReturnedOn = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LeasesCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                unitId: unitId,
+                tenantName: tenantName,
+                phone: phone,
+                rentMinor: rentMinor,
+                prevRentMinor: prevRentMinor,
+                rentSince: rentSince,
+                currency: currency,
+                dueDay: dueDay,
+                startsOn: startsOn,
+                endsOn: endsOn,
+                depositMinor: depositMinor,
+                depositReturnedMinor: depositReturnedMinor,
+                depositReturnedOn: depositReturnedOn,
+                note: note,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$LeasesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $LeasesTable,
+      Lease,
+      $$LeasesTableFilterComposer,
+      $$LeasesTableOrderingComposer,
+      $$LeasesTableAnnotationComposer,
+      $$LeasesTableCreateCompanionBuilder,
+      $$LeasesTableUpdateCompanionBuilder,
+      (Lease, BaseReferences<_$AppDatabase, $LeasesTable, Lease>),
+      Lease,
+      PrefetchHooks Function()
+    >;
+typedef $$RentPaymentsTableCreateCompanionBuilder =
+    RentPaymentsCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String leaseId,
+      required String kind,
+      required int amountMinor,
+      Value<String> currency,
+      required String paidOn,
+      Value<String?> method,
+      Value<String?> memberId,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+typedef $$RentPaymentsTableUpdateCompanionBuilder =
+    RentPaymentsCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> leaseId,
+      Value<String> kind,
+      Value<int> amountMinor,
+      Value<String> currency,
+      Value<String> paidOn,
+      Value<String?> method,
+      Value<String?> memberId,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+
+class $$RentPaymentsTableFilterComposer
+    extends Composer<_$AppDatabase, $RentPaymentsTable> {
+  $$RentPaymentsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get leaseId => $composableBuilder(
+    column: $table.leaseId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get paidOn => $composableBuilder(
+    column: $table.paidOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get method => $composableBuilder(
+    column: $table.method,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$RentPaymentsTableOrderingComposer
+    extends Composer<_$AppDatabase, $RentPaymentsTable> {
+  $$RentPaymentsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get leaseId => $composableBuilder(
+    column: $table.leaseId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get paidOn => $composableBuilder(
+    column: $table.paidOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get method => $composableBuilder(
+    column: $table.method,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$RentPaymentsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $RentPaymentsTable> {
+  $$RentPaymentsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get leaseId =>
+      $composableBuilder(column: $table.leaseId, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get currency =>
+      $composableBuilder(column: $table.currency, builder: (column) => column);
+
+  GeneratedColumn<String> get paidOn =>
+      $composableBuilder(column: $table.paidOn, builder: (column) => column);
+
+  GeneratedColumn<String> get method =>
+      $composableBuilder(column: $table.method, builder: (column) => column);
+
+  GeneratedColumn<String> get memberId =>
+      $composableBuilder(column: $table.memberId, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+}
+
+class $$RentPaymentsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $RentPaymentsTable,
+          RentPayment,
+          $$RentPaymentsTableFilterComposer,
+          $$RentPaymentsTableOrderingComposer,
+          $$RentPaymentsTableAnnotationComposer,
+          $$RentPaymentsTableCreateCompanionBuilder,
+          $$RentPaymentsTableUpdateCompanionBuilder,
+          (
+            RentPayment,
+            BaseReferences<_$AppDatabase, $RentPaymentsTable, RentPayment>,
+          ),
+          RentPayment,
+          PrefetchHooks Function()
+        > {
+  $$RentPaymentsTableTableManager(_$AppDatabase db, $RentPaymentsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RentPaymentsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RentPaymentsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RentPaymentsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> leaseId = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<int> amountMinor = const Value.absent(),
+                Value<String> currency = const Value.absent(),
+                Value<String> paidOn = const Value.absent(),
+                Value<String?> method = const Value.absent(),
+                Value<String?> memberId = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RentPaymentsCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                leaseId: leaseId,
+                kind: kind,
+                amountMinor: amountMinor,
+                currency: currency,
+                paidOn: paidOn,
+                method: method,
+                memberId: memberId,
+                note: note,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String leaseId,
+                required String kind,
+                required int amountMinor,
+                Value<String> currency = const Value.absent(),
+                required String paidOn,
+                Value<String?> method = const Value.absent(),
+                Value<String?> memberId = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RentPaymentsCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                leaseId: leaseId,
+                kind: kind,
+                amountMinor: amountMinor,
+                currency: currency,
+                paidOn: paidOn,
+                method: method,
+                memberId: memberId,
+                note: note,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$RentPaymentsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $RentPaymentsTable,
+      RentPayment,
+      $$RentPaymentsTableFilterComposer,
+      $$RentPaymentsTableOrderingComposer,
+      $$RentPaymentsTableAnnotationComposer,
+      $$RentPaymentsTableCreateCompanionBuilder,
+      $$RentPaymentsTableUpdateCompanionBuilder,
+      (
+        RentPayment,
+        BaseReferences<_$AppDatabase, $RentPaymentsTable, RentPayment>,
+      ),
+      RentPayment,
+      PrefetchHooks Function()
+    >;
 typedef $$ConflictsTableCreateCompanionBuilder =
     ConflictsCompanion Function({
       required String id,
@@ -33021,6 +37211,12 @@ class $AppDatabaseManager {
       $$MedDosesTableTableManager(_db, _db.medDoses);
   $$CheckupsTableTableManager get checkups =>
       $$CheckupsTableTableManager(_db, _db.checkups);
+  $$RentalUnitsTableTableManager get rentalUnits =>
+      $$RentalUnitsTableTableManager(_db, _db.rentalUnits);
+  $$LeasesTableTableManager get leases =>
+      $$LeasesTableTableManager(_db, _db.leases);
+  $$RentPaymentsTableTableManager get rentPayments =>
+      $$RentPaymentsTableTableManager(_db, _db.rentPayments);
   $$ConflictsTableTableManager get conflicts =>
       $$ConflictsTableTableManager(_db, _db.conflicts);
   $$OutboxTableTableManager get outbox =>

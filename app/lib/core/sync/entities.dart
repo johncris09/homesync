@@ -177,6 +177,33 @@ const syncedEntities = <String, EntitySpec>{
     appendOnly: true,
     mutable: {'note'},
   ),
+  'rental_units': EntitySpec(name: 'rental_units', fields: {'name', 'note'}),
+  'leases': EntitySpec(
+    name: 'leases',
+    fields: {
+      'unit_id',
+      'tenant_name',
+      'phone',
+      'rent_minor',
+      'prev_rent_minor',
+      'rent_since',
+      'currency',
+      'due_day',
+      'starts_on',
+      'ends_on',
+      'deposit_minor',
+      'deposit_returned_minor',
+      'deposit_returned_on',
+      'note',
+    },
+    reviewed: {'rent_minor'},
+  ),
+  'rent_payments': EntitySpec(
+    name: 'rent_payments',
+    fields: {'lease_id', 'kind', 'amount_minor', 'currency', 'paid_on', 'method', 'member_id', 'note'},
+    appendOnly: true,
+    mutable: {'note'},
+  ),
   'transactions': EntitySpec(
     name: 'transactions',
     fields: {

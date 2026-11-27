@@ -30,6 +30,9 @@ part 'database.g.dart';
     Medicines,
     MedDoses,
     Checkups,
+    RentalUnits,
+    Leases,
+    RentPayments,
     Conflicts,
     Outbox,
     FieldClocks,
@@ -41,7 +44,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 13;
+  int get schemaVersion => 14;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -97,6 +100,12 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(medicines);
         await m.createTable(medDoses);
         await m.createTable(checkups);
+      }
+      if (from < 14) {
+        // Rent (new tables only, so this step can be renumbered freely)
+        await m.createTable(rentalUnits);
+        await m.createTable(leases);
+        await m.createTable(rentPayments);
       }
     },
   );

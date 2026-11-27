@@ -264,6 +264,9 @@ void main() {
     await v3.customStatement('DROP TABLE medicines');
     await v3.customStatement('DROP TABLE med_doses');
     await v3.customStatement('DROP TABLE checkups');
+    await v3.customStatement('DROP TABLE rental_units'); // added in v14
+    await v3.customStatement('DROP TABLE leases');
+    await v3.customStatement('DROP TABLE rent_payments');
     await v3.customStatement('PRAGMA user_version = 2');
     await v3.close();
 
