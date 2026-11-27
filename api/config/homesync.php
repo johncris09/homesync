@@ -423,6 +423,80 @@ return [
             'write' => $adults,
         ],
 
+        // Emergency & Disaster Preparedness. Everyone sees all of it, so it
+        // works for whoever has the phone when something happens. Adults edit
+        // contacts, the plan and the hazard checklists; go-bag items can be
+        // ticked by their member (checked in the app); anyone, viewers too,
+        // checks in.
+        'emergency_contacts' => [
+            'table' => 'emergency_contacts',
+            'fields' => [
+                'name' => 'string',
+                'kind' => 'string',
+                'phone' => 'string',
+                'note' => 'text',
+                'position' => 'int',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
+        // One row per household, id derived from the household (§2.1).
+        'emergency_plans' => [
+            'table' => 'emergency_plans',
+            'fields' => [
+                'meeting_point' => 'string',
+                'meeting_point_far' => 'string',
+                'evacuation_center' => 'string',
+                'note' => 'text',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
+        // member_id null = the household's shared bag.
+        'go_bag_items' => [
+            'table' => 'go_bag_items',
+            'fields' => [
+                'member_id' => 'uuid',
+                'name' => 'string',
+                'packed' => 'bool',
+                'expires_on' => 'date',
+                'position' => 'int',
+            ],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
+        // A tick on a built-in hazard checklist item; id derived from the
+        // household, hazard and item (§2.1), so ticks from two devices meet.
+        'emergency_checks' => [
+            'table' => 'emergency_checks',
+            'fields' => [
+                'hazard' => 'string',
+                'item' => 'string',
+                'done' => 'bool',
+                'done_by' => 'uuid',
+                'done_at' => 'datetime',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
+        // "I'm safe" / "Need help". Append-only: the latest per member counts.
+        'safety_checkins' => [
+            'table' => 'safety_checkins',
+            'fields' => [
+                'member_id' => 'uuid',
+                'status' => 'string',
+                'note' => 'text',
+                'checked_at' => 'datetime',
+            ],
+            'append_only' => true,
+            'read' => $everyone,
+            'write' => $everyone,
+        ],
+
         // Household Inventory: durable things the household owns. Everyone
         // can look up where a thing is and who borrowed it; adults add and
         // change items (the app hides prices from non-adults). The photo is
