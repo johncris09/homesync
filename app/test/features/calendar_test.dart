@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:drift/drift.dart' show driftRuntimeOptions;
+import 'package:drift/drift.dart' show Value, driftRuntimeOptions;
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -170,6 +170,33 @@ void main() {
     final repo = CalendarRepository(reopened, writer(reopened, identity(memberId: memberA, deviceId: deviceA)));
     await repo.addEvent(title: 'Dentist', startsOn: DateTime(2026, 12, 4));
     expect(await repo.watchEvents().first, hasLength(1));
+    await reopened.close();
+    await dir.delete(recursive: true);
+  });
+
+  test('upgrading a version 6 database adds ends_on to events', () async {
+    final dir = await Directory.systemTemp.createTemp('hs-migrate');
+    final file = File('${dir.path}/db.sqlite');
+    driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
+    final v6 = AppDatabase(NativeDatabase(file));
+    await v6.customStatement('SELECT 1');
+    await v6.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
+    await v6.customStatement('PRAGMA user_version = 6');
+    await v6.close();
+
+    final reopened = AppDatabase(NativeDatabase(file));
+    await reopened
+        .into(reopened.events)
+        .insert(
+          EventsCompanion.insert(
+            id: 'x',
+            householdId: householdId,
+            title: 'Retreat',
+            startsOn: '2026-12-04',
+            endsOn: const Value('2026-12-06'),
+          ),
+        );
+    expect((await reopened.select(reopened.events).getSingle()).endsOn, '2026-12-06');
     await reopened.close();
     await dir.delete(recursive: true);
   });

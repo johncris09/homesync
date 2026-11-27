@@ -6131,6 +6131,15 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _endsOnMeta = const VerificationMeta('endsOn');
+  @override
+  late final GeneratedColumn<String> endsOn = GeneratedColumn<String>(
+    'ends_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _startTimeMeta = const VerificationMeta(
     'startTime',
   );
@@ -6218,6 +6227,7 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
     deviceId,
     title,
     startsOn,
+    endsOn,
     startTime,
     endTime,
     repeat,
@@ -6315,6 +6325,12 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
     } else if (isInserting) {
       context.missing(_startsOnMeta);
     }
+    if (data.containsKey('ends_on')) {
+      context.handle(
+        _endsOnMeta,
+        endsOn.isAcceptableOrUnknown(data['ends_on']!, _endsOnMeta),
+      );
+    }
     if (data.containsKey('start_time')) {
       context.handle(
         _startTimeMeta,
@@ -6410,6 +6426,10 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
         DriftSqlType.string,
         data['${effectivePrefix}starts_on'],
       )!,
+      endsOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ends_on'],
+      ),
       startTime: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}start_time'],
@@ -6462,7 +6482,12 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
   /// Calendar date `YYYY-MM-DD` (the first occurrence).
   final String startsOn;
 
-  /// Local `HH:MM`; null = all day.
+  /// Last day `YYYY-MM-DD` of a multi-day event's first occurrence; null = one
+  /// day. A repeat copies the whole span.
+  final String? endsOn;
+
+  /// Local `HH:MM`; null = all day. On a multi-day event the start time is on
+  /// the first day and the end time on the last.
   final String? startTime;
   final String? endTime;
   final String repeat;
@@ -6484,6 +6509,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     this.deviceId,
     required this.title,
     required this.startsOn,
+    this.endsOn,
     this.startTime,
     this.endTime,
     required this.repeat,
@@ -6516,6 +6542,9 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     }
     map['title'] = Variable<String>(title);
     map['starts_on'] = Variable<String>(startsOn);
+    if (!nullToAbsent || endsOn != null) {
+      map['ends_on'] = Variable<String>(endsOn);
+    }
     if (!nullToAbsent || startTime != null) {
       map['start_time'] = Variable<String>(startTime);
     }
@@ -6559,6 +6588,9 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
           : Value(deviceId),
       title: Value(title),
       startsOn: Value(startsOn),
+      endsOn: endsOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endsOn),
       startTime: startTime == null && nullToAbsent
           ? const Value.absent()
           : Value(startTime),
@@ -6596,6 +6628,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       deviceId: serializer.fromJson<String?>(json['deviceId']),
       title: serializer.fromJson<String>(json['title']),
       startsOn: serializer.fromJson<String>(json['startsOn']),
+      endsOn: serializer.fromJson<String?>(json['endsOn']),
       startTime: serializer.fromJson<String?>(json['startTime']),
       endTime: serializer.fromJson<String?>(json['endTime']),
       repeat: serializer.fromJson<String>(json['repeat']),
@@ -6620,6 +6653,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       'deviceId': serializer.toJson<String?>(deviceId),
       'title': serializer.toJson<String>(title),
       'startsOn': serializer.toJson<String>(startsOn),
+      'endsOn': serializer.toJson<String?>(endsOn),
       'startTime': serializer.toJson<String?>(startTime),
       'endTime': serializer.toJson<String?>(endTime),
       'repeat': serializer.toJson<String>(repeat),
@@ -6642,6 +6676,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     Value<String?> deviceId = const Value.absent(),
     String? title,
     String? startsOn,
+    Value<String?> endsOn = const Value.absent(),
     Value<String?> startTime = const Value.absent(),
     Value<String?> endTime = const Value.absent(),
     String? repeat,
@@ -6663,6 +6698,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     deviceId: deviceId.present ? deviceId.value : this.deviceId,
     title: title ?? this.title,
     startsOn: startsOn ?? this.startsOn,
+    endsOn: endsOn.present ? endsOn.value : this.endsOn,
     startTime: startTime.present ? startTime.value : this.startTime,
     endTime: endTime.present ? endTime.value : this.endTime,
     repeat: repeat ?? this.repeat,
@@ -6688,6 +6724,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
       title: data.title.present ? data.title.value : this.title,
       startsOn: data.startsOn.present ? data.startsOn.value : this.startsOn,
+      endsOn: data.endsOn.present ? data.endsOn.value : this.endsOn,
       startTime: data.startTime.present ? data.startTime.value : this.startTime,
       endTime: data.endTime.present ? data.endTime.value : this.endTime,
       repeat: data.repeat.present ? data.repeat.value : this.repeat,
@@ -6712,6 +6749,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
           ..write('deviceId: $deviceId, ')
           ..write('title: $title, ')
           ..write('startsOn: $startsOn, ')
+          ..write('endsOn: $endsOn, ')
           ..write('startTime: $startTime, ')
           ..write('endTime: $endTime, ')
           ..write('repeat: $repeat, ')
@@ -6736,6 +6774,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     deviceId,
     title,
     startsOn,
+    endsOn,
     startTime,
     endTime,
     repeat,
@@ -6759,6 +6798,7 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
           other.deviceId == this.deviceId &&
           other.title == this.title &&
           other.startsOn == this.startsOn &&
+          other.endsOn == this.endsOn &&
           other.startTime == this.startTime &&
           other.endTime == this.endTime &&
           other.repeat == this.repeat &&
@@ -6780,6 +6820,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
   final Value<String?> deviceId;
   final Value<String> title;
   final Value<String> startsOn;
+  final Value<String?> endsOn;
   final Value<String?> startTime;
   final Value<String?> endTime;
   final Value<String> repeat;
@@ -6800,6 +6841,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     this.deviceId = const Value.absent(),
     this.title = const Value.absent(),
     this.startsOn = const Value.absent(),
+    this.endsOn = const Value.absent(),
     this.startTime = const Value.absent(),
     this.endTime = const Value.absent(),
     this.repeat = const Value.absent(),
@@ -6821,6 +6863,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     this.deviceId = const Value.absent(),
     required String title,
     required String startsOn,
+    this.endsOn = const Value.absent(),
     this.startTime = const Value.absent(),
     this.endTime = const Value.absent(),
     this.repeat = const Value.absent(),
@@ -6845,6 +6888,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     Expression<String>? deviceId,
     Expression<String>? title,
     Expression<String>? startsOn,
+    Expression<String>? endsOn,
     Expression<String>? startTime,
     Expression<String>? endTime,
     Expression<String>? repeat,
@@ -6866,6 +6910,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
       if (deviceId != null) 'device_id': deviceId,
       if (title != null) 'title': title,
       if (startsOn != null) 'starts_on': startsOn,
+      if (endsOn != null) 'ends_on': endsOn,
       if (startTime != null) 'start_time': startTime,
       if (endTime != null) 'end_time': endTime,
       if (repeat != null) 'repeat': repeat,
@@ -6889,6 +6934,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     Value<String?>? deviceId,
     Value<String>? title,
     Value<String>? startsOn,
+    Value<String?>? endsOn,
     Value<String?>? startTime,
     Value<String?>? endTime,
     Value<String>? repeat,
@@ -6910,6 +6956,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
       deviceId: deviceId ?? this.deviceId,
       title: title ?? this.title,
       startsOn: startsOn ?? this.startsOn,
+      endsOn: endsOn ?? this.endsOn,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       repeat: repeat ?? this.repeat,
@@ -6957,6 +7004,9 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     if (startsOn.present) {
       map['starts_on'] = Variable<String>(startsOn.value);
     }
+    if (endsOn.present) {
+      map['ends_on'] = Variable<String>(endsOn.value);
+    }
     if (startTime.present) {
       map['start_time'] = Variable<String>(startTime.value);
     }
@@ -6998,6 +7048,7 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
           ..write('deviceId: $deviceId, ')
           ..write('title: $title, ')
           ..write('startsOn: $startsOn, ')
+          ..write('endsOn: $endsOn, ')
           ..write('startTime: $startTime, ')
           ..write('endTime: $endTime, ')
           ..write('repeat: $repeat, ')
@@ -16523,6 +16574,7 @@ typedef $$EventsTableCreateCompanionBuilder =
       Value<String?> deviceId,
       required String title,
       required String startsOn,
+      Value<String?> endsOn,
       Value<String?> startTime,
       Value<String?> endTime,
       Value<String> repeat,
@@ -16545,6 +16597,7 @@ typedef $$EventsTableUpdateCompanionBuilder =
       Value<String?> deviceId,
       Value<String> title,
       Value<String> startsOn,
+      Value<String?> endsOn,
       Value<String?> startTime,
       Value<String?> endTime,
       Value<String> repeat,
@@ -16616,6 +16669,11 @@ class $$EventsTableFilterComposer
 
   ColumnFilters<String> get startsOn => $composableBuilder(
     column: $table.startsOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get endsOn => $composableBuilder(
+    column: $table.endsOn,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -16719,6 +16777,11 @@ class $$EventsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get endsOn => $composableBuilder(
+    column: $table.endsOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get startTime => $composableBuilder(
     column: $table.startTime,
     builder: (column) => ColumnOrderings(column),
@@ -16801,6 +16864,9 @@ class $$EventsTableAnnotationComposer
   GeneratedColumn<String> get startsOn =>
       $composableBuilder(column: $table.startsOn, builder: (column) => column);
 
+  GeneratedColumn<String> get endsOn =>
+      $composableBuilder(column: $table.endsOn, builder: (column) => column);
+
   GeneratedColumn<String> get startTime =>
       $composableBuilder(column: $table.startTime, builder: (column) => column);
 
@@ -16865,6 +16931,7 @@ class $$EventsTableTableManager
                 Value<String?> deviceId = const Value.absent(),
                 Value<String> title = const Value.absent(),
                 Value<String> startsOn = const Value.absent(),
+                Value<String?> endsOn = const Value.absent(),
                 Value<String?> startTime = const Value.absent(),
                 Value<String?> endTime = const Value.absent(),
                 Value<String> repeat = const Value.absent(),
@@ -16885,6 +16952,7 @@ class $$EventsTableTableManager
                 deviceId: deviceId,
                 title: title,
                 startsOn: startsOn,
+                endsOn: endsOn,
                 startTime: startTime,
                 endTime: endTime,
                 repeat: repeat,
@@ -16907,6 +16975,7 @@ class $$EventsTableTableManager
                 Value<String?> deviceId = const Value.absent(),
                 required String title,
                 required String startsOn,
+                Value<String?> endsOn = const Value.absent(),
                 Value<String?> startTime = const Value.absent(),
                 Value<String?> endTime = const Value.absent(),
                 Value<String> repeat = const Value.absent(),
@@ -16927,6 +16996,7 @@ class $$EventsTableTableManager
                 deviceId: deviceId,
                 title: title,
                 startsOn: startsOn,
+                endsOn: endsOn,
                 startTime: startTime,
                 endTime: endTime,
                 repeat: repeat,

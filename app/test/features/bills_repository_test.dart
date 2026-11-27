@@ -250,6 +250,8 @@ void main() {
     for (final c in ['category', 'repeat', 'series_id']) {
       await v3.customStatement('ALTER TABLE bills DROP COLUMN "$c"');
     }
+    // Also undo version 9 (multi-day events).
+    await v3.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
     await v3.customStatement('PRAGMA user_version = 2');
     await v3.close();
 
