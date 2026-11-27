@@ -15,6 +15,7 @@ import '../members/members_screen.dart' show memberColor;
 import '../sync/sync_widgets.dart';
 import 'calendar_providers.dart';
 import 'calendar_repository.dart';
+import 'event_colors.dart';
 
 TimeOfDay? parseTime(String? hhmm) {
   final parts = hhmm?.split(':');
@@ -26,14 +27,33 @@ TimeOfDay? parseTime(String? hhmm) {
 
 String hhmm(TimeOfDay t) => '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
 
-/// "All day", "3:00 PM" or "3:00 PM – 4:30 PM".
+/// "All day", "3:00 PM" or "3:00 PM – 4:30 PM" for an event's own times.
+String eventTimes(BuildContext context, String? startTime, String? endTime) {
+  final l10n = AppLocalizations.of(context);
+  final m = MaterialLocalizations.of(context);
+  final start = parseTime(startTime);
+  if (start == null) return l10n.eventAllDay;
+  final end = parseTime(endTime);
+  return end == null ? m.formatTimeOfDay(start) : '${m.formatTimeOfDay(start)} – ${m.formatTimeOfDay(end)}';
+}
+
+/// The times on the item's day: as [eventTimes], and on a multi-day event
+/// "Starts 6:00 PM" on the first day and "Until 3:00 PM" on the last.
 String timeLabel(BuildContext context, CalendarItem i) {
   final l10n = AppLocalizations.of(context);
   final m = MaterialLocalizations.of(context);
+  if (!i.multiDay) return eventTimes(context, i.startTime, i.endTime);
   final start = parseTime(i.startTime);
-  if (start == null) return l10n.eventAllDay;
   final end = parseTime(i.endTime);
-  return end == null ? m.formatTimeOfDay(start) : '${m.formatTimeOfDay(start)} – ${m.formatTimeOfDay(end)}';
+  if (start != null) return l10n.eventStartsAt(m.formatTimeOfDay(start));
+  if (end != null) return l10n.eventUntilTime(m.formatTimeOfDay(end));
+  return l10n.eventAllDay;
+}
+
+/// "Nov 1 – Nov 3".
+String rangeLabel(BuildContext context, DateTime from, DateTime to) {
+  final f = DateFormat.MMMd(Localizations.localeOf(context).toString());
+  return AppLocalizations.of(context).calendarRange(f.format(from), f.format(to));
 }
 
 /// "Today", "Tomorrow" or "Fri, Nov 27".
@@ -125,7 +145,13 @@ class CalendarScreen extends ConsumerWidget {
                     child: Column(
                       children: [
                         for (final (d, items) in ahead)
-                          for (final i in items) _ItemTile(item: i, showDay: dayLabel(context, d, today)),
+                          for (final i in items)
+                            _ItemTile(
+                              item: i,
+                              showDay: i.multiDay
+                                  ? rangeLabel(context, i.spanStart, i.spanEnd)
+                                  : dayLabel(context, d, today),
+                            ),
                       ],
                     ),
                   ),
@@ -156,6 +182,22 @@ class _MonthCard extends ConsumerWidget {
     final lead = (month.weekday % 7 - first + 7) % 7;
     final days = DateTime(month.year, month.month + 1, 0).day;
     final rows = (lead + days + 6) ~/ 7;
+
+    final layout = BandLayout(agenda, month, DateTime(month.year, month.month, days));
+
+    // Lanes drawn in a week row: up to its highest used lane, so a quiet week
+    // keeps thick bands even when another week of the month is busy.
+    int rowLanes(int row) {
+      var most = 0;
+      for (var col = 0; col < 7; col++) {
+        final n = row * 7 + col - lead + 1;
+        if (n < 1 || n > days) continue;
+        final here = layout.on(DateTime(month.year, month.month, n));
+        final used = here.lastIndexWhere((i) => i != null) + 1;
+        if (used > most) most = used;
+      }
+      return most;
+    }
 
     void moveMonth(int by) {
       final next = DateTime(month.year, month.month + by);
@@ -213,8 +255,26 @@ class _MonthCard extends ConsumerWidget {
                           final n = row * 7 + col - lead + 1;
                           if (n < 1 || n > days) return const SizedBox(height: 44);
                           final d = DateTime(month.year, month.month, n);
+                          final here = layout.on(d).take(rowLanes(row)).toList();
+                          final left = col > 0 && n > 1 ? layout.on(DateTime(d.year, d.month, n - 1)) : null;
+                          final right = col < 6 && n < days ? layout.on(DateTime(d.year, d.month, n + 1)) : null;
                           return _DayCell(
                             day: d,
+                            bands: [
+                              for (var l = 0; l < here.length; l++)
+                                if (here[l] case final i?)
+                                  _Band(
+                                    color: bandTint(
+                                      eventColor(i.event!.color) ?? HomeColors.ube,
+                                      stacked: here.length > 1,
+                                    ),
+                                    joinLeft: BandLayout.same(i, left?[l]),
+                                    joinRight: BandLayout.same(i, right?[l]),
+                                  )
+                                else
+                                  null,
+                            ],
+                            more: layout.hiddenOn(d),
                             selected: daysUntil(d, day) == 0,
                             isToday: daysUntil(d, today) == 0,
                             items: agenda.on(d),
@@ -232,6 +292,17 @@ class _MonthCard extends ConsumerWidget {
   }
 }
 
+/// One lane of a multi-day band in a day cell.
+class _Band {
+  const _Band({required this.color, required this.joinLeft, required this.joinRight});
+
+  final Color color;
+
+  /// The same occurrence goes on to the neighbouring day in the same row.
+  final bool joinLeft;
+  final bool joinRight;
+}
+
 class _DayCell extends StatelessWidget {
   const _DayCell({
     required this.day,
@@ -239,13 +310,53 @@ class _DayCell extends StatelessWidget {
     required this.isToday,
     required this.items,
     required this.onTap,
+    this.bands = const [],
+    this.more = 0,
   });
 
   final DateTime day;
+
+  /// Multi-day events on this day, one per lane (null = free lane): soft bands
+  /// stacked behind the number, joined to the days they go on to.
+  final List<_Band?> bands;
+
+  /// Multi-day events here that have no lane (shown as "+").
+  final int more;
   final bool selected;
   final bool isToday;
   final List<CalendarItem> items;
   final VoidCallback onTap;
+
+  /// Lane [l] of [bands]: lanes share the 26 px behind the number.
+  Widget _lane(int l, _Band b) {
+    const gap = 2.0;
+    final height = (26 - gap * (bands.length - 1)) / bands.length;
+    final radius = Radius.circular(height / 2);
+    return Positioned(
+      key: Key('band-${isoDate(day)}-$l'),
+      left: 0,
+      right: 0,
+      top: 2 + l * (height + gap),
+      height: height,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(child: b.joinLeft ? ColoredBox(color: b.color) : const SizedBox()),
+          Container(
+            width: 30,
+            decoration: BoxDecoration(
+              color: b.color,
+              borderRadius: BorderRadius.horizontal(
+                left: b.joinLeft ? Radius.zero : radius,
+                right: b.joinRight ? Radius.zero : radius,
+              ),
+            ),
+          ),
+          Expanded(child: b.joinRight ? ColoredBox(color: b.color) : const SizedBox()),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -258,35 +369,49 @@ class _DayCell extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 30,
+            SizedBox(
+              width: double.infinity,
               height: 30,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: selected ? HomeColors.ube : null,
-                border: isToday && !selected ? Border.all(color: HomeColors.ube, width: 1.5) : null,
-              ),
-              child: Text(
-                '${day.day}',
-                style: TextStyle(
-                  color: selected ? Colors.white : HomeColors.narra,
-                  fontWeight: isToday || selected ? FontWeight.w700 : FontWeight.w400,
-                ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  for (var l = 0; l < bands.length; l++)
+                    if (bands[l] case final b?) _lane(l, b),
+                  Container(
+                    width: 30,
+                    height: 30,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selected ? HomeColors.ube : null,
+                      border: isToday && !selected ? Border.all(color: HomeColors.ube, width: 1.5) : null,
+                    ),
+                    child: Text(
+                      '${day.day}',
+                      style: TextStyle(
+                        color: selected ? Colors.white : HomeColors.narra,
+                        fontWeight: isToday || selected ? FontWeight.w700 : FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 3),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for (final i in items.take(3))
+                if (more > 0) Icon(Icons.add, key: Key('more-${isoDate(day)}'), size: 9, color: HomeColors.narra),
+                for (final i in items.where((i) => !i.multiDay).take(3))
                   Container(
                     width: 5,
                     height: 5,
                     margin: const EdgeInsets.symmetric(horizontal: 1),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: i.kind == CalendarKind.event ? HomeColors.ube : HomeColors.mangga,
+                      color: i.kind == CalendarKind.event
+                          ? eventColor(i.event?.color) ?? HomeColors.ube
+                          : HomeColors.mangga,
                     ),
                   ),
               ],
@@ -333,7 +458,7 @@ class _ItemTile extends ConsumerWidget {
     final canEdit = ref.watch(canEditEventProvider)(event);
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: who == null ? HomeColors.ube : memberColor(who.color),
+        backgroundColor: eventColor(event.color) ?? (who == null ? HomeColors.ube : memberColor(who.color)),
         foregroundColor: Colors.white,
         child: Icon(event.repeat == 'yearly' ? Icons.cake_outlined : Icons.event_outlined),
       ),
@@ -374,7 +499,12 @@ class _EventDetails extends ConsumerWidget {
         ListTile(
           contentPadding: EdgeInsets.zero,
           leading: const Icon(Icons.schedule),
-          title: Text('${DateFormat.yMMMEd(locale).format(item.day)} · ${timeLabel(context, item)}'),
+          title: Text(
+            item.multiDay
+                ? '${l10n.calendarRange(DateFormat.yMMMEd(locale).format(item.spanStart), DateFormat.yMMMEd(locale).format(item.spanEnd))}'
+                      ' · ${eventTimes(context, e.startTime, e.endTime)}'
+                : '${DateFormat.yMMMEd(locale).format(item.day)} · ${timeLabel(context, item)}',
+          ),
           subtitle: Text(repeatName(l10n, e.repeat)),
         ),
         ListTile(
@@ -415,10 +545,14 @@ class _EventFormState extends ConsumerState<EventForm> {
   late final _location = TextEditingController(text: widget.event?.location ?? '');
   late final _note = TextEditingController(text: widget.event?.note ?? '');
   late DateTime _date = parseIsoDate(widget.event?.startsOn) ?? widget.day ?? ref.read(calendarRepoProvider).today;
+
+  /// Last day of a multi-day event; null = one day.
+  late DateTime? _until = parseIsoDate(widget.event?.endsOn);
   late TimeOfDay? _start = parseTime(widget.event?.startTime);
   late TimeOfDay? _end = parseTime(widget.event?.endTime);
   late String _repeat = widget.event?.repeat ?? 'none';
   late String? _memberId = widget.event?.memberId;
+  late String _color = eventColor(widget.event?.color) == null ? eventColorDefault : widget.event!.color!;
   bool _tried = false;
 
   @override
@@ -429,8 +563,16 @@ class _EventFormState extends ConsumerState<EventForm> {
     super.dispose();
   }
 
+  /// How many days the event lasts.
+  int get _days => _until == null ? 1 : daysUntil(_until!, _date) + 1;
+
+  bool get _tooLong {
+    final max = maxSpanDays(_repeat);
+    return max != null && _days > max;
+  }
+
   Future<void> _save() async {
-    if (_title.text.trim().isEmpty) {
+    if (_title.text.trim().isEmpty || _tooLong) {
       setState(() => _tried = true);
       return;
     }
@@ -442,9 +584,11 @@ class _EventFormState extends ConsumerState<EventForm> {
       await repo.addEvent(
         title: _title.text,
         startsOn: _date,
+        endsOn: _until,
         startTime: start,
         endTime: end,
         repeat: _repeat,
+        color: _color,
         memberId: _memberId,
         location: _location.text,
         note: _note.text,
@@ -454,9 +598,11 @@ class _EventFormState extends ConsumerState<EventForm> {
         e,
         title: _title.text,
         startsOn: _date,
+        endsOn: _until,
         startTime: start,
         endTime: end,
         repeat: _repeat,
+        color: _color,
         memberId: _memberId,
         location: _location.text,
         note: _note.text,
@@ -504,9 +650,46 @@ class _EventFormState extends ConsumerState<EventForm> {
               firstDate: DateTime(today.year - 100),
               lastDate: DateTime(today.year + 5),
             );
-            if (picked != null) setState(() => _date = picked);
+            if (picked == null) return;
+            setState(() {
+              // Moving the start keeps how many days it lasts.
+              if (_until != null) _until = DateTime(picked.year, picked.month, picked.day + _days - 1);
+              _date = picked;
+            });
           },
         ),
+        SwitchListTile(
+          key: const Key('event-several-days'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(l10n.eventSeveralDays),
+          value: _until != null,
+          onChanged: (on) => setState(() => _until = on ? DateTime(_date.year, _date.month, _date.day + 1) : null),
+        ),
+        if (_until != null)
+          ListTile(
+            key: const Key('event-until'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.event_available_outlined),
+            title: Text(l10n.eventUntilDate(DateFormat.yMMMEd(locale).format(_until!))),
+            subtitle: Text(
+              _tooLong ? l10n.eventTooLong(maxSpanDays(_repeat)!) : l10n.eventDayCount(_days),
+              style: _tooLong ? const TextStyle(color: HomeColors.gumamela) : null,
+            ),
+            onTap: () async {
+              final first = DateTime(_date.year, _date.month, _date.day + 1);
+              final max = maxSpanDays(_repeat);
+              final last = max == null
+                  ? DateTime(_date.year + 5)
+                  : DateTime(_date.year, _date.month, _date.day + max - 1);
+              final picked = await showDatePicker(
+                context: context,
+                initialDate: _until!.isAfter(last) ? last : (_until!.isBefore(first) ? first : _until!),
+                firstDate: first,
+                lastDate: last,
+              );
+              if (picked != null) setState(() => _until = picked);
+            },
+          ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
           title: Text(l10n.eventAllDay),
@@ -560,6 +743,39 @@ class _EventFormState extends ConsumerState<EventForm> {
           ],
           selected: {_repeat},
           onSelectionChanged: (s) => setState(() => _repeat = s.first),
+        ),
+        const SizedBox(height: 16),
+        Text(l10n.eventColour, style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            for (final name in eventColorNames)
+              Tooltip(
+                message: eventColorLabel(l10n, name),
+                child: Semantics(
+                  selected: _color == name,
+                  button: true,
+                  child: InkResponse(
+                    key: Key('event-colour-$name'),
+                    radius: 22,
+                    onTap: () => setState(() => _color = name),
+                    child: Container(
+                      width: 34,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: eventColor(name),
+                        border: _color == name ? Border.all(color: HomeColors.capiz, width: 3) : null,
+                        boxShadow: _color == name ? const [BoxShadow(color: HomeColors.narra, spreadRadius: 2)] : null,
+                      ),
+                      child: _color == name ? const Icon(Icons.check, color: Colors.white, size: 18) : null,
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
         const SizedBox(height: 16),
         Text(l10n.eventForWho, style: Theme.of(context).textTheme.titleMedium),

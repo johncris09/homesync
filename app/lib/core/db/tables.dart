@@ -126,10 +126,19 @@ class Events extends Table with SyncColumns {
   /// Calendar date `YYYY-MM-DD` (the first occurrence).
   TextColumn get startsOn => text()();
 
-  /// Local `HH:MM`; null = all day.
+  /// Last day `YYYY-MM-DD` of a multi-day event's first occurrence; null = one
+  /// day. A repeat copies the whole span.
+  TextColumn get endsOn => text().nullable()();
+
+  /// Local `HH:MM`; null = all day. On a multi-day event the start time is on
+  /// the first day and the end time on the last.
   TextColumn get startTime => text().nullable()();
   TextColumn get endTime => text().nullable()();
   TextColumn get repeat => text().withDefault(const Constant('none'))();
+
+  /// Palette name (`ube`, `dagat`, `dahon`, `narra`, `rosas`, `tubig`); null =
+  /// the default look.
+  TextColumn get color => text().nullable()();
 
   /// Who it is for; null = the whole family.
   TextColumn get memberId => text().nullable()();

@@ -251,7 +251,7 @@ class PushTest extends SyncTestCase
         $child = $this->device('child');
         $viewer = $this->device('viewer');
         $id = (string) Str::uuid7();
-        $fields = ['title' => 'School play', 'starts_on' => '2026-12-04', 'start_time' => '15:00', 'repeat' => 'none', 'member_id' => $child->member_id, 'created_by' => $child->member_id];
+        $fields = ['title' => 'School play', 'starts_on' => '2026-12-04', 'ends_on' => '2026-12-05', 'color' => 'dagat', 'start_time' => '15:00', 'repeat' => 'none', 'member_id' => $child->member_id, 'created_by' => $child->member_id];
 
         $this->assertSame(['applied'], $this->statuses($this->push($child, [$this->op('events', $id, 'insert', $fields, $this->hlc(1))])));
         $this->assertSame('forbidden', $this->push($viewer, [$this->op('events', (string) Str::uuid7(), 'insert', $fields, $this->hlc(2))])->json('results.0.error'));
@@ -260,6 +260,8 @@ class PushTest extends SyncTestCase
         $this->assertSame($id, $pulled['entity_id']);
         $this->assertSame('15:00', $pulled['row']['start_time']);
         $this->assertSame('2026-12-04', $pulled['row']['starts_on']);
+        $this->assertSame('2026-12-05', $pulled['row']['ends_on']);
+        $this->assertSame('dagat', $pulled['row']['color']);
     }
 
     public function test_debts_are_for_adults_and_payments_from_two_devices_both_count(): void
