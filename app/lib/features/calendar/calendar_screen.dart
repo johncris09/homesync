@@ -309,6 +309,7 @@ class _DayCell extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
+              width: double.infinity,
               height: 30,
               child: Stack(
                 alignment: Alignment.center,
@@ -319,6 +320,7 @@ class _DayCell extends StatelessWidget {
                       top: 2,
                       bottom: 2,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Expanded(child: joinLeft ? const ColoredBox(color: _bandColor) : const SizedBox()),
                           Container(

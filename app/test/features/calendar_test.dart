@@ -383,6 +383,13 @@ void main() {
     expect(e.endsOn, isoDate(DateTime(d.year, d.month, d.day + 1)));
     expect(find.text('1 today'), findsOneWidget);
     expect(find.byKey(Key('band-${isoDate(d)}')), findsOneWidget);
+    expect(
+      tester.getSize(find.byKey(Key('band-${isoDate(d)}'))).width,
+      tester.getSize(find.byKey(Key('day-${isoDate(d)}'))).width,
+      reason: 'the band fills the cell so joined days meet',
+    );
+    final join = find.descendant(of: find.byKey(Key('band-${isoDate(d)}')), matching: find.byType(ColoredBox));
+    expect(tester.getSize(join.first).height, greaterThan(20), reason: 'the join to the next day is visible');
     // Next week's copy comes up once, with its range.
     final next = DateTime(d.year, d.month, d.day + 7);
     final f = DateFormat.MMMd('en');
