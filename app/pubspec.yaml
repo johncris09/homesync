@@ -50,6 +50,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  image_picker: ^1.2.4
+  file_picker: ^13.4.1
+  path_provider: ^2.1.6
+  open_filex: ^5.0.0
+  web: ^1.1.1
 
 dev_dependencies:
   flutter_test:

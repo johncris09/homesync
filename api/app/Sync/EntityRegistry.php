@@ -65,6 +65,12 @@ class EntityRegistry
         return in_array($field, $this->def($entity)['reviewed'] ?? [], true);
     }
 
+    /** Concurrent edits keep both versions: the newer is live, the older goes to conflicts. */
+    public function isNeverMerged(string $entity): bool
+    {
+        return (bool) ($this->def($entity)['never_merged'] ?? false);
+    }
+
     public function isAppendOnly(string $entity): bool
     {
         return (bool) ($this->def($entity)['append_only'] ?? false);

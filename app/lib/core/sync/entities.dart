@@ -14,6 +14,7 @@ class EntitySpec {
     this.mutable = const {},
     this.jsonFields = const {},
     this.serverCreated = false,
+    this.neverMerged = false,
   });
 
   /// Wire and table name, e.g. `grocery_items`.
@@ -40,6 +41,9 @@ class EntitySpec {
 
   /// Rows only the hub creates; devices may not insert them.
   final bool serverCreated;
+
+  /// Concurrent edits keep both versions; the older goes to conflicts.
+  final bool neverMerged;
 
   bool canUpdate(String field) =>
       fields.contains(field) &&
@@ -188,6 +192,21 @@ const syncedEntities = <String, EntitySpec>{
     },
     appendOnly: true,
     mutable: {'note'},
+  ),
+  'vault_keys': EntitySpec(
+    name: 'vault_keys',
+    fields: {'passphrase_wrap', 'kdf_salt', 'kdf_iterations', 'recovery_wrap', 'recovery_salt', 'created_by'},
+    neverMerged: true,
+  ),
+  'vault_items': EntitySpec(
+    name: 'vault_items',
+    fields: {'kind', 'member_id', 'expires_on', 'sealed', 'created_by'},
+    neverMerged: true,
+  ),
+  'vault_files': EntitySpec(
+    name: 'vault_files',
+    fields: {'item_id', 'sha256', 'size', 'key_wrap', 'sealed', 'position'},
+    neverMerged: true,
   ),
   'conflicts': EntitySpec(
     name: 'conflicts',

@@ -13233,6 +13233,2863 @@ class TransactionsCompanion extends UpdateCompanion<LedgerEntry> {
   }
 }
 
+class $VaultKeysTable extends VaultKeys
+    with TableInfo<$VaultKeysTable, VaultKey> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VaultKeysTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _passphraseWrapMeta = const VerificationMeta(
+    'passphraseWrap',
+  );
+  @override
+  late final GeneratedColumn<String> passphraseWrap = GeneratedColumn<String>(
+    'passphrase_wrap',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kdfSaltMeta = const VerificationMeta(
+    'kdfSalt',
+  );
+  @override
+  late final GeneratedColumn<String> kdfSalt = GeneratedColumn<String>(
+    'kdf_salt',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kdfIterationsMeta = const VerificationMeta(
+    'kdfIterations',
+  );
+  @override
+  late final GeneratedColumn<int> kdfIterations = GeneratedColumn<int>(
+    'kdf_iterations',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recoveryWrapMeta = const VerificationMeta(
+    'recoveryWrap',
+  );
+  @override
+  late final GeneratedColumn<String> recoveryWrap = GeneratedColumn<String>(
+    'recovery_wrap',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recoverySaltMeta = const VerificationMeta(
+    'recoverySalt',
+  );
+  @override
+  late final GeneratedColumn<String> recoverySalt = GeneratedColumn<String>(
+    'recovery_salt',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    passphraseWrap,
+    kdfSalt,
+    kdfIterations,
+    recoveryWrap,
+    recoverySalt,
+    createdBy,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vault_keys';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VaultKey> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('passphrase_wrap')) {
+      context.handle(
+        _passphraseWrapMeta,
+        passphraseWrap.isAcceptableOrUnknown(
+          data['passphrase_wrap']!,
+          _passphraseWrapMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_passphraseWrapMeta);
+    }
+    if (data.containsKey('kdf_salt')) {
+      context.handle(
+        _kdfSaltMeta,
+        kdfSalt.isAcceptableOrUnknown(data['kdf_salt']!, _kdfSaltMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kdfSaltMeta);
+    }
+    if (data.containsKey('kdf_iterations')) {
+      context.handle(
+        _kdfIterationsMeta,
+        kdfIterations.isAcceptableOrUnknown(
+          data['kdf_iterations']!,
+          _kdfIterationsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_kdfIterationsMeta);
+    }
+    if (data.containsKey('recovery_wrap')) {
+      context.handle(
+        _recoveryWrapMeta,
+        recoveryWrap.isAcceptableOrUnknown(
+          data['recovery_wrap']!,
+          _recoveryWrapMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recoveryWrapMeta);
+    }
+    if (data.containsKey('recovery_salt')) {
+      context.handle(
+        _recoverySaltMeta,
+        recoverySalt.isAcceptableOrUnknown(
+          data['recovery_salt']!,
+          _recoverySaltMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recoverySaltMeta);
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VaultKey map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VaultKey(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      passphraseWrap: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}passphrase_wrap'],
+      )!,
+      kdfSalt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kdf_salt'],
+      )!,
+      kdfIterations: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kdf_iterations'],
+      )!,
+      recoveryWrap: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recovery_wrap'],
+      )!,
+      recoverySalt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recovery_salt'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      ),
+    );
+  }
+
+  @override
+  $VaultKeysTable createAlias(String alias) {
+    return $VaultKeysTable(attachedDatabase, alias);
+  }
+}
+
+class VaultKey extends DataClass implements Insertable<VaultKey> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+
+  /// base64 of version byte, nonce, ciphertext and tag (see VaultCrypto).
+  final String passphraseWrap;
+  final String kdfSalt;
+  final int kdfIterations;
+  final String recoveryWrap;
+  final String recoverySalt;
+  final String? createdBy;
+  const VaultKey({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.passphraseWrap,
+    required this.kdfSalt,
+    required this.kdfIterations,
+    required this.recoveryWrap,
+    required this.recoverySalt,
+    this.createdBy,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['passphrase_wrap'] = Variable<String>(passphraseWrap);
+    map['kdf_salt'] = Variable<String>(kdfSalt);
+    map['kdf_iterations'] = Variable<int>(kdfIterations);
+    map['recovery_wrap'] = Variable<String>(recoveryWrap);
+    map['recovery_salt'] = Variable<String>(recoverySalt);
+    if (!nullToAbsent || createdBy != null) {
+      map['created_by'] = Variable<String>(createdBy);
+    }
+    return map;
+  }
+
+  VaultKeysCompanion toCompanion(bool nullToAbsent) {
+    return VaultKeysCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      passphraseWrap: Value(passphraseWrap),
+      kdfSalt: Value(kdfSalt),
+      kdfIterations: Value(kdfIterations),
+      recoveryWrap: Value(recoveryWrap),
+      recoverySalt: Value(recoverySalt),
+      createdBy: createdBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdBy),
+    );
+  }
+
+  factory VaultKey.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VaultKey(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      passphraseWrap: serializer.fromJson<String>(json['passphraseWrap']),
+      kdfSalt: serializer.fromJson<String>(json['kdfSalt']),
+      kdfIterations: serializer.fromJson<int>(json['kdfIterations']),
+      recoveryWrap: serializer.fromJson<String>(json['recoveryWrap']),
+      recoverySalt: serializer.fromJson<String>(json['recoverySalt']),
+      createdBy: serializer.fromJson<String?>(json['createdBy']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'passphraseWrap': serializer.toJson<String>(passphraseWrap),
+      'kdfSalt': serializer.toJson<String>(kdfSalt),
+      'kdfIterations': serializer.toJson<int>(kdfIterations),
+      'recoveryWrap': serializer.toJson<String>(recoveryWrap),
+      'recoverySalt': serializer.toJson<String>(recoverySalt),
+      'createdBy': serializer.toJson<String?>(createdBy),
+    };
+  }
+
+  VaultKey copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? passphraseWrap,
+    String? kdfSalt,
+    int? kdfIterations,
+    String? recoveryWrap,
+    String? recoverySalt,
+    Value<String?> createdBy = const Value.absent(),
+  }) => VaultKey(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    passphraseWrap: passphraseWrap ?? this.passphraseWrap,
+    kdfSalt: kdfSalt ?? this.kdfSalt,
+    kdfIterations: kdfIterations ?? this.kdfIterations,
+    recoveryWrap: recoveryWrap ?? this.recoveryWrap,
+    recoverySalt: recoverySalt ?? this.recoverySalt,
+    createdBy: createdBy.present ? createdBy.value : this.createdBy,
+  );
+  VaultKey copyWithCompanion(VaultKeysCompanion data) {
+    return VaultKey(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      passphraseWrap: data.passphraseWrap.present
+          ? data.passphraseWrap.value
+          : this.passphraseWrap,
+      kdfSalt: data.kdfSalt.present ? data.kdfSalt.value : this.kdfSalt,
+      kdfIterations: data.kdfIterations.present
+          ? data.kdfIterations.value
+          : this.kdfIterations,
+      recoveryWrap: data.recoveryWrap.present
+          ? data.recoveryWrap.value
+          : this.recoveryWrap,
+      recoverySalt: data.recoverySalt.present
+          ? data.recoverySalt.value
+          : this.recoverySalt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VaultKey(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('passphraseWrap: $passphraseWrap, ')
+          ..write('kdfSalt: $kdfSalt, ')
+          ..write('kdfIterations: $kdfIterations, ')
+          ..write('recoveryWrap: $recoveryWrap, ')
+          ..write('recoverySalt: $recoverySalt, ')
+          ..write('createdBy: $createdBy')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    passphraseWrap,
+    kdfSalt,
+    kdfIterations,
+    recoveryWrap,
+    recoverySalt,
+    createdBy,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VaultKey &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.passphraseWrap == this.passphraseWrap &&
+          other.kdfSalt == this.kdfSalt &&
+          other.kdfIterations == this.kdfIterations &&
+          other.recoveryWrap == this.recoveryWrap &&
+          other.recoverySalt == this.recoverySalt &&
+          other.createdBy == this.createdBy);
+}
+
+class VaultKeysCompanion extends UpdateCompanion<VaultKey> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> passphraseWrap;
+  final Value<String> kdfSalt;
+  final Value<int> kdfIterations;
+  final Value<String> recoveryWrap;
+  final Value<String> recoverySalt;
+  final Value<String?> createdBy;
+  final Value<int> rowid;
+  const VaultKeysCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.passphraseWrap = const Value.absent(),
+    this.kdfSalt = const Value.absent(),
+    this.kdfIterations = const Value.absent(),
+    this.recoveryWrap = const Value.absent(),
+    this.recoverySalt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VaultKeysCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String passphraseWrap,
+    required String kdfSalt,
+    required int kdfIterations,
+    required String recoveryWrap,
+    required String recoverySalt,
+    this.createdBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       passphraseWrap = Value(passphraseWrap),
+       kdfSalt = Value(kdfSalt),
+       kdfIterations = Value(kdfIterations),
+       recoveryWrap = Value(recoveryWrap),
+       recoverySalt = Value(recoverySalt);
+  static Insertable<VaultKey> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? passphraseWrap,
+    Expression<String>? kdfSalt,
+    Expression<int>? kdfIterations,
+    Expression<String>? recoveryWrap,
+    Expression<String>? recoverySalt,
+    Expression<String>? createdBy,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (passphraseWrap != null) 'passphrase_wrap': passphraseWrap,
+      if (kdfSalt != null) 'kdf_salt': kdfSalt,
+      if (kdfIterations != null) 'kdf_iterations': kdfIterations,
+      if (recoveryWrap != null) 'recovery_wrap': recoveryWrap,
+      if (recoverySalt != null) 'recovery_salt': recoverySalt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VaultKeysCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? passphraseWrap,
+    Value<String>? kdfSalt,
+    Value<int>? kdfIterations,
+    Value<String>? recoveryWrap,
+    Value<String>? recoverySalt,
+    Value<String?>? createdBy,
+    Value<int>? rowid,
+  }) {
+    return VaultKeysCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      passphraseWrap: passphraseWrap ?? this.passphraseWrap,
+      kdfSalt: kdfSalt ?? this.kdfSalt,
+      kdfIterations: kdfIterations ?? this.kdfIterations,
+      recoveryWrap: recoveryWrap ?? this.recoveryWrap,
+      recoverySalt: recoverySalt ?? this.recoverySalt,
+      createdBy: createdBy ?? this.createdBy,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (passphraseWrap.present) {
+      map['passphrase_wrap'] = Variable<String>(passphraseWrap.value);
+    }
+    if (kdfSalt.present) {
+      map['kdf_salt'] = Variable<String>(kdfSalt.value);
+    }
+    if (kdfIterations.present) {
+      map['kdf_iterations'] = Variable<int>(kdfIterations.value);
+    }
+    if (recoveryWrap.present) {
+      map['recovery_wrap'] = Variable<String>(recoveryWrap.value);
+    }
+    if (recoverySalt.present) {
+      map['recovery_salt'] = Variable<String>(recoverySalt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VaultKeysCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('passphraseWrap: $passphraseWrap, ')
+          ..write('kdfSalt: $kdfSalt, ')
+          ..write('kdfIterations: $kdfIterations, ')
+          ..write('recoveryWrap: $recoveryWrap, ')
+          ..write('recoverySalt: $recoverySalt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VaultItemsTable extends VaultItems
+    with TableInfo<$VaultItemsTable, VaultItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VaultItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _memberIdMeta = const VerificationMeta(
+    'memberId',
+  );
+  @override
+  late final GeneratedColumn<String> memberId = GeneratedColumn<String>(
+    'member_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _expiresOnMeta = const VerificationMeta(
+    'expiresOn',
+  );
+  @override
+  late final GeneratedColumn<String> expiresOn = GeneratedColumn<String>(
+    'expires_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sealedMeta = const VerificationMeta('sealed');
+  @override
+  late final GeneratedColumn<String> sealed = GeneratedColumn<String>(
+    'sealed',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    kind,
+    memberId,
+    expiresOn,
+    sealed,
+    createdBy,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vault_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VaultItem> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('member_id')) {
+      context.handle(
+        _memberIdMeta,
+        memberId.isAcceptableOrUnknown(data['member_id']!, _memberIdMeta),
+      );
+    }
+    if (data.containsKey('expires_on')) {
+      context.handle(
+        _expiresOnMeta,
+        expiresOn.isAcceptableOrUnknown(data['expires_on']!, _expiresOnMeta),
+      );
+    }
+    if (data.containsKey('sealed')) {
+      context.handle(
+        _sealedMeta,
+        sealed.isAcceptableOrUnknown(data['sealed']!, _sealedMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sealedMeta);
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VaultItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VaultItem(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      memberId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}member_id'],
+      ),
+      expiresOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}expires_on'],
+      ),
+      sealed: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sealed'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      ),
+    );
+  }
+
+  @override
+  $VaultItemsTable createAlias(String alias) {
+    return $VaultItemsTable(attachedDatabase, alias);
+  }
+}
+
+class VaultItem extends DataClass implements Insertable<VaultItem> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String kind;
+  final String? memberId;
+
+  /// Calendar date `YYYY-MM-DD`; plain so reminders work while locked.
+  final String? expiresOn;
+  final String sealed;
+  final String? createdBy;
+  const VaultItem({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.kind,
+    this.memberId,
+    this.expiresOn,
+    required this.sealed,
+    this.createdBy,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['kind'] = Variable<String>(kind);
+    if (!nullToAbsent || memberId != null) {
+      map['member_id'] = Variable<String>(memberId);
+    }
+    if (!nullToAbsent || expiresOn != null) {
+      map['expires_on'] = Variable<String>(expiresOn);
+    }
+    map['sealed'] = Variable<String>(sealed);
+    if (!nullToAbsent || createdBy != null) {
+      map['created_by'] = Variable<String>(createdBy);
+    }
+    return map;
+  }
+
+  VaultItemsCompanion toCompanion(bool nullToAbsent) {
+    return VaultItemsCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      kind: Value(kind),
+      memberId: memberId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(memberId),
+      expiresOn: expiresOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(expiresOn),
+      sealed: Value(sealed),
+      createdBy: createdBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdBy),
+    );
+  }
+
+  factory VaultItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VaultItem(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      kind: serializer.fromJson<String>(json['kind']),
+      memberId: serializer.fromJson<String?>(json['memberId']),
+      expiresOn: serializer.fromJson<String?>(json['expiresOn']),
+      sealed: serializer.fromJson<String>(json['sealed']),
+      createdBy: serializer.fromJson<String?>(json['createdBy']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'kind': serializer.toJson<String>(kind),
+      'memberId': serializer.toJson<String?>(memberId),
+      'expiresOn': serializer.toJson<String?>(expiresOn),
+      'sealed': serializer.toJson<String>(sealed),
+      'createdBy': serializer.toJson<String?>(createdBy),
+    };
+  }
+
+  VaultItem copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? kind,
+    Value<String?> memberId = const Value.absent(),
+    Value<String?> expiresOn = const Value.absent(),
+    String? sealed,
+    Value<String?> createdBy = const Value.absent(),
+  }) => VaultItem(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    kind: kind ?? this.kind,
+    memberId: memberId.present ? memberId.value : this.memberId,
+    expiresOn: expiresOn.present ? expiresOn.value : this.expiresOn,
+    sealed: sealed ?? this.sealed,
+    createdBy: createdBy.present ? createdBy.value : this.createdBy,
+  );
+  VaultItem copyWithCompanion(VaultItemsCompanion data) {
+    return VaultItem(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      memberId: data.memberId.present ? data.memberId.value : this.memberId,
+      expiresOn: data.expiresOn.present ? data.expiresOn.value : this.expiresOn,
+      sealed: data.sealed.present ? data.sealed.value : this.sealed,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VaultItem(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('kind: $kind, ')
+          ..write('memberId: $memberId, ')
+          ..write('expiresOn: $expiresOn, ')
+          ..write('sealed: $sealed, ')
+          ..write('createdBy: $createdBy')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    kind,
+    memberId,
+    expiresOn,
+    sealed,
+    createdBy,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VaultItem &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.kind == this.kind &&
+          other.memberId == this.memberId &&
+          other.expiresOn == this.expiresOn &&
+          other.sealed == this.sealed &&
+          other.createdBy == this.createdBy);
+}
+
+class VaultItemsCompanion extends UpdateCompanion<VaultItem> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> kind;
+  final Value<String?> memberId;
+  final Value<String?> expiresOn;
+  final Value<String> sealed;
+  final Value<String?> createdBy;
+  final Value<int> rowid;
+  const VaultItemsCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.memberId = const Value.absent(),
+    this.expiresOn = const Value.absent(),
+    this.sealed = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VaultItemsCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String kind,
+    this.memberId = const Value.absent(),
+    this.expiresOn = const Value.absent(),
+    required String sealed,
+    this.createdBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       kind = Value(kind),
+       sealed = Value(sealed);
+  static Insertable<VaultItem> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? kind,
+    Expression<String>? memberId,
+    Expression<String>? expiresOn,
+    Expression<String>? sealed,
+    Expression<String>? createdBy,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (kind != null) 'kind': kind,
+      if (memberId != null) 'member_id': memberId,
+      if (expiresOn != null) 'expires_on': expiresOn,
+      if (sealed != null) 'sealed': sealed,
+      if (createdBy != null) 'created_by': createdBy,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VaultItemsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? kind,
+    Value<String?>? memberId,
+    Value<String?>? expiresOn,
+    Value<String>? sealed,
+    Value<String?>? createdBy,
+    Value<int>? rowid,
+  }) {
+    return VaultItemsCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      kind: kind ?? this.kind,
+      memberId: memberId ?? this.memberId,
+      expiresOn: expiresOn ?? this.expiresOn,
+      sealed: sealed ?? this.sealed,
+      createdBy: createdBy ?? this.createdBy,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (memberId.present) {
+      map['member_id'] = Variable<String>(memberId.value);
+    }
+    if (expiresOn.present) {
+      map['expires_on'] = Variable<String>(expiresOn.value);
+    }
+    if (sealed.present) {
+      map['sealed'] = Variable<String>(sealed.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VaultItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('kind: $kind, ')
+          ..write('memberId: $memberId, ')
+          ..write('expiresOn: $expiresOn, ')
+          ..write('sealed: $sealed, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VaultFilesTable extends VaultFiles
+    with TableInfo<$VaultFilesTable, VaultFile> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VaultFilesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
+    'item_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sha256Meta = const VerificationMeta('sha256');
+  @override
+  late final GeneratedColumn<String> sha256 = GeneratedColumn<String>(
+    'sha256',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sizeMeta = const VerificationMeta('size');
+  @override
+  late final GeneratedColumn<int> size = GeneratedColumn<int>(
+    'size',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _keyWrapMeta = const VerificationMeta(
+    'keyWrap',
+  );
+  @override
+  late final GeneratedColumn<String> keyWrap = GeneratedColumn<String>(
+    'key_wrap',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sealedMeta = const VerificationMeta('sealed');
+  @override
+  late final GeneratedColumn<String> sealed = GeneratedColumn<String>(
+    'sealed',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
+  );
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+    'position',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    itemId,
+    sha256,
+    size,
+    keyWrap,
+    sealed,
+    position,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vault_files';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VaultFile> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(
+        _itemIdMeta,
+        itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('sha256')) {
+      context.handle(
+        _sha256Meta,
+        sha256.isAcceptableOrUnknown(data['sha256']!, _sha256Meta),
+      );
+    } else if (isInserting) {
+      context.missing(_sha256Meta);
+    }
+    if (data.containsKey('size')) {
+      context.handle(
+        _sizeMeta,
+        size.isAcceptableOrUnknown(data['size']!, _sizeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sizeMeta);
+    }
+    if (data.containsKey('key_wrap')) {
+      context.handle(
+        _keyWrapMeta,
+        keyWrap.isAcceptableOrUnknown(data['key_wrap']!, _keyWrapMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_keyWrapMeta);
+    }
+    if (data.containsKey('sealed')) {
+      context.handle(
+        _sealedMeta,
+        sealed.isAcceptableOrUnknown(data['sealed']!, _sealedMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sealedMeta);
+    }
+    if (data.containsKey('position')) {
+      context.handle(
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VaultFile map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VaultFile(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      itemId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}item_id'],
+      )!,
+      sha256: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sha256'],
+      )!,
+      size: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}size'],
+      )!,
+      keyWrap: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key_wrap'],
+      )!,
+      sealed: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sealed'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
+  }
+
+  @override
+  $VaultFilesTable createAlias(String alias) {
+    return $VaultFilesTable(attachedDatabase, alias);
+  }
+}
+
+class VaultFile extends DataClass implements Insertable<VaultFile> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String itemId;
+  final String sha256;
+  final int size;
+  final String keyWrap;
+  final String sealed;
+  final int position;
+  const VaultFile({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.itemId,
+    required this.sha256,
+    required this.size,
+    required this.keyWrap,
+    required this.sealed,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['item_id'] = Variable<String>(itemId);
+    map['sha256'] = Variable<String>(sha256);
+    map['size'] = Variable<int>(size);
+    map['key_wrap'] = Variable<String>(keyWrap);
+    map['sealed'] = Variable<String>(sealed);
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  VaultFilesCompanion toCompanion(bool nullToAbsent) {
+    return VaultFilesCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      itemId: Value(itemId),
+      sha256: Value(sha256),
+      size: Value(size),
+      keyWrap: Value(keyWrap),
+      sealed: Value(sealed),
+      position: Value(position),
+    );
+  }
+
+  factory VaultFile.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VaultFile(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      itemId: serializer.fromJson<String>(json['itemId']),
+      sha256: serializer.fromJson<String>(json['sha256']),
+      size: serializer.fromJson<int>(json['size']),
+      keyWrap: serializer.fromJson<String>(json['keyWrap']),
+      sealed: serializer.fromJson<String>(json['sealed']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'itemId': serializer.toJson<String>(itemId),
+      'sha256': serializer.toJson<String>(sha256),
+      'size': serializer.toJson<int>(size),
+      'keyWrap': serializer.toJson<String>(keyWrap),
+      'sealed': serializer.toJson<String>(sealed),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  VaultFile copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? itemId,
+    String? sha256,
+    int? size,
+    String? keyWrap,
+    String? sealed,
+    int? position,
+  }) => VaultFile(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    itemId: itemId ?? this.itemId,
+    sha256: sha256 ?? this.sha256,
+    size: size ?? this.size,
+    keyWrap: keyWrap ?? this.keyWrap,
+    sealed: sealed ?? this.sealed,
+    position: position ?? this.position,
+  );
+  VaultFile copyWithCompanion(VaultFilesCompanion data) {
+    return VaultFile(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      itemId: data.itemId.present ? data.itemId.value : this.itemId,
+      sha256: data.sha256.present ? data.sha256.value : this.sha256,
+      size: data.size.present ? data.size.value : this.size,
+      keyWrap: data.keyWrap.present ? data.keyWrap.value : this.keyWrap,
+      sealed: data.sealed.present ? data.sealed.value : this.sealed,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VaultFile(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('itemId: $itemId, ')
+          ..write('sha256: $sha256, ')
+          ..write('size: $size, ')
+          ..write('keyWrap: $keyWrap, ')
+          ..write('sealed: $sealed, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    itemId,
+    sha256,
+    size,
+    keyWrap,
+    sealed,
+    position,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VaultFile &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.itemId == this.itemId &&
+          other.sha256 == this.sha256 &&
+          other.size == this.size &&
+          other.keyWrap == this.keyWrap &&
+          other.sealed == this.sealed &&
+          other.position == this.position);
+}
+
+class VaultFilesCompanion extends UpdateCompanion<VaultFile> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> itemId;
+  final Value<String> sha256;
+  final Value<int> size;
+  final Value<String> keyWrap;
+  final Value<String> sealed;
+  final Value<int> position;
+  final Value<int> rowid;
+  const VaultFilesCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.sha256 = const Value.absent(),
+    this.size = const Value.absent(),
+    this.keyWrap = const Value.absent(),
+    this.sealed = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VaultFilesCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String itemId,
+    required String sha256,
+    required int size,
+    required String keyWrap,
+    required String sealed,
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       itemId = Value(itemId),
+       sha256 = Value(sha256),
+       size = Value(size),
+       keyWrap = Value(keyWrap),
+       sealed = Value(sealed);
+  static Insertable<VaultFile> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? itemId,
+    Expression<String>? sha256,
+    Expression<int>? size,
+    Expression<String>? keyWrap,
+    Expression<String>? sealed,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (itemId != null) 'item_id': itemId,
+      if (sha256 != null) 'sha256': sha256,
+      if (size != null) 'size': size,
+      if (keyWrap != null) 'key_wrap': keyWrap,
+      if (sealed != null) 'sealed': sealed,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VaultFilesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? itemId,
+    Value<String>? sha256,
+    Value<int>? size,
+    Value<String>? keyWrap,
+    Value<String>? sealed,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return VaultFilesCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      itemId: itemId ?? this.itemId,
+      sha256: sha256 ?? this.sha256,
+      size: size ?? this.size,
+      keyWrap: keyWrap ?? this.keyWrap,
+      sealed: sealed ?? this.sealed,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<String>(itemId.value);
+    }
+    if (sha256.present) {
+      map['sha256'] = Variable<String>(sha256.value);
+    }
+    if (size.present) {
+      map['size'] = Variable<int>(size.value);
+    }
+    if (keyWrap.present) {
+      map['key_wrap'] = Variable<String>(keyWrap.value);
+    }
+    if (sealed.present) {
+      map['sealed'] = Variable<String>(sealed.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VaultFilesCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('itemId: $itemId, ')
+          ..write('sha256: $sha256, ')
+          ..write('size: $size, ')
+          ..write('keyWrap: $keyWrap, ')
+          ..write('sealed: $sealed, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VaultBlobsTable extends VaultBlobs
+    with TableInfo<$VaultBlobsTable, VaultBlob> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VaultBlobsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _sha256Meta = const VerificationMeta('sha256');
+  @override
+  late final GeneratedColumn<String> sha256 = GeneratedColumn<String>(
+    'sha256',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dataMeta = const VerificationMeta('data');
+  @override
+  late final GeneratedColumn<Uint8List> data = GeneratedColumn<Uint8List>(
+    'data',
+    aliasedName,
+    false,
+    type: DriftSqlType.blob,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _needsUploadMeta = const VerificationMeta(
+    'needsUpload',
+  );
+  @override
+  late final GeneratedColumn<bool> needsUpload = GeneratedColumn<bool>(
+    'needs_upload',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("needs_upload" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [sha256, data, needsUpload, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vault_blobs';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VaultBlob> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('sha256')) {
+      context.handle(
+        _sha256Meta,
+        sha256.isAcceptableOrUnknown(data['sha256']!, _sha256Meta),
+      );
+    } else if (isInserting) {
+      context.missing(_sha256Meta);
+    }
+    if (data.containsKey('data')) {
+      context.handle(
+        _dataMeta,
+        this.data.isAcceptableOrUnknown(data['data']!, _dataMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dataMeta);
+    }
+    if (data.containsKey('needs_upload')) {
+      context.handle(
+        _needsUploadMeta,
+        needsUpload.isAcceptableOrUnknown(
+          data['needs_upload']!,
+          _needsUploadMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {sha256};
+  @override
+  VaultBlob map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VaultBlob(
+      sha256: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sha256'],
+      )!,
+      data: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}data'],
+      )!,
+      needsUpload: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}needs_upload'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $VaultBlobsTable createAlias(String alias) {
+    return $VaultBlobsTable(attachedDatabase, alias);
+  }
+}
+
+class VaultBlob extends DataClass implements Insertable<VaultBlob> {
+  final String sha256;
+  final Uint8List data;
+  final bool needsUpload;
+  final DateTime createdAt;
+  const VaultBlob({
+    required this.sha256,
+    required this.data,
+    required this.needsUpload,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['sha256'] = Variable<String>(sha256);
+    map['data'] = Variable<Uint8List>(data);
+    map['needs_upload'] = Variable<bool>(needsUpload);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  VaultBlobsCompanion toCompanion(bool nullToAbsent) {
+    return VaultBlobsCompanion(
+      sha256: Value(sha256),
+      data: Value(data),
+      needsUpload: Value(needsUpload),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory VaultBlob.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VaultBlob(
+      sha256: serializer.fromJson<String>(json['sha256']),
+      data: serializer.fromJson<Uint8List>(json['data']),
+      needsUpload: serializer.fromJson<bool>(json['needsUpload']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'sha256': serializer.toJson<String>(sha256),
+      'data': serializer.toJson<Uint8List>(data),
+      'needsUpload': serializer.toJson<bool>(needsUpload),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  VaultBlob copyWith({
+    String? sha256,
+    Uint8List? data,
+    bool? needsUpload,
+    DateTime? createdAt,
+  }) => VaultBlob(
+    sha256: sha256 ?? this.sha256,
+    data: data ?? this.data,
+    needsUpload: needsUpload ?? this.needsUpload,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  VaultBlob copyWithCompanion(VaultBlobsCompanion data) {
+    return VaultBlob(
+      sha256: data.sha256.present ? data.sha256.value : this.sha256,
+      data: data.data.present ? data.data.value : this.data,
+      needsUpload: data.needsUpload.present
+          ? data.needsUpload.value
+          : this.needsUpload,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VaultBlob(')
+          ..write('sha256: $sha256, ')
+          ..write('data: $data, ')
+          ..write('needsUpload: $needsUpload, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    sha256,
+    $driftBlobEquality.hash(data),
+    needsUpload,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VaultBlob &&
+          other.sha256 == this.sha256 &&
+          $driftBlobEquality.equals(other.data, this.data) &&
+          other.needsUpload == this.needsUpload &&
+          other.createdAt == this.createdAt);
+}
+
+class VaultBlobsCompanion extends UpdateCompanion<VaultBlob> {
+  final Value<String> sha256;
+  final Value<Uint8List> data;
+  final Value<bool> needsUpload;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const VaultBlobsCompanion({
+    this.sha256 = const Value.absent(),
+    this.data = const Value.absent(),
+    this.needsUpload = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VaultBlobsCompanion.insert({
+    required String sha256,
+    required Uint8List data,
+    this.needsUpload = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : sha256 = Value(sha256),
+       data = Value(data);
+  static Insertable<VaultBlob> custom({
+    Expression<String>? sha256,
+    Expression<Uint8List>? data,
+    Expression<bool>? needsUpload,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (sha256 != null) 'sha256': sha256,
+      if (data != null) 'data': data,
+      if (needsUpload != null) 'needs_upload': needsUpload,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VaultBlobsCompanion copyWith({
+    Value<String>? sha256,
+    Value<Uint8List>? data,
+    Value<bool>? needsUpload,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return VaultBlobsCompanion(
+      sha256: sha256 ?? this.sha256,
+      data: data ?? this.data,
+      needsUpload: needsUpload ?? this.needsUpload,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (sha256.present) {
+      map['sha256'] = Variable<String>(sha256.value);
+    }
+    if (data.present) {
+      map['data'] = Variable<Uint8List>(data.value);
+    }
+    if (needsUpload.present) {
+      map['needs_upload'] = Variable<bool>(needsUpload.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VaultBlobsCompanion(')
+          ..write('sha256: $sha256, ')
+          ..write('data: $data, ')
+          ..write('needsUpload: $needsUpload, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $ConflictsTable extends Conflicts
     with TableInfo<$ConflictsTable, ConflictRecord> {
   @override
@@ -16059,6 +18916,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $VehicleLogsTable vehicleLogs = $VehicleLogsTable(this);
   late final $BudgetsTable budgets = $BudgetsTable(this);
   late final $TransactionsTable transactions = $TransactionsTable(this);
+  late final $VaultKeysTable vaultKeys = $VaultKeysTable(this);
+  late final $VaultItemsTable vaultItems = $VaultItemsTable(this);
+  late final $VaultFilesTable vaultFiles = $VaultFilesTable(this);
+  late final $VaultBlobsTable vaultBlobs = $VaultBlobsTable(this);
   late final $ConflictsTable conflicts = $ConflictsTable(this);
   late final $OutboxTable outbox = $OutboxTable(this);
   late final $FieldClocksTable fieldClocks = $FieldClocksTable(this);
@@ -16083,6 +18944,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     vehicleLogs,
     budgets,
     transactions,
+    vaultKeys,
+    vaultItems,
+    vaultFiles,
+    vaultBlobs,
     conflicts,
     outbox,
     fieldClocks,
@@ -22074,6 +24939,1345 @@ typedef $$TransactionsTableProcessedTableManager =
       LedgerEntry,
       PrefetchHooks Function()
     >;
+typedef $$VaultKeysTableCreateCompanionBuilder =
+    VaultKeysCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String passphraseWrap,
+      required String kdfSalt,
+      required int kdfIterations,
+      required String recoveryWrap,
+      required String recoverySalt,
+      Value<String?> createdBy,
+      Value<int> rowid,
+    });
+typedef $$VaultKeysTableUpdateCompanionBuilder =
+    VaultKeysCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> passphraseWrap,
+      Value<String> kdfSalt,
+      Value<int> kdfIterations,
+      Value<String> recoveryWrap,
+      Value<String> recoverySalt,
+      Value<String?> createdBy,
+      Value<int> rowid,
+    });
+
+class $$VaultKeysTableFilterComposer
+    extends Composer<_$AppDatabase, $VaultKeysTable> {
+  $$VaultKeysTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get passphraseWrap => $composableBuilder(
+    column: $table.passphraseWrap,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kdfSalt => $composableBuilder(
+    column: $table.kdfSalt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get kdfIterations => $composableBuilder(
+    column: $table.kdfIterations,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recoveryWrap => $composableBuilder(
+    column: $table.recoveryWrap,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recoverySalt => $composableBuilder(
+    column: $table.recoverySalt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$VaultKeysTableOrderingComposer
+    extends Composer<_$AppDatabase, $VaultKeysTable> {
+  $$VaultKeysTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get passphraseWrap => $composableBuilder(
+    column: $table.passphraseWrap,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kdfSalt => $composableBuilder(
+    column: $table.kdfSalt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get kdfIterations => $composableBuilder(
+    column: $table.kdfIterations,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recoveryWrap => $composableBuilder(
+    column: $table.recoveryWrap,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recoverySalt => $composableBuilder(
+    column: $table.recoverySalt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VaultKeysTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VaultKeysTable> {
+  $$VaultKeysTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get passphraseWrap => $composableBuilder(
+    column: $table.passphraseWrap,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get kdfSalt =>
+      $composableBuilder(column: $table.kdfSalt, builder: (column) => column);
+
+  GeneratedColumn<int> get kdfIterations => $composableBuilder(
+    column: $table.kdfIterations,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recoveryWrap => $composableBuilder(
+    column: $table.recoveryWrap,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recoverySalt => $composableBuilder(
+    column: $table.recoverySalt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+}
+
+class $$VaultKeysTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VaultKeysTable,
+          VaultKey,
+          $$VaultKeysTableFilterComposer,
+          $$VaultKeysTableOrderingComposer,
+          $$VaultKeysTableAnnotationComposer,
+          $$VaultKeysTableCreateCompanionBuilder,
+          $$VaultKeysTableUpdateCompanionBuilder,
+          (VaultKey, BaseReferences<_$AppDatabase, $VaultKeysTable, VaultKey>),
+          VaultKey,
+          PrefetchHooks Function()
+        > {
+  $$VaultKeysTableTableManager(_$AppDatabase db, $VaultKeysTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VaultKeysTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VaultKeysTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VaultKeysTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> passphraseWrap = const Value.absent(),
+                Value<String> kdfSalt = const Value.absent(),
+                Value<int> kdfIterations = const Value.absent(),
+                Value<String> recoveryWrap = const Value.absent(),
+                Value<String> recoverySalt = const Value.absent(),
+                Value<String?> createdBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VaultKeysCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                passphraseWrap: passphraseWrap,
+                kdfSalt: kdfSalt,
+                kdfIterations: kdfIterations,
+                recoveryWrap: recoveryWrap,
+                recoverySalt: recoverySalt,
+                createdBy: createdBy,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String passphraseWrap,
+                required String kdfSalt,
+                required int kdfIterations,
+                required String recoveryWrap,
+                required String recoverySalt,
+                Value<String?> createdBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VaultKeysCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                passphraseWrap: passphraseWrap,
+                kdfSalt: kdfSalt,
+                kdfIterations: kdfIterations,
+                recoveryWrap: recoveryWrap,
+                recoverySalt: recoverySalt,
+                createdBy: createdBy,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$VaultKeysTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VaultKeysTable,
+      VaultKey,
+      $$VaultKeysTableFilterComposer,
+      $$VaultKeysTableOrderingComposer,
+      $$VaultKeysTableAnnotationComposer,
+      $$VaultKeysTableCreateCompanionBuilder,
+      $$VaultKeysTableUpdateCompanionBuilder,
+      (VaultKey, BaseReferences<_$AppDatabase, $VaultKeysTable, VaultKey>),
+      VaultKey,
+      PrefetchHooks Function()
+    >;
+typedef $$VaultItemsTableCreateCompanionBuilder =
+    VaultItemsCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String kind,
+      Value<String?> memberId,
+      Value<String?> expiresOn,
+      required String sealed,
+      Value<String?> createdBy,
+      Value<int> rowid,
+    });
+typedef $$VaultItemsTableUpdateCompanionBuilder =
+    VaultItemsCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> kind,
+      Value<String?> memberId,
+      Value<String?> expiresOn,
+      Value<String> sealed,
+      Value<String?> createdBy,
+      Value<int> rowid,
+    });
+
+class $$VaultItemsTableFilterComposer
+    extends Composer<_$AppDatabase, $VaultItemsTable> {
+  $$VaultItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get expiresOn => $composableBuilder(
+    column: $table.expiresOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get sealed => $composableBuilder(
+    column: $table.sealed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$VaultItemsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VaultItemsTable> {
+  $$VaultItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get expiresOn => $composableBuilder(
+    column: $table.expiresOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get sealed => $composableBuilder(
+    column: $table.sealed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VaultItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VaultItemsTable> {
+  $$VaultItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<String> get memberId =>
+      $composableBuilder(column: $table.memberId, builder: (column) => column);
+
+  GeneratedColumn<String> get expiresOn =>
+      $composableBuilder(column: $table.expiresOn, builder: (column) => column);
+
+  GeneratedColumn<String> get sealed =>
+      $composableBuilder(column: $table.sealed, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+}
+
+class $$VaultItemsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VaultItemsTable,
+          VaultItem,
+          $$VaultItemsTableFilterComposer,
+          $$VaultItemsTableOrderingComposer,
+          $$VaultItemsTableAnnotationComposer,
+          $$VaultItemsTableCreateCompanionBuilder,
+          $$VaultItemsTableUpdateCompanionBuilder,
+          (
+            VaultItem,
+            BaseReferences<_$AppDatabase, $VaultItemsTable, VaultItem>,
+          ),
+          VaultItem,
+          PrefetchHooks Function()
+        > {
+  $$VaultItemsTableTableManager(_$AppDatabase db, $VaultItemsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VaultItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VaultItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VaultItemsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<String?> memberId = const Value.absent(),
+                Value<String?> expiresOn = const Value.absent(),
+                Value<String> sealed = const Value.absent(),
+                Value<String?> createdBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VaultItemsCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                kind: kind,
+                memberId: memberId,
+                expiresOn: expiresOn,
+                sealed: sealed,
+                createdBy: createdBy,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String kind,
+                Value<String?> memberId = const Value.absent(),
+                Value<String?> expiresOn = const Value.absent(),
+                required String sealed,
+                Value<String?> createdBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VaultItemsCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                kind: kind,
+                memberId: memberId,
+                expiresOn: expiresOn,
+                sealed: sealed,
+                createdBy: createdBy,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$VaultItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VaultItemsTable,
+      VaultItem,
+      $$VaultItemsTableFilterComposer,
+      $$VaultItemsTableOrderingComposer,
+      $$VaultItemsTableAnnotationComposer,
+      $$VaultItemsTableCreateCompanionBuilder,
+      $$VaultItemsTableUpdateCompanionBuilder,
+      (VaultItem, BaseReferences<_$AppDatabase, $VaultItemsTable, VaultItem>),
+      VaultItem,
+      PrefetchHooks Function()
+    >;
+typedef $$VaultFilesTableCreateCompanionBuilder =
+    VaultFilesCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String itemId,
+      required String sha256,
+      required int size,
+      required String keyWrap,
+      required String sealed,
+      Value<int> position,
+      Value<int> rowid,
+    });
+typedef $$VaultFilesTableUpdateCompanionBuilder =
+    VaultFilesCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> itemId,
+      Value<String> sha256,
+      Value<int> size,
+      Value<String> keyWrap,
+      Value<String> sealed,
+      Value<int> position,
+      Value<int> rowid,
+    });
+
+class $$VaultFilesTableFilterComposer
+    extends Composer<_$AppDatabase, $VaultFilesTable> {
+  $$VaultFilesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get itemId => $composableBuilder(
+    column: $table.itemId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get sha256 => $composableBuilder(
+    column: $table.sha256,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get size => $composableBuilder(
+    column: $table.size,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get keyWrap => $composableBuilder(
+    column: $table.keyWrap,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get sealed => $composableBuilder(
+    column: $table.sealed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$VaultFilesTableOrderingComposer
+    extends Composer<_$AppDatabase, $VaultFilesTable> {
+  $$VaultFilesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get itemId => $composableBuilder(
+    column: $table.itemId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get sha256 => $composableBuilder(
+    column: $table.sha256,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get size => $composableBuilder(
+    column: $table.size,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get keyWrap => $composableBuilder(
+    column: $table.keyWrap,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get sealed => $composableBuilder(
+    column: $table.sealed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VaultFilesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VaultFilesTable> {
+  $$VaultFilesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get itemId =>
+      $composableBuilder(column: $table.itemId, builder: (column) => column);
+
+  GeneratedColumn<String> get sha256 =>
+      $composableBuilder(column: $table.sha256, builder: (column) => column);
+
+  GeneratedColumn<int> get size =>
+      $composableBuilder(column: $table.size, builder: (column) => column);
+
+  GeneratedColumn<String> get keyWrap =>
+      $composableBuilder(column: $table.keyWrap, builder: (column) => column);
+
+  GeneratedColumn<String> get sealed =>
+      $composableBuilder(column: $table.sealed, builder: (column) => column);
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+}
+
+class $$VaultFilesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VaultFilesTable,
+          VaultFile,
+          $$VaultFilesTableFilterComposer,
+          $$VaultFilesTableOrderingComposer,
+          $$VaultFilesTableAnnotationComposer,
+          $$VaultFilesTableCreateCompanionBuilder,
+          $$VaultFilesTableUpdateCompanionBuilder,
+          (
+            VaultFile,
+            BaseReferences<_$AppDatabase, $VaultFilesTable, VaultFile>,
+          ),
+          VaultFile,
+          PrefetchHooks Function()
+        > {
+  $$VaultFilesTableTableManager(_$AppDatabase db, $VaultFilesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VaultFilesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VaultFilesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VaultFilesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> itemId = const Value.absent(),
+                Value<String> sha256 = const Value.absent(),
+                Value<int> size = const Value.absent(),
+                Value<String> keyWrap = const Value.absent(),
+                Value<String> sealed = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VaultFilesCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                itemId: itemId,
+                sha256: sha256,
+                size: size,
+                keyWrap: keyWrap,
+                sealed: sealed,
+                position: position,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String itemId,
+                required String sha256,
+                required int size,
+                required String keyWrap,
+                required String sealed,
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VaultFilesCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                itemId: itemId,
+                sha256: sha256,
+                size: size,
+                keyWrap: keyWrap,
+                sealed: sealed,
+                position: position,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$VaultFilesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VaultFilesTable,
+      VaultFile,
+      $$VaultFilesTableFilterComposer,
+      $$VaultFilesTableOrderingComposer,
+      $$VaultFilesTableAnnotationComposer,
+      $$VaultFilesTableCreateCompanionBuilder,
+      $$VaultFilesTableUpdateCompanionBuilder,
+      (VaultFile, BaseReferences<_$AppDatabase, $VaultFilesTable, VaultFile>),
+      VaultFile,
+      PrefetchHooks Function()
+    >;
+typedef $$VaultBlobsTableCreateCompanionBuilder =
+    VaultBlobsCompanion Function({
+      required String sha256,
+      required Uint8List data,
+      Value<bool> needsUpload,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$VaultBlobsTableUpdateCompanionBuilder =
+    VaultBlobsCompanion Function({
+      Value<String> sha256,
+      Value<Uint8List> data,
+      Value<bool> needsUpload,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$VaultBlobsTableFilterComposer
+    extends Composer<_$AppDatabase, $VaultBlobsTable> {
+  $$VaultBlobsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get sha256 => $composableBuilder(
+    column: $table.sha256,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<Uint8List> get data => $composableBuilder(
+    column: $table.data,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get needsUpload => $composableBuilder(
+    column: $table.needsUpload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$VaultBlobsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VaultBlobsTable> {
+  $$VaultBlobsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get sha256 => $composableBuilder(
+    column: $table.sha256,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<Uint8List> get data => $composableBuilder(
+    column: $table.data,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get needsUpload => $composableBuilder(
+    column: $table.needsUpload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VaultBlobsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VaultBlobsTable> {
+  $$VaultBlobsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get sha256 =>
+      $composableBuilder(column: $table.sha256, builder: (column) => column);
+
+  GeneratedColumn<Uint8List> get data =>
+      $composableBuilder(column: $table.data, builder: (column) => column);
+
+  GeneratedColumn<bool> get needsUpload => $composableBuilder(
+    column: $table.needsUpload,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$VaultBlobsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VaultBlobsTable,
+          VaultBlob,
+          $$VaultBlobsTableFilterComposer,
+          $$VaultBlobsTableOrderingComposer,
+          $$VaultBlobsTableAnnotationComposer,
+          $$VaultBlobsTableCreateCompanionBuilder,
+          $$VaultBlobsTableUpdateCompanionBuilder,
+          (
+            VaultBlob,
+            BaseReferences<_$AppDatabase, $VaultBlobsTable, VaultBlob>,
+          ),
+          VaultBlob,
+          PrefetchHooks Function()
+        > {
+  $$VaultBlobsTableTableManager(_$AppDatabase db, $VaultBlobsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VaultBlobsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VaultBlobsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VaultBlobsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> sha256 = const Value.absent(),
+                Value<Uint8List> data = const Value.absent(),
+                Value<bool> needsUpload = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VaultBlobsCompanion(
+                sha256: sha256,
+                data: data,
+                needsUpload: needsUpload,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String sha256,
+                required Uint8List data,
+                Value<bool> needsUpload = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VaultBlobsCompanion.insert(
+                sha256: sha256,
+                data: data,
+                needsUpload: needsUpload,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$VaultBlobsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VaultBlobsTable,
+      VaultBlob,
+      $$VaultBlobsTableFilterComposer,
+      $$VaultBlobsTableOrderingComposer,
+      $$VaultBlobsTableAnnotationComposer,
+      $$VaultBlobsTableCreateCompanionBuilder,
+      $$VaultBlobsTableUpdateCompanionBuilder,
+      (VaultBlob, BaseReferences<_$AppDatabase, $VaultBlobsTable, VaultBlob>),
+      VaultBlob,
+      PrefetchHooks Function()
+    >;
 typedef $$ConflictsTableCreateCompanionBuilder =
     ConflictsCompanion Function({
       required String id,
@@ -23490,6 +27694,14 @@ class $AppDatabaseManager {
       $$BudgetsTableTableManager(_db, _db.budgets);
   $$TransactionsTableTableManager get transactions =>
       $$TransactionsTableTableManager(_db, _db.transactions);
+  $$VaultKeysTableTableManager get vaultKeys =>
+      $$VaultKeysTableTableManager(_db, _db.vaultKeys);
+  $$VaultItemsTableTableManager get vaultItems =>
+      $$VaultItemsTableTableManager(_db, _db.vaultItems);
+  $$VaultFilesTableTableManager get vaultFiles =>
+      $$VaultFilesTableTableManager(_db, _db.vaultFiles);
+  $$VaultBlobsTableTableManager get vaultBlobs =>
+      $$VaultBlobsTableTableManager(_db, _db.vaultBlobs);
   $$ConflictsTableTableManager get conflicts =>
       $$ConflictsTableTableManager(_db, _db.conflicts);
   $$OutboxTableTableManager get outbox =>

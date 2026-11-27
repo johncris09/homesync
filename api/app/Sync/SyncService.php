@@ -248,6 +248,24 @@ class SyncService
             }
 
             $differs = $this->differs($current, $value);
+
+            // Never auto-merged (vault): a field someone else changed after the
+            // version this device last saw is a real concurrent edit. Both
+            // versions are kept: the newer is live, the older goes to review.
+            if ($differs && $clock && $this->registry->isNeverMerged($ctx->entity)
+                && $ctx->baseVersion !== null && (int) ($clock->seq ?? 0) > $ctx->baseVersion) {
+                if (Hlc::isNewer($ctx->hlc, $clock->hlc)) {
+                    $conflictId = $this->recordConflict($ctx, $field, $value, $ctx->member->id, $current, $clock->updated_by);
+                    $changes[$field] = $value;
+                    $this->setClock($ctx, $field);
+                } else {
+                    $conflictId = $this->recordConflict($ctx, $field, $current, $clock->updated_by, $value, $ctx->member->id);
+                }
+                $merged = true;
+
+                continue;
+            }
+
             if (Hlc::isNewer($ctx->hlc, $clock->hlc ?? null)) {
                 if ($differs && $this->registry->isReviewed($ctx->entity, $field)
                     && $clock && $clock->updated_by !== $ctx->member->id
@@ -362,9 +380,9 @@ class SyncService
     private function setClock(OpContext $ctx, string $field): void
     {
         DB::table('field_clocks')->upsert(
-            [['entity' => $ctx->entity, 'entity_id' => $ctx->id, 'field' => $field, 'hlc' => $ctx->hlc, 'updated_by' => $ctx->member->id]],
+            [['entity' => $ctx->entity, 'entity_id' => $ctx->id, 'field' => $field, 'hlc' => $ctx->hlc, 'updated_by' => $ctx->member->id, 'seq' => null]],
             ['entity', 'entity_id', 'field'],
-            ['hlc', 'updated_by'],
+            ['hlc', 'updated_by', 'seq'],
         );
     }
 
@@ -430,6 +448,12 @@ class SyncService
         ]);
 
         DB::table($ctx->table)->where('id', $ctx->id)->update(['server_version' => $seq]);
+        // Which change set each field this op wrote (read by the never
+        // auto-merged rule).
+        DB::table('field_clocks')
+            ->where('entity', $ctx->entity)->where('entity_id', $ctx->id)
+            ->where('hlc', $ctx->hlc)->whereNull('seq')
+            ->update(['seq' => $seq]);
         $row = DB::table($ctx->table)->where('id', $ctx->id)->first();
         DB::table('change_log')->where('id', $seq)->update(['row' => json_encode($row)]);
 

@@ -2278,6 +2278,582 @@ abstract class AppLocalizations {
   /// **'Remove this entry'**
   String get debtRemoveEntry;
 
+  /// No description provided for @vaultModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Document vault'**
+  String get vaultModule;
+
+  /// No description provided for @vaultTileDocs.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing kept yet} =1{1 document} other{{count} documents}}'**
+  String vaultTileDocs(int count);
+
+  /// No description provided for @vaultTileRenew.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 to renew soon} other{{count} to renew soon}}'**
+  String vaultTileRenew(int count);
+
+  /// No description provided for @vaultTileSetUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set up yet'**
+  String get vaultTileSetUp;
+
+  /// No description provided for @vaultInboxNote.
+  ///
+  /// In en, this message translates to:
+  /// **'A vault document was changed on two devices. Open it in the vault to compare.'**
+  String get vaultInboxNote;
+
+  /// No description provided for @vaultDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No documents} =1{1 document} other{{count} documents}}'**
+  String vaultDocuments(int count);
+
+  /// No description provided for @vaultLockedCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked. Encrypted on this device.'**
+  String get vaultLockedCaption;
+
+  /// No description provided for @vaultLockedRenew.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Locked · 1 to renew soon} other{Locked · {count} to renew soon}}'**
+  String vaultLockedRenew(int count);
+
+  /// No description provided for @vaultKeptSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted before it leaves this device'**
+  String get vaultKeptSafe;
+
+  /// No description provided for @vaultExpiresOn.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} expires {date}'**
+  String vaultExpiresOn(String title, String date);
+
+  /// No description provided for @vaultRenewSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew soon'**
+  String get vaultRenewSoon;
+
+  /// No description provided for @vaultEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add IDs, birth certificates, land titles, contracts and warranties. Only adults can open them.'**
+  String get vaultEmpty;
+
+  /// No description provided for @vaultAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add document'**
+  String get vaultAdd;
+
+  /// No description provided for @vaultEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit document'**
+  String get vaultEdit;
+
+  /// No description provided for @vaultDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get vaultDelete;
+
+  /// No description provided for @vaultDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {title} and its files from the vault?'**
+  String vaultDeleteConfirm(String title);
+
+  /// No description provided for @vaultLock.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock'**
+  String get vaultLock;
+
+  /// No description provided for @vaultUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock'**
+  String get vaultUnlock;
+
+  /// No description provided for @vaultOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening the vault. This takes a few seconds.'**
+  String get vaultOpening;
+
+  /// No description provided for @vaultPassphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Vault passphrase'**
+  String get vaultPassphrase;
+
+  /// No description provided for @vaultPassphraseAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Passphrase again'**
+  String get vaultPassphraseAgain;
+
+  /// No description provided for @vaultPassphraseTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least {count} characters. A few words work well.'**
+  String vaultPassphraseTooShort(int count);
+
+  /// No description provided for @vaultPassphrasesDontMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The passphrases don\'t match'**
+  String get vaultPassphrasesDontMatch;
+
+  /// No description provided for @vaultWrongPassphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'That passphrase didn\'t open the vault'**
+  String get vaultWrongPassphrase;
+
+  /// No description provided for @vaultAppLockHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on app lock on Home to open the vault with your PIN instead of the passphrase.'**
+  String get vaultAppLockHint;
+
+  /// No description provided for @vaultBiometricReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the document vault'**
+  String get vaultBiometricReason;
+
+  /// No description provided for @vaultPinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your app PIN'**
+  String get vaultPinTitle;
+
+  /// No description provided for @vaultUseRecovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Use recovery code'**
+  String get vaultUseRecovery;
+
+  /// No description provided for @vaultRecoveryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'K7QM-3XRT-9WHD-PC2E-VN6A-YB4F'**
+  String get vaultRecoveryHint;
+
+  /// No description provided for @vaultWrongRecovery.
+  ///
+  /// In en, this message translates to:
+  /// **'That recovery code didn\'t open the vault'**
+  String get vaultWrongRecovery;
+
+  /// No description provided for @vaultNewPassphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'New vault passphrase'**
+  String get vaultNewPassphrase;
+
+  /// No description provided for @vaultNewPassphraseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell the other adults the new passphrase. Phones that already opened the vault keep working.'**
+  String get vaultNewPassphraseBody;
+
+  /// No description provided for @vaultChangePassphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Change passphrase'**
+  String get vaultChangePassphrase;
+
+  /// No description provided for @vaultNewRecoveryCode.
+  ///
+  /// In en, this message translates to:
+  /// **'New recovery code'**
+  String get vaultNewRecoveryCode;
+
+  /// No description provided for @vaultSetUpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up the vault'**
+  String get vaultSetUpTitle;
+
+  /// No description provided for @vaultSetUpCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'For IDs, titles and certificates'**
+  String get vaultSetUpCaption;
+
+  /// No description provided for @vaultSetUpBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a vault passphrase for the household and tell the other adults in person. Documents are encrypted on this device before they sync; the hub never sees them.'**
+  String get vaultSetUpBody;
+
+  /// No description provided for @vaultSetUpButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up'**
+  String get vaultSetUpButton;
+
+  /// No description provided for @vaultSetUpOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to the internet to set up the vault, so every device gets the same key.'**
+  String get vaultSetUpOffline;
+
+  /// No description provided for @vaultNotSetUp.
+  ///
+  /// In en, this message translates to:
+  /// **'The owner hasn\'t set up the vault yet.'**
+  String get vaultNotSetUp;
+
+  /// No description provided for @vaultRecoveryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recovery code'**
+  String get vaultRecoveryTitle;
+
+  /// No description provided for @vaultRecoveryCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'The only way back if the passphrase is lost'**
+  String get vaultRecoveryCaption;
+
+  /// No description provided for @vaultRecoveryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Print it or write it down and keep it with the land titles. If the passphrase and this code are both lost, no one can open the documents again, not even HomeSync.'**
+  String get vaultRecoveryBody;
+
+  /// No description provided for @vaultRecoverySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'ve saved it somewhere safe'**
+  String get vaultRecoverySaved;
+
+  /// No description provided for @vaultFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get vaultFinish;
+
+  /// No description provided for @vaultCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get vaultCopy;
+
+  /// No description provided for @vaultKindId.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get vaultKindId;
+
+  /// No description provided for @vaultKindCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate'**
+  String get vaultKindCertificate;
+
+  /// No description provided for @vaultKindProperty.
+  ///
+  /// In en, this message translates to:
+  /// **'Property'**
+  String get vaultKindProperty;
+
+  /// No description provided for @vaultKindContract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contract'**
+  String get vaultKindContract;
+
+  /// No description provided for @vaultKindInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance'**
+  String get vaultKindInsurance;
+
+  /// No description provided for @vaultKindWarranty.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty'**
+  String get vaultKindWarranty;
+
+  /// No description provided for @vaultKindVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle'**
+  String get vaultKindVehicle;
+
+  /// No description provided for @vaultKindPawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Pawn ticket'**
+  String get vaultKindPawn;
+
+  /// No description provided for @vaultKindOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get vaultKindOther;
+
+  /// No description provided for @vaultGroupId.
+  ///
+  /// In en, this message translates to:
+  /// **'IDs'**
+  String get vaultGroupId;
+
+  /// No description provided for @vaultGroupCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificates'**
+  String get vaultGroupCertificate;
+
+  /// No description provided for @vaultGroupProperty.
+  ///
+  /// In en, this message translates to:
+  /// **'Property'**
+  String get vaultGroupProperty;
+
+  /// No description provided for @vaultGroupContract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contracts'**
+  String get vaultGroupContract;
+
+  /// No description provided for @vaultGroupInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance'**
+  String get vaultGroupInsurance;
+
+  /// No description provided for @vaultGroupWarranty.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranties'**
+  String get vaultGroupWarranty;
+
+  /// No description provided for @vaultGroupVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicles'**
+  String get vaultGroupVehicle;
+
+  /// No description provided for @vaultGroupPawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Pawn tickets'**
+  String get vaultGroupPawn;
+
+  /// No description provided for @vaultGroupOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other documents'**
+  String get vaultGroupOther;
+
+  /// No description provided for @vaultTitleOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} · {name}'**
+  String vaultTitleOf(String title, String name);
+
+  /// No description provided for @vaultUnreadable.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t open this document'**
+  String get vaultUnreadable;
+
+  /// No description provided for @vaultDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Expires today} =1{1 day left} other{{count} days left}}'**
+  String vaultDaysLeft(int count);
+
+  /// No description provided for @vaultExpiredDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Expired yesterday} other{Expired {count} days ago}}'**
+  String vaultExpiredDaysAgo(int count);
+
+  /// No description provided for @vaultExpiresCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String vaultExpiresCaption(String date);
+
+  /// No description provided for @vaultExpiredOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired {date}'**
+  String vaultExpiredOn(String date);
+
+  /// No description provided for @vaultNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Number'**
+  String get vaultNumber;
+
+  /// No description provided for @vaultShowNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Show number'**
+  String get vaultShowNumber;
+
+  /// No description provided for @vaultHideNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide number'**
+  String get vaultHideNumber;
+
+  /// No description provided for @vaultKind.
+  ///
+  /// In en, this message translates to:
+  /// **'Kind'**
+  String get vaultKind;
+
+  /// No description provided for @vaultWhose.
+  ///
+  /// In en, this message translates to:
+  /// **'Whose'**
+  String get vaultWhose;
+
+  /// No description provided for @vaultWholeFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole family'**
+  String get vaultWholeFamily;
+
+  /// No description provided for @vaultIssuer.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued by'**
+  String get vaultIssuer;
+
+  /// No description provided for @vaultIssuerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'DFA, PSA, LTO'**
+  String get vaultIssuerHint;
+
+  /// No description provided for @vaultIssuedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get vaultIssuedOn;
+
+  /// No description provided for @vaultExpiresOnLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires'**
+  String get vaultExpiresOnLabel;
+
+  /// No description provided for @vaultNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get vaultNote;
+
+  /// No description provided for @vaultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get vaultTitle;
+
+  /// No description provided for @vaultTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport'**
+  String get vaultTitleHint;
+
+  /// No description provided for @vaultTitleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the document a name'**
+  String get vaultTitleRequired;
+
+  /// No description provided for @vaultEncryptedNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, number, issuer and note are encrypted. Kind, whose and the expiry date are not, so reminders work while the vault is locked.'**
+  String get vaultEncryptedNote;
+
+  /// No description provided for @vaultFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos and files'**
+  String get vaultFiles;
+
+  /// No description provided for @vaultTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get vaultTakePhoto;
+
+  /// No description provided for @vaultAddPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo'**
+  String get vaultAddPhoto;
+
+  /// No description provided for @vaultAddPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Add PDF'**
+  String get vaultAddPdf;
+
+  /// No description provided for @vaultRemoveFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from the document'**
+  String get vaultRemoveFile;
+
+  /// No description provided for @vaultFileTooBig.
+  ///
+  /// In en, this message translates to:
+  /// **'That file is over 20 MB'**
+  String get vaultFileTooBig;
+
+  /// No description provided for @vaultFileOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t reach the hub to get this file. Try again when online.'**
+  String get vaultFileOffline;
+
+  /// No description provided for @vaultFileNotUploaded.
+  ///
+  /// In en, this message translates to:
+  /// **'This file hasn\'t been uploaded yet from the device that added it.'**
+  String get vaultFileNotUploaded;
+
+  /// No description provided for @vaultConflictTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Changed on two devices at once'**
+  String get vaultConflictTitle;
+
+  /// No description provided for @vaultUseOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the other'**
+  String get vaultUseOther;
+
+  /// No description provided for @vaultConflictOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'The owner will choose which version to keep.'**
+  String get vaultConflictOwner;
+
   /// No description provided for @vehiclesModule.
   ///
   /// In en, this message translates to:

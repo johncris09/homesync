@@ -30,6 +30,11 @@ return [
     'push_max_ops' => 200,
     'pull_max_limit' => 500,
 
+    // Encrypted vault files (/api/files): uploaded in chunks of at most
+    // file_chunk_bytes, up to file_max_bytes per file.
+    'file_chunk_bytes' => 1024 * 1024,
+    'file_max_bytes' => 20 * 1024 * 1024,
+
     'entities' => [
 
         // Household members and PIN profiles. Owner manages them.
@@ -299,6 +304,61 @@ return [
             'mutable' => ['note'],
             'read' => $adults,
             'write' => $household,
+        ],
+
+        // Document Vault (docs/vault.md). The household vault key, wrapped by
+        // the vault passphrase (PBKDF2) and by the owner's recovery code. One
+        // row per household, id derived from the household (sync-protocol
+        // §2.1). Only the owner sets it up or changes the passphrase.
+        'vault_keys' => [
+            'table' => 'vault_keys',
+            'fields' => [
+                'passphrase_wrap' => 'text',
+                'kdf_salt' => 'string',
+                'kdf_iterations' => 'int',
+                'recovery_wrap' => 'text',
+                'recovery_salt' => 'string',
+                'created_by' => 'uuid',
+            ],
+            'never_merged' => true,
+            'read' => $adults,
+            'write' => ['owner'],
+        ],
+
+        // A document: kind, whose it is and when it expires are plain so
+        // reminders work while the vault is locked; the title, number,
+        // issuer and note are one encrypted `sealed` blob.
+        'vault_items' => [
+            'table' => 'vault_items',
+            'fields' => [
+                'kind' => 'string',
+                'member_id' => 'uuid',
+                'expires_on' => 'date',
+                'sealed' => 'text',
+                'created_by' => 'uuid',
+            ],
+            'never_merged' => true,
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // A photo or PDF of a document. The bytes are encrypted on the device
+        // with their own key (key_wrap, wrapped by the vault key) and uploaded
+        // to /api/files/{sha256}; sha256 is of the ciphertext. The file name
+        // and type are in `sealed`.
+        'vault_files' => [
+            'table' => 'vault_files',
+            'fields' => [
+                'item_id' => 'uuid',
+                'sha256' => 'string',
+                'size' => 'int',
+                'key_wrap' => 'text',
+                'sealed' => 'text',
+                'position' => 'int',
+            ],
+            'never_merged' => true,
+            'read' => $adults,
+            'write' => $adults,
         ],
 
         // Reviewed-money and never-auto-merged losers, for the Conflict Inbox.

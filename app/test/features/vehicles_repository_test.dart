@@ -233,6 +233,9 @@ void main() {
     await v10.customStatement('SELECT 1');
     await v10.customStatement('DROP TABLE vehicles');
     await v10.customStatement('DROP TABLE vehicle_logs');
+    for (final t in ['vault_keys', 'vault_items', 'vault_files', 'vault_blobs']) {
+      await v10.customStatement('DROP TABLE "$t"'); // added in v12
+    }
     await v10.customStatement('PRAGMA user_version = 10');
     await v10.close();
 

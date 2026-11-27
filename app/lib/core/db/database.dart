@@ -22,6 +22,10 @@ part 'database.g.dart';
     VehicleLogs,
     Budgets,
     Transactions,
+    VaultKeys,
+    VaultItems,
+    VaultFiles,
+    VaultBlobs,
     Conflicts,
     Outbox,
     FieldClocks,
@@ -33,7 +37,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 11;
+  int get schemaVersion => 12;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -75,6 +79,13 @@ class AppDatabase extends _$AppDatabase {
         // Vehicles (new tables only, so this step can be renumbered freely)
         await m.createTable(vehicles);
         await m.createTable(vehicleLogs);
+      }
+      if (from < 12) {
+        // Document Vault
+        await m.createTable(vaultKeys);
+        await m.createTable(vaultItems);
+        await m.createTable(vaultFiles);
+        await m.createTable(vaultBlobs);
       }
     },
   );
