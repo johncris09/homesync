@@ -412,6 +412,8 @@ class _DayCell extends StatelessWidget {
                       color: switch (i.kind) {
                         CalendarKind.event => eventColor(i.event?.color) ?? HomeColors.ube,
                         CalendarKind.vehicle || CalendarKind.checkup => HomeColors.dagat,
+                        CalendarKind.rent => HomeColors.dahon,
+                        CalendarKind.warranty => HomeColors.ube,
                         _ => HomeColors.mangga,
                       },
                     ),
@@ -454,6 +456,36 @@ class _ItemTile extends ConsumerWidget {
         ),
         trailing: const Icon(Icons.chevron_right),
         onTap: () => context.push(Routes.health),
+      );
+    }
+
+    if (item.kind == CalendarKind.rent) {
+      return ListTile(
+        leading: const CircleAvatar(
+          backgroundColor: HomeColors.dahon,
+          foregroundColor: Colors.white,
+          child: Icon(Icons.real_estate_agent_outlined),
+        ),
+        title: Text(item.title),
+        subtitle: Text(
+          [?showDay, l10n.calendarRentDue(formatPeso(item.amountMinor ?? 0, locale: locale, whole: true))].join(' · '),
+        ),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => context.push(Routes.rent),
+      );
+    }
+
+    if (item.kind == CalendarKind.warranty) {
+      return ListTile(
+        leading: const CircleAvatar(
+          backgroundColor: HomeColors.ube,
+          foregroundColor: Colors.white,
+          child: Icon(Icons.verified_outlined),
+        ),
+        title: Text(item.title),
+        subtitle: Text([?showDay, l10n.calendarWarrantyEnds].join(' · ')),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => context.push(Routes.inventory),
       );
     }
 

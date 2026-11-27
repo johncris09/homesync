@@ -364,6 +364,166 @@ return [
             'write' => $adults,
         ],
 
+        // Rent the household collects. A rental unit (room, house, stall) stays
+        // while vacant; a lease is one tenant in a unit, rent due every month on
+        // due_day from starts_on until ends_on. rent_since is the first month at
+        // rent_minor; months before it use prev_rent_minor. Rent changes are
+        // reviewed.
+        'rental_units' => [
+            'table' => 'rental_units',
+            'fields' => [
+                'name' => 'string',
+                'note' => 'text',
+            ],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        'leases' => [
+            'table' => 'leases',
+            'fields' => [
+                'unit_id' => 'uuid',
+                'tenant_name' => 'string',
+                'phone' => 'string',
+                'rent_minor' => 'int',
+                'prev_rent_minor' => 'int',
+                'rent_since' => 'date',
+                'currency' => 'string',
+                'due_day' => 'int',
+                'starts_on' => 'date',
+                'ends_on' => 'date',
+                'deposit_minor' => 'int',
+                'deposit_returned_minor' => 'int',
+                'deposit_returned_on' => 'date',
+                'note' => 'text',
+            ],
+            'reviewed' => ['rent_minor'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // Money received for a lease: kind payment (posts income to the ledger)
+        // or waived (forgiven, no money). Payments cover the oldest month first,
+        // so partial and advance payments need no month. Append-only.
+        'rent_payments' => [
+            'table' => 'rent_payments',
+            'fields' => [
+                'lease_id' => 'uuid',
+                'kind' => 'string',
+                'amount_minor' => 'int',
+                'currency' => 'string',
+                'paid_on' => 'date',
+                'method' => 'string',
+                'member_id' => 'uuid',
+                'note' => 'text',
+            ],
+            'append_only' => true,
+            'mutable' => ['note'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // Emergency & Disaster Preparedness. Everyone sees all of it, so it
+        // works for whoever has the phone when something happens. Adults edit
+        // contacts, the plan and the hazard checklists; go-bag items can be
+        // ticked by their member (checked in the app); anyone, viewers too,
+        // checks in.
+        'emergency_contacts' => [
+            'table' => 'emergency_contacts',
+            'fields' => [
+                'name' => 'string',
+                'kind' => 'string',
+                'phone' => 'string',
+                'note' => 'text',
+                'position' => 'int',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
+        // One row per household, id derived from the household (§2.1).
+        'emergency_plans' => [
+            'table' => 'emergency_plans',
+            'fields' => [
+                'meeting_point' => 'string',
+                'meeting_point_far' => 'string',
+                'evacuation_center' => 'string',
+                'note' => 'text',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
+        // member_id null = the household's shared bag.
+        'go_bag_items' => [
+            'table' => 'go_bag_items',
+            'fields' => [
+                'member_id' => 'uuid',
+                'name' => 'string',
+                'packed' => 'bool',
+                'expires_on' => 'date',
+                'position' => 'int',
+            ],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
+        // A tick on a built-in hazard checklist item; id derived from the
+        // household, hazard and item (§2.1), so ticks from two devices meet.
+        'emergency_checks' => [
+            'table' => 'emergency_checks',
+            'fields' => [
+                'hazard' => 'string',
+                'item' => 'string',
+                'done' => 'bool',
+                'done_by' => 'uuid',
+                'done_at' => 'datetime',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
+        // "I'm safe" / "Need help". Append-only: the latest per member counts.
+        'safety_checkins' => [
+            'table' => 'safety_checkins',
+            'fields' => [
+                'member_id' => 'uuid',
+                'status' => 'string',
+                'note' => 'text',
+                'checked_at' => 'datetime',
+            ],
+            'append_only' => true,
+            'read' => $everyone,
+            'write' => $everyone,
+        ],
+
+        // Household Inventory: durable things the household owns. Everyone
+        // can look up where a thing is and who borrowed it; adults add and
+        // change items (the app hides prices from non-adults). The photo is
+        // a plain file at /api/files/{photo_sha256}.
+        'inventory_items' => [
+            'table' => 'inventory_items',
+            'fields' => [
+                'name' => 'string',
+                'category' => 'string',
+                'room' => 'string',
+                'brand' => 'string',
+                'model' => 'string',
+                'serial_no' => 'string',
+                'bought_on' => 'date',
+                'price_minor' => 'int',
+                'currency' => 'string',
+                'warranty_until' => 'date',
+                'photo_sha256' => 'string',
+                'photo_size' => 'int',
+                'lent_to' => 'string',
+                'lent_on' => 'date',
+                'note' => 'text',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',

@@ -240,6 +240,13 @@ void main() {
     await v10.customStatement('DROP TABLE medicines');
     await v10.customStatement('DROP TABLE med_doses');
     await v10.customStatement('DROP TABLE checkups');
+    await v10.customStatement('DROP TABLE rental_units'); // added in v14
+    await v10.customStatement('DROP TABLE leases');
+    await v10.customStatement('DROP TABLE rent_payments');
+    await v10.customStatement('DROP TABLE inventory_items'); // added in v15
+    for (final t in ['emergency_contacts', 'emergency_plans', 'go_bag_items', 'emergency_checks', 'safety_checkins']) {
+      await v10.customStatement('DROP TABLE $t'); // added in v16
+    }
     await v10.customStatement('PRAGMA user_version = 10');
     await v10.close();
 

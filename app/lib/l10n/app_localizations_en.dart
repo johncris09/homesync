@@ -2484,4 +2484,836 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileDoctor => 'Doctor (optional)';
+
+  @override
+  String get rentModule => 'Rent';
+
+  @override
+  String get rentTileNone => 'No rentals yet';
+
+  @override
+  String get rentTileAllPaid => 'All paid this month';
+
+  @override
+  String rentTileToCollect(String amount) {
+    return '$amount to collect';
+  }
+
+  @override
+  String rentTileLate(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tenants late',
+      one: '1 tenant late',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get rentNoneFigure => 'No rentals yet';
+
+  @override
+  String get rentEmptyCaption => 'Rooms, houses and stalls you rent out';
+
+  @override
+  String get rentEmpty =>
+      'Add a room, house or stall you rent out, then the tenant who stays there.';
+
+  @override
+  String rentToCollectFigure(String amount) {
+    return '$amount to collect';
+  }
+
+  @override
+  String get rentAllPaidFigure => 'All paid';
+
+  @override
+  String rentPaidCount(int paid, int total) {
+    return '$paid of $total paid';
+  }
+
+  @override
+  String rentOverdueCount(int count) {
+    return '$count overdue';
+  }
+
+  @override
+  String rentVacantCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count vacant',
+      one: '1 vacant',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get rentToCollect => 'To collect';
+
+  @override
+  String get rentPaidThisMonth => 'Paid this month';
+
+  @override
+  String get rentVacant => 'Vacant';
+
+  @override
+  String get rentVacantLine => 'Vacant · add a tenant';
+
+  @override
+  String rentOwesLine(String amount) {
+    return 'Owes $amount';
+  }
+
+  @override
+  String rentLeftOf(String left, String rent) {
+    return '$left left of $rent';
+  }
+
+  @override
+  String rentDueOn(String date) {
+    return 'due $date';
+  }
+
+  @override
+  String rentDaysLate(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days late',
+      one: '1 day late',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rentMovedOut(String date) {
+    return 'moved out $date';
+  }
+
+  @override
+  String rentPaidOn(String date) {
+    return 'paid $date';
+  }
+
+  @override
+  String rentAhead(String amount) {
+    return '$amount paid ahead';
+  }
+
+  @override
+  String get rentRecordPayment => 'Record payment';
+
+  @override
+  String get rentAddUnit => 'Add unit';
+
+  @override
+  String get rentEditUnit => 'Rename unit';
+
+  @override
+  String get rentRemoveUnit => 'Remove unit';
+
+  @override
+  String get rentUnitName => 'Unit name';
+
+  @override
+  String get rentUnitNameHint => 'Room 1, upstairs, stall 3';
+
+  @override
+  String get rentAddTenant => 'Add tenant';
+
+  @override
+  String get rentEditTenant => 'Edit tenant';
+
+  @override
+  String get rentRemoveTenant => 'Remove tenant';
+
+  @override
+  String get rentTenantName => 'Tenant name';
+
+  @override
+  String get rentPhone => 'Phone (optional)';
+
+  @override
+  String get rentMonthly => 'Monthly rent';
+
+  @override
+  String get rentChangeHint =>
+      'A new rent applies from this month; earlier months keep the old one.';
+
+  @override
+  String get rentDueDay => 'Due day of the month';
+
+  @override
+  String get rentDueDayHelp =>
+      '29, 30 or 31 falls on the last day of a shorter month';
+
+  @override
+  String get rentDueDayInvalid => 'Enter a day from 1 to 31';
+
+  @override
+  String get rentStartsOn => 'Moved in';
+
+  @override
+  String get rentDeposit => 'Deposit (optional)';
+
+  @override
+  String get rentNote => 'Note (optional)';
+
+  @override
+  String rentEveryLine(String amount, int day) {
+    return '$amount a month, due on day $day';
+  }
+
+  @override
+  String rentSince(String date) {
+    return 'Since $date';
+  }
+
+  @override
+  String rentDepositLine(String amount) {
+    return 'Deposit $amount';
+  }
+
+  @override
+  String rentDepositReturned(String returned, String deposit) {
+    return 'Deposit: $returned of $deposit returned';
+  }
+
+  @override
+  String get rentCall => 'Call';
+
+  @override
+  String get rentText => 'Text';
+
+  @override
+  String get rentWhich => 'Which tenant?';
+
+  @override
+  String get rentAmount => 'Amount';
+
+  @override
+  String get rentPaidOnLabel => 'Paid on';
+
+  @override
+  String rentMethod(String method) {
+    String _temp0 = intl.Intl.selectLogic(method, {
+      'cash': 'Cash',
+      'gcash': 'GCash',
+      'bank': 'Bank',
+      'other': 'Other',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get rentPayHint =>
+      'Pays the oldest month first. Recorded as money in on the Budget.';
+
+  @override
+  String get rentWaive => 'Waive rent';
+
+  @override
+  String get rentWaiveHint =>
+      'Forgiven rent counts as paid but is not money in.';
+
+  @override
+  String get rentMoveOut => 'Move out';
+
+  @override
+  String get rentMoveOutDate => 'Moving out on';
+
+  @override
+  String get rentDepositBack => 'Deposit returned';
+
+  @override
+  String get rentMoveOutHint =>
+      'Rent stops after this month. The unit shows as vacant; anything still owed stays on the list.';
+
+  @override
+  String get rentUndoMoveOut => 'Undo move out';
+
+  @override
+  String get rentHistory => 'Payments';
+
+  @override
+  String get rentHistoryEmpty => 'No payments yet';
+
+  @override
+  String rentKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'waived': 'Waived',
+      'other': 'Payment',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get rentRemoveEntry => 'Remove entry';
+
+  @override
+  String calendarRentDue(String amount) {
+    return 'Rent due · $amount';
+  }
+
+  @override
+  String get inventoryModule => 'Inventory';
+
+  @override
+  String get inventoryTileNone => 'Nothing listed yet';
+
+  @override
+  String inventoryTileItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inventoryTileAttention(int count, int attention) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0 · $attention need a look';
+  }
+
+  @override
+  String get inventoryNoneFigure => 'No items yet';
+
+  @override
+  String inventoryCountFigure(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get inventoryEmptyCaption =>
+      'Appliances, gadgets, furniture and tools';
+
+  @override
+  String inventoryWorth(String amount) {
+    return 'worth $amount';
+  }
+
+  @override
+  String inventoryRoomCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count rooms',
+      one: '1 room',
+      zero: 'no rooms set',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inventoryAttentionCount(int count) {
+    return '$count need a look';
+  }
+
+  @override
+  String get inventoryEmpty =>
+      'List what the household owns: where it is, when it was bought, its warranty and who borrowed it.';
+
+  @override
+  String get inventoryEmptyHelper =>
+      'Nothing is listed yet. An adult can add items.';
+
+  @override
+  String get inventoryAddItem => 'Add item';
+
+  @override
+  String get inventoryEditItem => 'Edit item';
+
+  @override
+  String get inventoryRemoveItem => 'Remove item';
+
+  @override
+  String inventoryRemoveTitle(String name) {
+    return 'Remove $name?';
+  }
+
+  @override
+  String get inventoryRemoveBody =>
+      'It disappears from every phone in the household.';
+
+  @override
+  String get inventorySearch => 'Search name, brand, serial or who has it';
+
+  @override
+  String get inventoryClearSearch => 'Clear search';
+
+  @override
+  String get inventoryNoMatch => 'Nothing matches.';
+
+  @override
+  String get inventoryNeedsAttention => 'Needs a look';
+
+  @override
+  String get inventoryNoRoom => 'No room set';
+
+  @override
+  String inventoryWarrantyEnds(String date) {
+    return 'Warranty ends $date';
+  }
+
+  @override
+  String inventoryWarrantyUntil(String date) {
+    return 'Under warranty until $date';
+  }
+
+  @override
+  String inventoryWarrantyEnded(String date) {
+    return 'Warranty ended $date';
+  }
+
+  @override
+  String inventoryLentTo(String name) {
+    return 'Lent to $name';
+  }
+
+  @override
+  String inventoryLentSince(String name, String date) {
+    return 'Lent to $name since $date';
+  }
+
+  @override
+  String inventoryBoughtOn(String date) {
+    return 'Bought $date';
+  }
+
+  @override
+  String inventorySerialLine(String serial) {
+    return 'S/N $serial';
+  }
+
+  @override
+  String inventoryCategory(String category) {
+    String _temp0 = intl.Intl.selectLogic(category, {
+      'appliance': 'Appliance',
+      'electronics': 'Electronics',
+      'furniture': 'Furniture',
+      'tools': 'Tools',
+      'other': 'Other',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get inventoryPhotoNotHere => 'Photo not here yet · try again';
+
+  @override
+  String get inventoryPhotoTooBig => 'That photo is too big.';
+
+  @override
+  String get inventoryTakePhoto => 'Take photo';
+
+  @override
+  String get inventoryRetakePhoto => 'New photo';
+
+  @override
+  String get inventoryChoosePhoto => 'Choose photo';
+
+  @override
+  String get inventoryRemovePhoto => 'Remove photo';
+
+  @override
+  String get inventoryLend => 'Lend';
+
+  @override
+  String get inventoryReturned => 'Returned';
+
+  @override
+  String inventoryLendTitle(String name) {
+    return 'Lend $name';
+  }
+
+  @override
+  String get inventoryLendWho => 'Who borrowed it';
+
+  @override
+  String get inventoryLendSince => 'Since';
+
+  @override
+  String get inventoryItemName => 'Name';
+
+  @override
+  String get inventoryItemNameHint => 'e.g. Ref, aircon, electric fan';
+
+  @override
+  String get inventoryRoom => 'Room';
+
+  @override
+  String get inventoryDefaultRooms => 'Sala,Kusina,Kwarto,CR,Garahe,Bodega';
+
+  @override
+  String get inventoryBrand => 'Brand';
+
+  @override
+  String get inventoryModel => 'Model';
+
+  @override
+  String get inventorySerial => 'Serial number';
+
+  @override
+  String get inventoryBought => 'Bought on';
+
+  @override
+  String get inventoryPrice => 'Price paid';
+
+  @override
+  String get inventoryWarrantyField => 'Warranty until';
+
+  @override
+  String get inventoryNote => 'Note';
+
+  @override
+  String get inventoryNotSet => 'Not set';
+
+  @override
+  String get inventoryClearDate => 'Clear date';
+
+  @override
+  String get calendarWarrantyEnds => 'Warranty ends';
+
+  @override
+  String get emergencyModule => 'Emergency';
+
+  @override
+  String emergencyTileHelp(String name) {
+    return '$name needs help';
+  }
+
+  @override
+  String emergencyTileSafe(int safe, int total) {
+    return '$safe of $total safe today';
+  }
+
+  @override
+  String emergencyTileBags(int ready, int total) {
+    return '$ready of $total go-bags packed';
+  }
+
+  @override
+  String get emergencyTileSetUp => 'Contacts, meeting point, go-bags';
+
+  @override
+  String emergencyNeedsHelpFigure(String name) {
+    return '$name needs help';
+  }
+
+  @override
+  String emergencyManyNeedHelp(int count) {
+    return '$count need help';
+  }
+
+  @override
+  String emergencySafeFigure(int safe, int total) {
+    return '$safe of $total safe';
+  }
+
+  @override
+  String emergencySafeCaption(int safe, int total) {
+    return '$safe of $total checked in safe';
+  }
+
+  @override
+  String get emergencyLast24h => 'Check-ins from the last 24 hours';
+
+  @override
+  String get emergencyReadyFigure => 'Be ready';
+
+  @override
+  String get emergencyReadyCaption => 'Tap I\'m safe when something happens';
+
+  @override
+  String emergencyBagsPacked(int ready, int total) {
+    return '$ready of $total go-bags packed';
+  }
+
+  @override
+  String get emergencyImSafe => 'I\'m safe';
+
+  @override
+  String get emergencyNeedHelp => 'Need help';
+
+  @override
+  String get emergencyCheckedInSafe =>
+      'Checked in as safe. It reaches everyone when you have signal.';
+
+  @override
+  String get emergencyWho => 'Who\'s checked in';
+
+  @override
+  String get emergencyStatusSafe => 'Safe';
+
+  @override
+  String get emergencyStatusHelp => 'Needs help';
+
+  @override
+  String emergencyLastCheckin(String date) {
+    return 'Last check-in $date';
+  }
+
+  @override
+  String get emergencyNoCheckin => 'No check-in yet';
+
+  @override
+  String get emergencyHelpNote => 'Where are you, what\'s wrong?';
+
+  @override
+  String get emergencyHelpNoteHint => 'e.g. Stuck at school, road flooded';
+
+  @override
+  String get emergencyHelpSyncs =>
+      'Saved on this phone now and sent as soon as there is signal. In danger, call 911.';
+
+  @override
+  String get emergencySendHelp => 'Send';
+
+  @override
+  String get emergencyCall => 'Numbers to call';
+
+  @override
+  String emergencyHotline(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'emergency': 'National emergency hotline',
+      'redCross': 'Philippine Red Cross',
+      'other': 'Hotline',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String emergencyCallNumber(String number) {
+    return 'Call $number';
+  }
+
+  @override
+  String emergencyContactKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'family': 'Family',
+      'barangay': 'Barangay',
+      'hospital': 'Hospital',
+      'doctor': 'Doctor',
+      'other': 'Other',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get emergencyAddContact => 'Add contact';
+
+  @override
+  String get emergencyEditContact => 'Edit contact';
+
+  @override
+  String get emergencyRemoveContact => 'Remove contact';
+
+  @override
+  String get emergencyContactName => 'Name';
+
+  @override
+  String get emergencyContactPhone => 'Phone number';
+
+  @override
+  String get emergencyPhoneInvalid => 'Enter a phone number.';
+
+  @override
+  String get emergencyNote => 'Note';
+
+  @override
+  String get emergencyWhereToMeet => 'Where to meet';
+
+  @override
+  String get emergencyNoPlan => 'No meeting point yet';
+
+  @override
+  String get emergencyNoPlanAdult =>
+      'Agree where everyone goes if you\'re apart.';
+
+  @override
+  String get emergencyNoPlanOthers => 'Ask an adult to set one.';
+
+  @override
+  String get emergencyMeetingPoint => 'Meeting point nearby';
+
+  @override
+  String get emergencyMeetingPointHint => 'e.g. the covered court';
+
+  @override
+  String get emergencyMeetingPointFar => 'Meeting point outside the area';
+
+  @override
+  String get emergencyMeetingPointFarHint => 'e.g. Lola\'s house in town';
+
+  @override
+  String get emergencyEvacuationCenter => 'Evacuation centre';
+
+  @override
+  String get emergencyEvacuationCenterHint => 'e.g. the elementary school';
+
+  @override
+  String get emergencyEditPlan => 'Edit meeting points';
+
+  @override
+  String get emergencyGoBags => 'Go-bags';
+
+  @override
+  String get emergencyHouseholdBag => 'Household';
+
+  @override
+  String get emergencyUnknownMember => 'Member';
+
+  @override
+  String emergencyBagTitle(String name) {
+    return '$name\'s go-bag';
+  }
+
+  @override
+  String get emergencyHouseholdBagTitle => 'Household go-bag';
+
+  @override
+  String get emergencyBagEmpty => 'Nothing listed yet';
+
+  @override
+  String emergencyBagPacked(int packed, int total) {
+    return '$packed of $total packed';
+  }
+
+  @override
+  String emergencyBagExpiring(int count) {
+    return '$count to replace';
+  }
+
+  @override
+  String get emergencyAddToBag => 'Add an item';
+
+  @override
+  String get emergencyAddStarter => 'Add the starter list';
+
+  @override
+  String emergencyStarterItem(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'water': 'Drinking water',
+      'food': 'Ready-to-eat food',
+      'flashlight': 'Flashlight',
+      'batteries': 'Extra batteries',
+      'whistle': 'Whistle',
+      'firstAid': 'First aid kit',
+      'medicines': 'Maintenance medicines',
+      'ids': 'Copies of IDs',
+      'cash': 'Cash in small bills',
+      'powerBank': 'Power bank',
+      'clothes': 'Change of clothes',
+      'raincoat': 'Raincoat',
+      'other': 'Item',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get emergencyEditItem => 'Edit item';
+
+  @override
+  String get emergencyRemoveItem => 'Remove item';
+
+  @override
+  String get emergencyItemName => 'Item';
+
+  @override
+  String get emergencyExpiresField => 'Expires';
+
+  @override
+  String get emergencyNoExpiry => 'No expiry';
+
+  @override
+  String emergencyExpires(String date) {
+    return 'expires $date';
+  }
+
+  @override
+  String emergencyExpired(String date) {
+    return 'expired $date';
+  }
+
+  @override
+  String get emergencyChecklists => 'Be ready for';
+
+  @override
+  String emergencyHazard(String hazard) {
+    String _temp0 = intl.Intl.selectLogic(hazard, {
+      'typhoon': 'Typhoon',
+      'flood': 'Flood',
+      'earthquake': 'Earthquake',
+      'other': 'Hazard',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String emergencyHazardTitle(String hazard) {
+    String _temp0 = intl.Intl.selectLogic(hazard, {
+      'typhoon': 'Before a typhoon',
+      'flood': 'Before a flood',
+      'earthquake': 'Before an earthquake',
+      'other': 'Checklist',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String emergencyChecksDone(int done, int total) {
+    return '$done of $total done';
+  }
+
+  @override
+  String get emergencyClearChecks => 'Clear ticks';
+
+  @override
+  String emergencyCheckItem(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'typhoon_charge': 'Charge phones and power banks',
+      'typhoon_water': 'Store drinking water for at least 3 days',
+      'typhoon_food': 'Stock ready-to-eat food for at least 3 days',
+      'typhoon_secure': 'Secure the roof, windows and loose things outside',
+      'typhoon_drains': 'Clear drains and gutters',
+      'typhoon_bags': 'Keep go-bags by the door',
+      'typhoon_center': 'Know the way to the evacuation centre',
+      'typhoon_updates': 'Follow PAGASA updates on radio or TV',
+      'flood_upHigh': 'Move appliances, documents and valuables up high',
+      'flood_power': 'Switch off the main power if water starts coming in',
+      'flood_documents': 'Keep IDs and documents in a waterproof bag',
+      'flood_noWading': 'Don\'t walk or drive through floodwater',
+      'flood_highGround': 'Know the way to higher ground',
+      'flood_bags': 'Keep go-bags by the door',
+      'earthquake_furniture': 'Fasten tall furniture and shelves to the wall',
+      'earthquake_safeSpots':
+          'Know the safe spot in each room, like under a sturdy table',
+      'earthquake_drill': 'Practise Duck, Cover and Hold',
+      'earthquake_shutOff': 'Know how to turn off gas, water and power',
+      'earthquake_bedside': 'Keep shoes and a flashlight by each bed',
+      'earthquake_meet': 'Agree where to meet outside',
+      'other': 'Item',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get emergencyWorksOffline =>
+      'Everything here is on this phone and works without signal.';
 }

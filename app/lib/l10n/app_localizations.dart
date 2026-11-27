@@ -3681,6 +3681,1164 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Doctor (optional)'**
   String get profileDoctor;
+
+  /// No description provided for @rentModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent'**
+  String get rentModule;
+
+  /// No description provided for @rentTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No rentals yet'**
+  String get rentTileNone;
+
+  /// No description provided for @rentTileAllPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'All paid this month'**
+  String get rentTileAllPaid;
+
+  /// No description provided for @rentTileToCollect.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to collect'**
+  String rentTileToCollect(String amount);
+
+  /// No description provided for @rentTileLate.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 tenant late} other{{count} tenants late}}'**
+  String rentTileLate(int count);
+
+  /// No description provided for @rentNoneFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'No rentals yet'**
+  String get rentNoneFigure;
+
+  /// No description provided for @rentEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms, houses and stalls you rent out'**
+  String get rentEmptyCaption;
+
+  /// No description provided for @rentEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a room, house or stall you rent out, then the tenant who stays there.'**
+  String get rentEmpty;
+
+  /// No description provided for @rentToCollectFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to collect'**
+  String rentToCollectFigure(String amount);
+
+  /// No description provided for @rentAllPaidFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'All paid'**
+  String get rentAllPaidFigure;
+
+  /// No description provided for @rentPaidCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{paid} of {total} paid'**
+  String rentPaidCount(int paid, int total);
+
+  /// No description provided for @rentOverdueCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} overdue'**
+  String rentOverdueCount(int count);
+
+  /// No description provided for @rentVacantCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 vacant} other{{count} vacant}}'**
+  String rentVacantCount(int count);
+
+  /// No description provided for @rentToCollect.
+  ///
+  /// In en, this message translates to:
+  /// **'To collect'**
+  String get rentToCollect;
+
+  /// No description provided for @rentPaidThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid this month'**
+  String get rentPaidThisMonth;
+
+  /// No description provided for @rentVacant.
+  ///
+  /// In en, this message translates to:
+  /// **'Vacant'**
+  String get rentVacant;
+
+  /// No description provided for @rentVacantLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Vacant · add a tenant'**
+  String get rentVacantLine;
+
+  /// No description provided for @rentOwesLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Owes {amount}'**
+  String rentOwesLine(String amount);
+
+  /// No description provided for @rentLeftOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{left} left of {rent}'**
+  String rentLeftOf(String left, String rent);
+
+  /// No description provided for @rentDueOn.
+  ///
+  /// In en, this message translates to:
+  /// **'due {date}'**
+  String rentDueOn(String date);
+
+  /// No description provided for @rentDaysLate.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day late} other{{count} days late}}'**
+  String rentDaysLate(int count);
+
+  /// No description provided for @rentMovedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'moved out {date}'**
+  String rentMovedOut(String date);
+
+  /// No description provided for @rentPaidOn.
+  ///
+  /// In en, this message translates to:
+  /// **'paid {date}'**
+  String rentPaidOn(String date);
+
+  /// No description provided for @rentAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} paid ahead'**
+  String rentAhead(String amount);
+
+  /// No description provided for @rentRecordPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Record payment'**
+  String get rentRecordPayment;
+
+  /// No description provided for @rentAddUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Add unit'**
+  String get rentAddUnit;
+
+  /// No description provided for @rentEditUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename unit'**
+  String get rentEditUnit;
+
+  /// No description provided for @rentRemoveUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove unit'**
+  String get rentRemoveUnit;
+
+  /// No description provided for @rentUnitName.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit name'**
+  String get rentUnitName;
+
+  /// No description provided for @rentUnitNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Room 1, upstairs, stall 3'**
+  String get rentUnitNameHint;
+
+  /// No description provided for @rentAddTenant.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tenant'**
+  String get rentAddTenant;
+
+  /// No description provided for @rentEditTenant.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit tenant'**
+  String get rentEditTenant;
+
+  /// No description provided for @rentRemoveTenant.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove tenant'**
+  String get rentRemoveTenant;
+
+  /// No description provided for @rentTenantName.
+  ///
+  /// In en, this message translates to:
+  /// **'Tenant name'**
+  String get rentTenantName;
+
+  /// No description provided for @rentPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone (optional)'**
+  String get rentPhone;
+
+  /// No description provided for @rentMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly rent'**
+  String get rentMonthly;
+
+  /// No description provided for @rentChangeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A new rent applies from this month; earlier months keep the old one.'**
+  String get rentChangeHint;
+
+  /// No description provided for @rentDueDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Due day of the month'**
+  String get rentDueDay;
+
+  /// No description provided for @rentDueDayHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'29, 30 or 31 falls on the last day of a shorter month'**
+  String get rentDueDayHelp;
+
+  /// No description provided for @rentDueDayInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a day from 1 to 31'**
+  String get rentDueDayInvalid;
+
+  /// No description provided for @rentStartsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Moved in'**
+  String get rentStartsOn;
+
+  /// No description provided for @rentDeposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit (optional)'**
+  String get rentDeposit;
+
+  /// No description provided for @rentNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get rentNote;
+
+  /// No description provided for @rentEveryLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} a month, due on day {day}'**
+  String rentEveryLine(String amount, int day);
+
+  /// No description provided for @rentSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Since {date}'**
+  String rentSince(String date);
+
+  /// No description provided for @rentDepositLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit {amount}'**
+  String rentDepositLine(String amount);
+
+  /// No description provided for @rentDepositReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit: {returned} of {deposit} returned'**
+  String rentDepositReturned(String returned, String deposit);
+
+  /// No description provided for @rentCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get rentCall;
+
+  /// No description provided for @rentText.
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get rentText;
+
+  /// No description provided for @rentWhich.
+  ///
+  /// In en, this message translates to:
+  /// **'Which tenant?'**
+  String get rentWhich;
+
+  /// No description provided for @rentAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get rentAmount;
+
+  /// No description provided for @rentPaidOnLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on'**
+  String get rentPaidOnLabel;
+
+  /// No description provided for @rentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'{method, select, cash{Cash} gcash{GCash} bank{Bank} other{Other}}'**
+  String rentMethod(String method);
+
+  /// No description provided for @rentPayHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pays the oldest month first. Recorded as money in on the Budget.'**
+  String get rentPayHint;
+
+  /// No description provided for @rentWaive.
+  ///
+  /// In en, this message translates to:
+  /// **'Waive rent'**
+  String get rentWaive;
+
+  /// No description provided for @rentWaiveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgiven rent counts as paid but is not money in.'**
+  String get rentWaiveHint;
+
+  /// No description provided for @rentMoveOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Move out'**
+  String get rentMoveOut;
+
+  /// No description provided for @rentMoveOutDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moving out on'**
+  String get rentMoveOutDate;
+
+  /// No description provided for @rentDepositBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit returned'**
+  String get rentDepositBack;
+
+  /// No description provided for @rentMoveOutHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent stops after this month. The unit shows as vacant; anything still owed stays on the list.'**
+  String get rentMoveOutHint;
+
+  /// No description provided for @rentUndoMoveOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo move out'**
+  String get rentUndoMoveOut;
+
+  /// No description provided for @rentHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get rentHistory;
+
+  /// No description provided for @rentHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No payments yet'**
+  String get rentHistoryEmpty;
+
+  /// No description provided for @rentKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, waived{Waived} other{Payment}}'**
+  String rentKind(String kind);
+
+  /// No description provided for @rentRemoveEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove entry'**
+  String get rentRemoveEntry;
+
+  /// No description provided for @calendarRentDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent due · {amount}'**
+  String calendarRentDue(String amount);
+
+  /// No description provided for @inventoryModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get inventoryModule;
+
+  /// No description provided for @inventoryTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing listed yet'**
+  String get inventoryTileNone;
+
+  /// No description provided for @inventoryTileItems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item} other{{count} items}}'**
+  String inventoryTileItems(int count);
+
+  /// No description provided for @inventoryTileAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item} other{{count} items}} · {attention} need a look'**
+  String inventoryTileAttention(int count, int attention);
+
+  /// No description provided for @inventoryNoneFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'No items yet'**
+  String get inventoryNoneFigure;
+
+  /// No description provided for @inventoryCountFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item} other{{count} items}}'**
+  String inventoryCountFigure(int count);
+
+  /// No description provided for @inventoryEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Appliances, gadgets, furniture and tools'**
+  String get inventoryEmptyCaption;
+
+  /// No description provided for @inventoryWorth.
+  ///
+  /// In en, this message translates to:
+  /// **'worth {amount}'**
+  String inventoryWorth(String amount);
+
+  /// No description provided for @inventoryRoomCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{no rooms set} =1{1 room} other{{count} rooms}}'**
+  String inventoryRoomCount(int count);
+
+  /// No description provided for @inventoryAttentionCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} need a look'**
+  String inventoryAttentionCount(int count);
+
+  /// No description provided for @inventoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'List what the household owns: where it is, when it was bought, its warranty and who borrowed it.'**
+  String get inventoryEmpty;
+
+  /// No description provided for @inventoryEmptyHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is listed yet. An adult can add items.'**
+  String get inventoryEmptyHelper;
+
+  /// No description provided for @inventoryAddItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item'**
+  String get inventoryAddItem;
+
+  /// No description provided for @inventoryEditItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get inventoryEditItem;
+
+  /// No description provided for @inventoryRemoveItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove item'**
+  String get inventoryRemoveItem;
+
+  /// No description provided for @inventoryRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}?'**
+  String inventoryRemoveTitle(String name);
+
+  /// No description provided for @inventoryRemoveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It disappears from every phone in the household.'**
+  String get inventoryRemoveBody;
+
+  /// No description provided for @inventorySearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search name, brand, serial or who has it'**
+  String get inventorySearch;
+
+  /// No description provided for @inventoryClearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get inventoryClearSearch;
+
+  /// No description provided for @inventoryNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches.'**
+  String get inventoryNoMatch;
+
+  /// No description provided for @inventoryNeedsAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a look'**
+  String get inventoryNeedsAttention;
+
+  /// No description provided for @inventoryNoRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'No room set'**
+  String get inventoryNoRoom;
+
+  /// No description provided for @inventoryWarrantyEnds.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty ends {date}'**
+  String inventoryWarrantyEnds(String date);
+
+  /// No description provided for @inventoryWarrantyUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Under warranty until {date}'**
+  String inventoryWarrantyUntil(String date);
+
+  /// No description provided for @inventoryWarrantyEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty ended {date}'**
+  String inventoryWarrantyEnded(String date);
+
+  /// No description provided for @inventoryLentTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent to {name}'**
+  String inventoryLentTo(String name);
+
+  /// No description provided for @inventoryLentSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent to {name} since {date}'**
+  String inventoryLentSince(String name, String date);
+
+  /// No description provided for @inventoryBoughtOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought {date}'**
+  String inventoryBoughtOn(String date);
+
+  /// No description provided for @inventorySerialLine.
+  ///
+  /// In en, this message translates to:
+  /// **'S/N {serial}'**
+  String inventorySerialLine(String serial);
+
+  /// No description provided for @inventoryCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'{category, select, appliance{Appliance} electronics{Electronics} furniture{Furniture} tools{Tools} other{Other}}'**
+  String inventoryCategory(String category);
+
+  /// No description provided for @inventoryPhotoNotHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo not here yet · try again'**
+  String get inventoryPhotoNotHere;
+
+  /// No description provided for @inventoryPhotoTooBig.
+  ///
+  /// In en, this message translates to:
+  /// **'That photo is too big.'**
+  String get inventoryPhotoTooBig;
+
+  /// No description provided for @inventoryTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get inventoryTakePhoto;
+
+  /// No description provided for @inventoryRetakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'New photo'**
+  String get inventoryRetakePhoto;
+
+  /// No description provided for @inventoryChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get inventoryChoosePhoto;
+
+  /// No description provided for @inventoryRemovePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get inventoryRemovePhoto;
+
+  /// No description provided for @inventoryLend.
+  ///
+  /// In en, this message translates to:
+  /// **'Lend'**
+  String get inventoryLend;
+
+  /// No description provided for @inventoryReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get inventoryReturned;
+
+  /// No description provided for @inventoryLendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lend {name}'**
+  String inventoryLendTitle(String name);
+
+  /// No description provided for @inventoryLendWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Who borrowed it'**
+  String get inventoryLendWho;
+
+  /// No description provided for @inventoryLendSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Since'**
+  String get inventoryLendSince;
+
+  /// No description provided for @inventoryItemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get inventoryItemName;
+
+  /// No description provided for @inventoryItemNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Ref, aircon, electric fan'**
+  String get inventoryItemNameHint;
+
+  /// No description provided for @inventoryRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get inventoryRoom;
+
+  /// No description provided for @inventoryDefaultRooms.
+  ///
+  /// In en, this message translates to:
+  /// **'Sala,Kusina,Kwarto,CR,Garahe,Bodega'**
+  String get inventoryDefaultRooms;
+
+  /// No description provided for @inventoryBrand.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand'**
+  String get inventoryBrand;
+
+  /// No description provided for @inventoryModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get inventoryModel;
+
+  /// No description provided for @inventorySerial.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial number'**
+  String get inventorySerial;
+
+  /// No description provided for @inventoryBought.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought on'**
+  String get inventoryBought;
+
+  /// No description provided for @inventoryPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price paid'**
+  String get inventoryPrice;
+
+  /// No description provided for @inventoryWarrantyField.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty until'**
+  String get inventoryWarrantyField;
+
+  /// No description provided for @inventoryNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get inventoryNote;
+
+  /// No description provided for @inventoryNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get inventoryNotSet;
+
+  /// No description provided for @inventoryClearDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear date'**
+  String get inventoryClearDate;
+
+  /// No description provided for @calendarWarrantyEnds.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty ends'**
+  String get calendarWarrantyEnds;
+
+  /// No description provided for @emergencyModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get emergencyModule;
+
+  /// No description provided for @emergencyTileHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} needs help'**
+  String emergencyTileHelp(String name);
+
+  /// No description provided for @emergencyTileSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'{safe} of {total} safe today'**
+  String emergencyTileSafe(int safe, int total);
+
+  /// No description provided for @emergencyTileBags.
+  ///
+  /// In en, this message translates to:
+  /// **'{ready} of {total} go-bags packed'**
+  String emergencyTileBags(int ready, int total);
+
+  /// No description provided for @emergencyTileSetUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts, meeting point, go-bags'**
+  String get emergencyTileSetUp;
+
+  /// No description provided for @emergencyNeedsHelpFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} needs help'**
+  String emergencyNeedsHelpFigure(String name);
+
+  /// No description provided for @emergencyManyNeedHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} need help'**
+  String emergencyManyNeedHelp(int count);
+
+  /// No description provided for @emergencySafeFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{safe} of {total} safe'**
+  String emergencySafeFigure(int safe, int total);
+
+  /// No description provided for @emergencySafeCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{safe} of {total} checked in safe'**
+  String emergencySafeCaption(int safe, int total);
+
+  /// No description provided for @emergencyLast24h.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-ins from the last 24 hours'**
+  String get emergencyLast24h;
+
+  /// No description provided for @emergencyReadyFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'Be ready'**
+  String get emergencyReadyFigure;
+
+  /// No description provided for @emergencyReadyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap I\'m safe when something happens'**
+  String get emergencyReadyCaption;
+
+  /// No description provided for @emergencyBagsPacked.
+  ///
+  /// In en, this message translates to:
+  /// **'{ready} of {total} go-bags packed'**
+  String emergencyBagsPacked(int ready, int total);
+
+  /// No description provided for @emergencyImSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m safe'**
+  String get emergencyImSafe;
+
+  /// No description provided for @emergencyNeedHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Need help'**
+  String get emergencyNeedHelp;
+
+  /// No description provided for @emergencyCheckedInSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in as safe. It reaches everyone when you have signal.'**
+  String get emergencyCheckedInSafe;
+
+  /// No description provided for @emergencyWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Who\'s checked in'**
+  String get emergencyWho;
+
+  /// No description provided for @emergencyStatusSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Safe'**
+  String get emergencyStatusSafe;
+
+  /// No description provided for @emergencyStatusHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs help'**
+  String get emergencyStatusHelp;
+
+  /// No description provided for @emergencyLastCheckin.
+  ///
+  /// In en, this message translates to:
+  /// **'Last check-in {date}'**
+  String emergencyLastCheckin(String date);
+
+  /// No description provided for @emergencyNoCheckin.
+  ///
+  /// In en, this message translates to:
+  /// **'No check-in yet'**
+  String get emergencyNoCheckin;
+
+  /// No description provided for @emergencyHelpNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Where are you, what\'s wrong?'**
+  String get emergencyHelpNote;
+
+  /// No description provided for @emergencyHelpNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Stuck at school, road flooded'**
+  String get emergencyHelpNoteHint;
+
+  /// No description provided for @emergencyHelpSyncs.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this phone now and sent as soon as there is signal. In danger, call 911.'**
+  String get emergencyHelpSyncs;
+
+  /// No description provided for @emergencySendHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get emergencySendHelp;
+
+  /// No description provided for @emergencyCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Numbers to call'**
+  String get emergencyCall;
+
+  /// No description provided for @emergencyHotline.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, emergency{National emergency hotline} redCross{Philippine Red Cross} other{Hotline}}'**
+  String emergencyHotline(String key);
+
+  /// No description provided for @emergencyCallNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Call {number}'**
+  String emergencyCallNumber(String number);
+
+  /// No description provided for @emergencyContactKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, family{Family} barangay{Barangay} hospital{Hospital} doctor{Doctor} other{Other}}'**
+  String emergencyContactKind(String kind);
+
+  /// No description provided for @emergencyAddContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Add contact'**
+  String get emergencyAddContact;
+
+  /// No description provided for @emergencyEditContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit contact'**
+  String get emergencyEditContact;
+
+  /// No description provided for @emergencyRemoveContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove contact'**
+  String get emergencyRemoveContact;
+
+  /// No description provided for @emergencyContactName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get emergencyContactName;
+
+  /// No description provided for @emergencyContactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get emergencyContactPhone;
+
+  /// No description provided for @emergencyPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a phone number.'**
+  String get emergencyPhoneInvalid;
+
+  /// No description provided for @emergencyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get emergencyNote;
+
+  /// No description provided for @emergencyWhereToMeet.
+  ///
+  /// In en, this message translates to:
+  /// **'Where to meet'**
+  String get emergencyWhereToMeet;
+
+  /// No description provided for @emergencyNoPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'No meeting point yet'**
+  String get emergencyNoPlan;
+
+  /// No description provided for @emergencyNoPlanAdult.
+  ///
+  /// In en, this message translates to:
+  /// **'Agree where everyone goes if you\'re apart.'**
+  String get emergencyNoPlanAdult;
+
+  /// No description provided for @emergencyNoPlanOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask an adult to set one.'**
+  String get emergencyNoPlanOthers;
+
+  /// No description provided for @emergencyMeetingPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting point nearby'**
+  String get emergencyMeetingPoint;
+
+  /// No description provided for @emergencyMeetingPointHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. the covered court'**
+  String get emergencyMeetingPointHint;
+
+  /// No description provided for @emergencyMeetingPointFar.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting point outside the area'**
+  String get emergencyMeetingPointFar;
+
+  /// No description provided for @emergencyMeetingPointFarHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Lola\'s house in town'**
+  String get emergencyMeetingPointFarHint;
+
+  /// No description provided for @emergencyEvacuationCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Evacuation centre'**
+  String get emergencyEvacuationCenter;
+
+  /// No description provided for @emergencyEvacuationCenterHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. the elementary school'**
+  String get emergencyEvacuationCenterHint;
+
+  /// No description provided for @emergencyEditPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit meeting points'**
+  String get emergencyEditPlan;
+
+  /// No description provided for @emergencyGoBags.
+  ///
+  /// In en, this message translates to:
+  /// **'Go-bags'**
+  String get emergencyGoBags;
+
+  /// No description provided for @emergencyHouseholdBag.
+  ///
+  /// In en, this message translates to:
+  /// **'Household'**
+  String get emergencyHouseholdBag;
+
+  /// No description provided for @emergencyUnknownMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get emergencyUnknownMember;
+
+  /// No description provided for @emergencyBagTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s go-bag'**
+  String emergencyBagTitle(String name);
+
+  /// No description provided for @emergencyHouseholdBagTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Household go-bag'**
+  String get emergencyHouseholdBagTitle;
+
+  /// No description provided for @emergencyBagEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing listed yet'**
+  String get emergencyBagEmpty;
+
+  /// No description provided for @emergencyBagPacked.
+  ///
+  /// In en, this message translates to:
+  /// **'{packed} of {total} packed'**
+  String emergencyBagPacked(int packed, int total);
+
+  /// No description provided for @emergencyBagExpiring.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} to replace'**
+  String emergencyBagExpiring(int count);
+
+  /// No description provided for @emergencyAddToBag.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an item'**
+  String get emergencyAddToBag;
+
+  /// No description provided for @emergencyAddStarter.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the starter list'**
+  String get emergencyAddStarter;
+
+  /// No description provided for @emergencyStarterItem.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, water{Drinking water} food{Ready-to-eat food} flashlight{Flashlight} batteries{Extra batteries} whistle{Whistle} firstAid{First aid kit} medicines{Maintenance medicines} ids{Copies of IDs} cash{Cash in small bills} powerBank{Power bank} clothes{Change of clothes} raincoat{Raincoat} other{Item}}'**
+  String emergencyStarterItem(String key);
+
+  /// No description provided for @emergencyEditItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get emergencyEditItem;
+
+  /// No description provided for @emergencyRemoveItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove item'**
+  String get emergencyRemoveItem;
+
+  /// No description provided for @emergencyItemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get emergencyItemName;
+
+  /// No description provided for @emergencyExpiresField.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires'**
+  String get emergencyExpiresField;
+
+  /// No description provided for @emergencyNoExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'No expiry'**
+  String get emergencyNoExpiry;
+
+  /// No description provided for @emergencyExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'expires {date}'**
+  String emergencyExpires(String date);
+
+  /// No description provided for @emergencyExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'expired {date}'**
+  String emergencyExpired(String date);
+
+  /// No description provided for @emergencyChecklists.
+  ///
+  /// In en, this message translates to:
+  /// **'Be ready for'**
+  String get emergencyChecklists;
+
+  /// No description provided for @emergencyHazard.
+  ///
+  /// In en, this message translates to:
+  /// **'{hazard, select, typhoon{Typhoon} flood{Flood} earthquake{Earthquake} other{Hazard}}'**
+  String emergencyHazard(String hazard);
+
+  /// No description provided for @emergencyHazardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{hazard, select, typhoon{Before a typhoon} flood{Before a flood} earthquake{Before an earthquake} other{Checklist}}'**
+  String emergencyHazardTitle(String hazard);
+
+  /// No description provided for @emergencyChecksDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} done'**
+  String emergencyChecksDone(int done, int total);
+
+  /// No description provided for @emergencyClearChecks.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear ticks'**
+  String get emergencyClearChecks;
+
+  /// No description provided for @emergencyCheckItem.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, typhoon_charge{Charge phones and power banks} typhoon_water{Store drinking water for at least 3 days} typhoon_food{Stock ready-to-eat food for at least 3 days} typhoon_secure{Secure the roof, windows and loose things outside} typhoon_drains{Clear drains and gutters} typhoon_bags{Keep go-bags by the door} typhoon_center{Know the way to the evacuation centre} typhoon_updates{Follow PAGASA updates on radio or TV} flood_upHigh{Move appliances, documents and valuables up high} flood_power{Switch off the main power if water starts coming in} flood_documents{Keep IDs and documents in a waterproof bag} flood_noWading{Don\'t walk or drive through floodwater} flood_highGround{Know the way to higher ground} flood_bags{Keep go-bags by the door} earthquake_furniture{Fasten tall furniture and shelves to the wall} earthquake_safeSpots{Know the safe spot in each room, like under a sturdy table} earthquake_drill{Practise Duck, Cover and Hold} earthquake_shutOff{Know how to turn off gas, water and power} earthquake_bedside{Keep shoes and a flashlight by each bed} earthquake_meet{Agree where to meet outside} other{Item}}'**
+  String emergencyCheckItem(String key);
+
+  /// No description provided for @emergencyWorksOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything here is on this phone and works without signal.'**
+  String get emergencyWorksOffline;
 }
 
 class _AppLocalizationsDelegate

@@ -237,6 +237,129 @@ class VehicleLogs extends Table with SyncColumns {
   TextColumn get note => text().nullable()();
 }
 
+/// A room, house or stall the household rents out; kept while vacant.
+class RentalUnits extends Table with SyncColumns {
+  TextColumn get name => text()();
+  TextColumn get note => text().nullable()();
+}
+
+/// One tenant in a [RentalUnits] row. Rent is due every month on [dueDay]
+/// (the last day of a shorter month) from the month of [startsOn] up to the
+/// month of [endsOn]. [rentMinor] applies from the month of [rentSince]
+/// (from the start when null); earlier months use [prevRentMinor].
+class Leases extends Table with SyncColumns {
+  TextColumn get unitId => text()();
+  TextColumn get tenantName => text()();
+  TextColumn get phone => text().nullable()();
+  IntColumn get rentMinor => integer()();
+  IntColumn get prevRentMinor => integer().nullable()();
+  TextColumn get rentSince => text().nullable()();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+  IntColumn get dueDay => integer()();
+
+  /// Calendar dates `YYYY-MM-DD`.
+  TextColumn get startsOn => text()();
+  TextColumn get endsOn => text().nullable()();
+  IntColumn get depositMinor => integer().nullable()();
+  IntColumn get depositReturnedMinor => integer().nullable()();
+  TextColumn get depositReturnedOn => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// Money received for a lease ([kind] `payment`) or rent forgiven
+/// (`waived`). Covers the oldest month first. Append-only.
+class RentPayments extends Table with SyncColumns {
+  TextColumn get leaseId => text()();
+  TextColumn get kind => text()();
+  IntColumn get amountMinor => integer()();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+
+  /// Calendar date `YYYY-MM-DD`.
+  TextColumn get paidOn => text()();
+
+  /// `cash`, `gcash` or `bank` (optional).
+  TextColumn get method => text().nullable()();
+  TextColumn get memberId => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// A durable thing the household owns (appliance, electronics, furniture,
+/// tools). Everyone reads; adults write. The photo is a plain file named by
+/// [photoSha256], kept in [VaultBlobs] and uploaded like vault files.
+class InventoryItems extends Table with SyncColumns {
+  TextColumn get name => text()();
+
+  /// `appliance`, `electronics`, `furniture`, `tools` or `other`.
+  TextColumn get category => text()();
+  TextColumn get room => text().nullable()();
+  TextColumn get brand => text().nullable()();
+  TextColumn get model => text().nullable()();
+  TextColumn get serialNo => text().nullable()();
+
+  /// Calendar date `YYYY-MM-DD`.
+  TextColumn get boughtOn => text().nullable()();
+  IntColumn get priceMinor => integer().nullable()();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+
+  /// Calendar date `YYYY-MM-DD`: the last day under warranty.
+  TextColumn get warrantyUntil => text().nullable()();
+  TextColumn get photoSha256 => text().nullable()();
+  IntColumn get photoSize => integer().nullable()();
+
+  /// Who borrowed it and since when; both null when it is home.
+  TextColumn get lentTo => text().nullable()();
+  TextColumn get lentOn => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// A number to call in an emergency. The national hotlines are built in.
+class EmergencyContacts extends Table with SyncColumns {
+  TextColumn get name => text()();
+
+  /// `family`, `barangay`, `hospital`, `doctor` or `other`.
+  TextColumn get kind => text()();
+  TextColumn get phone => text()();
+  TextColumn get note => text().nullable()();
+  IntColumn get position => integer().withDefault(const Constant(0))();
+}
+
+/// Where the household meets and evacuates. One row per household.
+class EmergencyPlans extends Table with SyncColumns {
+  TextColumn get meetingPoint => text().nullable()();
+  TextColumn get meetingPointFar => text().nullable()();
+  TextColumn get evacuationCenter => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// One thing in a go-bag; [memberId] null = the household's shared bag.
+class GoBagItems extends Table with SyncColumns {
+  TextColumn get memberId => text().nullable()();
+  TextColumn get name => text()();
+  BoolColumn get packed => boolean().withDefault(const Constant(false))();
+
+  /// Calendar date `YYYY-MM-DD` (food, water, medicine, batteries).
+  TextColumn get expiresOn => text().nullable()();
+  IntColumn get position => integer().withDefault(const Constant(0))();
+}
+
+/// A tick on a built-in hazard checklist item. Id derived from hazard + item.
+class EmergencyChecks extends Table with SyncColumns {
+  /// `typhoon`, `flood` or `earthquake`.
+  TextColumn get hazard => text()();
+  TextColumn get item => text()();
+  BoolColumn get done => boolean().withDefault(const Constant(false))();
+  TextColumn get doneBy => text().nullable()();
+  DateTimeColumn get doneAt => dateTime().nullable()();
+}
+
+/// "I'm safe" ([status] `safe`) or "Need help" (`help`). Append-only.
+class SafetyCheckins extends Table with SyncColumns {
+  TextColumn get memberId => text()();
+  TextColumn get status => text()();
+  TextColumn get note => text().nullable()();
+  DateTimeColumn get checkedAt => dateTime()();
+}
+
 /// A member's health profile; [sealed] is blood type, allergies, conditions,
 /// maintenance medicines, PhilHealth/HMO numbers and doctor, encrypted with
 /// the vault key. One row per member (derived id).

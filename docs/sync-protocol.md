@@ -48,10 +48,13 @@ Some entities hold at most one row per natural key. Their id is not random: the 
 | `transactions` (subscription payment) | `subscription/<subscription_id>/<due_on>` |
 | `transactions` (debt payment) | `debt/<debt_payment_id>` |
 | `transactions` (vehicle cost) | `vehicle/<vehicle_log_id>` |
+| `transactions` (rent received) | `rent/<rent_payment_id>` |
 | `vault_keys` | `household` |
 | `health_profiles` | `<member_id>` |
 | `med_doses` (scheduled dose) | `<medicine_id>/<taken_on>/<slot>` |
 | `transactions` (checkup cost) | `checkup/<checkup_id>` |
+| `emergency_plans` | `household` |
+| `emergency_checks` | `<hazard>/<item>` |
 
 An `insert` for an existing **append-only** record (two devices recording the same payment) changes nothing: the first record stays and the op is answered `merged`, so the second device pulls the first one. A payment re-recorded after its owner undid it uses a random id.
 
@@ -215,6 +218,12 @@ The Document Vault (`docs/vault.md`) keeps secrets encrypted on the device with 
 
 Health (`docs/vault.md` for the key): a member's `health_profiles` row holds blood type, allergies, conditions, maintenance medicines, PhilHealth and HMO numbers and the doctor in `sealed`, encrypted with the vault key (additional data `homesync/health_profiles/<id>/sealed`); only `member_id` is plain. It follows the never-auto-merged rule. A medicine (`medicines`) is for a member (null = anyone), taken at local `HH:MM` `times` (comma-separated; null = as needed) until `ends_on`; `stock` is a counter: a dose sends `-dose_qty`, a restock or stock-take sends the difference, so use and restocking on two devices both count. Everyone but viewers writes `medicines` because a dose changes the stock; only adults edit a medicine (checked in the app). A dose given is an append-only `med_doses` row; a scheduled dose's id is derived from the medicine, day and slot (§2.1), so two people ticking it offline record it once (both stock decrements still count; a stock-take corrects that rare case); an as-needed dose has a random id. Undo is a delete by the person who gave it, with the stock sent back. A restock may post an expense (category `health`, `source_type` `medicine`, random id: it is one device's action). `checkups` (`kind` `checkup` or `vaccine`) have a due date and optional time, are done when `done_at` is set, and marking one done may post its cost (`source_type` `checkup`, id derived from the checkup). Health fields otherwise follow the default rule.
 
+Rent the household collects: a `rental_units` row per room, house or stall (kept while vacant) and a `leases` row per tenant in a unit, with rent due every month on `due_day` (the last day of a shorter month) from the month of `starts_on` up to the month of `ends_on`. `rent_minor` applies from the month of `rent_since` (from the start when null); earlier months use `prev_rent_minor`. Money received is an append-only `rent_payments` row (`kind` `payment`, or `waived` for rent forgiven). What a tenant owes is never stored: devices add up the rent due so far and subtract every payment, which covers the oldest month first, so partial, advance and offline payments from two devices all count. A `payment` also posts income to `transactions` (category `income`, `source_type` `rent`, `source_id` the lease, id derived from the payment, §2.1); `waived` does not. The deposit is kept on the lease and never posted to the ledger.
+
+Household Inventory: an `inventory_items` row per durable thing the household owns (`category` `appliance`, `electronics`, `furniture`, `tools`, `other`) with its `room`, brand, model, serial number, `bought_on`, `price_minor` and `warranty_until`. Lending it out sets `lent_to` and `lent_on`; returning it clears both. Everyone reads it (the app hides prices from non-adults); adults write. The photo is a plain JPEG at `/api/files/{photo_sha256}` (§7), not encrypted, so members without the vault key can see it. All fields follow the default rule.
+
+Emergency & Disaster Preparedness: `emergency_contacts` (`kind` `family`, `barangay`, `hospital`, `doctor`, `other`; the national hotlines are built into the app, not rows), one `emergency_plans` row per household (meeting point nearby, meeting point outside the area, evacuation centre, note), `go_bag_items` per member (`member_id` null = the household's shared bag) with `packed` and an optional `expires_on`, and `emergency_checks`, a tick on an item of a built-in hazard checklist (`hazard` `typhoon`, `flood`, `earthquake`; `item` the app's key for it). A check-in is an append-only `safety_checkins` row (`status` `safe` or `help`, `checked_at`); the latest per member counts, and the app treats one older than 24 hours as no check-in. Everyone reads all of it. Adults write contacts, the plan and checks; everyone but viewers writes go-bag items (the app lets a member tick only their own bag and the shared one); everyone, viewers too, checks in. All other fields follow the default rule.
+
 Tombstones are kept 90 days, then pruned by the nightly job.
 
 ### 6.1 Conflict records
@@ -234,20 +243,20 @@ Every value stored for review (reviewed money, never-auto-merged) is a row in th
 
 ---
 
-## 7. Files (vault)
+## 7. Files (vault and inventory photos)
 
-Encrypted vault files live on the hub's private disk, named by the SHA-256 of their ciphertext. The device encrypts before hashing and uploading (`docs/vault.md`), so the hub only ever sees ciphertext. Every call is authenticated; uploads need `write` on `vault_files`, downloads `read`.
+Files live on the hub's private disk, named by the SHA-256 of their bytes: encrypted vault files (the device encrypts before hashing and uploading, `docs/vault.md`, so the hub only ever sees ciphertext) and plain inventory photos. Every call is authenticated; uploads need `write` on `vault_files` or `inventory_items`. A download needs `read` on a live record that names the file.
 
 | Endpoint | Body | Returns |
 | --- | --- | --- |
 | `GET /api/files/{sha256}/chunks` | — | `{ "complete": bool, "chunks": [0, 1] }`: which chunks the hub already has (resume) |
 | `PUT /api/files/{sha256}/chunks/{index}` | raw bytes, 1 B – 1 MiB (`application/octet-stream`) | `{ "received": index }` |
 | `POST /api/files/{sha256}/complete` | `{ "chunks": n }` | `{ "sha256", "size" }`, or `422` if chunks are missing, the file is over 20 MB or the hash does not match (the chunks are then discarded) |
-| `GET /api/files/{sha256}` | — | the ciphertext, if a live `vault_files` row in the household names it; else `404` |
+| `GET /api/files/{sha256}` | — | the bytes, if a live `vault_files` row (`sha256`) or `inventory_items` row (`photo_sha256`) in the household that the member can read names it; `403` if only records they can't read name it; else `404` |
 
-1. The device stores the ciphertext locally first and writes the `vault_files` row through the outbox.
+1. The device stores the bytes locally first and writes the `vault_files` / `inventory_items` row through the outbox.
 2. After a sync it uploads every file still waiting, chunk by chunk, then calls `complete`. A file already on the hub answers `complete: true` and needs no upload.
-3. Other devices download a file when it is opened and keep the ciphertext locally. A `404` means the device that added it has not uploaded it yet.
+3. Other devices download a file when it is opened (an inventory photo when it is shown) and keep it locally. A `404` means the device that added it has not uploaded it yet.
 
 Files no live row names are kept for now; pruning them is a later job.
 

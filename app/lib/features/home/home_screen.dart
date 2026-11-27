@@ -21,6 +21,9 @@ import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
 import '../health/health_providers.dart';
+import '../emergency/emergency_providers.dart';
+import '../inventory/inventory_providers.dart';
+import '../rent/rent_providers.dart';
 import '../vehicles/vehicles_providers.dart';
 import '../vehicles/vehicles_screen.dart' show dueWhen;
 import '../vault/vault_providers.dart';
@@ -53,6 +56,34 @@ class HomeScreen extends ConsumerWidget {
     final debts = adult ? ref.watch(debtsSummaryProvider) : null;
     final vehicles = adult ? ref.watch(vehiclesProvider).value ?? const [] : const [];
     final cars = adult ? ref.watch(vehiclesSummaryProvider) : null;
+    final rent = adult ? ref.watch(rentSummaryProvider) : null;
+    final inventory = ref.watch(inventorySummaryProvider);
+    final board = ref.watch(checkinBoardProvider);
+    final bagsWithItems = ref.watch(goBagsProvider).where((b) => b.memberId != null && b.items.isNotEmpty).toList();
+    final help = board.needHelp;
+    // During a check-in round the Emergency tile moves to the top.
+    final emergencyFirst = board.active;
+    final emergencyTile = ListTile(
+      key: const Key('emergency-tile'),
+      leading: const CircleAvatar(
+        backgroundColor: HomeColors.gumamela,
+        foregroundColor: Colors.white,
+        child: Icon(Icons.sos_outlined),
+      ),
+      title: Text(l10n.emergencyModule),
+      subtitle: Text(
+        help.isNotEmpty
+            ? l10n.emergencyTileHelp(help.first.name)
+            : board.active
+            ? l10n.emergencyTileSafe(board.safeCount, board.members.length)
+            : bagsWithItems.isNotEmpty
+            ? l10n.emergencyTileBags(bagsWithItems.where((b) => b.ready).length, bagsWithItems.length)
+            : l10n.emergencyTileSetUp,
+        style: help.isNotEmpty ? const TextStyle(color: HomeColors.gumamela, fontWeight: FontWeight.w600) : null,
+      ),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () => context.push(Routes.emergency),
+    );
     final health = ref.watch(healthSummaryProvider);
     final checkup = health.upcoming.firstOrNull;
     final healthCaption = health.left > 0
@@ -60,7 +91,10 @@ class HomeScreen extends ConsumerWidget {
         : health.low.isNotEmpty
         ? l10n.healthTileLow(health.low.length)
         : checkup != null
-        ? l10n.healthTileCheckup(checkup.title, dayLabel(context, DateTime.parse(checkup.dueOn!), ref.read(healthRepoProvider).today))
+        ? l10n.healthTileCheckup(
+            checkup.title,
+            dayLabel(context, DateTime.parse(checkup.dueOn!), ref.read(healthRepoProvider).today),
+          )
         : l10n.healthTileNothing;
     final carNext = cars?.next;
     final carWhen = carNext == null ? null : dueWhen(l10n, locale, carNext, ref.read(vehiclesRepoProvider).today);
@@ -104,6 +138,7 @@ class HomeScreen extends ConsumerWidget {
                 Card(
                   child: Column(
                     children: [
+                      if (emergencyFirst) emergencyTile,
                       if (canRecord)
                         ListTile(
                           leading: const CircleAvatar(
@@ -151,6 +186,27 @@ class HomeScreen extends ConsumerWidget {
                           ),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => context.push(Routes.debts),
+                        ),
+                      if (rent != null)
+                        ListTile(
+                          key: const Key('rent-tile'),
+                          leading: CircleAvatar(
+                            backgroundColor: rent.overdueCount > 0 ? HomeColors.gumamela : HomeColors.dahon,
+                            foregroundColor: Colors.white,
+                            child: const Icon(Icons.real_estate_agent_outlined),
+                          ),
+                          title: Text(l10n.rentModule),
+                          subtitle: Text(
+                            rent.isEmpty
+                                ? l10n.rentTileNone
+                                : rent.overdueCount > 0
+                                ? '${l10n.rentTileToCollect(peso(rent.totalOwed))} · ${l10n.rentTileLate(rent.overdueCount)}'
+                                : rent.totalOwed > 0
+                                ? l10n.rentTileToCollect(peso(rent.totalOwed))
+                                : l10n.rentTileAllPaid,
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => context.push(Routes.rent),
                         ),
                       ListTile(
                         key: const Key('health-tile'),
@@ -226,6 +282,24 @@ class HomeScreen extends ConsumerWidget {
                         onTap: () => context.push(Routes.calendar),
                       ),
                       ListTile(
+                        key: const Key('inventory-tile'),
+                        leading: CircleAvatar(
+                          backgroundColor: inventory.needsAttention.isNotEmpty ? HomeColors.mangga : HomeColors.ube,
+                          foregroundColor: inventory.needsAttention.isNotEmpty ? HomeColors.narra : Colors.white,
+                          child: const Icon(Icons.chair_outlined),
+                        ),
+                        title: Text(l10n.inventoryModule),
+                        subtitle: Text(
+                          inventory.isEmpty
+                              ? l10n.inventoryTileNone
+                              : inventory.needsAttention.isNotEmpty
+                              ? l10n.inventoryTileAttention(inventory.count, inventory.needsAttention.length)
+                              : l10n.inventoryTileItems(inventory.count),
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(Routes.inventory),
+                      ),
+                      ListTile(
                         leading: const CircleAvatar(
                           backgroundColor: HomeColors.ube,
                           foregroundColor: Colors.white,
@@ -236,6 +310,7 @@ class HomeScreen extends ConsumerWidget {
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () => context.push(Routes.pantry),
                       ),
+                      if (!emergencyFirst) emergencyTile,
                     ],
                   ),
                 ),
