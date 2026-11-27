@@ -237,6 +237,50 @@ return [
             'write' => $adults,
         ],
 
+        // Vehicles: kind is car or motorcycle. Due dates for LTO registration
+        // and insurance (yearly) and PMS / change oil by date and/or odometer
+        // (pms_due_km); pms_every_* set the next PMS when one is logged.
+        'vehicles' => [
+            'table' => 'vehicles',
+            'fields' => [
+                'kind' => 'string',
+                'name' => 'string',
+                'plate' => 'string',
+                'color' => 'string',
+                'registration_due_on' => 'date',
+                'insurance_due_on' => 'date',
+                'pms_due_on' => 'date',
+                'pms_due_km' => 'int',
+                'pms_every_months' => 'int',
+                'pms_every_km' => 'int',
+                'note' => 'text',
+            ],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // What happened to a vehicle: kind fuel, repair, pms, registration,
+        // insurance (costs, amount_minor positive) or odometer (a reading
+        // only). The odometer is the highest odometer_km. Append-only.
+        'vehicle_logs' => [
+            'table' => 'vehicle_logs',
+            'fields' => [
+                'vehicle_id' => 'uuid',
+                'kind' => 'string',
+                'amount_minor' => 'int',
+                'currency' => 'string',
+                'logged_on' => 'date',
+                'odometer_km' => 'int',
+                'litres' => 'decimal',
+                'member_id' => 'uuid',
+                'note' => 'text',
+            ],
+            'append_only' => true,
+            'mutable' => ['note'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',

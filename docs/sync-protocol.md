@@ -47,6 +47,7 @@ Some entities hold at most one row per natural key. Their id is not random: the 
 | `transactions` (bill payment) | `bill/<bill_id>` |
 | `transactions` (subscription payment) | `subscription/<subscription_id>/<due_on>` |
 | `transactions` (debt payment) | `debt/<debt_payment_id>` |
+| `transactions` (vehicle cost) | `vehicle/<vehicle_log_id>` |
 
 An `insert` for an existing **append-only** record (two devices recording the same payment) changes nothing: the first record stays and the op is answered `merged`, so the second device pulls the first one. A payment re-recorded after its owner undid it uses a random id.
 
@@ -188,7 +189,7 @@ Applied by the server when an incoming op's field HLC is older than or concurren
 | Kind | Entities / fields | Rule |
 | --- | --- | --- |
 | Default | All fields not listed below | Field-level last-writer-wins by HLC |
-| Append-only | `transactions`, `debt_payments`, `chore_completions`, `med_doses`, `fuel_logs`, `rent_payments`, `stock_movements`, `safety_checkins`, `activity_log` | Inserts only; updates allowed only to `note` and `deleted_at`. Never conflict |
+| Append-only | `transactions`, `debt_payments`, `chore_completions`, `med_doses`, `vehicle_logs`, `rent_payments`, `stock_movements`, `safety_checkins`, `activity_log` | Inserts only; updates allowed only to `note` and `deleted_at`. Never conflict |
 | Counters | `pantry_items.quantity`, `medicines.stock`, `go_bag_items.quantity` | `increment` ops summed; absolute `update` of a counter is rejected (`not_counter`) |
 | Forward-only status | `bills.is_paid`, `grocery_items.is_bought`, `debts.is_closed` | `true` wins over `false`, unless the `false` has a newer HLC **and** the same `updated_by` as the `true` |
 | Reviewed money | `budgets.limit_minor`, `bills.amount_minor`, `subscriptions.price_minor`, `leases.rent_minor`, `debts.principal_minor` | LWW, and the losing value is stored in `conflicts` for an Adult/Owner to confirm or revert |
@@ -202,6 +203,8 @@ A chore has no done flag: it is done for a day when it has a `chore_completions`
 A calendar event (`events`) stores its first date (`starts_on`) and a `repeat` of `none`, `weekly`, `monthly` or `yearly`; devices work out the other dates (monthly and yearly keep the day, clamped to short months). A multi-day event also stores `ends_on`, the last day of its first occurrence (null = one day); every repeat copies the whole span, which must fit inside the repeat (weekly up to 7 days, monthly up to 28, yearly up to 365). Times are local `HH:MM` text (`start_time` null = all day); on a multi-day event `start_time` is on the first day and `end_time` on the last. `color` is a palette name (`ube`, `dagat`, `dahon`, `narra`, `rosas`, `tubig`; null = the default look); devices show an unknown name as the default. Editing or removing a repeating event changes every date. Events follow the default field-level rule.
 
 A debt (`debts`) is one loan, credit card, pawn ticket or sum lent (`kind` `loan`, `card`, `pawn`, `lent`). Its balance is never stored: devices work it out as `principal_minor` plus `charge` rows minus `payment` rows in `debt_payments` (`interest` rows are paid but leave the balance alone, e.g. renewing a pawn ticket). Because those rows are append-only with random ids, two people recording payments offline both count. A payment or interest the household makes on a `loan`, `card` or `pawn` also posts an expense to `transactions` (category `debt`, `source_type` `debt`, `source_id` the debt, id derived from the payment, §2.1); money paid back on a `lent` debt does not. `is_closed` (paid off, redeemed, repaid) follows the forward-only rule; `closed_by` says who may reopen it.
+
+A vehicle (`vehicles`, `kind` `car` or `motorcycle`) keeps its due dates on the row: `registration_due_on` and `insurance_due_on` (yearly), and PMS / change oil by `pms_due_on` and/or `pms_due_km` (whichever comes first). Everything that happens to it is an append-only `vehicle_logs` row (`kind` `fuel`, `repair`, `pms`, `registration`, `insurance` with a positive `amount_minor`, or `odometer` with no amount; `litres` optional on fuel). The odometer is never stored on the vehicle: devices take the highest `odometer_km` in its logs, so readings from two devices offline both count. Every cost also posts an expense to `transactions` (category `transport`, `source_type` `vehicle`, `source_id` the vehicle, id derived from the log, §2.1). Logging a registration or insurance cost moves that due date one year on; logging a PMS sets `pms_due_on` to the log date plus `pms_every_months` and `pms_due_km` to its reading plus `pms_every_km` (when those are set). The due fields follow the default field-level rule.
 
 Tombstones are kept 90 days, then pruned by the nightly job.
 
