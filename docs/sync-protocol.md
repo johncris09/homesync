@@ -55,6 +55,7 @@ Some entities hold at most one row per natural key. Their id is not random: the 
 | `transactions` (checkup cost) | `checkup/<checkup_id>` |
 | `emergency_plans` | `household` |
 | `emergency_checks` | `<hazard>/<item>` |
+| `maintenance_logs` (upkeep done) | `<task_id>/<due_on>` (`once` when the task had no date) |
 
 An `insert` for an existing **append-only** record (two devices recording the same payment) changes nothing: the first record stays and the op is answered `merged`, so the second device pulls the first one. A payment re-recorded after its owner undid it uses a random id.
 
@@ -227,6 +228,8 @@ Emergency & Disaster Preparedness: `emergency_contacts` (`kind` `family`, `baran
 Tombstones are kept 90 days, then pruned by the nightly job.
 
 Food Planner: `recipes` (name, `servings`, `steps`, `note`) and `recipe_ingredients`, one row per ingredient line (`recipe_id`, `name`, optional `quantity` and `unit`, `position`), so two phones editing different lines of a recipe both stick. A planned dish is a `meals` row (`planned_on`, `slot` `breakfast`, `lunch`, `merienda` or `dinner`, and either a `recipe_id` or a typed `dish`; a meal from a recipe also keeps the recipe's name in `dish`, so the plan still reads right after the recipe is deleted). A slot may hold several dishes; removing one deletes its row. Deleting a recipe deletes its lines. The grocery list from the plan is worked out on the device and written as ordinary `grocery_items`. Everyone reads all three; everyone but viewers writes. All fields follow the default rule.
+
+Home Maintenance: `maintenance_tasks` (name, `area` `aircon`, `water`, `roof`, `electrical`, `plumbing`, `septic`, `pest`, `appliance`, `garden` or `other`, `every_months` (null = once), `next_due_on`, `last_done_on`, and an optional `inventory_item_id` and `contractor_id`), `contractors` (name, `trade`, phone, note), and `maintenance_logs`, one row per upkeep done (`kind` `upkeep`, `task_id`, the `due_on` it was for) or repair (`kind` `repair`), with `done_on`, an optional `cost_minor`, `member_id`, contractor and Inventory item. Logs are append-only (only `note` may change). Marking upkeep done writes the log (derived id per task and due date, §2.1, so two phones doing it offline make one entry) and moves the task's `next_due_on` to `done_on` + `every_months` (cleared for a one-off). A cost is also a `transactions` row (`source_type` `maintenance`, `source_id` the log id, category `household`, id derived from the log id), so it is recorded once. Undo, by whoever marked it done, deletes the log and its ledger row and puts `next_due_on` back. Everyone reads all three; adults write. The app shows costs to adults only.
 
 ### 6.1 Conflict records
 
