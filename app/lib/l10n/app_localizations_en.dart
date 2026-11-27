@@ -3316,4 +3316,238 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get emergencyWorksOffline =>
       'Everything here is on this phone and works without signal.';
+
+  @override
+  String get foodModule => 'Food Planner';
+
+  @override
+  String foodTileTonight(String dish) {
+    return 'Tonight: $dish';
+  }
+
+  @override
+  String get foodTileNone => 'Nothing planned for tonight';
+
+  @override
+  String foodTonightFigure(String dish) {
+    return 'Tonight: $dish';
+  }
+
+  @override
+  String get foodNoDinnerFigure => 'Dinner not planned';
+
+  @override
+  String foodDaysPlanned(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count of 7 days planned this week',
+      one: '1 of 7 days planned this week',
+      zero: 'No days planned this week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get foodWeekTab => 'Week';
+
+  @override
+  String get foodRecipesTab => 'Recipes';
+
+  @override
+  String get foodPrevWeek => 'Previous week';
+
+  @override
+  String get foodNextWeek => 'Next week';
+
+  @override
+  String get foodThisWeek => 'This week';
+
+  @override
+  String foodToday(String day) {
+    return 'Today · $day';
+  }
+
+  @override
+  String foodSlot(String slot) {
+    String _temp0 = intl.Intl.selectLogic(slot, {
+      'breakfast': 'Breakfast',
+      'lunch': 'Lunch',
+      'merienda': 'Merienda',
+      'other': 'Dinner',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String foodAddTo(String meal) {
+    return 'Add to $meal';
+  }
+
+  @override
+  String foodMealSheetTitle(String meal, String day) {
+    return '$meal · $day';
+  }
+
+  @override
+  String get foodDishHint => 'Type a dish, or pick a recipe below';
+
+  @override
+  String foodAddDish(String dish) {
+    return 'Add “$dish”';
+  }
+
+  @override
+  String get foodCanCook => 'Can cook from the pantry';
+
+  @override
+  String get foodYourRecipes => 'Your recipes';
+
+  @override
+  String get foodNoRecipesToPick => 'No recipes yet. Type a dish above.';
+
+  @override
+  String get foodNoMatch => 'No recipe by that name.';
+
+  @override
+  String foodInPantryCount(int have, int total) {
+    return '$have of $total in the pantry';
+  }
+
+  @override
+  String get foodAllInPantry => 'Everything is in the pantry';
+
+  @override
+  String foodNeeds(String items) {
+    return 'Needs $items';
+  }
+
+  @override
+  String foodRemoveMeal(String dish) {
+    return 'Remove $dish';
+  }
+
+  @override
+  String get foodPlanToGrocery =>
+      'Add the week\'s ingredients to the grocery list';
+
+  @override
+  String get foodPlanToGroceryHint =>
+      'Only what the pantry lacks, from today on.';
+
+  @override
+  String foodGroceryAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items added to the grocery list',
+      one: '1 item added to the grocery list',
+      zero: 'Nothing new to buy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String foodGroceryInPantry(int count) {
+    return '$count in the pantry';
+  }
+
+  @override
+  String foodGroceryListed(int count) {
+    return '$count already on the list';
+  }
+
+  @override
+  String get foodRecipesEmpty =>
+      'No recipes yet. Add the family\'s favourites.';
+
+  @override
+  String get foodRecipesEmptyViewer => 'No recipes yet.';
+
+  @override
+  String get foodAddRecipe => 'Add recipe';
+
+  @override
+  String get foodEditRecipe => 'Edit recipe';
+
+  @override
+  String get foodRecipeName => 'Recipe name';
+
+  @override
+  String get foodRecipeNameRequired => 'Enter a name.';
+
+  @override
+  String get foodServings => 'Servings';
+
+  @override
+  String foodServingsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count servings',
+      one: '1 serving',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get foodIngredients => 'Ingredients';
+
+  @override
+  String foodIngredientCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ingredients',
+      one: '1 ingredient',
+      zero: 'No ingredients',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get foodIngredientName => 'Ingredient';
+
+  @override
+  String get foodQuantity => 'Amount';
+
+  @override
+  String get foodUnit => 'Unit';
+
+  @override
+  String get foodAddIngredient => 'Add ingredient';
+
+  @override
+  String get foodRemoveIngredient => 'Remove ingredient';
+
+  @override
+  String get foodSteps => 'Steps';
+
+  @override
+  String get foodNote => 'Note';
+
+  @override
+  String get foodDeleteRecipe => 'Delete recipe';
+
+  @override
+  String foodDeleteRecipeConfirm(String name) {
+    return 'Delete $name? Meals already planned keep its name.';
+  }
+
+  @override
+  String get foodDelete => 'Delete';
+
+  @override
+  String get foodEdit => 'Edit';
+
+  @override
+  String get foodInPantry => 'In the pantry';
+
+  @override
+  String get foodToBuy => 'To buy';
+
+  @override
+  String foodToBuyAmount(String amount) {
+    return 'To buy: $amount';
+  }
 }

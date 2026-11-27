@@ -34,3 +34,25 @@ final pantryMatchesProvider = Provider<List<PantryMatch>>(
     ref.watch(pantryItemsProvider).value ?? const [],
   ),
 );
+
+final recipesByIdProvider = Provider<Map<String, Recipe>>(
+  (ref) => {for (final r in ref.watch(recipesProvider).value ?? const <Recipe>[]) r.id: r},
+);
+
+/// Today's meals (for the header and the home tile).
+final todayMealsProvider = StreamProvider<List<Meal>>((ref) {
+  final repo = ref.watch(foodRepoProvider);
+  final t = repo.now;
+  final day = DateTime(t.year, t.month, t.day);
+  return repo.watchMeals(day, day);
+});
+
+/// What is planned for dinner today, names joined; null when nothing.
+final tonightProvider = Provider<String?>((ref) {
+  final recipes = ref.watch(recipesByIdProvider);
+  final names = [
+    for (final m in ref.watch(todayMealsProvider).value ?? const <Meal>[])
+      if (m.slot == 'dinner') mealName(m, recipes),
+  ].where((n) => n.isNotEmpty);
+  return names.isEmpty ? null : names.join(', ');
+});

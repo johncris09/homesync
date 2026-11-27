@@ -39,6 +39,19 @@ void main() {
     expect(weekStart(DateTime(2026, 12, 6), 1), DateTime(2026, 11, 30));
   });
 
+  test('amounts: decimals, commas and fractions', () {
+    expect(parseAmount('1.5'), 1.5);
+    expect(parseAmount('1,5'), 1.5);
+    expect(parseAmount('1/2'), 0.5);
+    expect(parseAmount(' 1 1/2 '), 1.5);
+    expect(parseAmount(''), isNull);
+    expect(parseAmount('a little'), isNull);
+    expect(parseAmount('1/0'), isNull);
+    expect(amountText(0.75, 'kg'), '0.75 kg');
+    expect(amountText(null, 'bunch'), 'bunch');
+    expect(amountText(null, null), isNull);
+  });
+
   test('shortfall compares amounts in the same unit, otherwise only "none left"', () {
     final pantry = [stock('Pork ribs', 0.5, 'kg'), stock('Salt', 1), stock('Rice', 0, 'kg'), stock('Eggs', 4)];
     expect(shortfall(Need('pork ribs', 1.5, 'kg'), pantry), '1 kg');

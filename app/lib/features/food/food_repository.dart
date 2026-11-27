@@ -305,3 +305,25 @@ class FoodRepository {
 }
 
 String? _blankToNull(String? s) => s == null || s.trim().isEmpty ? null : s.trim();
+
+/// "1.5", "1,5", "1/2" or "1 1/2" → a number; null when blank or unreadable.
+double? parseAmount(String text) {
+  final t = text.trim().replaceAll(',', '.');
+  if (t.isEmpty) return null;
+  final mixed = RegExp(r'^(\d+)\s+(\d+)/(\d+)$').firstMatch(t);
+  if (mixed != null) {
+    final d = int.parse(mixed[3]!);
+    return d == 0 ? null : int.parse(mixed[1]!) + int.parse(mixed[2]!) / d;
+  }
+  final frac = RegExp(r'^(\d+)/(\d+)$').firstMatch(t);
+  if (frac != null) {
+    final d = int.parse(frac[2]!);
+    return d == 0 ? null : int.parse(frac[1]!) / d;
+  }
+  final v = double.tryParse(t);
+  return v == null || v < 0 ? null : v;
+}
+
+/// The name to show for a planned meal: its recipe's current name, else the
+/// dish kept on the meal.
+String mealName(Meal m, Map<String, Recipe> recipes) => recipes[m.recipeId]?.name ?? m.dish ?? '';
