@@ -205,6 +205,9 @@ void main() {
       await v13.customStatement('DROP TABLE $t');
     }
     await v13.customStatement('DROP TABLE inventory_items'); // added in v15
+    for (final t in ['emergency_contacts', 'emergency_plans', 'go_bag_items', 'emergency_checks', 'safety_checkins']) {
+      await v13.customStatement('DROP TABLE $t'); // added in v16
+    }
     await v13.customStatement('PRAGMA user_version = 13');
     await v13.close();
 

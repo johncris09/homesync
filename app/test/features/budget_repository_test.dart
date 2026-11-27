@@ -218,6 +218,9 @@ void main() {
     await v2.customStatement('DROP TABLE leases');
     await v2.customStatement('DROP TABLE rent_payments');
     await v2.customStatement('DROP TABLE inventory_items'); // added in v15
+    for (final t in ['emergency_contacts', 'emergency_plans', 'go_bag_items', 'emergency_checks', 'safety_checkins']) {
+      await v2.customStatement('DROP TABLE $t'); // added in v16
+    }
     await v2.customStatement('PRAGMA user_version = 1');
     await v2.close();
 
