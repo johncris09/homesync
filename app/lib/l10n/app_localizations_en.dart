@@ -1111,6 +1111,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventNote => 'Note';
 
   @override
+  String get eventSeveralDays => 'Several days';
+
+  @override
+  String eventUntilDate(String date) {
+    return 'Until $date';
+  }
+
+  @override
+  String eventStartsAt(String time) {
+    return 'Starts $time';
+  }
+
+  @override
+  String eventUntilTime(String time) {
+    return 'Until $time';
+  }
+
+  @override
+  String eventDayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String eventTooLong(int days) {
+    return 'Too long for this repeat: up to $days days';
+  }
+
+  @override
+  String calendarRange(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
   String eventAddedBy(String name) {
     return 'Added by $name';
   }

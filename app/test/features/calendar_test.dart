@@ -10,6 +10,7 @@ import 'package:homesync/core/db/database.dart';
 import 'package:homesync/features/bills/bills_repository.dart';
 import 'package:homesync/features/calendar/calendar_repository.dart';
 import 'package:homesync/shared/dates.dart';
+import 'package:intl/intl.dart';
 
 import '../app_test.dart' as app;
 import '../support/test_db.dart';
@@ -25,14 +26,23 @@ const viewer = Profile(
   deviceId: 'f0000000-0000-7000-8000-00000000000f',
 );
 
-CalendarEvent event(String startsOn, {String repeat = 'none', String title = 'x', String? at}) => CalendarEvent(
+CalendarEvent event(
+  String startsOn, {
+  String repeat = 'none',
+  String title = 'x',
+  String? at,
+  String? until,
+  String? endsOn,
+}) => CalendarEvent(
   id: title,
   householdId: householdId,
   createdAt: DateTime(2026),
   updatedAt: DateTime(2026),
   title: title,
   startsOn: startsOn,
+  endsOn: endsOn,
   startTime: at,
+  endTime: until,
   repeat: repeat,
 );
 
@@ -118,6 +128,54 @@ void main() {
     expect(agenda.daysAfter(today).map((d) => (d.$1.day, d.$2.single.title)), [(28, 'Lola'), (1, 'Netflix')]);
   });
 
+  group('multi-day', () {
+    test('a once event is on every day of its range and comes up once', () {
+      final agenda = Agenda(
+        [event('2026-12-01', endsOn: '2026-12-03', title: 'Retreat')],
+        DateTime(2026, 11, 26),
+        DateTime(2026, 12, 31),
+      );
+      for (final d in [1, 2, 3]) {
+        final i = agenda.on(DateTime(2026, 12, d)).single;
+        expect(i.title, 'Retreat');
+        expect((i.spanStart, i.spanEnd), (DateTime(2026, 12, 1), DateTime(2026, 12, 3)));
+        expect(i.allDay, isTrue);
+        expect(i.continues, d > 1);
+      }
+      expect(agenda.on(DateTime(2026, 12, 4)), isEmpty);
+      expect(agenda.daysAfter(DateTime(2026, 11, 26)).map((d) => d.$1.day), [1], reason: 'listed once, on day 1');
+      expect(agenda.daysAfter(DateTime(2026, 12, 1)), isEmpty, reason: 'already started');
+    });
+
+    test('a timed range starts on the first day and ends on the last', () {
+      final agenda = Agenda(
+        [event('2026-12-04', endsOn: '2026-12-06', at: '18:00', until: '15:00')],
+        DateTime(2026, 12, 1),
+        DateTime(2026, 12, 31),
+      );
+      final days = [
+        for (final d in [4, 5, 6]) agenda.on(DateTime(2026, 12, d)).single,
+      ];
+      expect([for (final i in days) (i.startTime, i.endTime)], [('18:00', null), (null, null), (null, '15:00')]);
+      expect(days.every((i) => i.multiDay), isTrue);
+    });
+
+    test('a repeat copies the span, including one that began before the range', () {
+      final weekend = event('2026-11-06', endsOn: '2026-11-08', repeat: 'weekly');
+      final agenda = Agenda([weekend], DateTime(2026, 11, 22), DateTime(2026, 11, 30));
+      // Fri Nov 20 – Sun Nov 22 started before the range; Fri 27 – Sun 29.
+      expect(
+        [
+          for (var d = 22; d <= 30; d++)
+            if (agenda.on(DateTime(2026, 11, d)).isNotEmpty) d,
+        ],
+        [22, 27, 28, 29],
+      );
+      expect(agenda.on(DateTime(2026, 11, 22)).single.spanStart, DateTime(2026, 11, 20));
+      expect(spanDays(weekend), 2);
+    });
+  });
+
   group('repository', () {
     late AppDatabase db;
     late CalendarRepository repo;
@@ -153,6 +211,33 @@ void main() {
       final after = (await repo.watchEvents().first).single;
       await repo.editEvent(after, title: 'Dentist', startsOn: DateTime(2026, 12, 4), repeat: 'none');
       expect(await db.select(db.outbox).get(), isEmpty, reason: 'nothing changed');
+    });
+
+    test('a range saves ends_on; one day or a span too long for the repeat is fixed', () async {
+      final id = await repo.addEvent(title: 'Retreat', startsOn: DateTime(2026, 12, 4), endsOn: DateTime(2026, 12, 6));
+      var e = (await repo.watchEvents().first).single;
+      expect(e.endsOn, '2026-12-06');
+
+      await repo.editEvent(
+        e,
+        title: 'Retreat',
+        startsOn: DateTime(2026, 12, 4),
+        endsOn: DateTime(2026, 12, 20),
+        repeat: 'weekly',
+      );
+      e = (await repo.watchEvents().first).single;
+      expect(e.endsOn, '2026-12-10', reason: 'a weekly event lasts at most 7 days');
+
+      await repo.editEvent(
+        e,
+        title: 'Retreat',
+        startsOn: DateTime(2026, 12, 4),
+        endsOn: DateTime(2026, 12, 4),
+        repeat: 'weekly',
+      );
+      e = (await repo.watchEvents().first).single;
+      expect(e.id, id);
+      expect(e.endsOn, isNull, reason: 'same day = one-day event');
     });
   });
 
@@ -273,6 +358,64 @@ void main() {
     expect(find.text('Edit event'), findsOneWidget);
     await tapText(tester, 'Remove event');
     expect(find.text('1 today'), findsOneWidget);
+    await app.finish(tester, s);
+  });
+
+  testWidgets('adding a several-day event bands the month and comes up once with its range', (tester) async {
+    final store = MemorySecureStore();
+    app.signedIn(store);
+    final s = (await tester.runAsync(() => open(store)))!;
+    await app.pumpApp(tester, s);
+    await tapText(tester, 'Calendar');
+
+    final today = DateTime.now();
+    final d = DateTime(today.year, today.month, today.day);
+    await tester.tap(find.text('Add event'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('event-title')), 'Retreat');
+    await tester.tap(find.byKey(const Key('event-several-days')));
+    await tester.pumpAndSettle();
+    expect(find.text('2 days'), findsOneWidget);
+    await tapText(tester, 'Weekly');
+    await tapText(tester, 'Save');
+
+    final e = (await tester.runAsync(() => s.db.select(s.db.events).getSingle()))!;
+    expect(e.endsOn, isoDate(DateTime(d.year, d.month, d.day + 1)));
+    expect(find.text('1 today'), findsOneWidget);
+    expect(find.byKey(Key('band-${isoDate(d)}')), findsOneWidget);
+    // Next week's copy comes up once, with its range.
+    final next = DateTime(d.year, d.month, d.day + 7);
+    final f = DateFormat.MMMd('en');
+    expect(
+      find.textContaining('${f.format(next)} – ${f.format(DateTime(next.year, next.month, next.day + 1))}'),
+      findsOneWidget,
+    );
+
+    await app.finish(tester, s);
+  });
+
+  testWidgets('a range too long for the repeat is not saved', (tester) async {
+    final store = MemorySecureStore();
+    app.signedIn(store);
+    final s = (await tester.runAsync(() async {
+      final s = await open(store);
+      final t = DateTime.now();
+      await CalendarRepository(s.db, s.writer).addEvent(
+        title: 'Fiesta week',
+        startsOn: DateTime(t.year, t.month, t.day),
+        endsOn: DateTime(t.year, t.month, t.day + 9),
+      );
+      return s;
+    }))!;
+    await app.pumpApp(tester, s);
+    await tapText(tester, 'Calendar');
+    await tapText(tester, 'Fiesta week');
+    expect(find.text('10 days'), findsOneWidget);
+    await tapText(tester, 'Weekly');
+    expect(find.text('Too long for this repeat: up to 7 days'), findsOneWidget);
+    await tapText(tester, 'Save');
+    expect(find.text('Edit event'), findsOneWidget, reason: 'still open');
+    expect((await tester.runAsync(() => s.db.select(s.db.events).getSingle()))!.repeat, 'none');
     await app.finish(tester, s);
   });
 

@@ -26,14 +26,33 @@ TimeOfDay? parseTime(String? hhmm) {
 
 String hhmm(TimeOfDay t) => '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
 
-/// "All day", "3:00 PM" or "3:00 PM – 4:30 PM".
+/// "All day", "3:00 PM" or "3:00 PM – 4:30 PM" for an event's own times.
+String eventTimes(BuildContext context, String? startTime, String? endTime) {
+  final l10n = AppLocalizations.of(context);
+  final m = MaterialLocalizations.of(context);
+  final start = parseTime(startTime);
+  if (start == null) return l10n.eventAllDay;
+  final end = parseTime(endTime);
+  return end == null ? m.formatTimeOfDay(start) : '${m.formatTimeOfDay(start)} – ${m.formatTimeOfDay(end)}';
+}
+
+/// The times on the item's day: as [eventTimes], and on a multi-day event
+/// "Starts 6:00 PM" on the first day and "Until 3:00 PM" on the last.
 String timeLabel(BuildContext context, CalendarItem i) {
   final l10n = AppLocalizations.of(context);
   final m = MaterialLocalizations.of(context);
+  if (!i.multiDay) return eventTimes(context, i.startTime, i.endTime);
   final start = parseTime(i.startTime);
-  if (start == null) return l10n.eventAllDay;
   final end = parseTime(i.endTime);
-  return end == null ? m.formatTimeOfDay(start) : '${m.formatTimeOfDay(start)} – ${m.formatTimeOfDay(end)}';
+  if (start != null) return l10n.eventStartsAt(m.formatTimeOfDay(start));
+  if (end != null) return l10n.eventUntilTime(m.formatTimeOfDay(end));
+  return l10n.eventAllDay;
+}
+
+/// "Nov 1 – Nov 3".
+String rangeLabel(BuildContext context, DateTime from, DateTime to) {
+  final f = DateFormat.MMMd(Localizations.localeOf(context).toString());
+  return AppLocalizations.of(context).calendarRange(f.format(from), f.format(to));
 }
 
 /// "Today", "Tomorrow" or "Fri, Nov 27".
@@ -125,7 +144,13 @@ class CalendarScreen extends ConsumerWidget {
                     child: Column(
                       children: [
                         for (final (d, items) in ahead)
-                          for (final i in items) _ItemTile(item: i, showDay: dayLabel(context, d, today)),
+                          for (final i in items)
+                            _ItemTile(
+                              item: i,
+                              showDay: i.multiDay
+                                  ? rangeLabel(context, i.spanStart, i.spanEnd)
+                                  : dayLabel(context, d, today),
+                            ),
                       ],
                     ),
                   ),
@@ -156,6 +181,12 @@ class _MonthCard extends ConsumerWidget {
     final lead = (month.weekday % 7 - first + 7) % 7;
     final days = DateTime(month.year, month.month + 1, 0).day;
     final rows = (lead + days + 6) ~/ 7;
+
+    // Multi-day events on a day, to join the band to the next day.
+    Set<String> spanning(DateTime d) => {
+      for (final i in agenda.on(d))
+        if (i.multiDay) i.event!.id,
+    };
 
     void moveMonth(int by) {
       final next = DateTime(month.year, month.month + by);
@@ -213,8 +244,15 @@ class _MonthCard extends ConsumerWidget {
                           final n = row * 7 + col - lead + 1;
                           if (n < 1 || n > days) return const SizedBox(height: 44);
                           final d = DateTime(month.year, month.month, n);
+                          final here = spanning(d);
+                          bool joins(int by) =>
+                              here.isNotEmpty &&
+                              spanning(DateTime(d.year, d.month, d.day + by)).intersection(here).isNotEmpty;
                           return _DayCell(
                             day: d,
+                            band: here.isNotEmpty,
+                            joinLeft: col > 0 && n > 1 && joins(-1),
+                            joinRight: col < 6 && n < days && joins(1),
                             selected: daysUntil(d, day) == 0,
                             isToday: daysUntil(d, today) == 0,
                             items: agenda.on(d),
@@ -232,6 +270,9 @@ class _MonthCard extends ConsumerWidget {
   }
 }
 
+/// Ube at a low tint, for the multi-day band.
+const _bandColor = Color(0xFFE4DCEC);
+
 class _DayCell extends StatelessWidget {
   const _DayCell({
     required this.day,
@@ -239,9 +280,18 @@ class _DayCell extends StatelessWidget {
     required this.isToday,
     required this.items,
     required this.onTap,
+    this.band = false,
+    this.joinLeft = false,
+    this.joinRight = false,
   });
 
   final DateTime day;
+
+  /// A multi-day event covers this day: a soft band behind the number,
+  /// joined to the neighbouring days it shares an event with.
+  final bool band;
+  final bool joinLeft;
+  final bool joinRight;
   final bool selected;
   final bool isToday;
   final List<CalendarItem> items;
@@ -258,28 +308,58 @@ class _DayCell extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 30,
+            SizedBox(
               height: 30,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: selected ? HomeColors.ube : null,
-                border: isToday && !selected ? Border.all(color: HomeColors.ube, width: 1.5) : null,
-              ),
-              child: Text(
-                '${day.day}',
-                style: TextStyle(
-                  color: selected ? Colors.white : HomeColors.narra,
-                  fontWeight: isToday || selected ? FontWeight.w700 : FontWeight.w400,
-                ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  if (band)
+                    Positioned.fill(
+                      key: Key('band-${isoDate(day)}'),
+                      top: 2,
+                      bottom: 2,
+                      child: Row(
+                        children: [
+                          Expanded(child: joinLeft ? const ColoredBox(color: _bandColor) : const SizedBox()),
+                          Container(
+                            width: 30,
+                            decoration: BoxDecoration(
+                              color: _bandColor,
+                              borderRadius: BorderRadius.horizontal(
+                                left: Radius.circular(joinLeft ? 0 : 13),
+                                right: Radius.circular(joinRight ? 0 : 13),
+                              ),
+                            ),
+                          ),
+                          Expanded(child: joinRight ? const ColoredBox(color: _bandColor) : const SizedBox()),
+                        ],
+                      ),
+                    ),
+                  Container(
+                    width: 30,
+                    height: 30,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selected ? HomeColors.ube : null,
+                      border: isToday && !selected ? Border.all(color: HomeColors.ube, width: 1.5) : null,
+                    ),
+                    child: Text(
+                      '${day.day}',
+                      style: TextStyle(
+                        color: selected ? Colors.white : HomeColors.narra,
+                        fontWeight: isToday || selected ? FontWeight.w700 : FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 3),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for (final i in items.take(3))
+                for (final i in items.where((i) => !i.multiDay).take(3))
                   Container(
                     width: 5,
                     height: 5,
@@ -374,7 +454,12 @@ class _EventDetails extends ConsumerWidget {
         ListTile(
           contentPadding: EdgeInsets.zero,
           leading: const Icon(Icons.schedule),
-          title: Text('${DateFormat.yMMMEd(locale).format(item.day)} · ${timeLabel(context, item)}'),
+          title: Text(
+            item.multiDay
+                ? '${l10n.calendarRange(DateFormat.yMMMEd(locale).format(item.spanStart), DateFormat.yMMMEd(locale).format(item.spanEnd))}'
+                      ' · ${eventTimes(context, e.startTime, e.endTime)}'
+                : '${DateFormat.yMMMEd(locale).format(item.day)} · ${timeLabel(context, item)}',
+          ),
           subtitle: Text(repeatName(l10n, e.repeat)),
         ),
         ListTile(
@@ -415,6 +500,9 @@ class _EventFormState extends ConsumerState<EventForm> {
   late final _location = TextEditingController(text: widget.event?.location ?? '');
   late final _note = TextEditingController(text: widget.event?.note ?? '');
   late DateTime _date = parseIsoDate(widget.event?.startsOn) ?? widget.day ?? ref.read(calendarRepoProvider).today;
+
+  /// Last day of a multi-day event; null = one day.
+  late DateTime? _until = parseIsoDate(widget.event?.endsOn);
   late TimeOfDay? _start = parseTime(widget.event?.startTime);
   late TimeOfDay? _end = parseTime(widget.event?.endTime);
   late String _repeat = widget.event?.repeat ?? 'none';
@@ -429,8 +517,16 @@ class _EventFormState extends ConsumerState<EventForm> {
     super.dispose();
   }
 
+  /// How many days the event lasts.
+  int get _days => _until == null ? 1 : daysUntil(_until!, _date) + 1;
+
+  bool get _tooLong {
+    final max = maxSpanDays(_repeat);
+    return max != null && _days > max;
+  }
+
   Future<void> _save() async {
-    if (_title.text.trim().isEmpty) {
+    if (_title.text.trim().isEmpty || _tooLong) {
       setState(() => _tried = true);
       return;
     }
@@ -442,6 +538,7 @@ class _EventFormState extends ConsumerState<EventForm> {
       await repo.addEvent(
         title: _title.text,
         startsOn: _date,
+        endsOn: _until,
         startTime: start,
         endTime: end,
         repeat: _repeat,
@@ -454,6 +551,7 @@ class _EventFormState extends ConsumerState<EventForm> {
         e,
         title: _title.text,
         startsOn: _date,
+        endsOn: _until,
         startTime: start,
         endTime: end,
         repeat: _repeat,
@@ -504,9 +602,46 @@ class _EventFormState extends ConsumerState<EventForm> {
               firstDate: DateTime(today.year - 100),
               lastDate: DateTime(today.year + 5),
             );
-            if (picked != null) setState(() => _date = picked);
+            if (picked == null) return;
+            setState(() {
+              // Moving the start keeps how many days it lasts.
+              if (_until != null) _until = DateTime(picked.year, picked.month, picked.day + _days - 1);
+              _date = picked;
+            });
           },
         ),
+        SwitchListTile(
+          key: const Key('event-several-days'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(l10n.eventSeveralDays),
+          value: _until != null,
+          onChanged: (on) => setState(() => _until = on ? DateTime(_date.year, _date.month, _date.day + 1) : null),
+        ),
+        if (_until != null)
+          ListTile(
+            key: const Key('event-until'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.event_available_outlined),
+            title: Text(l10n.eventUntilDate(DateFormat.yMMMEd(locale).format(_until!))),
+            subtitle: Text(
+              _tooLong ? l10n.eventTooLong(maxSpanDays(_repeat)!) : l10n.eventDayCount(_days),
+              style: _tooLong ? const TextStyle(color: HomeColors.gumamela) : null,
+            ),
+            onTap: () async {
+              final first = DateTime(_date.year, _date.month, _date.day + 1);
+              final max = maxSpanDays(_repeat);
+              final last = max == null
+                  ? DateTime(_date.year + 5)
+                  : DateTime(_date.year, _date.month, _date.day + max - 1);
+              final picked = await showDatePicker(
+                context: context,
+                initialDate: _until!.isAfter(last) ? last : (_until!.isBefore(first) ? first : _until!),
+                firstDate: first,
+                lastDate: last,
+              );
+              if (picked != null) setState(() => _until = picked);
+            },
+          ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
           title: Text(l10n.eventAllDay),

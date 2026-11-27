@@ -1798,6 +1798,48 @@ abstract class AppLocalizations {
   /// **'Note'**
   String get eventNote;
 
+  /// No description provided for @eventSeveralDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Several days'**
+  String get eventSeveralDays;
+
+  /// No description provided for @eventUntilDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Until {date}'**
+  String eventUntilDate(String date);
+
+  /// No description provided for @eventStartsAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts {time}'**
+  String eventStartsAt(String time);
+
+  /// No description provided for @eventUntilTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Until {time}'**
+  String eventUntilTime(String time);
+
+  /// No description provided for @eventDayCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  String eventDayCount(int count);
+
+  /// No description provided for @eventTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Too long for this repeat: up to {days} days'**
+  String eventTooLong(int days);
+
+  /// No description provided for @calendarRange.
+  ///
+  /// In en, this message translates to:
+  /// **'{from} – {to}'**
+  String calendarRange(String from, String to);
+
   /// No description provided for @eventAddedBy.
   ///
   /// In en, this message translates to:
