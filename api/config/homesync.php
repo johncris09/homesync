@@ -166,16 +166,20 @@ return [
         ],
 
         // Calendar events: all day or at a local "HH:MM" time, once or
-        // repeating weekly, monthly or yearly from starts_on. member_id is who
-        // it is for (null = the whole family). Everyone but viewers adds them.
+        // repeating weekly, monthly or yearly from starts_on. ends_on is the
+        // last day of a multi-day event (null = one day); a repeat copies the
+        // whole span. color is a palette name (null = default). member_id is
+        // who it is for (null = the whole family). Everyone but viewers adds them.
         'events' => [
             'table' => 'events',
             'fields' => [
                 'title' => 'string',
                 'starts_on' => 'date',
+                'ends_on' => 'date',
                 'start_time' => 'string',
                 'end_time' => 'string',
                 'repeat' => 'string',
+                'color' => 'string',
                 'member_id' => 'uuid',
                 'location' => 'string',
                 'note' => 'text',

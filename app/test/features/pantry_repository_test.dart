@@ -325,6 +325,9 @@ void main() {
     final id = await old.addGrocery('Eggs');
     await v6.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at');
     await v6.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on');
+    // Also undo versions 9 and 10 (calendar events).
+    await v6.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
+    await v6.customStatement('ALTER TABLE events DROP COLUMN "color"');
     await v6.customStatement('PRAGMA user_version = 6');
     await v6.close();
 

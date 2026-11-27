@@ -113,9 +113,11 @@ const syncedEntities = <String, EntitySpec>{
     fields: {
       'title',
       'starts_on',
+      'ends_on',
       'start_time',
       'end_time',
       'repeat',
+      'color',
       'member_id',
       'location',
       'note',

@@ -31,7 +31,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 10;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -66,6 +66,9 @@ class AppDatabase extends _$AppDatabase {
       }
       if (from < 7) await m.addColumn(groceryItems, groceryItems.clearedAt); // Grocery history
       if (from < 8) await m.addColumn(groceryItems, groceryItems.plannedOn); // Planned shopping day
+      // Multi-day events; databases older than 5 got events with ends_on above.
+      if (from >= 5 && from < 9) await m.addColumn(events, events.endsOn);
+      if (from >= 5 && from < 10) await m.addColumn(events, events.color); // event colours
     },
   );
 
