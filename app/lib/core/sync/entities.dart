@@ -204,6 +204,26 @@ const syncedEntities = <String, EntitySpec>{
     appendOnly: true,
     mutable: {'note'},
   ),
+  'inventory_items': EntitySpec(
+    name: 'inventory_items',
+    fields: {
+      'name',
+      'category',
+      'room',
+      'brand',
+      'model',
+      'serial_no',
+      'bought_on',
+      'price_minor',
+      'currency',
+      'warranty_until',
+      'photo_sha256',
+      'photo_size',
+      'lent_to',
+      'lent_on',
+      'note',
+    },
+  ),
   'transactions': EntitySpec(
     name: 'transactions',
     fields: {

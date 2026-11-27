@@ -204,6 +204,7 @@ void main() {
     for (final t in ['rental_units', 'leases', 'rent_payments']) {
       await v13.customStatement('DROP TABLE $t');
     }
+    await v13.customStatement('DROP TABLE inventory_items'); // added in v15
     await v13.customStatement('PRAGMA user_version = 13');
     await v13.close();
 

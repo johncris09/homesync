@@ -22618,6 +22618,1309 @@ class RentPaymentsCompanion extends UpdateCompanion<RentPayment> {
   }
 }
 
+class $InventoryItemsTable extends InventoryItems
+    with TableInfo<$InventoryItemsTable, InventoryItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $InventoryItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _roomMeta = const VerificationMeta('room');
+  @override
+  late final GeneratedColumn<String> room = GeneratedColumn<String>(
+    'room',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _brandMeta = const VerificationMeta('brand');
+  @override
+  late final GeneratedColumn<String> brand = GeneratedColumn<String>(
+    'brand',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _modelMeta = const VerificationMeta('model');
+  @override
+  late final GeneratedColumn<String> model = GeneratedColumn<String>(
+    'model',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serialNoMeta = const VerificationMeta(
+    'serialNo',
+  );
+  @override
+  late final GeneratedColumn<String> serialNo = GeneratedColumn<String>(
+    'serial_no',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _boughtOnMeta = const VerificationMeta(
+    'boughtOn',
+  );
+  @override
+  late final GeneratedColumn<String> boughtOn = GeneratedColumn<String>(
+    'bought_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _priceMinorMeta = const VerificationMeta(
+    'priceMinor',
+  );
+  @override
+  late final GeneratedColumn<int> priceMinor = GeneratedColumn<int>(
+    'price_minor',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _currencyMeta = const VerificationMeta(
+    'currency',
+  );
+  @override
+  late final GeneratedColumn<String> currency = GeneratedColumn<String>(
+    'currency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('PHP'),
+  );
+  static const VerificationMeta _warrantyUntilMeta = const VerificationMeta(
+    'warrantyUntil',
+  );
+  @override
+  late final GeneratedColumn<String> warrantyUntil = GeneratedColumn<String>(
+    'warranty_until',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _photoSha256Meta = const VerificationMeta(
+    'photoSha256',
+  );
+  @override
+  late final GeneratedColumn<String> photoSha256 = GeneratedColumn<String>(
+    'photo_sha256',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _photoSizeMeta = const VerificationMeta(
+    'photoSize',
+  );
+  @override
+  late final GeneratedColumn<int> photoSize = GeneratedColumn<int>(
+    'photo_size',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lentToMeta = const VerificationMeta('lentTo');
+  @override
+  late final GeneratedColumn<String> lentTo = GeneratedColumn<String>(
+    'lent_to',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lentOnMeta = const VerificationMeta('lentOn');
+  @override
+  late final GeneratedColumn<String> lentOn = GeneratedColumn<String>(
+    'lent_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    name,
+    category,
+    room,
+    brand,
+    model,
+    serialNo,
+    boughtOn,
+    priceMinor,
+    currency,
+    warrantyUntil,
+    photoSha256,
+    photoSize,
+    lentTo,
+    lentOn,
+    note,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'inventory_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<InventoryItem> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('room')) {
+      context.handle(
+        _roomMeta,
+        room.isAcceptableOrUnknown(data['room']!, _roomMeta),
+      );
+    }
+    if (data.containsKey('brand')) {
+      context.handle(
+        _brandMeta,
+        brand.isAcceptableOrUnknown(data['brand']!, _brandMeta),
+      );
+    }
+    if (data.containsKey('model')) {
+      context.handle(
+        _modelMeta,
+        model.isAcceptableOrUnknown(data['model']!, _modelMeta),
+      );
+    }
+    if (data.containsKey('serial_no')) {
+      context.handle(
+        _serialNoMeta,
+        serialNo.isAcceptableOrUnknown(data['serial_no']!, _serialNoMeta),
+      );
+    }
+    if (data.containsKey('bought_on')) {
+      context.handle(
+        _boughtOnMeta,
+        boughtOn.isAcceptableOrUnknown(data['bought_on']!, _boughtOnMeta),
+      );
+    }
+    if (data.containsKey('price_minor')) {
+      context.handle(
+        _priceMinorMeta,
+        priceMinor.isAcceptableOrUnknown(data['price_minor']!, _priceMinorMeta),
+      );
+    }
+    if (data.containsKey('currency')) {
+      context.handle(
+        _currencyMeta,
+        currency.isAcceptableOrUnknown(data['currency']!, _currencyMeta),
+      );
+    }
+    if (data.containsKey('warranty_until')) {
+      context.handle(
+        _warrantyUntilMeta,
+        warrantyUntil.isAcceptableOrUnknown(
+          data['warranty_until']!,
+          _warrantyUntilMeta,
+        ),
+      );
+    }
+    if (data.containsKey('photo_sha256')) {
+      context.handle(
+        _photoSha256Meta,
+        photoSha256.isAcceptableOrUnknown(
+          data['photo_sha256']!,
+          _photoSha256Meta,
+        ),
+      );
+    }
+    if (data.containsKey('photo_size')) {
+      context.handle(
+        _photoSizeMeta,
+        photoSize.isAcceptableOrUnknown(data['photo_size']!, _photoSizeMeta),
+      );
+    }
+    if (data.containsKey('lent_to')) {
+      context.handle(
+        _lentToMeta,
+        lentTo.isAcceptableOrUnknown(data['lent_to']!, _lentToMeta),
+      );
+    }
+    if (data.containsKey('lent_on')) {
+      context.handle(
+        _lentOnMeta,
+        lentOn.isAcceptableOrUnknown(data['lent_on']!, _lentOnMeta),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  InventoryItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return InventoryItem(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      room: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}room'],
+      ),
+      brand: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}brand'],
+      ),
+      model: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}model'],
+      ),
+      serialNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}serial_no'],
+      ),
+      boughtOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bought_on'],
+      ),
+      priceMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}price_minor'],
+      ),
+      currency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}currency'],
+      )!,
+      warrantyUntil: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}warranty_until'],
+      ),
+      photoSha256: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}photo_sha256'],
+      ),
+      photoSize: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}photo_size'],
+      ),
+      lentTo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lent_to'],
+      ),
+      lentOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lent_on'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
+  }
+
+  @override
+  $InventoryItemsTable createAlias(String alias) {
+    return $InventoryItemsTable(attachedDatabase, alias);
+  }
+}
+
+class InventoryItem extends DataClass implements Insertable<InventoryItem> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String name;
+
+  /// `appliance`, `electronics`, `furniture`, `tools` or `other`.
+  final String category;
+  final String? room;
+  final String? brand;
+  final String? model;
+  final String? serialNo;
+
+  /// Calendar date `YYYY-MM-DD`.
+  final String? boughtOn;
+  final int? priceMinor;
+  final String currency;
+
+  /// Calendar date `YYYY-MM-DD`: the last day under warranty.
+  final String? warrantyUntil;
+  final String? photoSha256;
+  final int? photoSize;
+
+  /// Who borrowed it and since when; both null when it is home.
+  final String? lentTo;
+  final String? lentOn;
+  final String? note;
+  const InventoryItem({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.name,
+    required this.category,
+    this.room,
+    this.brand,
+    this.model,
+    this.serialNo,
+    this.boughtOn,
+    this.priceMinor,
+    required this.currency,
+    this.warrantyUntil,
+    this.photoSha256,
+    this.photoSize,
+    this.lentTo,
+    this.lentOn,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['name'] = Variable<String>(name);
+    map['category'] = Variable<String>(category);
+    if (!nullToAbsent || room != null) {
+      map['room'] = Variable<String>(room);
+    }
+    if (!nullToAbsent || brand != null) {
+      map['brand'] = Variable<String>(brand);
+    }
+    if (!nullToAbsent || model != null) {
+      map['model'] = Variable<String>(model);
+    }
+    if (!nullToAbsent || serialNo != null) {
+      map['serial_no'] = Variable<String>(serialNo);
+    }
+    if (!nullToAbsent || boughtOn != null) {
+      map['bought_on'] = Variable<String>(boughtOn);
+    }
+    if (!nullToAbsent || priceMinor != null) {
+      map['price_minor'] = Variable<int>(priceMinor);
+    }
+    map['currency'] = Variable<String>(currency);
+    if (!nullToAbsent || warrantyUntil != null) {
+      map['warranty_until'] = Variable<String>(warrantyUntil);
+    }
+    if (!nullToAbsent || photoSha256 != null) {
+      map['photo_sha256'] = Variable<String>(photoSha256);
+    }
+    if (!nullToAbsent || photoSize != null) {
+      map['photo_size'] = Variable<int>(photoSize);
+    }
+    if (!nullToAbsent || lentTo != null) {
+      map['lent_to'] = Variable<String>(lentTo);
+    }
+    if (!nullToAbsent || lentOn != null) {
+      map['lent_on'] = Variable<String>(lentOn);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  InventoryItemsCompanion toCompanion(bool nullToAbsent) {
+    return InventoryItemsCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      name: Value(name),
+      category: Value(category),
+      room: room == null && nullToAbsent ? const Value.absent() : Value(room),
+      brand: brand == null && nullToAbsent
+          ? const Value.absent()
+          : Value(brand),
+      model: model == null && nullToAbsent
+          ? const Value.absent()
+          : Value(model),
+      serialNo: serialNo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serialNo),
+      boughtOn: boughtOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(boughtOn),
+      priceMinor: priceMinor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(priceMinor),
+      currency: Value(currency),
+      warrantyUntil: warrantyUntil == null && nullToAbsent
+          ? const Value.absent()
+          : Value(warrantyUntil),
+      photoSha256: photoSha256 == null && nullToAbsent
+          ? const Value.absent()
+          : Value(photoSha256),
+      photoSize: photoSize == null && nullToAbsent
+          ? const Value.absent()
+          : Value(photoSize),
+      lentTo: lentTo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lentTo),
+      lentOn: lentOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lentOn),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory InventoryItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return InventoryItem(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      name: serializer.fromJson<String>(json['name']),
+      category: serializer.fromJson<String>(json['category']),
+      room: serializer.fromJson<String?>(json['room']),
+      brand: serializer.fromJson<String?>(json['brand']),
+      model: serializer.fromJson<String?>(json['model']),
+      serialNo: serializer.fromJson<String?>(json['serialNo']),
+      boughtOn: serializer.fromJson<String?>(json['boughtOn']),
+      priceMinor: serializer.fromJson<int?>(json['priceMinor']),
+      currency: serializer.fromJson<String>(json['currency']),
+      warrantyUntil: serializer.fromJson<String?>(json['warrantyUntil']),
+      photoSha256: serializer.fromJson<String?>(json['photoSha256']),
+      photoSize: serializer.fromJson<int?>(json['photoSize']),
+      lentTo: serializer.fromJson<String?>(json['lentTo']),
+      lentOn: serializer.fromJson<String?>(json['lentOn']),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'name': serializer.toJson<String>(name),
+      'category': serializer.toJson<String>(category),
+      'room': serializer.toJson<String?>(room),
+      'brand': serializer.toJson<String?>(brand),
+      'model': serializer.toJson<String?>(model),
+      'serialNo': serializer.toJson<String?>(serialNo),
+      'boughtOn': serializer.toJson<String?>(boughtOn),
+      'priceMinor': serializer.toJson<int?>(priceMinor),
+      'currency': serializer.toJson<String>(currency),
+      'warrantyUntil': serializer.toJson<String?>(warrantyUntil),
+      'photoSha256': serializer.toJson<String?>(photoSha256),
+      'photoSize': serializer.toJson<int?>(photoSize),
+      'lentTo': serializer.toJson<String?>(lentTo),
+      'lentOn': serializer.toJson<String?>(lentOn),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  InventoryItem copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? name,
+    String? category,
+    Value<String?> room = const Value.absent(),
+    Value<String?> brand = const Value.absent(),
+    Value<String?> model = const Value.absent(),
+    Value<String?> serialNo = const Value.absent(),
+    Value<String?> boughtOn = const Value.absent(),
+    Value<int?> priceMinor = const Value.absent(),
+    String? currency,
+    Value<String?> warrantyUntil = const Value.absent(),
+    Value<String?> photoSha256 = const Value.absent(),
+    Value<int?> photoSize = const Value.absent(),
+    Value<String?> lentTo = const Value.absent(),
+    Value<String?> lentOn = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+  }) => InventoryItem(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    name: name ?? this.name,
+    category: category ?? this.category,
+    room: room.present ? room.value : this.room,
+    brand: brand.present ? brand.value : this.brand,
+    model: model.present ? model.value : this.model,
+    serialNo: serialNo.present ? serialNo.value : this.serialNo,
+    boughtOn: boughtOn.present ? boughtOn.value : this.boughtOn,
+    priceMinor: priceMinor.present ? priceMinor.value : this.priceMinor,
+    currency: currency ?? this.currency,
+    warrantyUntil: warrantyUntil.present
+        ? warrantyUntil.value
+        : this.warrantyUntil,
+    photoSha256: photoSha256.present ? photoSha256.value : this.photoSha256,
+    photoSize: photoSize.present ? photoSize.value : this.photoSize,
+    lentTo: lentTo.present ? lentTo.value : this.lentTo,
+    lentOn: lentOn.present ? lentOn.value : this.lentOn,
+    note: note.present ? note.value : this.note,
+  );
+  InventoryItem copyWithCompanion(InventoryItemsCompanion data) {
+    return InventoryItem(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      name: data.name.present ? data.name.value : this.name,
+      category: data.category.present ? data.category.value : this.category,
+      room: data.room.present ? data.room.value : this.room,
+      brand: data.brand.present ? data.brand.value : this.brand,
+      model: data.model.present ? data.model.value : this.model,
+      serialNo: data.serialNo.present ? data.serialNo.value : this.serialNo,
+      boughtOn: data.boughtOn.present ? data.boughtOn.value : this.boughtOn,
+      priceMinor: data.priceMinor.present
+          ? data.priceMinor.value
+          : this.priceMinor,
+      currency: data.currency.present ? data.currency.value : this.currency,
+      warrantyUntil: data.warrantyUntil.present
+          ? data.warrantyUntil.value
+          : this.warrantyUntil,
+      photoSha256: data.photoSha256.present
+          ? data.photoSha256.value
+          : this.photoSha256,
+      photoSize: data.photoSize.present ? data.photoSize.value : this.photoSize,
+      lentTo: data.lentTo.present ? data.lentTo.value : this.lentTo,
+      lentOn: data.lentOn.present ? data.lentOn.value : this.lentOn,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('InventoryItem(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('name: $name, ')
+          ..write('category: $category, ')
+          ..write('room: $room, ')
+          ..write('brand: $brand, ')
+          ..write('model: $model, ')
+          ..write('serialNo: $serialNo, ')
+          ..write('boughtOn: $boughtOn, ')
+          ..write('priceMinor: $priceMinor, ')
+          ..write('currency: $currency, ')
+          ..write('warrantyUntil: $warrantyUntil, ')
+          ..write('photoSha256: $photoSha256, ')
+          ..write('photoSize: $photoSize, ')
+          ..write('lentTo: $lentTo, ')
+          ..write('lentOn: $lentOn, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    name,
+    category,
+    room,
+    brand,
+    model,
+    serialNo,
+    boughtOn,
+    priceMinor,
+    currency,
+    warrantyUntil,
+    photoSha256,
+    photoSize,
+    lentTo,
+    lentOn,
+    note,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is InventoryItem &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.name == this.name &&
+          other.category == this.category &&
+          other.room == this.room &&
+          other.brand == this.brand &&
+          other.model == this.model &&
+          other.serialNo == this.serialNo &&
+          other.boughtOn == this.boughtOn &&
+          other.priceMinor == this.priceMinor &&
+          other.currency == this.currency &&
+          other.warrantyUntil == this.warrantyUntil &&
+          other.photoSha256 == this.photoSha256 &&
+          other.photoSize == this.photoSize &&
+          other.lentTo == this.lentTo &&
+          other.lentOn == this.lentOn &&
+          other.note == this.note);
+}
+
+class InventoryItemsCompanion extends UpdateCompanion<InventoryItem> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> name;
+  final Value<String> category;
+  final Value<String?> room;
+  final Value<String?> brand;
+  final Value<String?> model;
+  final Value<String?> serialNo;
+  final Value<String?> boughtOn;
+  final Value<int?> priceMinor;
+  final Value<String> currency;
+  final Value<String?> warrantyUntil;
+  final Value<String?> photoSha256;
+  final Value<int?> photoSize;
+  final Value<String?> lentTo;
+  final Value<String?> lentOn;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const InventoryItemsCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.category = const Value.absent(),
+    this.room = const Value.absent(),
+    this.brand = const Value.absent(),
+    this.model = const Value.absent(),
+    this.serialNo = const Value.absent(),
+    this.boughtOn = const Value.absent(),
+    this.priceMinor = const Value.absent(),
+    this.currency = const Value.absent(),
+    this.warrantyUntil = const Value.absent(),
+    this.photoSha256 = const Value.absent(),
+    this.photoSize = const Value.absent(),
+    this.lentTo = const Value.absent(),
+    this.lentOn = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  InventoryItemsCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String name,
+    required String category,
+    this.room = const Value.absent(),
+    this.brand = const Value.absent(),
+    this.model = const Value.absent(),
+    this.serialNo = const Value.absent(),
+    this.boughtOn = const Value.absent(),
+    this.priceMinor = const Value.absent(),
+    this.currency = const Value.absent(),
+    this.warrantyUntil = const Value.absent(),
+    this.photoSha256 = const Value.absent(),
+    this.photoSize = const Value.absent(),
+    this.lentTo = const Value.absent(),
+    this.lentOn = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       name = Value(name),
+       category = Value(category);
+  static Insertable<InventoryItem> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? name,
+    Expression<String>? category,
+    Expression<String>? room,
+    Expression<String>? brand,
+    Expression<String>? model,
+    Expression<String>? serialNo,
+    Expression<String>? boughtOn,
+    Expression<int>? priceMinor,
+    Expression<String>? currency,
+    Expression<String>? warrantyUntil,
+    Expression<String>? photoSha256,
+    Expression<int>? photoSize,
+    Expression<String>? lentTo,
+    Expression<String>? lentOn,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (name != null) 'name': name,
+      if (category != null) 'category': category,
+      if (room != null) 'room': room,
+      if (brand != null) 'brand': brand,
+      if (model != null) 'model': model,
+      if (serialNo != null) 'serial_no': serialNo,
+      if (boughtOn != null) 'bought_on': boughtOn,
+      if (priceMinor != null) 'price_minor': priceMinor,
+      if (currency != null) 'currency': currency,
+      if (warrantyUntil != null) 'warranty_until': warrantyUntil,
+      if (photoSha256 != null) 'photo_sha256': photoSha256,
+      if (photoSize != null) 'photo_size': photoSize,
+      if (lentTo != null) 'lent_to': lentTo,
+      if (lentOn != null) 'lent_on': lentOn,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  InventoryItemsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? name,
+    Value<String>? category,
+    Value<String?>? room,
+    Value<String?>? brand,
+    Value<String?>? model,
+    Value<String?>? serialNo,
+    Value<String?>? boughtOn,
+    Value<int?>? priceMinor,
+    Value<String>? currency,
+    Value<String?>? warrantyUntil,
+    Value<String?>? photoSha256,
+    Value<int?>? photoSize,
+    Value<String?>? lentTo,
+    Value<String?>? lentOn,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return InventoryItemsCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      room: room ?? this.room,
+      brand: brand ?? this.brand,
+      model: model ?? this.model,
+      serialNo: serialNo ?? this.serialNo,
+      boughtOn: boughtOn ?? this.boughtOn,
+      priceMinor: priceMinor ?? this.priceMinor,
+      currency: currency ?? this.currency,
+      warrantyUntil: warrantyUntil ?? this.warrantyUntil,
+      photoSha256: photoSha256 ?? this.photoSha256,
+      photoSize: photoSize ?? this.photoSize,
+      lentTo: lentTo ?? this.lentTo,
+      lentOn: lentOn ?? this.lentOn,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (room.present) {
+      map['room'] = Variable<String>(room.value);
+    }
+    if (brand.present) {
+      map['brand'] = Variable<String>(brand.value);
+    }
+    if (model.present) {
+      map['model'] = Variable<String>(model.value);
+    }
+    if (serialNo.present) {
+      map['serial_no'] = Variable<String>(serialNo.value);
+    }
+    if (boughtOn.present) {
+      map['bought_on'] = Variable<String>(boughtOn.value);
+    }
+    if (priceMinor.present) {
+      map['price_minor'] = Variable<int>(priceMinor.value);
+    }
+    if (currency.present) {
+      map['currency'] = Variable<String>(currency.value);
+    }
+    if (warrantyUntil.present) {
+      map['warranty_until'] = Variable<String>(warrantyUntil.value);
+    }
+    if (photoSha256.present) {
+      map['photo_sha256'] = Variable<String>(photoSha256.value);
+    }
+    if (photoSize.present) {
+      map['photo_size'] = Variable<int>(photoSize.value);
+    }
+    if (lentTo.present) {
+      map['lent_to'] = Variable<String>(lentTo.value);
+    }
+    if (lentOn.present) {
+      map['lent_on'] = Variable<String>(lentOn.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('InventoryItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('name: $name, ')
+          ..write('category: $category, ')
+          ..write('room: $room, ')
+          ..write('brand: $brand, ')
+          ..write('model: $model, ')
+          ..write('serialNo: $serialNo, ')
+          ..write('boughtOn: $boughtOn, ')
+          ..write('priceMinor: $priceMinor, ')
+          ..write('currency: $currency, ')
+          ..write('warrantyUntil: $warrantyUntil, ')
+          ..write('photoSha256: $photoSha256, ')
+          ..write('photoSize: $photoSize, ')
+          ..write('lentTo: $lentTo, ')
+          ..write('lentOn: $lentOn, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $ConflictsTable extends Conflicts
     with TableInfo<$ConflictsTable, ConflictRecord> {
   @override
@@ -25455,6 +26758,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $RentalUnitsTable rentalUnits = $RentalUnitsTable(this);
   late final $LeasesTable leases = $LeasesTable(this);
   late final $RentPaymentsTable rentPayments = $RentPaymentsTable(this);
+  late final $InventoryItemsTable inventoryItems = $InventoryItemsTable(this);
   late final $ConflictsTable conflicts = $ConflictsTable(this);
   late final $OutboxTable outbox = $OutboxTable(this);
   late final $FieldClocksTable fieldClocks = $FieldClocksTable(this);
@@ -25490,6 +26794,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     rentalUnits,
     leases,
     rentPayments,
+    inventoryItems,
     conflicts,
     outbox,
     fieldClocks,
@@ -35779,6 +37084,579 @@ typedef $$RentPaymentsTableProcessedTableManager =
       RentPayment,
       PrefetchHooks Function()
     >;
+typedef $$InventoryItemsTableCreateCompanionBuilder =
+    InventoryItemsCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String name,
+      required String category,
+      Value<String?> room,
+      Value<String?> brand,
+      Value<String?> model,
+      Value<String?> serialNo,
+      Value<String?> boughtOn,
+      Value<int?> priceMinor,
+      Value<String> currency,
+      Value<String?> warrantyUntil,
+      Value<String?> photoSha256,
+      Value<int?> photoSize,
+      Value<String?> lentTo,
+      Value<String?> lentOn,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+typedef $$InventoryItemsTableUpdateCompanionBuilder =
+    InventoryItemsCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> name,
+      Value<String> category,
+      Value<String?> room,
+      Value<String?> brand,
+      Value<String?> model,
+      Value<String?> serialNo,
+      Value<String?> boughtOn,
+      Value<int?> priceMinor,
+      Value<String> currency,
+      Value<String?> warrantyUntil,
+      Value<String?> photoSha256,
+      Value<int?> photoSize,
+      Value<String?> lentTo,
+      Value<String?> lentOn,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+
+class $$InventoryItemsTableFilterComposer
+    extends Composer<_$AppDatabase, $InventoryItemsTable> {
+  $$InventoryItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get room => $composableBuilder(
+    column: $table.room,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get brand => $composableBuilder(
+    column: $table.brand,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get model => $composableBuilder(
+    column: $table.model,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get serialNo => $composableBuilder(
+    column: $table.serialNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get boughtOn => $composableBuilder(
+    column: $table.boughtOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get priceMinor => $composableBuilder(
+    column: $table.priceMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get warrantyUntil => $composableBuilder(
+    column: $table.warrantyUntil,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get photoSha256 => $composableBuilder(
+    column: $table.photoSha256,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get photoSize => $composableBuilder(
+    column: $table.photoSize,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lentTo => $composableBuilder(
+    column: $table.lentTo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lentOn => $composableBuilder(
+    column: $table.lentOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$InventoryItemsTableOrderingComposer
+    extends Composer<_$AppDatabase, $InventoryItemsTable> {
+  $$InventoryItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get room => $composableBuilder(
+    column: $table.room,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get brand => $composableBuilder(
+    column: $table.brand,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get model => $composableBuilder(
+    column: $table.model,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get serialNo => $composableBuilder(
+    column: $table.serialNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get boughtOn => $composableBuilder(
+    column: $table.boughtOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get priceMinor => $composableBuilder(
+    column: $table.priceMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get warrantyUntil => $composableBuilder(
+    column: $table.warrantyUntil,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get photoSha256 => $composableBuilder(
+    column: $table.photoSha256,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get photoSize => $composableBuilder(
+    column: $table.photoSize,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lentTo => $composableBuilder(
+    column: $table.lentTo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lentOn => $composableBuilder(
+    column: $table.lentOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$InventoryItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $InventoryItemsTable> {
+  $$InventoryItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get room =>
+      $composableBuilder(column: $table.room, builder: (column) => column);
+
+  GeneratedColumn<String> get brand =>
+      $composableBuilder(column: $table.brand, builder: (column) => column);
+
+  GeneratedColumn<String> get model =>
+      $composableBuilder(column: $table.model, builder: (column) => column);
+
+  GeneratedColumn<String> get serialNo =>
+      $composableBuilder(column: $table.serialNo, builder: (column) => column);
+
+  GeneratedColumn<String> get boughtOn =>
+      $composableBuilder(column: $table.boughtOn, builder: (column) => column);
+
+  GeneratedColumn<int> get priceMinor => $composableBuilder(
+    column: $table.priceMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get currency =>
+      $composableBuilder(column: $table.currency, builder: (column) => column);
+
+  GeneratedColumn<String> get warrantyUntil => $composableBuilder(
+    column: $table.warrantyUntil,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get photoSha256 => $composableBuilder(
+    column: $table.photoSha256,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get photoSize =>
+      $composableBuilder(column: $table.photoSize, builder: (column) => column);
+
+  GeneratedColumn<String> get lentTo =>
+      $composableBuilder(column: $table.lentTo, builder: (column) => column);
+
+  GeneratedColumn<String> get lentOn =>
+      $composableBuilder(column: $table.lentOn, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+}
+
+class $$InventoryItemsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $InventoryItemsTable,
+          InventoryItem,
+          $$InventoryItemsTableFilterComposer,
+          $$InventoryItemsTableOrderingComposer,
+          $$InventoryItemsTableAnnotationComposer,
+          $$InventoryItemsTableCreateCompanionBuilder,
+          $$InventoryItemsTableUpdateCompanionBuilder,
+          (
+            InventoryItem,
+            BaseReferences<_$AppDatabase, $InventoryItemsTable, InventoryItem>,
+          ),
+          InventoryItem,
+          PrefetchHooks Function()
+        > {
+  $$InventoryItemsTableTableManager(
+    _$AppDatabase db,
+    $InventoryItemsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$InventoryItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$InventoryItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$InventoryItemsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String?> room = const Value.absent(),
+                Value<String?> brand = const Value.absent(),
+                Value<String?> model = const Value.absent(),
+                Value<String?> serialNo = const Value.absent(),
+                Value<String?> boughtOn = const Value.absent(),
+                Value<int?> priceMinor = const Value.absent(),
+                Value<String> currency = const Value.absent(),
+                Value<String?> warrantyUntil = const Value.absent(),
+                Value<String?> photoSha256 = const Value.absent(),
+                Value<int?> photoSize = const Value.absent(),
+                Value<String?> lentTo = const Value.absent(),
+                Value<String?> lentOn = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => InventoryItemsCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                name: name,
+                category: category,
+                room: room,
+                brand: brand,
+                model: model,
+                serialNo: serialNo,
+                boughtOn: boughtOn,
+                priceMinor: priceMinor,
+                currency: currency,
+                warrantyUntil: warrantyUntil,
+                photoSha256: photoSha256,
+                photoSize: photoSize,
+                lentTo: lentTo,
+                lentOn: lentOn,
+                note: note,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String name,
+                required String category,
+                Value<String?> room = const Value.absent(),
+                Value<String?> brand = const Value.absent(),
+                Value<String?> model = const Value.absent(),
+                Value<String?> serialNo = const Value.absent(),
+                Value<String?> boughtOn = const Value.absent(),
+                Value<int?> priceMinor = const Value.absent(),
+                Value<String> currency = const Value.absent(),
+                Value<String?> warrantyUntil = const Value.absent(),
+                Value<String?> photoSha256 = const Value.absent(),
+                Value<int?> photoSize = const Value.absent(),
+                Value<String?> lentTo = const Value.absent(),
+                Value<String?> lentOn = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => InventoryItemsCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                name: name,
+                category: category,
+                room: room,
+                brand: brand,
+                model: model,
+                serialNo: serialNo,
+                boughtOn: boughtOn,
+                priceMinor: priceMinor,
+                currency: currency,
+                warrantyUntil: warrantyUntil,
+                photoSha256: photoSha256,
+                photoSize: photoSize,
+                lentTo: lentTo,
+                lentOn: lentOn,
+                note: note,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$InventoryItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $InventoryItemsTable,
+      InventoryItem,
+      $$InventoryItemsTableFilterComposer,
+      $$InventoryItemsTableOrderingComposer,
+      $$InventoryItemsTableAnnotationComposer,
+      $$InventoryItemsTableCreateCompanionBuilder,
+      $$InventoryItemsTableUpdateCompanionBuilder,
+      (
+        InventoryItem,
+        BaseReferences<_$AppDatabase, $InventoryItemsTable, InventoryItem>,
+      ),
+      InventoryItem,
+      PrefetchHooks Function()
+    >;
 typedef $$ConflictsTableCreateCompanionBuilder =
     ConflictsCompanion Function({
       required String id,
@@ -37217,6 +39095,8 @@ class $AppDatabaseManager {
       $$LeasesTableTableManager(_db, _db.leases);
   $$RentPaymentsTableTableManager get rentPayments =>
       $$RentPaymentsTableTableManager(_db, _db.rentPayments);
+  $$InventoryItemsTableTableManager get inventoryItems =>
+      $$InventoryItemsTableTableManager(_db, _db.inventoryItems);
   $$ConflictsTableTableManager get conflicts =>
       $$ConflictsTableTableManager(_db, _db.conflicts);
   $$OutboxTableTableManager get outbox =>
