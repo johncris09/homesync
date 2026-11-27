@@ -365,6 +365,38 @@ class PushTest extends SyncTestCase
         $this->assertSame('rejected', $this->push($john, [$this->op('vehicle_logs', $logId, 'update', ['amount_minor' => 1], $this->hlc(6), 1)])->json('results.0.status'), 'logs are append-only');
     }
 
+    public function test_rent_is_for_adults_and_payments_from_two_devices_both_count(): void
+    {
+        $john = $this->device('owner');
+        $ana = $this->device('adult');
+        $teen = $this->device('teen');
+        $unitId = (string) Str::uuid7();
+        $leaseId = (string) Str::uuid7();
+
+        $this->assertSame('forbidden', $this->push($teen, [$this->op('rental_units', (string) Str::uuid7(), 'insert', ['name' => 'Room 9'], $this->hlc(1))])->json('results.0.error'));
+        $lease = ['unit_id' => $unitId, 'tenant_name' => 'Jun', 'phone' => '0917 555 0101', 'rent_minor' => 350000, 'due_day' => 1, 'starts_on' => '2026-10-01', 'deposit_minor' => 700000];
+        $this->assertSame(['applied', 'applied'], $this->statuses($this->push($john, [
+            $this->op('rental_units', $unitId, 'insert', ['name' => 'Room 2'], $this->hlc(2)),
+            $this->op('leases', $leaseId, 'insert', $lease, $this->hlc(3)),
+        ])));
+
+        $pay = fn ($d, int $t) => $this->op('rent_payments', (string) Str::uuid7(), 'insert', ['lease_id' => $leaseId, 'kind' => 'payment', 'amount_minor' => 200000, 'paid_on' => '2026-12-02', 'method' => 'gcash', 'member_id' => $d->member_id], $this->hlc($t));
+        $this->assertSame(['applied'], $this->statuses($this->push($john, [$pay($john, 4)])));
+        $this->assertSame(['applied'], $this->statuses($this->push($ana, [$pay($ana, 5)])));
+        $this->assertSame(2, DB::table('rent_payments')->where('lease_id', $leaseId)->count());
+
+        $changes = collect($this->pull($ana)->assertOk()->json('changes'));
+        $pulled = $changes->firstWhere('entity', 'leases');
+        $this->assertSame(350000, $pulled['row']['rent_minor']);
+        $this->assertSame(1, $pulled['row']['due_day']);
+        $this->assertSame('2026-10-01', $pulled['row']['starts_on']);
+        $this->assertSame('gcash', $changes->firstWhere('entity', 'rent_payments')['row']['method']);
+        $this->assertEmpty(collect($this->pull($teen)->json('changes'))->whereIn('entity', ['rental_units', 'leases', 'rent_payments'])->all());
+
+        $payId = $changes->firstWhere('entity', 'rent_payments')['entity_id'];
+        $this->assertSame('rejected', $this->push($john, [$this->op('rent_payments', $payId, 'update', ['amount_minor' => 1], $this->hlc(6), 1)])->json('results.0.status'), 'payments are append-only');
+    }
+
     public function test_conflicts_sync_to_adults_and_can_be_resolved(): void
     {
         $john = $this->device('owner');

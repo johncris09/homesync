@@ -21,6 +21,7 @@ import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
 import '../health/health_providers.dart';
+import '../rent/rent_providers.dart';
 import '../vehicles/vehicles_providers.dart';
 import '../vehicles/vehicles_screen.dart' show dueWhen;
 import '../vault/vault_providers.dart';
@@ -53,6 +54,7 @@ class HomeScreen extends ConsumerWidget {
     final debts = adult ? ref.watch(debtsSummaryProvider) : null;
     final vehicles = adult ? ref.watch(vehiclesProvider).value ?? const [] : const [];
     final cars = adult ? ref.watch(vehiclesSummaryProvider) : null;
+    final rent = adult ? ref.watch(rentSummaryProvider) : null;
     final health = ref.watch(healthSummaryProvider);
     final checkup = health.upcoming.firstOrNull;
     final healthCaption = health.left > 0
@@ -60,7 +62,10 @@ class HomeScreen extends ConsumerWidget {
         : health.low.isNotEmpty
         ? l10n.healthTileLow(health.low.length)
         : checkup != null
-        ? l10n.healthTileCheckup(checkup.title, dayLabel(context, DateTime.parse(checkup.dueOn!), ref.read(healthRepoProvider).today))
+        ? l10n.healthTileCheckup(
+            checkup.title,
+            dayLabel(context, DateTime.parse(checkup.dueOn!), ref.read(healthRepoProvider).today),
+          )
         : l10n.healthTileNothing;
     final carNext = cars?.next;
     final carWhen = carNext == null ? null : dueWhen(l10n, locale, carNext, ref.read(vehiclesRepoProvider).today);
@@ -151,6 +156,27 @@ class HomeScreen extends ConsumerWidget {
                           ),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => context.push(Routes.debts),
+                        ),
+                      if (rent != null)
+                        ListTile(
+                          key: const Key('rent-tile'),
+                          leading: CircleAvatar(
+                            backgroundColor: rent.overdueCount > 0 ? HomeColors.gumamela : HomeColors.dahon,
+                            foregroundColor: Colors.white,
+                            child: const Icon(Icons.real_estate_agent_outlined),
+                          ),
+                          title: Text(l10n.rentModule),
+                          subtitle: Text(
+                            rent.isEmpty
+                                ? l10n.rentTileNone
+                                : rent.overdueCount > 0
+                                ? '${l10n.rentTileToCollect(peso(rent.totalOwed))} · ${l10n.rentTileLate(rent.overdueCount)}'
+                                : rent.totalOwed > 0
+                                ? l10n.rentTileToCollect(peso(rent.totalOwed))
+                                : l10n.rentTileAllPaid,
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => context.push(Routes.rent),
                         ),
                       ListTile(
                         key: const Key('health-tile'),

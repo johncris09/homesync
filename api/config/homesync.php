@@ -364,6 +364,65 @@ return [
             'write' => $adults,
         ],
 
+        // Rent the household collects. A rental unit (room, house, stall) stays
+        // while vacant; a lease is one tenant in a unit, rent due every month on
+        // due_day from starts_on until ends_on. rent_since is the first month at
+        // rent_minor; months before it use prev_rent_minor. Rent changes are
+        // reviewed.
+        'rental_units' => [
+            'table' => 'rental_units',
+            'fields' => [
+                'name' => 'string',
+                'note' => 'text',
+            ],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        'leases' => [
+            'table' => 'leases',
+            'fields' => [
+                'unit_id' => 'uuid',
+                'tenant_name' => 'string',
+                'phone' => 'string',
+                'rent_minor' => 'int',
+                'prev_rent_minor' => 'int',
+                'rent_since' => 'date',
+                'currency' => 'string',
+                'due_day' => 'int',
+                'starts_on' => 'date',
+                'ends_on' => 'date',
+                'deposit_minor' => 'int',
+                'deposit_returned_minor' => 'int',
+                'deposit_returned_on' => 'date',
+                'note' => 'text',
+            ],
+            'reviewed' => ['rent_minor'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // Money received for a lease: kind payment (posts income to the ledger)
+        // or waived (forgiven, no money). Payments cover the oldest month first,
+        // so partial and advance payments need no month. Append-only.
+        'rent_payments' => [
+            'table' => 'rent_payments',
+            'fields' => [
+                'lease_id' => 'uuid',
+                'kind' => 'string',
+                'amount_minor' => 'int',
+                'currency' => 'string',
+                'paid_on' => 'date',
+                'method' => 'string',
+                'member_id' => 'uuid',
+                'note' => 'text',
+            ],
+            'append_only' => true,
+            'mutable' => ['note'],
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',

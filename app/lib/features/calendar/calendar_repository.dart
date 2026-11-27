@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import '../../core/db/database.dart';
 import '../../core/sync/outbox.dart';
 import '../../shared/dates.dart';
+import '../rent/rent_repository.dart' show UnitRow;
 
 /// The default event colour (`events.color` null).
 const eventColorDefault = 'ube';
@@ -69,7 +70,7 @@ List<DateTime> occurrences(CalendarEvent e, DateTime from, DateTime to) {
   return out;
 }
 
-enum CalendarKind { event, bill, subscription, vehicle, checkup }
+enum CalendarKind { event, bill, subscription, vehicle, checkup, rent }
 
 /// One thing on one day: an event occurrence, a bill or subscription due, or
 /// a vehicle's registration, insurance or PMS date.
@@ -128,6 +129,7 @@ class Agenda {
     List<Subscription> subscriptions = const [],
     List<Vehicle> vehicles = const [],
     List<Checkup> checkups = const [],
+    List<UnitRow> rent = const [],
   }) {
     final a = _day(from);
     final b = _day(to);
@@ -167,6 +169,20 @@ class Agenda {
       final d = parseIsoDate(s.nextDueOn);
       if (d == null || !inRange(d)) continue;
       add(CalendarItem(day: d, kind: CalendarKind.subscription, title: s.name, amountMinor: s.priceMinor));
+    }
+    for (final r in rent) {
+      final s = r.status;
+      if (s == null) continue;
+      for (final (d, left) in s.unpaidBetween(a, b)) {
+        add(
+          CalendarItem(
+            day: d,
+            kind: CalendarKind.rent,
+            title: '${r.unit.name} · ${s.lease.tenantName}',
+            amountMinor: left,
+          ),
+        );
+      }
     }
     for (final v in vehicles) {
       for (final (kind, due) in [

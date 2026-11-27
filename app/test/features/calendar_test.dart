@@ -342,6 +342,9 @@ void main() {
     await v5.customStatement('DROP TABLE medicines');
     await v5.customStatement('DROP TABLE med_doses');
     await v5.customStatement('DROP TABLE checkups');
+    await v5.customStatement('DROP TABLE rental_units'); // added in v14
+    await v5.customStatement('DROP TABLE leases');
+    await v5.customStatement('DROP TABLE rent_payments');
     await v5.customStatement('PRAGMA user_version = 4');
     await v5.close();
 
@@ -372,6 +375,9 @@ void main() {
     await v6.customStatement('DROP TABLE medicines');
     await v6.customStatement('DROP TABLE med_doses');
     await v6.customStatement('DROP TABLE checkups');
+    await v6.customStatement('DROP TABLE rental_units'); // added in v14
+    await v6.customStatement('DROP TABLE leases');
+    await v6.customStatement('DROP TABLE rent_payments');
     await v6.customStatement('PRAGMA user_version = 6');
     await v6.close();
 
@@ -408,6 +414,9 @@ void main() {
     await v9.customStatement('DROP TABLE medicines');
     await v9.customStatement('DROP TABLE med_doses');
     await v9.customStatement('DROP TABLE checkups');
+    await v9.customStatement('DROP TABLE rental_units'); // added in v14
+    await v9.customStatement('DROP TABLE leases');
+    await v9.customStatement('DROP TABLE rent_payments');
     await v9.customStatement('PRAGMA user_version = 9');
     await v9.close();
 

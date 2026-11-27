@@ -3681,6 +3681,402 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Doctor (optional)'**
   String get profileDoctor;
+
+  /// No description provided for @rentModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent'**
+  String get rentModule;
+
+  /// No description provided for @rentTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No rentals yet'**
+  String get rentTileNone;
+
+  /// No description provided for @rentTileAllPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'All paid this month'**
+  String get rentTileAllPaid;
+
+  /// No description provided for @rentTileToCollect.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to collect'**
+  String rentTileToCollect(String amount);
+
+  /// No description provided for @rentTileLate.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 tenant late} other{{count} tenants late}}'**
+  String rentTileLate(int count);
+
+  /// No description provided for @rentNoneFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'No rentals yet'**
+  String get rentNoneFigure;
+
+  /// No description provided for @rentEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms, houses and stalls you rent out'**
+  String get rentEmptyCaption;
+
+  /// No description provided for @rentEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a room, house or stall you rent out, then the tenant who stays there.'**
+  String get rentEmpty;
+
+  /// No description provided for @rentToCollectFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to collect'**
+  String rentToCollectFigure(String amount);
+
+  /// No description provided for @rentAllPaidFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'All paid'**
+  String get rentAllPaidFigure;
+
+  /// No description provided for @rentPaidCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{paid} of {total} paid'**
+  String rentPaidCount(int paid, int total);
+
+  /// No description provided for @rentOverdueCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} overdue'**
+  String rentOverdueCount(int count);
+
+  /// No description provided for @rentVacantCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 vacant} other{{count} vacant}}'**
+  String rentVacantCount(int count);
+
+  /// No description provided for @rentToCollect.
+  ///
+  /// In en, this message translates to:
+  /// **'To collect'**
+  String get rentToCollect;
+
+  /// No description provided for @rentPaidThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid this month'**
+  String get rentPaidThisMonth;
+
+  /// No description provided for @rentVacant.
+  ///
+  /// In en, this message translates to:
+  /// **'Vacant'**
+  String get rentVacant;
+
+  /// No description provided for @rentVacantLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Vacant · add a tenant'**
+  String get rentVacantLine;
+
+  /// No description provided for @rentOwesLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Owes {amount}'**
+  String rentOwesLine(String amount);
+
+  /// No description provided for @rentLeftOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{left} left of {rent}'**
+  String rentLeftOf(String left, String rent);
+
+  /// No description provided for @rentDueOn.
+  ///
+  /// In en, this message translates to:
+  /// **'due {date}'**
+  String rentDueOn(String date);
+
+  /// No description provided for @rentDaysLate.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day late} other{{count} days late}}'**
+  String rentDaysLate(int count);
+
+  /// No description provided for @rentMovedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'moved out {date}'**
+  String rentMovedOut(String date);
+
+  /// No description provided for @rentPaidOn.
+  ///
+  /// In en, this message translates to:
+  /// **'paid {date}'**
+  String rentPaidOn(String date);
+
+  /// No description provided for @rentAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} paid ahead'**
+  String rentAhead(String amount);
+
+  /// No description provided for @rentRecordPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Record payment'**
+  String get rentRecordPayment;
+
+  /// No description provided for @rentAddUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Add unit'**
+  String get rentAddUnit;
+
+  /// No description provided for @rentEditUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename unit'**
+  String get rentEditUnit;
+
+  /// No description provided for @rentRemoveUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove unit'**
+  String get rentRemoveUnit;
+
+  /// No description provided for @rentUnitName.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit name'**
+  String get rentUnitName;
+
+  /// No description provided for @rentUnitNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Room 1, upstairs, stall 3'**
+  String get rentUnitNameHint;
+
+  /// No description provided for @rentAddTenant.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tenant'**
+  String get rentAddTenant;
+
+  /// No description provided for @rentEditTenant.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit tenant'**
+  String get rentEditTenant;
+
+  /// No description provided for @rentRemoveTenant.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove tenant'**
+  String get rentRemoveTenant;
+
+  /// No description provided for @rentTenantName.
+  ///
+  /// In en, this message translates to:
+  /// **'Tenant name'**
+  String get rentTenantName;
+
+  /// No description provided for @rentPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone (optional)'**
+  String get rentPhone;
+
+  /// No description provided for @rentMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly rent'**
+  String get rentMonthly;
+
+  /// No description provided for @rentChangeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A new rent applies from this month; earlier months keep the old one.'**
+  String get rentChangeHint;
+
+  /// No description provided for @rentDueDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Due day of the month'**
+  String get rentDueDay;
+
+  /// No description provided for @rentDueDayHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'29, 30 or 31 falls on the last day of a shorter month'**
+  String get rentDueDayHelp;
+
+  /// No description provided for @rentDueDayInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a day from 1 to 31'**
+  String get rentDueDayInvalid;
+
+  /// No description provided for @rentStartsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Moved in'**
+  String get rentStartsOn;
+
+  /// No description provided for @rentDeposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit (optional)'**
+  String get rentDeposit;
+
+  /// No description provided for @rentNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get rentNote;
+
+  /// No description provided for @rentEveryLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} a month, due on day {day}'**
+  String rentEveryLine(String amount, int day);
+
+  /// No description provided for @rentSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Since {date}'**
+  String rentSince(String date);
+
+  /// No description provided for @rentDepositLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit {amount}'**
+  String rentDepositLine(String amount);
+
+  /// No description provided for @rentDepositReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit: {returned} of {deposit} returned'**
+  String rentDepositReturned(String returned, String deposit);
+
+  /// No description provided for @rentCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get rentCall;
+
+  /// No description provided for @rentText.
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get rentText;
+
+  /// No description provided for @rentWhich.
+  ///
+  /// In en, this message translates to:
+  /// **'Which tenant?'**
+  String get rentWhich;
+
+  /// No description provided for @rentAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get rentAmount;
+
+  /// No description provided for @rentPaidOnLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on'**
+  String get rentPaidOnLabel;
+
+  /// No description provided for @rentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'{method, select, cash{Cash} gcash{GCash} bank{Bank} other{Other}}'**
+  String rentMethod(String method);
+
+  /// No description provided for @rentPayHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pays the oldest month first. Recorded as money in on the Budget.'**
+  String get rentPayHint;
+
+  /// No description provided for @rentWaive.
+  ///
+  /// In en, this message translates to:
+  /// **'Waive rent'**
+  String get rentWaive;
+
+  /// No description provided for @rentWaiveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgiven rent counts as paid but is not money in.'**
+  String get rentWaiveHint;
+
+  /// No description provided for @rentMoveOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Move out'**
+  String get rentMoveOut;
+
+  /// No description provided for @rentMoveOutDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moving out on'**
+  String get rentMoveOutDate;
+
+  /// No description provided for @rentDepositBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit returned'**
+  String get rentDepositBack;
+
+  /// No description provided for @rentMoveOutHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent stops after this month. The unit shows as vacant; anything still owed stays on the list.'**
+  String get rentMoveOutHint;
+
+  /// No description provided for @rentUndoMoveOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo move out'**
+  String get rentUndoMoveOut;
+
+  /// No description provided for @rentHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get rentHistory;
+
+  /// No description provided for @rentHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No payments yet'**
+  String get rentHistoryEmpty;
+
+  /// No description provided for @rentKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, waived{Waived} other{Payment}}'**
+  String rentKind(String kind);
+
+  /// No description provided for @rentRemoveEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove entry'**
+  String get rentRemoveEntry;
+
+  /// No description provided for @calendarRentDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent due · {amount}'**
+  String calendarRentDue(String amount);
 }
 
 class _AppLocalizationsDelegate
