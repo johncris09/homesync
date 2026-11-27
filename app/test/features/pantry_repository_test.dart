@@ -329,8 +329,10 @@ void main() {
     await v6.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
     await v6.customStatement('ALTER TABLE events DROP COLUMN "color"');
     for (final t in ['vault_keys', 'vault_items', 'vault_files', 'vault_blobs']) {
-      await v6.customStatement('DROP TABLE "$t"'); // added in v11
+      await v6.customStatement('DROP TABLE "$t"'); // added in v12
     }
+    await v6.customStatement('DROP TABLE vehicles'); // added in v11
+    await v6.customStatement('DROP TABLE vehicle_logs');
     await v6.customStatement('DROP TABLE health_profiles'); // added in v13
     await v6.customStatement('DROP TABLE medicines');
     await v6.customStatement('DROP TABLE med_doses');

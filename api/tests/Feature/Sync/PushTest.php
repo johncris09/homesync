@@ -336,6 +336,35 @@ class PushTest extends SyncTestCase
         $this->assertSame('validation', $this->push($john, [$this->op('debt_payments', (string) Str::uuid7(), 'insert', ['debt_id' => $id, 'kind' => 'payment', 'amount_minor' => 'lots', 'paid_on' => '2026-11-26'], $this->hlc(5))])->json('results.0.error'));
     }
 
+    public function test_vehicles_are_for_adults_and_logs_from_two_devices_both_count(): void
+    {
+        $john = $this->device('owner');
+        $ana = $this->device('adult');
+        $teen = $this->device('teen');
+        $carId = (string) Str::uuid7();
+        $car = ['kind' => 'car', 'name' => 'Innova', 'plate' => 'ABC 1234', 'color' => 'silver', 'registration_due_on' => '2027-07-20', 'pms_due_on' => '2026-12-06', 'pms_due_km' => 45000, 'pms_every_months' => 6, 'pms_every_km' => 5000];
+
+        $this->assertSame('forbidden', $this->push($teen, [$this->op('vehicles', (string) Str::uuid7(), 'insert', $car, $this->hlc(1))])->json('results.0.error'));
+        $this->assertSame(['applied'], $this->statuses($this->push($john, [$this->op('vehicles', $carId, 'insert', $car, $this->hlc(2))])));
+
+        $fuel = fn ($d, int $t) => $this->op('vehicle_logs', (string) Str::uuid7(), 'insert', ['vehicle_id' => $carId, 'kind' => 'fuel', 'amount_minor' => 200000, 'logged_on' => '2026-11-26', 'odometer_km' => 44210, 'litres' => 31.5, 'member_id' => $d->member_id], $this->hlc($t));
+        $this->assertSame(['applied'], $this->statuses($this->push($john, [$fuel($john, 3)])));
+        $this->assertSame(['applied'], $this->statuses($this->push($ana, [$fuel($ana, 4)])));
+        $this->assertSame(2, DB::table('vehicle_logs')->where('vehicle_id', $carId)->count());
+        $reading = $this->op('vehicle_logs', (string) Str::uuid7(), 'insert', ['vehicle_id' => $carId, 'kind' => 'odometer', 'logged_on' => '2026-11-27', 'odometer_km' => 44300], $this->hlc(5));
+        $this->assertSame(['applied'], $this->statuses($this->push($ana, [$reading])));
+
+        $changes = collect($this->pull($ana)->assertOk()->json('changes'));
+        $pulled = $changes->firstWhere('entity', 'vehicles');
+        $this->assertSame('ABC 1234', $pulled['row']['plate']);
+        $this->assertSame(45000, $pulled['row']['pms_due_km']);
+        $this->assertEqualsWithDelta(31.5, (float) $changes->firstWhere('entity', 'vehicle_logs')['row']['litres'], 0.001);
+        $this->assertEmpty(collect($this->pull($teen)->json('changes'))->whereIn('entity', ['vehicles', 'vehicle_logs'])->all());
+
+        $logId = $changes->firstWhere('entity', 'vehicle_logs')['entity_id'];
+        $this->assertSame('rejected', $this->push($john, [$this->op('vehicle_logs', $logId, 'update', ['amount_minor' => 1], $this->hlc(6), 1)])->json('results.0.status'), 'logs are append-only');
+    }
+
     public function test_conflicts_sync_to_adults_and_can_be_resolved(): void
     {
         $john = $this->device('owner');

@@ -18,7 +18,7 @@ Future<AppServices> open(MemorySecureStore store, {Future<void> Function(PantryR
 }
 
 Future<void> openPantry(WidgetTester tester) async {
-  await tester.ensureVisible(find.text('Pantry & grocery')); // below the other module tiles
+  await tester.ensureVisible(find.text('Pantry & grocery')); // below the fold with every module shown
   await tester.pumpAndSettle();
   await tester.tap(find.text('Pantry & grocery'));
   await tester.pumpAndSettle();

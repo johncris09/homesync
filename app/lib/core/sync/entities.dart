@@ -155,6 +155,28 @@ const syncedEntities = <String, EntitySpec>{
     appendOnly: true,
     mutable: {'note'},
   ),
+  'vehicles': EntitySpec(
+    name: 'vehicles',
+    fields: {
+      'kind',
+      'name',
+      'plate',
+      'color',
+      'registration_due_on',
+      'insurance_due_on',
+      'pms_due_on',
+      'pms_due_km',
+      'pms_every_months',
+      'pms_every_km',
+      'note',
+    },
+  ),
+  'vehicle_logs': EntitySpec(
+    name: 'vehicle_logs',
+    fields: {'vehicle_id', 'kind', 'amount_minor', 'currency', 'logged_on', 'odometer_km', 'litres', 'member_id', 'note'},
+    appendOnly: true,
+    mutable: {'note'},
+  ),
   'transactions': EntitySpec(
     name: 'transactions',
     fields: {

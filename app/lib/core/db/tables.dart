@@ -197,6 +197,46 @@ class DebtPayments extends Table with SyncColumns {
   TextColumn get note => text().nullable()();
 }
 
+/// A car or motorcycle ([kind] `car`, `motorcycle`) with its due dates. The
+/// odometer is the highest reading in [VehicleLogs]; it is never stored here.
+class Vehicles extends Table with SyncColumns {
+  TextColumn get kind => text()();
+  TextColumn get name => text()();
+  TextColumn get plate => text().nullable()();
+  TextColumn get color => text().nullable()();
+
+  /// Calendar dates `YYYY-MM-DD`; registration and insurance are yearly.
+  TextColumn get registrationDueOn => text().nullable()();
+  TextColumn get insuranceDueOn => text().nullable()();
+
+  /// PMS / change oil: due at this date or this odometer reading, whichever
+  /// comes first.
+  TextColumn get pmsDueOn => text().nullable()();
+  IntColumn get pmsDueKm => integer().nullable()();
+
+  /// How often PMS is done; logging one sets the next date and reading.
+  IntColumn get pmsEveryMonths => integer().nullable()();
+  IntColumn get pmsEveryKm => integer().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// A cost ([kind] `fuel`, `repair`, `pms`, `registration`, `insurance`;
+/// [amountMinor] positive) or an odometer reading ([kind] `odometer`, no
+/// amount) for a vehicle. Append-only.
+class VehicleLogs extends Table with SyncColumns {
+  TextColumn get vehicleId => text()();
+  TextColumn get kind => text()();
+  IntColumn get amountMinor => integer().nullable()();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+
+  /// Calendar date `YYYY-MM-DD`.
+  TextColumn get loggedOn => text()();
+  IntColumn get odometerKm => integer().nullable()();
+  RealColumn get litres => real().nullable()();
+  TextColumn get memberId => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
 /// A member's health profile; [sealed] is blood type, allergies, conditions,
 /// maintenance medicines, PhilHealth/HMO numbers and doctor, encrypted with
 /// the vault key. One row per member (derived id).

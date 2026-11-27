@@ -69,9 +69,10 @@ List<DateTime> occurrences(CalendarEvent e, DateTime from, DateTime to) {
   return out;
 }
 
-enum CalendarKind { event, bill, subscription }
+enum CalendarKind { event, bill, subscription, vehicle }
 
-/// One thing on one day: an event occurrence, or a bill or subscription due.
+/// One thing on one day: an event occurrence, a bill or subscription due, or
+/// a vehicle's registration, insurance or PMS date.
 class CalendarItem {
   const CalendarItem({
     required this.day,
@@ -82,6 +83,7 @@ class CalendarItem {
     this.endTime,
     this.memberId,
     this.amountMinor,
+    this.dueKind,
     DateTime? spanStart,
     DateTime? spanEnd,
   }) : spanStart = spanStart ?? day,
@@ -100,6 +102,9 @@ class CalendarItem {
   final String? memberId;
   final int? amountMinor;
 
+  /// For a vehicle: `registration`, `insurance` or `pms`.
+  final String? dueKind;
+
   /// First and last day of this occurrence (both [day] for a one-day item).
   final DateTime spanStart;
   final DateTime spanEnd;
@@ -111,8 +116,8 @@ class CalendarItem {
   bool get continues => daysUntil(day, spanStart) > 0;
 }
 
-/// Everything on the calendar from [from] to [to], by day. Bills and
-/// subscriptions are passed only for adults.
+/// Everything on the calendar from [from] to [to], by day. Bills,
+/// subscriptions and vehicles are passed only for adults.
 class Agenda {
   Agenda(
     List<CalendarEvent> events,
@@ -120,6 +125,7 @@ class Agenda {
     DateTime to, {
     List<Bill> bills = const [],
     List<Subscription> subscriptions = const [],
+    List<Vehicle> vehicles = const [],
   }) {
     final a = _day(from);
     final b = _day(to);
@@ -159,6 +165,17 @@ class Agenda {
       final d = parseIsoDate(s.nextDueOn);
       if (d == null || !inRange(d)) continue;
       add(CalendarItem(day: d, kind: CalendarKind.subscription, title: s.name, amountMinor: s.priceMinor));
+    }
+    for (final v in vehicles) {
+      for (final (kind, due) in [
+        ('registration', v.registrationDueOn),
+        ('insurance', v.insuranceDueOn),
+        ('pms', v.pmsDueOn),
+      ]) {
+        final d = parseIsoDate(due);
+        if (d == null || !inRange(d)) continue;
+        add(CalendarItem(day: d, kind: CalendarKind.vehicle, title: v.name, dueKind: kind));
+      }
     }
     for (final list in _byDay.values) {
       list.sort((x, y) {

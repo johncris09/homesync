@@ -334,8 +334,10 @@ void main() {
     await v5.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
     await v5.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on'); // added in v8
     for (final t in ['vault_keys', 'vault_items', 'vault_files', 'vault_blobs']) {
-      await v5.customStatement('DROP TABLE "$t"'); // added in v11
+      await v5.customStatement('DROP TABLE "$t"'); // added in v12
     }
+    await v5.customStatement('DROP TABLE vehicles'); // added in v11
+    await v5.customStatement('DROP TABLE vehicle_logs');
     await v5.customStatement('DROP TABLE health_profiles'); // added in v13
     await v5.customStatement('DROP TABLE medicines');
     await v5.customStatement('DROP TABLE med_doses');
@@ -362,8 +364,10 @@ void main() {
     await v6.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
     await v6.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on'); // added in v8
     for (final t in ['vault_keys', 'vault_items', 'vault_files', 'vault_blobs']) {
-      await v6.customStatement('DROP TABLE "$t"'); // added in v11
+      await v6.customStatement('DROP TABLE "$t"'); // added in v12
     }
+    await v6.customStatement('DROP TABLE vehicles'); // added in v11
+    await v6.customStatement('DROP TABLE vehicle_logs');
     await v6.customStatement('DROP TABLE health_profiles'); // added in v13
     await v6.customStatement('DROP TABLE medicines');
     await v6.customStatement('DROP TABLE med_doses');
@@ -396,8 +400,10 @@ void main() {
     await v9.customStatement('SELECT 1');
     await v9.customStatement('ALTER TABLE events DROP COLUMN "color"');
     for (final t in ['vault_keys', 'vault_items', 'vault_files', 'vault_blobs']) {
-      await v9.customStatement('DROP TABLE "$t"'); // added in v11
+      await v9.customStatement('DROP TABLE "$t"'); // added in v12
     }
+    await v9.customStatement('DROP TABLE vehicles'); // added in v11
+    await v9.customStatement('DROP TABLE vehicle_logs');
     await v9.customStatement('DROP TABLE health_profiles'); // added in v13
     await v9.customStatement('DROP TABLE medicines');
     await v9.customStatement('DROP TABLE med_doses');

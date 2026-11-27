@@ -1880,4 +1880,280 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get vaultConflictOwner =>
       'The owner will choose which version to keep.';
+
+  @override
+  String get vehiclesModule => 'Vehicles';
+
+  @override
+  String get vehiclesTileNone => 'No vehicles yet';
+
+  @override
+  String get vehiclesTileNothingDue => 'Nothing due';
+
+  @override
+  String vehiclesTileOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count things overdue',
+      one: '1 thing overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vehiclesNoneFigure => 'No vehicles yet';
+
+  @override
+  String get vehiclesEmptyCaption =>
+      'Cars and motorcycles: papers, PMS and costs';
+
+  @override
+  String get vehiclesEmpty =>
+      'Add your car or motorcycle to keep track of its registration, insurance, PMS and costs.';
+
+  @override
+  String get vehiclesNothingDue => 'Nothing due';
+
+  @override
+  String vehiclesNextFigure(String what, String when) {
+    return '$what $when';
+  }
+
+  @override
+  String vehiclesMoreOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count more overdue',
+      one: '1 more overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vehiclesSpentLine(String amount) {
+    return 'Spent this month: $amount';
+  }
+
+  @override
+  String get vehiclesComingUp => 'Coming up';
+
+  @override
+  String get vehiclesOurs => 'Our vehicles';
+
+  @override
+  String vehicleDueKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'registration': 'Registration',
+      'insurance': 'Insurance',
+      'other': 'PMS',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String vehicleDueOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'overdue by $count days',
+      one: 'overdue by 1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vehicleDueIn(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'in $count days',
+      one: 'due tomorrow',
+      zero: 'due today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vehicleDueOn(String date) {
+    return 'on $date';
+  }
+
+  @override
+  String vehicleKmLeft(String km) {
+    return 'in $km km';
+  }
+
+  @override
+  String vehicleKmPast(String km) {
+    return '$km km past due';
+  }
+
+  @override
+  String vehicleAtKm(String km) {
+    return 'at $km km';
+  }
+
+  @override
+  String vehicleOrAt(String km) {
+    return 'or at $km km';
+  }
+
+  @override
+  String vehicleOrOn(String date) {
+    return 'or by $date';
+  }
+
+  @override
+  String vehicleKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'car': 'Car',
+      'other': 'Motorcycle',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String vehicleLogKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'fuel': 'Fuel',
+      'pms': 'PMS',
+      'repair': 'Repair',
+      'registration': 'Registration',
+      'insurance': 'Insurance',
+      'other': 'Odometer',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get vehicleAdd => 'Add vehicle';
+
+  @override
+  String get vehicleEdit => 'Edit vehicle';
+
+  @override
+  String get vehicleRemove => 'Remove vehicle';
+
+  @override
+  String get vehicleLogFuel => 'Log fuel';
+
+  @override
+  String get vehicleAddCost => 'Add cost';
+
+  @override
+  String get vehicleUpdateOdometer => 'Update odometer';
+
+  @override
+  String vehicleOdometer(String km) {
+    return '$km km';
+  }
+
+  @override
+  String get vehicleNoOdometer => 'No odometer reading yet';
+
+  @override
+  String vehicleLastReading(String km) {
+    return 'Last reading $km km';
+  }
+
+  @override
+  String vehicleNameHint(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'car': 'e.g. Innova',
+      'other': 'e.g. Mio',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get vehiclePlate => 'Plate number (optional)';
+
+  @override
+  String get vehicleColor => 'Colour (optional)';
+
+  @override
+  String get vehicleOdometerLabel => 'Odometer';
+
+  @override
+  String get vehicleOdometerOptional => 'Odometer (optional)';
+
+  @override
+  String get vehicleOdometerInvalid => 'Enter a whole number above zero';
+
+  @override
+  String vehicleDueDateLabel(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'registration': 'LTO registration due',
+      'insurance': 'Insurance due',
+      'other': 'Next PMS date',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get vehicleNotSet => 'Not set';
+
+  @override
+  String get vehicleClearDate => 'Clear date';
+
+  @override
+  String get vehiclePmsKm => 'Next PMS at (optional)';
+
+  @override
+  String get vehiclePmsEveryMonths => 'PMS every how many months (optional)';
+
+  @override
+  String get vehiclePmsEveryKm => 'PMS every how many km (optional)';
+
+  @override
+  String get vehiclePmsHelp =>
+      'PMS is due at its date or km, whichever comes first. Logging a PMS sets the next one from these.';
+
+  @override
+  String get vehicleNote => 'Note (optional)';
+
+  @override
+  String get vehicleAmount => 'Amount';
+
+  @override
+  String get vehicleLitres => 'Litres (optional)';
+
+  @override
+  String vehicleLitresLine(String litres) {
+    return '$litres L';
+  }
+
+  @override
+  String vehicleRenewHint(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'registration': 'Moves the registration due date one year on.',
+      'insurance': 'Moves the insurance due date one year on.',
+      'other': 'Sets the next PMS from its interval.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get vehicleWhich => 'Which vehicle?';
+
+  @override
+  String get vehicleHistory => 'History';
+
+  @override
+  String get vehicleHistoryEmpty => 'Nothing recorded yet.';
+
+  @override
+  String get vehicleRemoveEntry => 'Remove this entry';
+
+  @override
+  String calendarVehicleDue(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'registration': 'Registration due',
+      'insurance': 'Insurance due',
+      'other': 'PMS due',
+    });
+    return '$_temp0';
+  }
 }

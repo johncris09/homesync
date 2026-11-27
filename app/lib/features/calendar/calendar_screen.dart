@@ -409,9 +409,11 @@ class _DayCell extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 1),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: i.kind == CalendarKind.event
-                          ? eventColor(i.event?.color) ?? HomeColors.ube
-                          : HomeColors.mangga,
+                      color: switch (i.kind) {
+                        CalendarKind.event => eventColor(i.event?.color) ?? HomeColors.ube,
+                        CalendarKind.vehicle => HomeColors.dagat,
+                        _ => HomeColors.mangga,
+                      },
                     ),
                   ),
               ],
@@ -437,6 +439,20 @@ class _ItemTile extends ConsumerWidget {
     final locale = Localizations.localeOf(context).toString();
     final members = {for (final m in ref.watch(membersProvider).value ?? const <Member>[]) m.id: m};
     final event = item.event;
+
+    if (item.kind == CalendarKind.vehicle) {
+      return ListTile(
+        leading: const CircleAvatar(
+          backgroundColor: HomeColors.dagat,
+          foregroundColor: Colors.white,
+          child: Icon(Icons.directions_car_outlined),
+        ),
+        title: Text(item.title),
+        subtitle: Text([?showDay, l10n.calendarVehicleDue(item.dueKind ?? 'pms')].join(' · ')),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => context.push(Routes.vehicles),
+      );
+    }
 
     if (event == null) {
       final what = item.kind == CalendarKind.bill ? l10n.calendarBillDue : l10n.calendarSubscriptionDue;
