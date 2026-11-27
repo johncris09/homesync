@@ -240,6 +240,9 @@ void main() {
     final v14 = AppDatabase(NativeDatabase(file));
     await v14.customStatement('SELECT 1');
     await v14.customStatement('DROP TABLE inventory_items');
+    for (final t in ['emergency_contacts', 'emergency_plans', 'go_bag_items', 'emergency_checks', 'safety_checkins']) {
+      await v14.customStatement('DROP TABLE $t'); // added in v16
+    }
     await v14.customStatement('PRAGMA user_version = 14');
     await v14.close();
 

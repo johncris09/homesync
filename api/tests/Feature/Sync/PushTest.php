@@ -397,6 +397,36 @@ class PushTest extends SyncTestCase
         $this->assertSame('rejected', $this->push($john, [$this->op('rent_payments', $payId, 'update', ['amount_minor' => 1], $this->hlc(6), 1)])->json('results.0.status'), 'payments are append-only');
     }
 
+    public function test_emergency_is_seen_by_everyone_viewers_check_in_and_only_adults_edit_the_plan(): void
+    {
+        $john = $this->device('owner');
+        $teen = $this->device('teen');
+        $viewer = $this->device('viewer');
+
+        $contact = ['name' => 'Barangay hall', 'kind' => 'barangay', 'phone' => '0917 555 0199'];
+        $this->assertSame('forbidden', $this->push($teen, [$this->op('emergency_contacts', (string) Str::uuid7(), 'insert', $contact, $this->hlc(1))])->json('results.0.error'));
+        $this->assertSame(['applied', 'applied'], $this->statuses($this->push($john, [
+            $this->op('emergency_contacts', (string) Str::uuid7(), 'insert', $contact, $this->hlc(2)),
+            $this->op('emergency_plans', (string) Str::uuid7(), 'insert', ['meeting_point' => 'Covered court', 'evacuation_center' => 'Elementary school'], $this->hlc(3)),
+        ])));
+
+        // A teen ticks their own go-bag; a viewer can't.
+        $bag = (string) Str::uuid7();
+        $this->assertSame(['applied'], $this->statuses($this->push($teen, [$this->op('go_bag_items', $bag, 'insert', ['member_id' => $teen->member_id, 'name' => 'Water', 'packed' => true], $this->hlc(4))])));
+        $this->assertSame('forbidden', $this->push($viewer, [$this->op('go_bag_items', $bag, 'update', ['packed' => false], $this->hlc(5))])->json('results.0.error'));
+
+        // Anyone checks in, viewers too; check-ins can't be changed.
+        $checkin = (string) Str::uuid7();
+        $this->assertSame(['applied'], $this->statuses($this->push($viewer, [$this->op('safety_checkins', $checkin, 'insert', ['member_id' => $viewer->member_id, 'status' => 'safe', 'checked_at' => '2026-11-28T01:00:00.000Z'], $this->hlc(6))])));
+        $this->assertSame('rejected', $this->push($viewer, [$this->op('safety_checkins', $checkin, 'update', ['status' => 'help'], $this->hlc(7), 1)])->json('results.0.status'));
+
+        $changes = collect($this->pull($viewer)->assertOk()->json('changes'));
+        $this->assertSame('Covered court', $changes->firstWhere('entity', 'emergency_plans')['row']['meeting_point']);
+        $this->assertSame('0917 555 0199', $changes->firstWhere('entity', 'emergency_contacts')['row']['phone']);
+        $this->assertTrue($changes->firstWhere('entity', 'go_bag_items')['row']['packed']);
+        $this->assertSame('safe', $changes->firstWhere('entity', 'safety_checkins')['row']['status']);
+    }
+
     public function test_everyone_sees_inventory_and_only_adults_change_it(): void
     {
         $john = $this->device('owner');

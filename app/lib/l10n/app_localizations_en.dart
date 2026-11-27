@@ -2989,4 +2989,331 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calendarWarrantyEnds => 'Warranty ends';
+
+  @override
+  String get emergencyModule => 'Emergency';
+
+  @override
+  String emergencyTileHelp(String name) {
+    return '$name needs help';
+  }
+
+  @override
+  String emergencyTileSafe(int safe, int total) {
+    return '$safe of $total safe today';
+  }
+
+  @override
+  String emergencyTileBags(int ready, int total) {
+    return '$ready of $total go-bags packed';
+  }
+
+  @override
+  String get emergencyTileSetUp => 'Contacts, meeting point, go-bags';
+
+  @override
+  String emergencyNeedsHelpFigure(String name) {
+    return '$name needs help';
+  }
+
+  @override
+  String emergencyManyNeedHelp(int count) {
+    return '$count need help';
+  }
+
+  @override
+  String emergencySafeFigure(int safe, int total) {
+    return '$safe of $total safe';
+  }
+
+  @override
+  String emergencySafeCaption(int safe, int total) {
+    return '$safe of $total checked in safe';
+  }
+
+  @override
+  String get emergencyLast24h => 'Check-ins from the last 24 hours';
+
+  @override
+  String get emergencyReadyFigure => 'Be ready';
+
+  @override
+  String get emergencyReadyCaption => 'Tap I\'m safe when something happens';
+
+  @override
+  String emergencyBagsPacked(int ready, int total) {
+    return '$ready of $total go-bags packed';
+  }
+
+  @override
+  String get emergencyImSafe => 'I\'m safe';
+
+  @override
+  String get emergencyNeedHelp => 'Need help';
+
+  @override
+  String get emergencyCheckedInSafe =>
+      'Checked in as safe. It reaches everyone when you have signal.';
+
+  @override
+  String get emergencyWho => 'Who\'s checked in';
+
+  @override
+  String get emergencyStatusSafe => 'Safe';
+
+  @override
+  String get emergencyStatusHelp => 'Needs help';
+
+  @override
+  String emergencyLastCheckin(String date) {
+    return 'Last check-in $date';
+  }
+
+  @override
+  String get emergencyNoCheckin => 'No check-in yet';
+
+  @override
+  String get emergencyHelpNote => 'Where are you, what\'s wrong?';
+
+  @override
+  String get emergencyHelpNoteHint => 'e.g. Stuck at school, road flooded';
+
+  @override
+  String get emergencyHelpSyncs =>
+      'Saved on this phone now and sent as soon as there is signal. In danger, call 911.';
+
+  @override
+  String get emergencySendHelp => 'Send';
+
+  @override
+  String get emergencyCall => 'Numbers to call';
+
+  @override
+  String emergencyHotline(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'emergency': 'National emergency hotline',
+      'redCross': 'Philippine Red Cross',
+      'other': 'Hotline',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String emergencyCallNumber(String number) {
+    return 'Call $number';
+  }
+
+  @override
+  String emergencyContactKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'family': 'Family',
+      'barangay': 'Barangay',
+      'hospital': 'Hospital',
+      'doctor': 'Doctor',
+      'other': 'Other',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get emergencyAddContact => 'Add contact';
+
+  @override
+  String get emergencyEditContact => 'Edit contact';
+
+  @override
+  String get emergencyRemoveContact => 'Remove contact';
+
+  @override
+  String get emergencyContactName => 'Name';
+
+  @override
+  String get emergencyContactPhone => 'Phone number';
+
+  @override
+  String get emergencyPhoneInvalid => 'Enter a phone number.';
+
+  @override
+  String get emergencyNote => 'Note';
+
+  @override
+  String get emergencyWhereToMeet => 'Where to meet';
+
+  @override
+  String get emergencyNoPlan => 'No meeting point yet';
+
+  @override
+  String get emergencyNoPlanAdult =>
+      'Agree where everyone goes if you\'re apart.';
+
+  @override
+  String get emergencyNoPlanOthers => 'Ask an adult to set one.';
+
+  @override
+  String get emergencyMeetingPoint => 'Meeting point nearby';
+
+  @override
+  String get emergencyMeetingPointHint => 'e.g. the covered court';
+
+  @override
+  String get emergencyMeetingPointFar => 'Meeting point outside the area';
+
+  @override
+  String get emergencyMeetingPointFarHint => 'e.g. Lola\'s house in town';
+
+  @override
+  String get emergencyEvacuationCenter => 'Evacuation centre';
+
+  @override
+  String get emergencyEvacuationCenterHint => 'e.g. the elementary school';
+
+  @override
+  String get emergencyEditPlan => 'Edit meeting points';
+
+  @override
+  String get emergencyGoBags => 'Go-bags';
+
+  @override
+  String get emergencyHouseholdBag => 'Household';
+
+  @override
+  String get emergencyUnknownMember => 'Member';
+
+  @override
+  String emergencyBagTitle(String name) {
+    return '$name\'s go-bag';
+  }
+
+  @override
+  String get emergencyHouseholdBagTitle => 'Household go-bag';
+
+  @override
+  String get emergencyBagEmpty => 'Nothing listed yet';
+
+  @override
+  String emergencyBagPacked(int packed, int total) {
+    return '$packed of $total packed';
+  }
+
+  @override
+  String emergencyBagExpiring(int count) {
+    return '$count to replace';
+  }
+
+  @override
+  String get emergencyAddToBag => 'Add an item';
+
+  @override
+  String get emergencyAddStarter => 'Add the starter list';
+
+  @override
+  String emergencyStarterItem(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'water': 'Drinking water',
+      'food': 'Ready-to-eat food',
+      'flashlight': 'Flashlight',
+      'batteries': 'Extra batteries',
+      'whistle': 'Whistle',
+      'firstAid': 'First aid kit',
+      'medicines': 'Maintenance medicines',
+      'ids': 'Copies of IDs',
+      'cash': 'Cash in small bills',
+      'powerBank': 'Power bank',
+      'clothes': 'Change of clothes',
+      'raincoat': 'Raincoat',
+      'other': 'Item',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get emergencyEditItem => 'Edit item';
+
+  @override
+  String get emergencyRemoveItem => 'Remove item';
+
+  @override
+  String get emergencyItemName => 'Item';
+
+  @override
+  String get emergencyExpiresField => 'Expires';
+
+  @override
+  String get emergencyNoExpiry => 'No expiry';
+
+  @override
+  String emergencyExpires(String date) {
+    return 'expires $date';
+  }
+
+  @override
+  String emergencyExpired(String date) {
+    return 'expired $date';
+  }
+
+  @override
+  String get emergencyChecklists => 'Be ready for';
+
+  @override
+  String emergencyHazard(String hazard) {
+    String _temp0 = intl.Intl.selectLogic(hazard, {
+      'typhoon': 'Typhoon',
+      'flood': 'Flood',
+      'earthquake': 'Earthquake',
+      'other': 'Hazard',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String emergencyHazardTitle(String hazard) {
+    String _temp0 = intl.Intl.selectLogic(hazard, {
+      'typhoon': 'Before a typhoon',
+      'flood': 'Before a flood',
+      'earthquake': 'Before an earthquake',
+      'other': 'Checklist',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String emergencyChecksDone(int done, int total) {
+    return '$done of $total done';
+  }
+
+  @override
+  String get emergencyClearChecks => 'Clear ticks';
+
+  @override
+  String emergencyCheckItem(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'typhoon_charge': 'Charge phones and power banks',
+      'typhoon_water': 'Store drinking water for at least 3 days',
+      'typhoon_food': 'Stock ready-to-eat food for at least 3 days',
+      'typhoon_secure': 'Secure the roof, windows and loose things outside',
+      'typhoon_drains': 'Clear drains and gutters',
+      'typhoon_bags': 'Keep go-bags by the door',
+      'typhoon_center': 'Know the way to the evacuation centre',
+      'typhoon_updates': 'Follow PAGASA updates on radio or TV',
+      'flood_upHigh': 'Move appliances, documents and valuables up high',
+      'flood_power': 'Switch off the main power if water starts coming in',
+      'flood_documents': 'Keep IDs and documents in a waterproof bag',
+      'flood_noWading': 'Don\'t walk or drive through floodwater',
+      'flood_highGround': 'Know the way to higher ground',
+      'flood_bags': 'Keep go-bags by the door',
+      'earthquake_furniture': 'Fasten tall furniture and shelves to the wall',
+      'earthquake_safeSpots':
+          'Know the safe spot in each room, like under a sturdy table',
+      'earthquake_drill': 'Practise Duck, Cover and Hold',
+      'earthquake_shutOff': 'Know how to turn off gas, water and power',
+      'earthquake_bedside': 'Keep shoes and a flashlight by each bed',
+      'earthquake_meet': 'Agree where to meet outside',
+      'other': 'Item',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get emergencyWorksOffline =>
+      'Everything here is on this phone and works without signal.';
 }

@@ -346,6 +346,9 @@ void main() {
     await v5.customStatement('DROP TABLE leases');
     await v5.customStatement('DROP TABLE rent_payments');
     await v5.customStatement('DROP TABLE inventory_items'); // added in v15
+    for (final t in ['emergency_contacts', 'emergency_plans', 'go_bag_items', 'emergency_checks', 'safety_checkins']) {
+      await v5.customStatement('DROP TABLE $t'); // added in v16
+    }
     await v5.customStatement('PRAGMA user_version = 4');
     await v5.close();
 

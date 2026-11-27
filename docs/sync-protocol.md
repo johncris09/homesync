@@ -53,6 +53,8 @@ Some entities hold at most one row per natural key. Their id is not random: the 
 | `health_profiles` | `<member_id>` |
 | `med_doses` (scheduled dose) | `<medicine_id>/<taken_on>/<slot>` |
 | `transactions` (checkup cost) | `checkup/<checkup_id>` |
+| `emergency_plans` | `household` |
+| `emergency_checks` | `<hazard>/<item>` |
 
 An `insert` for an existing **append-only** record (two devices recording the same payment) changes nothing: the first record stays and the op is answered `merged`, so the second device pulls the first one. A payment re-recorded after its owner undid it uses a random id.
 
@@ -219,6 +221,8 @@ Health (`docs/vault.md` for the key): a member's `health_profiles` row holds blo
 Rent the household collects: a `rental_units` row per room, house or stall (kept while vacant) and a `leases` row per tenant in a unit, with rent due every month on `due_day` (the last day of a shorter month) from the month of `starts_on` up to the month of `ends_on`. `rent_minor` applies from the month of `rent_since` (from the start when null); earlier months use `prev_rent_minor`. Money received is an append-only `rent_payments` row (`kind` `payment`, or `waived` for rent forgiven). What a tenant owes is never stored: devices add up the rent due so far and subtract every payment, which covers the oldest month first, so partial, advance and offline payments from two devices all count. A `payment` also posts income to `transactions` (category `income`, `source_type` `rent`, `source_id` the lease, id derived from the payment, §2.1); `waived` does not. The deposit is kept on the lease and never posted to the ledger.
 
 Household Inventory: an `inventory_items` row per durable thing the household owns (`category` `appliance`, `electronics`, `furniture`, `tools`, `other`) with its `room`, brand, model, serial number, `bought_on`, `price_minor` and `warranty_until`. Lending it out sets `lent_to` and `lent_on`; returning it clears both. Everyone reads it (the app hides prices from non-adults); adults write. The photo is a plain JPEG at `/api/files/{photo_sha256}` (§7), not encrypted, so members without the vault key can see it. All fields follow the default rule.
+
+Emergency & Disaster Preparedness: `emergency_contacts` (`kind` `family`, `barangay`, `hospital`, `doctor`, `other`; the national hotlines are built into the app, not rows), one `emergency_plans` row per household (meeting point nearby, meeting point outside the area, evacuation centre, note), `go_bag_items` per member (`member_id` null = the household's shared bag) with `packed` and an optional `expires_on`, and `emergency_checks`, a tick on an item of a built-in hazard checklist (`hazard` `typhoon`, `flood`, `earthquake`; `item` the app's key for it). A check-in is an append-only `safety_checkins` row (`status` `safe` or `help`, `checked_at`); the latest per member counts, and the app treats one older than 24 hours as no check-in. Everyone reads all of it. Adults write contacts, the plan and checks; everyone but viewers writes go-bag items (the app lets a member tick only their own bag and the shared one); everyone, viewers too, checks in. All other fields follow the default rule.
 
 Tombstones are kept 90 days, then pruned by the nightly job.
 

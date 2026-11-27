@@ -204,6 +204,27 @@ const syncedEntities = <String, EntitySpec>{
     appendOnly: true,
     mutable: {'note'},
   ),
+  'emergency_contacts': EntitySpec(
+    name: 'emergency_contacts',
+    fields: {'name', 'kind', 'phone', 'note', 'position'},
+  ),
+  'emergency_plans': EntitySpec(
+    name: 'emergency_plans',
+    fields: {'meeting_point', 'meeting_point_far', 'evacuation_center', 'note'},
+  ),
+  'go_bag_items': EntitySpec(
+    name: 'go_bag_items',
+    fields: {'member_id', 'name', 'packed', 'expires_on', 'position'},
+  ),
+  'emergency_checks': EntitySpec(
+    name: 'emergency_checks',
+    fields: {'hazard', 'item', 'done', 'done_by', 'done_at'},
+  ),
+  'safety_checkins': EntitySpec(
+    name: 'safety_checkins',
+    fields: {'member_id', 'status', 'note', 'checked_at'},
+    appendOnly: true,
+  ),
   'inventory_items': EntitySpec(
     name: 'inventory_items',
     fields: {

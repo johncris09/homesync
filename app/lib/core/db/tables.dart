@@ -312,6 +312,54 @@ class InventoryItems extends Table with SyncColumns {
   TextColumn get note => text().nullable()();
 }
 
+/// A number to call in an emergency. The national hotlines are built in.
+class EmergencyContacts extends Table with SyncColumns {
+  TextColumn get name => text()();
+
+  /// `family`, `barangay`, `hospital`, `doctor` or `other`.
+  TextColumn get kind => text()();
+  TextColumn get phone => text()();
+  TextColumn get note => text().nullable()();
+  IntColumn get position => integer().withDefault(const Constant(0))();
+}
+
+/// Where the household meets and evacuates. One row per household.
+class EmergencyPlans extends Table with SyncColumns {
+  TextColumn get meetingPoint => text().nullable()();
+  TextColumn get meetingPointFar => text().nullable()();
+  TextColumn get evacuationCenter => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// One thing in a go-bag; [memberId] null = the household's shared bag.
+class GoBagItems extends Table with SyncColumns {
+  TextColumn get memberId => text().nullable()();
+  TextColumn get name => text()();
+  BoolColumn get packed => boolean().withDefault(const Constant(false))();
+
+  /// Calendar date `YYYY-MM-DD` (food, water, medicine, batteries).
+  TextColumn get expiresOn => text().nullable()();
+  IntColumn get position => integer().withDefault(const Constant(0))();
+}
+
+/// A tick on a built-in hazard checklist item. Id derived from hazard + item.
+class EmergencyChecks extends Table with SyncColumns {
+  /// `typhoon`, `flood` or `earthquake`.
+  TextColumn get hazard => text()();
+  TextColumn get item => text()();
+  BoolColumn get done => boolean().withDefault(const Constant(false))();
+  TextColumn get doneBy => text().nullable()();
+  DateTimeColumn get doneAt => dateTime().nullable()();
+}
+
+/// "I'm safe" ([status] `safe`) or "Need help" (`help`). Append-only.
+class SafetyCheckins extends Table with SyncColumns {
+  TextColumn get memberId => text()();
+  TextColumn get status => text()();
+  TextColumn get note => text().nullable()();
+  DateTimeColumn get checkedAt => dateTime()();
+}
+
 /// A member's health profile; [sealed] is blood type, allergies, conditions,
 /// maintenance medicines, PhilHealth/HMO numbers and doctor, encrypted with
 /// the vault key. One row per member (derived id).

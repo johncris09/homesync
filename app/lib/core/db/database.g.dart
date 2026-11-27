@@ -23921,6 +23921,3955 @@ class InventoryItemsCompanion extends UpdateCompanion<InventoryItem> {
   }
 }
 
+class $EmergencyContactsTable extends EmergencyContacts
+    with TableInfo<$EmergencyContactsTable, EmergencyContact> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $EmergencyContactsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _phoneMeta = const VerificationMeta('phone');
+  @override
+  late final GeneratedColumn<String> phone = GeneratedColumn<String>(
+    'phone',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
+  );
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+    'position',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    name,
+    kind,
+    phone,
+    note,
+    position,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'emergency_contacts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<EmergencyContact> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('phone')) {
+      context.handle(
+        _phoneMeta,
+        phone.isAcceptableOrUnknown(data['phone']!, _phoneMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_phoneMeta);
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('position')) {
+      context.handle(
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  EmergencyContact map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return EmergencyContact(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      phone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}phone'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
+  }
+
+  @override
+  $EmergencyContactsTable createAlias(String alias) {
+    return $EmergencyContactsTable(attachedDatabase, alias);
+  }
+}
+
+class EmergencyContact extends DataClass
+    implements Insertable<EmergencyContact> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String name;
+
+  /// `family`, `barangay`, `hospital`, `doctor` or `other`.
+  final String kind;
+  final String phone;
+  final String? note;
+  final int position;
+  const EmergencyContact({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.name,
+    required this.kind,
+    required this.phone,
+    this.note,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['name'] = Variable<String>(name);
+    map['kind'] = Variable<String>(kind);
+    map['phone'] = Variable<String>(phone);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  EmergencyContactsCompanion toCompanion(bool nullToAbsent) {
+    return EmergencyContactsCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      name: Value(name),
+      kind: Value(kind),
+      phone: Value(phone),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      position: Value(position),
+    );
+  }
+
+  factory EmergencyContact.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return EmergencyContact(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      name: serializer.fromJson<String>(json['name']),
+      kind: serializer.fromJson<String>(json['kind']),
+      phone: serializer.fromJson<String>(json['phone']),
+      note: serializer.fromJson<String?>(json['note']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'name': serializer.toJson<String>(name),
+      'kind': serializer.toJson<String>(kind),
+      'phone': serializer.toJson<String>(phone),
+      'note': serializer.toJson<String?>(note),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  EmergencyContact copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? name,
+    String? kind,
+    String? phone,
+    Value<String?> note = const Value.absent(),
+    int? position,
+  }) => EmergencyContact(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    name: name ?? this.name,
+    kind: kind ?? this.kind,
+    phone: phone ?? this.phone,
+    note: note.present ? note.value : this.note,
+    position: position ?? this.position,
+  );
+  EmergencyContact copyWithCompanion(EmergencyContactsCompanion data) {
+    return EmergencyContact(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      name: data.name.present ? data.name.value : this.name,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      phone: data.phone.present ? data.phone.value : this.phone,
+      note: data.note.present ? data.note.value : this.note,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EmergencyContact(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('name: $name, ')
+          ..write('kind: $kind, ')
+          ..write('phone: $phone, ')
+          ..write('note: $note, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    name,
+    kind,
+    phone,
+    note,
+    position,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is EmergencyContact &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.name == this.name &&
+          other.kind == this.kind &&
+          other.phone == this.phone &&
+          other.note == this.note &&
+          other.position == this.position);
+}
+
+class EmergencyContactsCompanion extends UpdateCompanion<EmergencyContact> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> name;
+  final Value<String> kind;
+  final Value<String> phone;
+  final Value<String?> note;
+  final Value<int> position;
+  final Value<int> rowid;
+  const EmergencyContactsCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.note = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  EmergencyContactsCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String name,
+    required String kind,
+    required String phone,
+    this.note = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       name = Value(name),
+       kind = Value(kind),
+       phone = Value(phone);
+  static Insertable<EmergencyContact> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? name,
+    Expression<String>? kind,
+    Expression<String>? phone,
+    Expression<String>? note,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (name != null) 'name': name,
+      if (kind != null) 'kind': kind,
+      if (phone != null) 'phone': phone,
+      if (note != null) 'note': note,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  EmergencyContactsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? name,
+    Value<String>? kind,
+    Value<String>? phone,
+    Value<String?>? note,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return EmergencyContactsCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      name: name ?? this.name,
+      kind: kind ?? this.kind,
+      phone: phone ?? this.phone,
+      note: note ?? this.note,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (phone.present) {
+      map['phone'] = Variable<String>(phone.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EmergencyContactsCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('name: $name, ')
+          ..write('kind: $kind, ')
+          ..write('phone: $phone, ')
+          ..write('note: $note, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $EmergencyPlansTable extends EmergencyPlans
+    with TableInfo<$EmergencyPlansTable, EmergencyPlan> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $EmergencyPlansTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _meetingPointMeta = const VerificationMeta(
+    'meetingPoint',
+  );
+  @override
+  late final GeneratedColumn<String> meetingPoint = GeneratedColumn<String>(
+    'meeting_point',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _meetingPointFarMeta = const VerificationMeta(
+    'meetingPointFar',
+  );
+  @override
+  late final GeneratedColumn<String> meetingPointFar = GeneratedColumn<String>(
+    'meeting_point_far',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _evacuationCenterMeta = const VerificationMeta(
+    'evacuationCenter',
+  );
+  @override
+  late final GeneratedColumn<String> evacuationCenter = GeneratedColumn<String>(
+    'evacuation_center',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    meetingPoint,
+    meetingPointFar,
+    evacuationCenter,
+    note,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'emergency_plans';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<EmergencyPlan> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('meeting_point')) {
+      context.handle(
+        _meetingPointMeta,
+        meetingPoint.isAcceptableOrUnknown(
+          data['meeting_point']!,
+          _meetingPointMeta,
+        ),
+      );
+    }
+    if (data.containsKey('meeting_point_far')) {
+      context.handle(
+        _meetingPointFarMeta,
+        meetingPointFar.isAcceptableOrUnknown(
+          data['meeting_point_far']!,
+          _meetingPointFarMeta,
+        ),
+      );
+    }
+    if (data.containsKey('evacuation_center')) {
+      context.handle(
+        _evacuationCenterMeta,
+        evacuationCenter.isAcceptableOrUnknown(
+          data['evacuation_center']!,
+          _evacuationCenterMeta,
+        ),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  EmergencyPlan map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return EmergencyPlan(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      meetingPoint: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}meeting_point'],
+      ),
+      meetingPointFar: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}meeting_point_far'],
+      ),
+      evacuationCenter: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}evacuation_center'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
+  }
+
+  @override
+  $EmergencyPlansTable createAlias(String alias) {
+    return $EmergencyPlansTable(attachedDatabase, alias);
+  }
+}
+
+class EmergencyPlan extends DataClass implements Insertable<EmergencyPlan> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String? meetingPoint;
+  final String? meetingPointFar;
+  final String? evacuationCenter;
+  final String? note;
+  const EmergencyPlan({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    this.meetingPoint,
+    this.meetingPointFar,
+    this.evacuationCenter,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    if (!nullToAbsent || meetingPoint != null) {
+      map['meeting_point'] = Variable<String>(meetingPoint);
+    }
+    if (!nullToAbsent || meetingPointFar != null) {
+      map['meeting_point_far'] = Variable<String>(meetingPointFar);
+    }
+    if (!nullToAbsent || evacuationCenter != null) {
+      map['evacuation_center'] = Variable<String>(evacuationCenter);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  EmergencyPlansCompanion toCompanion(bool nullToAbsent) {
+    return EmergencyPlansCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      meetingPoint: meetingPoint == null && nullToAbsent
+          ? const Value.absent()
+          : Value(meetingPoint),
+      meetingPointFar: meetingPointFar == null && nullToAbsent
+          ? const Value.absent()
+          : Value(meetingPointFar),
+      evacuationCenter: evacuationCenter == null && nullToAbsent
+          ? const Value.absent()
+          : Value(evacuationCenter),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory EmergencyPlan.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return EmergencyPlan(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      meetingPoint: serializer.fromJson<String?>(json['meetingPoint']),
+      meetingPointFar: serializer.fromJson<String?>(json['meetingPointFar']),
+      evacuationCenter: serializer.fromJson<String?>(json['evacuationCenter']),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'meetingPoint': serializer.toJson<String?>(meetingPoint),
+      'meetingPointFar': serializer.toJson<String?>(meetingPointFar),
+      'evacuationCenter': serializer.toJson<String?>(evacuationCenter),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  EmergencyPlan copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    Value<String?> meetingPoint = const Value.absent(),
+    Value<String?> meetingPointFar = const Value.absent(),
+    Value<String?> evacuationCenter = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+  }) => EmergencyPlan(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    meetingPoint: meetingPoint.present ? meetingPoint.value : this.meetingPoint,
+    meetingPointFar: meetingPointFar.present
+        ? meetingPointFar.value
+        : this.meetingPointFar,
+    evacuationCenter: evacuationCenter.present
+        ? evacuationCenter.value
+        : this.evacuationCenter,
+    note: note.present ? note.value : this.note,
+  );
+  EmergencyPlan copyWithCompanion(EmergencyPlansCompanion data) {
+    return EmergencyPlan(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      meetingPoint: data.meetingPoint.present
+          ? data.meetingPoint.value
+          : this.meetingPoint,
+      meetingPointFar: data.meetingPointFar.present
+          ? data.meetingPointFar.value
+          : this.meetingPointFar,
+      evacuationCenter: data.evacuationCenter.present
+          ? data.evacuationCenter.value
+          : this.evacuationCenter,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EmergencyPlan(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('meetingPoint: $meetingPoint, ')
+          ..write('meetingPointFar: $meetingPointFar, ')
+          ..write('evacuationCenter: $evacuationCenter, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    meetingPoint,
+    meetingPointFar,
+    evacuationCenter,
+    note,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is EmergencyPlan &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.meetingPoint == this.meetingPoint &&
+          other.meetingPointFar == this.meetingPointFar &&
+          other.evacuationCenter == this.evacuationCenter &&
+          other.note == this.note);
+}
+
+class EmergencyPlansCompanion extends UpdateCompanion<EmergencyPlan> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String?> meetingPoint;
+  final Value<String?> meetingPointFar;
+  final Value<String?> evacuationCenter;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const EmergencyPlansCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.meetingPoint = const Value.absent(),
+    this.meetingPointFar = const Value.absent(),
+    this.evacuationCenter = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  EmergencyPlansCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.meetingPoint = const Value.absent(),
+    this.meetingPointFar = const Value.absent(),
+    this.evacuationCenter = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId);
+  static Insertable<EmergencyPlan> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? meetingPoint,
+    Expression<String>? meetingPointFar,
+    Expression<String>? evacuationCenter,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (meetingPoint != null) 'meeting_point': meetingPoint,
+      if (meetingPointFar != null) 'meeting_point_far': meetingPointFar,
+      if (evacuationCenter != null) 'evacuation_center': evacuationCenter,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  EmergencyPlansCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String?>? meetingPoint,
+    Value<String?>? meetingPointFar,
+    Value<String?>? evacuationCenter,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return EmergencyPlansCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      meetingPoint: meetingPoint ?? this.meetingPoint,
+      meetingPointFar: meetingPointFar ?? this.meetingPointFar,
+      evacuationCenter: evacuationCenter ?? this.evacuationCenter,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (meetingPoint.present) {
+      map['meeting_point'] = Variable<String>(meetingPoint.value);
+    }
+    if (meetingPointFar.present) {
+      map['meeting_point_far'] = Variable<String>(meetingPointFar.value);
+    }
+    if (evacuationCenter.present) {
+      map['evacuation_center'] = Variable<String>(evacuationCenter.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EmergencyPlansCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('meetingPoint: $meetingPoint, ')
+          ..write('meetingPointFar: $meetingPointFar, ')
+          ..write('evacuationCenter: $evacuationCenter, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GoBagItemsTable extends GoBagItems
+    with TableInfo<$GoBagItemsTable, GoBagItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GoBagItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _memberIdMeta = const VerificationMeta(
+    'memberId',
+  );
+  @override
+  late final GeneratedColumn<String> memberId = GeneratedColumn<String>(
+    'member_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _packedMeta = const VerificationMeta('packed');
+  @override
+  late final GeneratedColumn<bool> packed = GeneratedColumn<bool>(
+    'packed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("packed" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _expiresOnMeta = const VerificationMeta(
+    'expiresOn',
+  );
+  @override
+  late final GeneratedColumn<String> expiresOn = GeneratedColumn<String>(
+    'expires_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
+  );
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+    'position',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    memberId,
+    name,
+    packed,
+    expiresOn,
+    position,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'go_bag_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GoBagItem> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('member_id')) {
+      context.handle(
+        _memberIdMeta,
+        memberId.isAcceptableOrUnknown(data['member_id']!, _memberIdMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('packed')) {
+      context.handle(
+        _packedMeta,
+        packed.isAcceptableOrUnknown(data['packed']!, _packedMeta),
+      );
+    }
+    if (data.containsKey('expires_on')) {
+      context.handle(
+        _expiresOnMeta,
+        expiresOn.isAcceptableOrUnknown(data['expires_on']!, _expiresOnMeta),
+      );
+    }
+    if (data.containsKey('position')) {
+      context.handle(
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GoBagItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GoBagItem(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      memberId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}member_id'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      packed: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}packed'],
+      )!,
+      expiresOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}expires_on'],
+      ),
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
+  }
+
+  @override
+  $GoBagItemsTable createAlias(String alias) {
+    return $GoBagItemsTable(attachedDatabase, alias);
+  }
+}
+
+class GoBagItem extends DataClass implements Insertable<GoBagItem> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String? memberId;
+  final String name;
+  final bool packed;
+
+  /// Calendar date `YYYY-MM-DD` (food, water, medicine, batteries).
+  final String? expiresOn;
+  final int position;
+  const GoBagItem({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    this.memberId,
+    required this.name,
+    required this.packed,
+    this.expiresOn,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    if (!nullToAbsent || memberId != null) {
+      map['member_id'] = Variable<String>(memberId);
+    }
+    map['name'] = Variable<String>(name);
+    map['packed'] = Variable<bool>(packed);
+    if (!nullToAbsent || expiresOn != null) {
+      map['expires_on'] = Variable<String>(expiresOn);
+    }
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  GoBagItemsCompanion toCompanion(bool nullToAbsent) {
+    return GoBagItemsCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      memberId: memberId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(memberId),
+      name: Value(name),
+      packed: Value(packed),
+      expiresOn: expiresOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(expiresOn),
+      position: Value(position),
+    );
+  }
+
+  factory GoBagItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GoBagItem(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      memberId: serializer.fromJson<String?>(json['memberId']),
+      name: serializer.fromJson<String>(json['name']),
+      packed: serializer.fromJson<bool>(json['packed']),
+      expiresOn: serializer.fromJson<String?>(json['expiresOn']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'memberId': serializer.toJson<String?>(memberId),
+      'name': serializer.toJson<String>(name),
+      'packed': serializer.toJson<bool>(packed),
+      'expiresOn': serializer.toJson<String?>(expiresOn),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  GoBagItem copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    Value<String?> memberId = const Value.absent(),
+    String? name,
+    bool? packed,
+    Value<String?> expiresOn = const Value.absent(),
+    int? position,
+  }) => GoBagItem(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    memberId: memberId.present ? memberId.value : this.memberId,
+    name: name ?? this.name,
+    packed: packed ?? this.packed,
+    expiresOn: expiresOn.present ? expiresOn.value : this.expiresOn,
+    position: position ?? this.position,
+  );
+  GoBagItem copyWithCompanion(GoBagItemsCompanion data) {
+    return GoBagItem(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      memberId: data.memberId.present ? data.memberId.value : this.memberId,
+      name: data.name.present ? data.name.value : this.name,
+      packed: data.packed.present ? data.packed.value : this.packed,
+      expiresOn: data.expiresOn.present ? data.expiresOn.value : this.expiresOn,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GoBagItem(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('memberId: $memberId, ')
+          ..write('name: $name, ')
+          ..write('packed: $packed, ')
+          ..write('expiresOn: $expiresOn, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    memberId,
+    name,
+    packed,
+    expiresOn,
+    position,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GoBagItem &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.memberId == this.memberId &&
+          other.name == this.name &&
+          other.packed == this.packed &&
+          other.expiresOn == this.expiresOn &&
+          other.position == this.position);
+}
+
+class GoBagItemsCompanion extends UpdateCompanion<GoBagItem> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String?> memberId;
+  final Value<String> name;
+  final Value<bool> packed;
+  final Value<String?> expiresOn;
+  final Value<int> position;
+  final Value<int> rowid;
+  const GoBagItemsCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.memberId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.packed = const Value.absent(),
+    this.expiresOn = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  GoBagItemsCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.memberId = const Value.absent(),
+    required String name,
+    this.packed = const Value.absent(),
+    this.expiresOn = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       name = Value(name);
+  static Insertable<GoBagItem> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? memberId,
+    Expression<String>? name,
+    Expression<bool>? packed,
+    Expression<String>? expiresOn,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (memberId != null) 'member_id': memberId,
+      if (name != null) 'name': name,
+      if (packed != null) 'packed': packed,
+      if (expiresOn != null) 'expires_on': expiresOn,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  GoBagItemsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String?>? memberId,
+    Value<String>? name,
+    Value<bool>? packed,
+    Value<String?>? expiresOn,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return GoBagItemsCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      memberId: memberId ?? this.memberId,
+      name: name ?? this.name,
+      packed: packed ?? this.packed,
+      expiresOn: expiresOn ?? this.expiresOn,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (memberId.present) {
+      map['member_id'] = Variable<String>(memberId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (packed.present) {
+      map['packed'] = Variable<bool>(packed.value);
+    }
+    if (expiresOn.present) {
+      map['expires_on'] = Variable<String>(expiresOn.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GoBagItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('memberId: $memberId, ')
+          ..write('name: $name, ')
+          ..write('packed: $packed, ')
+          ..write('expiresOn: $expiresOn, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $EmergencyChecksTable extends EmergencyChecks
+    with TableInfo<$EmergencyChecksTable, EmergencyCheck> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $EmergencyChecksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hazardMeta = const VerificationMeta('hazard');
+  @override
+  late final GeneratedColumn<String> hazard = GeneratedColumn<String>(
+    'hazard',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _itemMeta = const VerificationMeta('item');
+  @override
+  late final GeneratedColumn<String> item = GeneratedColumn<String>(
+    'item',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _doneMeta = const VerificationMeta('done');
+  @override
+  late final GeneratedColumn<bool> done = GeneratedColumn<bool>(
+    'done',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("done" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _doneByMeta = const VerificationMeta('doneBy');
+  @override
+  late final GeneratedColumn<String> doneBy = GeneratedColumn<String>(
+    'done_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _doneAtMeta = const VerificationMeta('doneAt');
+  @override
+  late final GeneratedColumn<DateTime> doneAt = GeneratedColumn<DateTime>(
+    'done_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    hazard,
+    item,
+    done,
+    doneBy,
+    doneAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'emergency_checks';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<EmergencyCheck> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('hazard')) {
+      context.handle(
+        _hazardMeta,
+        hazard.isAcceptableOrUnknown(data['hazard']!, _hazardMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_hazardMeta);
+    }
+    if (data.containsKey('item')) {
+      context.handle(
+        _itemMeta,
+        item.isAcceptableOrUnknown(data['item']!, _itemMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_itemMeta);
+    }
+    if (data.containsKey('done')) {
+      context.handle(
+        _doneMeta,
+        done.isAcceptableOrUnknown(data['done']!, _doneMeta),
+      );
+    }
+    if (data.containsKey('done_by')) {
+      context.handle(
+        _doneByMeta,
+        doneBy.isAcceptableOrUnknown(data['done_by']!, _doneByMeta),
+      );
+    }
+    if (data.containsKey('done_at')) {
+      context.handle(
+        _doneAtMeta,
+        doneAt.isAcceptableOrUnknown(data['done_at']!, _doneAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  EmergencyCheck map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return EmergencyCheck(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      hazard: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hazard'],
+      )!,
+      item: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}item'],
+      )!,
+      done: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}done'],
+      )!,
+      doneBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}done_by'],
+      ),
+      doneAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}done_at'],
+      ),
+    );
+  }
+
+  @override
+  $EmergencyChecksTable createAlias(String alias) {
+    return $EmergencyChecksTable(attachedDatabase, alias);
+  }
+}
+
+class EmergencyCheck extends DataClass implements Insertable<EmergencyCheck> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+
+  /// `typhoon`, `flood` or `earthquake`.
+  final String hazard;
+  final String item;
+  final bool done;
+  final String? doneBy;
+  final DateTime? doneAt;
+  const EmergencyCheck({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.hazard,
+    required this.item,
+    required this.done,
+    this.doneBy,
+    this.doneAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['hazard'] = Variable<String>(hazard);
+    map['item'] = Variable<String>(item);
+    map['done'] = Variable<bool>(done);
+    if (!nullToAbsent || doneBy != null) {
+      map['done_by'] = Variable<String>(doneBy);
+    }
+    if (!nullToAbsent || doneAt != null) {
+      map['done_at'] = Variable<DateTime>(doneAt);
+    }
+    return map;
+  }
+
+  EmergencyChecksCompanion toCompanion(bool nullToAbsent) {
+    return EmergencyChecksCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      hazard: Value(hazard),
+      item: Value(item),
+      done: Value(done),
+      doneBy: doneBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(doneBy),
+      doneAt: doneAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(doneAt),
+    );
+  }
+
+  factory EmergencyCheck.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return EmergencyCheck(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      hazard: serializer.fromJson<String>(json['hazard']),
+      item: serializer.fromJson<String>(json['item']),
+      done: serializer.fromJson<bool>(json['done']),
+      doneBy: serializer.fromJson<String?>(json['doneBy']),
+      doneAt: serializer.fromJson<DateTime?>(json['doneAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'hazard': serializer.toJson<String>(hazard),
+      'item': serializer.toJson<String>(item),
+      'done': serializer.toJson<bool>(done),
+      'doneBy': serializer.toJson<String?>(doneBy),
+      'doneAt': serializer.toJson<DateTime?>(doneAt),
+    };
+  }
+
+  EmergencyCheck copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? hazard,
+    String? item,
+    bool? done,
+    Value<String?> doneBy = const Value.absent(),
+    Value<DateTime?> doneAt = const Value.absent(),
+  }) => EmergencyCheck(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    hazard: hazard ?? this.hazard,
+    item: item ?? this.item,
+    done: done ?? this.done,
+    doneBy: doneBy.present ? doneBy.value : this.doneBy,
+    doneAt: doneAt.present ? doneAt.value : this.doneAt,
+  );
+  EmergencyCheck copyWithCompanion(EmergencyChecksCompanion data) {
+    return EmergencyCheck(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      hazard: data.hazard.present ? data.hazard.value : this.hazard,
+      item: data.item.present ? data.item.value : this.item,
+      done: data.done.present ? data.done.value : this.done,
+      doneBy: data.doneBy.present ? data.doneBy.value : this.doneBy,
+      doneAt: data.doneAt.present ? data.doneAt.value : this.doneAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EmergencyCheck(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('hazard: $hazard, ')
+          ..write('item: $item, ')
+          ..write('done: $done, ')
+          ..write('doneBy: $doneBy, ')
+          ..write('doneAt: $doneAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    hazard,
+    item,
+    done,
+    doneBy,
+    doneAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is EmergencyCheck &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.hazard == this.hazard &&
+          other.item == this.item &&
+          other.done == this.done &&
+          other.doneBy == this.doneBy &&
+          other.doneAt == this.doneAt);
+}
+
+class EmergencyChecksCompanion extends UpdateCompanion<EmergencyCheck> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> hazard;
+  final Value<String> item;
+  final Value<bool> done;
+  final Value<String?> doneBy;
+  final Value<DateTime?> doneAt;
+  final Value<int> rowid;
+  const EmergencyChecksCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.hazard = const Value.absent(),
+    this.item = const Value.absent(),
+    this.done = const Value.absent(),
+    this.doneBy = const Value.absent(),
+    this.doneAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  EmergencyChecksCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String hazard,
+    required String item,
+    this.done = const Value.absent(),
+    this.doneBy = const Value.absent(),
+    this.doneAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       hazard = Value(hazard),
+       item = Value(item);
+  static Insertable<EmergencyCheck> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? hazard,
+    Expression<String>? item,
+    Expression<bool>? done,
+    Expression<String>? doneBy,
+    Expression<DateTime>? doneAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (hazard != null) 'hazard': hazard,
+      if (item != null) 'item': item,
+      if (done != null) 'done': done,
+      if (doneBy != null) 'done_by': doneBy,
+      if (doneAt != null) 'done_at': doneAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  EmergencyChecksCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? hazard,
+    Value<String>? item,
+    Value<bool>? done,
+    Value<String?>? doneBy,
+    Value<DateTime?>? doneAt,
+    Value<int>? rowid,
+  }) {
+    return EmergencyChecksCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      hazard: hazard ?? this.hazard,
+      item: item ?? this.item,
+      done: done ?? this.done,
+      doneBy: doneBy ?? this.doneBy,
+      doneAt: doneAt ?? this.doneAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (hazard.present) {
+      map['hazard'] = Variable<String>(hazard.value);
+    }
+    if (item.present) {
+      map['item'] = Variable<String>(item.value);
+    }
+    if (done.present) {
+      map['done'] = Variable<bool>(done.value);
+    }
+    if (doneBy.present) {
+      map['done_by'] = Variable<String>(doneBy.value);
+    }
+    if (doneAt.present) {
+      map['done_at'] = Variable<DateTime>(doneAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EmergencyChecksCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('hazard: $hazard, ')
+          ..write('item: $item, ')
+          ..write('done: $done, ')
+          ..write('doneBy: $doneBy, ')
+          ..write('doneAt: $doneAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SafetyCheckinsTable extends SafetyCheckins
+    with TableInfo<$SafetyCheckinsTable, SafetyCheckin> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SafetyCheckinsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _householdIdMeta = const VerificationMeta(
+    'householdId',
+  );
+  @override
+  late final GeneratedColumn<String> householdId = GeneratedColumn<String>(
+    'household_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _serverVersionMeta = const VerificationMeta(
+    'serverVersion',
+  );
+  @override
+  late final GeneratedColumn<int> serverVersion = GeneratedColumn<int>(
+    'server_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _memberIdMeta = const VerificationMeta(
+    'memberId',
+  );
+  @override
+  late final GeneratedColumn<String> memberId = GeneratedColumn<String>(
+    'member_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _checkedAtMeta = const VerificationMeta(
+    'checkedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> checkedAt = GeneratedColumn<DateTime>(
+    'checked_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    memberId,
+    status,
+    note,
+    checkedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'safety_checkins';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SafetyCheckin> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('household_id')) {
+      context.handle(
+        _householdIdMeta,
+        householdId.isAcceptableOrUnknown(
+          data['household_id']!,
+          _householdIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_householdIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    }
+    if (data.containsKey('server_version')) {
+      context.handle(
+        _serverVersionMeta,
+        serverVersion.isAcceptableOrUnknown(
+          data['server_version']!,
+          _serverVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    }
+    if (data.containsKey('member_id')) {
+      context.handle(
+        _memberIdMeta,
+        memberId.isAcceptableOrUnknown(data['member_id']!, _memberIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_memberIdMeta);
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_statusMeta);
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('checked_at')) {
+      context.handle(
+        _checkedAtMeta,
+        checkedAt.isAcceptableOrUnknown(data['checked_at']!, _checkedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_checkedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SafetyCheckin map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SafetyCheckin(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      householdId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}household_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      ),
+      serverVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}server_version'],
+      ),
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      ),
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      ),
+      memberId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}member_id'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      checkedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}checked_at'],
+      )!,
+    );
+  }
+
+  @override
+  $SafetyCheckinsTable createAlias(String alias) {
+    return $SafetyCheckinsTable(attachedDatabase, alias);
+  }
+}
+
+class SafetyCheckin extends DataClass implements Insertable<SafetyCheckin> {
+  final String id;
+  final String householdId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? hlc;
+  final int? serverVersion;
+  final String? updatedBy;
+  final String? deviceId;
+  final String memberId;
+  final String status;
+  final String? note;
+  final DateTime checkedAt;
+  const SafetyCheckin({
+    required this.id,
+    required this.householdId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.hlc,
+    this.serverVersion,
+    this.updatedBy,
+    this.deviceId,
+    required this.memberId,
+    required this.status,
+    this.note,
+    required this.checkedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['household_id'] = Variable<String>(householdId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || hlc != null) {
+      map['hlc'] = Variable<String>(hlc);
+    }
+    if (!nullToAbsent || serverVersion != null) {
+      map['server_version'] = Variable<int>(serverVersion);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<String>(updatedBy);
+    }
+    if (!nullToAbsent || deviceId != null) {
+      map['device_id'] = Variable<String>(deviceId);
+    }
+    map['member_id'] = Variable<String>(memberId);
+    map['status'] = Variable<String>(status);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    map['checked_at'] = Variable<DateTime>(checkedAt);
+    return map;
+  }
+
+  SafetyCheckinsCompanion toCompanion(bool nullToAbsent) {
+    return SafetyCheckinsCompanion(
+      id: Value(id),
+      householdId: Value(householdId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      hlc: hlc == null && nullToAbsent ? const Value.absent() : Value(hlc),
+      serverVersion: serverVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverVersion),
+      updatedBy: updatedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedBy),
+      deviceId: deviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceId),
+      memberId: Value(memberId),
+      status: Value(status),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      checkedAt: Value(checkedAt),
+    );
+  }
+
+  factory SafetyCheckin.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SafetyCheckin(
+      id: serializer.fromJson<String>(json['id']),
+      householdId: serializer.fromJson<String>(json['householdId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      hlc: serializer.fromJson<String?>(json['hlc']),
+      serverVersion: serializer.fromJson<int?>(json['serverVersion']),
+      updatedBy: serializer.fromJson<String?>(json['updatedBy']),
+      deviceId: serializer.fromJson<String?>(json['deviceId']),
+      memberId: serializer.fromJson<String>(json['memberId']),
+      status: serializer.fromJson<String>(json['status']),
+      note: serializer.fromJson<String?>(json['note']),
+      checkedAt: serializer.fromJson<DateTime>(json['checkedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'householdId': serializer.toJson<String>(householdId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'hlc': serializer.toJson<String?>(hlc),
+      'serverVersion': serializer.toJson<int?>(serverVersion),
+      'updatedBy': serializer.toJson<String?>(updatedBy),
+      'deviceId': serializer.toJson<String?>(deviceId),
+      'memberId': serializer.toJson<String>(memberId),
+      'status': serializer.toJson<String>(status),
+      'note': serializer.toJson<String?>(note),
+      'checkedAt': serializer.toJson<DateTime>(checkedAt),
+    };
+  }
+
+  SafetyCheckin copyWith({
+    String? id,
+    String? householdId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> hlc = const Value.absent(),
+    Value<int?> serverVersion = const Value.absent(),
+    Value<String?> updatedBy = const Value.absent(),
+    Value<String?> deviceId = const Value.absent(),
+    String? memberId,
+    String? status,
+    Value<String?> note = const Value.absent(),
+    DateTime? checkedAt,
+  }) => SafetyCheckin(
+    id: id ?? this.id,
+    householdId: householdId ?? this.householdId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    hlc: hlc.present ? hlc.value : this.hlc,
+    serverVersion: serverVersion.present
+        ? serverVersion.value
+        : this.serverVersion,
+    updatedBy: updatedBy.present ? updatedBy.value : this.updatedBy,
+    deviceId: deviceId.present ? deviceId.value : this.deviceId,
+    memberId: memberId ?? this.memberId,
+    status: status ?? this.status,
+    note: note.present ? note.value : this.note,
+    checkedAt: checkedAt ?? this.checkedAt,
+  );
+  SafetyCheckin copyWithCompanion(SafetyCheckinsCompanion data) {
+    return SafetyCheckin(
+      id: data.id.present ? data.id.value : this.id,
+      householdId: data.householdId.present
+          ? data.householdId.value
+          : this.householdId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      serverVersion: data.serverVersion.present
+          ? data.serverVersion.value
+          : this.serverVersion,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      memberId: data.memberId.present ? data.memberId.value : this.memberId,
+      status: data.status.present ? data.status.value : this.status,
+      note: data.note.present ? data.note.value : this.note,
+      checkedAt: data.checkedAt.present ? data.checkedAt.value : this.checkedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SafetyCheckin(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('memberId: $memberId, ')
+          ..write('status: $status, ')
+          ..write('note: $note, ')
+          ..write('checkedAt: $checkedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    householdId,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    hlc,
+    serverVersion,
+    updatedBy,
+    deviceId,
+    memberId,
+    status,
+    note,
+    checkedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SafetyCheckin &&
+          other.id == this.id &&
+          other.householdId == this.householdId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.hlc == this.hlc &&
+          other.serverVersion == this.serverVersion &&
+          other.updatedBy == this.updatedBy &&
+          other.deviceId == this.deviceId &&
+          other.memberId == this.memberId &&
+          other.status == this.status &&
+          other.note == this.note &&
+          other.checkedAt == this.checkedAt);
+}
+
+class SafetyCheckinsCompanion extends UpdateCompanion<SafetyCheckin> {
+  final Value<String> id;
+  final Value<String> householdId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> hlc;
+  final Value<int?> serverVersion;
+  final Value<String?> updatedBy;
+  final Value<String?> deviceId;
+  final Value<String> memberId;
+  final Value<String> status;
+  final Value<String?> note;
+  final Value<DateTime> checkedAt;
+  final Value<int> rowid;
+  const SafetyCheckinsCompanion({
+    this.id = const Value.absent(),
+    this.householdId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.memberId = const Value.absent(),
+    this.status = const Value.absent(),
+    this.note = const Value.absent(),
+    this.checkedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SafetyCheckinsCompanion.insert({
+    required String id,
+    required String householdId,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.serverVersion = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    required String memberId,
+    required String status,
+    this.note = const Value.absent(),
+    required DateTime checkedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       householdId = Value(householdId),
+       memberId = Value(memberId),
+       status = Value(status),
+       checkedAt = Value(checkedAt);
+  static Insertable<SafetyCheckin> custom({
+    Expression<String>? id,
+    Expression<String>? householdId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? hlc,
+    Expression<int>? serverVersion,
+    Expression<String>? updatedBy,
+    Expression<String>? deviceId,
+    Expression<String>? memberId,
+    Expression<String>? status,
+    Expression<String>? note,
+    Expression<DateTime>? checkedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (householdId != null) 'household_id': householdId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (hlc != null) 'hlc': hlc,
+      if (serverVersion != null) 'server_version': serverVersion,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (deviceId != null) 'device_id': deviceId,
+      if (memberId != null) 'member_id': memberId,
+      if (status != null) 'status': status,
+      if (note != null) 'note': note,
+      if (checkedAt != null) 'checked_at': checkedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SafetyCheckinsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? householdId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? hlc,
+    Value<int?>? serverVersion,
+    Value<String?>? updatedBy,
+    Value<String?>? deviceId,
+    Value<String>? memberId,
+    Value<String>? status,
+    Value<String?>? note,
+    Value<DateTime>? checkedAt,
+    Value<int>? rowid,
+  }) {
+    return SafetyCheckinsCompanion(
+      id: id ?? this.id,
+      householdId: householdId ?? this.householdId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      hlc: hlc ?? this.hlc,
+      serverVersion: serverVersion ?? this.serverVersion,
+      updatedBy: updatedBy ?? this.updatedBy,
+      deviceId: deviceId ?? this.deviceId,
+      memberId: memberId ?? this.memberId,
+      status: status ?? this.status,
+      note: note ?? this.note,
+      checkedAt: checkedAt ?? this.checkedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (householdId.present) {
+      map['household_id'] = Variable<String>(householdId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (serverVersion.present) {
+      map['server_version'] = Variable<int>(serverVersion.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (memberId.present) {
+      map['member_id'] = Variable<String>(memberId.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (checkedAt.present) {
+      map['checked_at'] = Variable<DateTime>(checkedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SafetyCheckinsCompanion(')
+          ..write('id: $id, ')
+          ..write('householdId: $householdId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('hlc: $hlc, ')
+          ..write('serverVersion: $serverVersion, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('memberId: $memberId, ')
+          ..write('status: $status, ')
+          ..write('note: $note, ')
+          ..write('checkedAt: $checkedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $ConflictsTable extends Conflicts
     with TableInfo<$ConflictsTable, ConflictRecord> {
   @override
@@ -26759,6 +30708,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $LeasesTable leases = $LeasesTable(this);
   late final $RentPaymentsTable rentPayments = $RentPaymentsTable(this);
   late final $InventoryItemsTable inventoryItems = $InventoryItemsTable(this);
+  late final $EmergencyContactsTable emergencyContacts =
+      $EmergencyContactsTable(this);
+  late final $EmergencyPlansTable emergencyPlans = $EmergencyPlansTable(this);
+  late final $GoBagItemsTable goBagItems = $GoBagItemsTable(this);
+  late final $EmergencyChecksTable emergencyChecks = $EmergencyChecksTable(
+    this,
+  );
+  late final $SafetyCheckinsTable safetyCheckins = $SafetyCheckinsTable(this);
   late final $ConflictsTable conflicts = $ConflictsTable(this);
   late final $OutboxTable outbox = $OutboxTable(this);
   late final $FieldClocksTable fieldClocks = $FieldClocksTable(this);
@@ -26795,6 +30752,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     leases,
     rentPayments,
     inventoryItems,
+    emergencyContacts,
+    emergencyPlans,
+    goBagItems,
+    emergencyChecks,
+    safetyCheckins,
     conflicts,
     outbox,
     fieldClocks,
@@ -37657,6 +41619,1869 @@ typedef $$InventoryItemsTableProcessedTableManager =
       InventoryItem,
       PrefetchHooks Function()
     >;
+typedef $$EmergencyContactsTableCreateCompanionBuilder =
+    EmergencyContactsCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String name,
+      required String kind,
+      required String phone,
+      Value<String?> note,
+      Value<int> position,
+      Value<int> rowid,
+    });
+typedef $$EmergencyContactsTableUpdateCompanionBuilder =
+    EmergencyContactsCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> name,
+      Value<String> kind,
+      Value<String> phone,
+      Value<String?> note,
+      Value<int> position,
+      Value<int> rowid,
+    });
+
+class $$EmergencyContactsTableFilterComposer
+    extends Composer<_$AppDatabase, $EmergencyContactsTable> {
+  $$EmergencyContactsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$EmergencyContactsTableOrderingComposer
+    extends Composer<_$AppDatabase, $EmergencyContactsTable> {
+  $$EmergencyContactsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$EmergencyContactsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $EmergencyContactsTable> {
+  $$EmergencyContactsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<String> get phone =>
+      $composableBuilder(column: $table.phone, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+}
+
+class $$EmergencyContactsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $EmergencyContactsTable,
+          EmergencyContact,
+          $$EmergencyContactsTableFilterComposer,
+          $$EmergencyContactsTableOrderingComposer,
+          $$EmergencyContactsTableAnnotationComposer,
+          $$EmergencyContactsTableCreateCompanionBuilder,
+          $$EmergencyContactsTableUpdateCompanionBuilder,
+          (
+            EmergencyContact,
+            BaseReferences<
+              _$AppDatabase,
+              $EmergencyContactsTable,
+              EmergencyContact
+            >,
+          ),
+          EmergencyContact,
+          PrefetchHooks Function()
+        > {
+  $$EmergencyContactsTableTableManager(
+    _$AppDatabase db,
+    $EmergencyContactsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$EmergencyContactsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$EmergencyContactsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$EmergencyContactsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<String> phone = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EmergencyContactsCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                name: name,
+                kind: kind,
+                phone: phone,
+                note: note,
+                position: position,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String name,
+                required String kind,
+                required String phone,
+                Value<String?> note = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EmergencyContactsCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                name: name,
+                kind: kind,
+                phone: phone,
+                note: note,
+                position: position,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$EmergencyContactsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $EmergencyContactsTable,
+      EmergencyContact,
+      $$EmergencyContactsTableFilterComposer,
+      $$EmergencyContactsTableOrderingComposer,
+      $$EmergencyContactsTableAnnotationComposer,
+      $$EmergencyContactsTableCreateCompanionBuilder,
+      $$EmergencyContactsTableUpdateCompanionBuilder,
+      (
+        EmergencyContact,
+        BaseReferences<
+          _$AppDatabase,
+          $EmergencyContactsTable,
+          EmergencyContact
+        >,
+      ),
+      EmergencyContact,
+      PrefetchHooks Function()
+    >;
+typedef $$EmergencyPlansTableCreateCompanionBuilder =
+    EmergencyPlansCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String?> meetingPoint,
+      Value<String?> meetingPointFar,
+      Value<String?> evacuationCenter,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+typedef $$EmergencyPlansTableUpdateCompanionBuilder =
+    EmergencyPlansCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String?> meetingPoint,
+      Value<String?> meetingPointFar,
+      Value<String?> evacuationCenter,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+
+class $$EmergencyPlansTableFilterComposer
+    extends Composer<_$AppDatabase, $EmergencyPlansTable> {
+  $$EmergencyPlansTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get meetingPoint => $composableBuilder(
+    column: $table.meetingPoint,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get meetingPointFar => $composableBuilder(
+    column: $table.meetingPointFar,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get evacuationCenter => $composableBuilder(
+    column: $table.evacuationCenter,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$EmergencyPlansTableOrderingComposer
+    extends Composer<_$AppDatabase, $EmergencyPlansTable> {
+  $$EmergencyPlansTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get meetingPoint => $composableBuilder(
+    column: $table.meetingPoint,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get meetingPointFar => $composableBuilder(
+    column: $table.meetingPointFar,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get evacuationCenter => $composableBuilder(
+    column: $table.evacuationCenter,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$EmergencyPlansTableAnnotationComposer
+    extends Composer<_$AppDatabase, $EmergencyPlansTable> {
+  $$EmergencyPlansTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get meetingPoint => $composableBuilder(
+    column: $table.meetingPoint,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get meetingPointFar => $composableBuilder(
+    column: $table.meetingPointFar,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get evacuationCenter => $composableBuilder(
+    column: $table.evacuationCenter,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+}
+
+class $$EmergencyPlansTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $EmergencyPlansTable,
+          EmergencyPlan,
+          $$EmergencyPlansTableFilterComposer,
+          $$EmergencyPlansTableOrderingComposer,
+          $$EmergencyPlansTableAnnotationComposer,
+          $$EmergencyPlansTableCreateCompanionBuilder,
+          $$EmergencyPlansTableUpdateCompanionBuilder,
+          (
+            EmergencyPlan,
+            BaseReferences<_$AppDatabase, $EmergencyPlansTable, EmergencyPlan>,
+          ),
+          EmergencyPlan,
+          PrefetchHooks Function()
+        > {
+  $$EmergencyPlansTableTableManager(
+    _$AppDatabase db,
+    $EmergencyPlansTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$EmergencyPlansTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$EmergencyPlansTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$EmergencyPlansTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String?> meetingPoint = const Value.absent(),
+                Value<String?> meetingPointFar = const Value.absent(),
+                Value<String?> evacuationCenter = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EmergencyPlansCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                meetingPoint: meetingPoint,
+                meetingPointFar: meetingPointFar,
+                evacuationCenter: evacuationCenter,
+                note: note,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String?> meetingPoint = const Value.absent(),
+                Value<String?> meetingPointFar = const Value.absent(),
+                Value<String?> evacuationCenter = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EmergencyPlansCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                meetingPoint: meetingPoint,
+                meetingPointFar: meetingPointFar,
+                evacuationCenter: evacuationCenter,
+                note: note,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$EmergencyPlansTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $EmergencyPlansTable,
+      EmergencyPlan,
+      $$EmergencyPlansTableFilterComposer,
+      $$EmergencyPlansTableOrderingComposer,
+      $$EmergencyPlansTableAnnotationComposer,
+      $$EmergencyPlansTableCreateCompanionBuilder,
+      $$EmergencyPlansTableUpdateCompanionBuilder,
+      (
+        EmergencyPlan,
+        BaseReferences<_$AppDatabase, $EmergencyPlansTable, EmergencyPlan>,
+      ),
+      EmergencyPlan,
+      PrefetchHooks Function()
+    >;
+typedef $$GoBagItemsTableCreateCompanionBuilder =
+    GoBagItemsCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String?> memberId,
+      required String name,
+      Value<bool> packed,
+      Value<String?> expiresOn,
+      Value<int> position,
+      Value<int> rowid,
+    });
+typedef $$GoBagItemsTableUpdateCompanionBuilder =
+    GoBagItemsCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String?> memberId,
+      Value<String> name,
+      Value<bool> packed,
+      Value<String?> expiresOn,
+      Value<int> position,
+      Value<int> rowid,
+    });
+
+class $$GoBagItemsTableFilterComposer
+    extends Composer<_$AppDatabase, $GoBagItemsTable> {
+  $$GoBagItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get packed => $composableBuilder(
+    column: $table.packed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get expiresOn => $composableBuilder(
+    column: $table.expiresOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$GoBagItemsTableOrderingComposer
+    extends Composer<_$AppDatabase, $GoBagItemsTable> {
+  $$GoBagItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get packed => $composableBuilder(
+    column: $table.packed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get expiresOn => $composableBuilder(
+    column: $table.expiresOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GoBagItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GoBagItemsTable> {
+  $$GoBagItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get memberId =>
+      $composableBuilder(column: $table.memberId, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<bool> get packed =>
+      $composableBuilder(column: $table.packed, builder: (column) => column);
+
+  GeneratedColumn<String> get expiresOn =>
+      $composableBuilder(column: $table.expiresOn, builder: (column) => column);
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+}
+
+class $$GoBagItemsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GoBagItemsTable,
+          GoBagItem,
+          $$GoBagItemsTableFilterComposer,
+          $$GoBagItemsTableOrderingComposer,
+          $$GoBagItemsTableAnnotationComposer,
+          $$GoBagItemsTableCreateCompanionBuilder,
+          $$GoBagItemsTableUpdateCompanionBuilder,
+          (
+            GoBagItem,
+            BaseReferences<_$AppDatabase, $GoBagItemsTable, GoBagItem>,
+          ),
+          GoBagItem,
+          PrefetchHooks Function()
+        > {
+  $$GoBagItemsTableTableManager(_$AppDatabase db, $GoBagItemsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GoBagItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GoBagItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GoBagItemsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String?> memberId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<bool> packed = const Value.absent(),
+                Value<String?> expiresOn = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GoBagItemsCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                memberId: memberId,
+                name: name,
+                packed: packed,
+                expiresOn: expiresOn,
+                position: position,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String?> memberId = const Value.absent(),
+                required String name,
+                Value<bool> packed = const Value.absent(),
+                Value<String?> expiresOn = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GoBagItemsCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                memberId: memberId,
+                name: name,
+                packed: packed,
+                expiresOn: expiresOn,
+                position: position,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$GoBagItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GoBagItemsTable,
+      GoBagItem,
+      $$GoBagItemsTableFilterComposer,
+      $$GoBagItemsTableOrderingComposer,
+      $$GoBagItemsTableAnnotationComposer,
+      $$GoBagItemsTableCreateCompanionBuilder,
+      $$GoBagItemsTableUpdateCompanionBuilder,
+      (GoBagItem, BaseReferences<_$AppDatabase, $GoBagItemsTable, GoBagItem>),
+      GoBagItem,
+      PrefetchHooks Function()
+    >;
+typedef $$EmergencyChecksTableCreateCompanionBuilder =
+    EmergencyChecksCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String hazard,
+      required String item,
+      Value<bool> done,
+      Value<String?> doneBy,
+      Value<DateTime?> doneAt,
+      Value<int> rowid,
+    });
+typedef $$EmergencyChecksTableUpdateCompanionBuilder =
+    EmergencyChecksCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> hazard,
+      Value<String> item,
+      Value<bool> done,
+      Value<String?> doneBy,
+      Value<DateTime?> doneAt,
+      Value<int> rowid,
+    });
+
+class $$EmergencyChecksTableFilterComposer
+    extends Composer<_$AppDatabase, $EmergencyChecksTable> {
+  $$EmergencyChecksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hazard => $composableBuilder(
+    column: $table.hazard,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get item => $composableBuilder(
+    column: $table.item,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get done => $composableBuilder(
+    column: $table.done,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get doneBy => $composableBuilder(
+    column: $table.doneBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get doneAt => $composableBuilder(
+    column: $table.doneAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$EmergencyChecksTableOrderingComposer
+    extends Composer<_$AppDatabase, $EmergencyChecksTable> {
+  $$EmergencyChecksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hazard => $composableBuilder(
+    column: $table.hazard,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get item => $composableBuilder(
+    column: $table.item,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get done => $composableBuilder(
+    column: $table.done,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get doneBy => $composableBuilder(
+    column: $table.doneBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get doneAt => $composableBuilder(
+    column: $table.doneAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$EmergencyChecksTableAnnotationComposer
+    extends Composer<_$AppDatabase, $EmergencyChecksTable> {
+  $$EmergencyChecksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get hazard =>
+      $composableBuilder(column: $table.hazard, builder: (column) => column);
+
+  GeneratedColumn<String> get item =>
+      $composableBuilder(column: $table.item, builder: (column) => column);
+
+  GeneratedColumn<bool> get done =>
+      $composableBuilder(column: $table.done, builder: (column) => column);
+
+  GeneratedColumn<String> get doneBy =>
+      $composableBuilder(column: $table.doneBy, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get doneAt =>
+      $composableBuilder(column: $table.doneAt, builder: (column) => column);
+}
+
+class $$EmergencyChecksTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $EmergencyChecksTable,
+          EmergencyCheck,
+          $$EmergencyChecksTableFilterComposer,
+          $$EmergencyChecksTableOrderingComposer,
+          $$EmergencyChecksTableAnnotationComposer,
+          $$EmergencyChecksTableCreateCompanionBuilder,
+          $$EmergencyChecksTableUpdateCompanionBuilder,
+          (
+            EmergencyCheck,
+            BaseReferences<
+              _$AppDatabase,
+              $EmergencyChecksTable,
+              EmergencyCheck
+            >,
+          ),
+          EmergencyCheck,
+          PrefetchHooks Function()
+        > {
+  $$EmergencyChecksTableTableManager(
+    _$AppDatabase db,
+    $EmergencyChecksTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$EmergencyChecksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$EmergencyChecksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$EmergencyChecksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> hazard = const Value.absent(),
+                Value<String> item = const Value.absent(),
+                Value<bool> done = const Value.absent(),
+                Value<String?> doneBy = const Value.absent(),
+                Value<DateTime?> doneAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EmergencyChecksCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                hazard: hazard,
+                item: item,
+                done: done,
+                doneBy: doneBy,
+                doneAt: doneAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String hazard,
+                required String item,
+                Value<bool> done = const Value.absent(),
+                Value<String?> doneBy = const Value.absent(),
+                Value<DateTime?> doneAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EmergencyChecksCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                hazard: hazard,
+                item: item,
+                done: done,
+                doneBy: doneBy,
+                doneAt: doneAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$EmergencyChecksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $EmergencyChecksTable,
+      EmergencyCheck,
+      $$EmergencyChecksTableFilterComposer,
+      $$EmergencyChecksTableOrderingComposer,
+      $$EmergencyChecksTableAnnotationComposer,
+      $$EmergencyChecksTableCreateCompanionBuilder,
+      $$EmergencyChecksTableUpdateCompanionBuilder,
+      (
+        EmergencyCheck,
+        BaseReferences<_$AppDatabase, $EmergencyChecksTable, EmergencyCheck>,
+      ),
+      EmergencyCheck,
+      PrefetchHooks Function()
+    >;
+typedef $$SafetyCheckinsTableCreateCompanionBuilder =
+    SafetyCheckinsCompanion Function({
+      required String id,
+      required String householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      required String memberId,
+      required String status,
+      Value<String?> note,
+      required DateTime checkedAt,
+      Value<int> rowid,
+    });
+typedef $$SafetyCheckinsTableUpdateCompanionBuilder =
+    SafetyCheckinsCompanion Function({
+      Value<String> id,
+      Value<String> householdId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> hlc,
+      Value<int?> serverVersion,
+      Value<String?> updatedBy,
+      Value<String?> deviceId,
+      Value<String> memberId,
+      Value<String> status,
+      Value<String?> note,
+      Value<DateTime> checkedAt,
+      Value<int> rowid,
+    });
+
+class $$SafetyCheckinsTableFilterComposer
+    extends Composer<_$AppDatabase, $SafetyCheckinsTable> {
+  $$SafetyCheckinsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get checkedAt => $composableBuilder(
+    column: $table.checkedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SafetyCheckinsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SafetyCheckinsTable> {
+  $$SafetyCheckinsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get checkedAt => $composableBuilder(
+    column: $table.checkedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SafetyCheckinsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SafetyCheckinsTable> {
+  $$SafetyCheckinsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get householdId => $composableBuilder(
+    column: $table.householdId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<int> get serverVersion => $composableBuilder(
+    column: $table.serverVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get memberId =>
+      $composableBuilder(column: $table.memberId, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get checkedAt =>
+      $composableBuilder(column: $table.checkedAt, builder: (column) => column);
+}
+
+class $$SafetyCheckinsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SafetyCheckinsTable,
+          SafetyCheckin,
+          $$SafetyCheckinsTableFilterComposer,
+          $$SafetyCheckinsTableOrderingComposer,
+          $$SafetyCheckinsTableAnnotationComposer,
+          $$SafetyCheckinsTableCreateCompanionBuilder,
+          $$SafetyCheckinsTableUpdateCompanionBuilder,
+          (
+            SafetyCheckin,
+            BaseReferences<_$AppDatabase, $SafetyCheckinsTable, SafetyCheckin>,
+          ),
+          SafetyCheckin,
+          PrefetchHooks Function()
+        > {
+  $$SafetyCheckinsTableTableManager(
+    _$AppDatabase db,
+    $SafetyCheckinsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SafetyCheckinsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SafetyCheckinsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SafetyCheckinsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> householdId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                Value<String> memberId = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<DateTime> checkedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SafetyCheckinsCompanion(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                memberId: memberId,
+                status: status,
+                note: note,
+                checkedAt: checkedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String householdId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> hlc = const Value.absent(),
+                Value<int?> serverVersion = const Value.absent(),
+                Value<String?> updatedBy = const Value.absent(),
+                Value<String?> deviceId = const Value.absent(),
+                required String memberId,
+                required String status,
+                Value<String?> note = const Value.absent(),
+                required DateTime checkedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => SafetyCheckinsCompanion.insert(
+                id: id,
+                householdId: householdId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                hlc: hlc,
+                serverVersion: serverVersion,
+                updatedBy: updatedBy,
+                deviceId: deviceId,
+                memberId: memberId,
+                status: status,
+                note: note,
+                checkedAt: checkedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SafetyCheckinsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SafetyCheckinsTable,
+      SafetyCheckin,
+      $$SafetyCheckinsTableFilterComposer,
+      $$SafetyCheckinsTableOrderingComposer,
+      $$SafetyCheckinsTableAnnotationComposer,
+      $$SafetyCheckinsTableCreateCompanionBuilder,
+      $$SafetyCheckinsTableUpdateCompanionBuilder,
+      (
+        SafetyCheckin,
+        BaseReferences<_$AppDatabase, $SafetyCheckinsTable, SafetyCheckin>,
+      ),
+      SafetyCheckin,
+      PrefetchHooks Function()
+    >;
 typedef $$ConflictsTableCreateCompanionBuilder =
     ConflictsCompanion Function({
       required String id,
@@ -39097,6 +44922,16 @@ class $AppDatabaseManager {
       $$RentPaymentsTableTableManager(_db, _db.rentPayments);
   $$InventoryItemsTableTableManager get inventoryItems =>
       $$InventoryItemsTableTableManager(_db, _db.inventoryItems);
+  $$EmergencyContactsTableTableManager get emergencyContacts =>
+      $$EmergencyContactsTableTableManager(_db, _db.emergencyContacts);
+  $$EmergencyPlansTableTableManager get emergencyPlans =>
+      $$EmergencyPlansTableTableManager(_db, _db.emergencyPlans);
+  $$GoBagItemsTableTableManager get goBagItems =>
+      $$GoBagItemsTableTableManager(_db, _db.goBagItems);
+  $$EmergencyChecksTableTableManager get emergencyChecks =>
+      $$EmergencyChecksTableTableManager(_db, _db.emergencyChecks);
+  $$SafetyCheckinsTableTableManager get safetyCheckins =>
+      $$SafetyCheckinsTableTableManager(_db, _db.safetyCheckins);
   $$ConflictsTableTableManager get conflicts =>
       $$ConflictsTableTableManager(_db, _db.conflicts);
   $$OutboxTableTableManager get outbox =>
