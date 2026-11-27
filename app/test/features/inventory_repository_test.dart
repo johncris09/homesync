@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:homesync/core/db/database.dart';
 import 'package:homesync/core/sync/sync_engine.dart';
 import 'package:homesync/core/vault/vault_files_api.dart';
+import 'package:homesync/features/calendar/calendar_repository.dart';
 import 'package:homesync/features/inventory/inventory_repository.dart';
 
 import '../support/fake_server.dart';
@@ -119,6 +120,20 @@ void main() {
       expect(warrantyOf(await item(id), DateTime(2027, 1, 6)), Warranty.ended);
       final none = await repo.add(const ItemDraft(name: 'Sofa', category: 'furniture'));
       expect(warrantyOf(await item(none), now), Warranty.none);
+    });
+
+    test('a warranty end date shows on the calendar', () async {
+      await repo.add(ItemDraft(name: 'Ref', category: 'appliance', warrantyUntil: DateTime(2026, 12, 20)));
+      await repo.add(const ItemDraft(name: 'Sofa', category: 'furniture'));
+      final agenda = Agenda(
+        const [],
+        DateTime(2026, 12, 1),
+        DateTime(2026, 12, 31),
+        warranties: await repo.watchItems().first,
+      );
+      final day = agenda.on(DateTime(2026, 12, 20));
+      expect(day.single.kind, CalendarKind.warranty);
+      expect(day.single.title, 'Ref');
     });
 
     test('summary: rooms in order with no room last, search, attention, value', () async {

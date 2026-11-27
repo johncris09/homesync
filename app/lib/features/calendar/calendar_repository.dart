@@ -70,7 +70,7 @@ List<DateTime> occurrences(CalendarEvent e, DateTime from, DateTime to) {
   return out;
 }
 
-enum CalendarKind { event, bill, subscription, vehicle, checkup, rent }
+enum CalendarKind { event, bill, subscription, vehicle, checkup, rent, warranty }
 
 /// One thing on one day: an event occurrence, a bill or subscription due, or
 /// a vehicle's registration, insurance or PMS date.
@@ -130,6 +130,7 @@ class Agenda {
     List<Vehicle> vehicles = const [],
     List<Checkup> checkups = const [],
     List<UnitRow> rent = const [],
+    List<InventoryItem> warranties = const [],
   }) {
     final a = _day(from);
     final b = _day(to);
@@ -183,6 +184,11 @@ class Agenda {
           ),
         );
       }
+    }
+    for (final i in warranties) {
+      final d = parseIsoDate(i.warrantyUntil);
+      if (d == null || !inRange(d)) continue;
+      add(CalendarItem(day: d, kind: CalendarKind.warranty, title: i.name));
     }
     for (final v in vehicles) {
       for (final (kind, due) in [

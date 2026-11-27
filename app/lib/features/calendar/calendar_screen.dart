@@ -413,6 +413,7 @@ class _DayCell extends StatelessWidget {
                         CalendarKind.event => eventColor(i.event?.color) ?? HomeColors.ube,
                         CalendarKind.vehicle || CalendarKind.checkup => HomeColors.dagat,
                         CalendarKind.rent => HomeColors.dahon,
+                        CalendarKind.warranty => HomeColors.ube,
                         _ => HomeColors.mangga,
                       },
                     ),
@@ -471,6 +472,20 @@ class _ItemTile extends ConsumerWidget {
         ),
         trailing: const Icon(Icons.chevron_right),
         onTap: () => context.push(Routes.rent),
+      );
+    }
+
+    if (item.kind == CalendarKind.warranty) {
+      return ListTile(
+        leading: const CircleAvatar(
+          backgroundColor: HomeColors.ube,
+          foregroundColor: Colors.white,
+          child: Icon(Icons.verified_outlined),
+        ),
+        title: Text(item.title),
+        subtitle: Text([?showDay, l10n.calendarWarrantyEnds].join(' · ')),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => context.push(Routes.inventory),
       );
     }
 

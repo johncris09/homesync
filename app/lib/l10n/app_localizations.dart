@@ -4077,6 +4077,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rent due · {amount}'**
   String calendarRentDue(String amount);
+
+  /// No description provided for @inventoryModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get inventoryModule;
+
+  /// No description provided for @inventoryTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing listed yet'**
+  String get inventoryTileNone;
+
+  /// No description provided for @inventoryTileItems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item} other{{count} items}}'**
+  String inventoryTileItems(int count);
+
+  /// No description provided for @inventoryTileAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item} other{{count} items}} · {attention} need a look'**
+  String inventoryTileAttention(int count, int attention);
+
+  /// No description provided for @inventoryNoneFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'No items yet'**
+  String get inventoryNoneFigure;
+
+  /// No description provided for @inventoryCountFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item} other{{count} items}}'**
+  String inventoryCountFigure(int count);
+
+  /// No description provided for @inventoryEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Appliances, gadgets, furniture and tools'**
+  String get inventoryEmptyCaption;
+
+  /// No description provided for @inventoryWorth.
+  ///
+  /// In en, this message translates to:
+  /// **'worth {amount}'**
+  String inventoryWorth(String amount);
+
+  /// No description provided for @inventoryRoomCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{no rooms set} =1{1 room} other{{count} rooms}}'**
+  String inventoryRoomCount(int count);
+
+  /// No description provided for @inventoryAttentionCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} need a look'**
+  String inventoryAttentionCount(int count);
+
+  /// No description provided for @inventoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'List what the household owns: where it is, when it was bought, its warranty and who borrowed it.'**
+  String get inventoryEmpty;
+
+  /// No description provided for @inventoryEmptyHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is listed yet. An adult can add items.'**
+  String get inventoryEmptyHelper;
+
+  /// No description provided for @inventoryAddItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item'**
+  String get inventoryAddItem;
+
+  /// No description provided for @inventoryEditItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get inventoryEditItem;
+
+  /// No description provided for @inventoryRemoveItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove item'**
+  String get inventoryRemoveItem;
+
+  /// No description provided for @inventoryRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}?'**
+  String inventoryRemoveTitle(String name);
+
+  /// No description provided for @inventoryRemoveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It disappears from every phone in the household.'**
+  String get inventoryRemoveBody;
+
+  /// No description provided for @inventorySearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search name, brand, serial or who has it'**
+  String get inventorySearch;
+
+  /// No description provided for @inventoryClearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get inventoryClearSearch;
+
+  /// No description provided for @inventoryNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches.'**
+  String get inventoryNoMatch;
+
+  /// No description provided for @inventoryNeedsAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a look'**
+  String get inventoryNeedsAttention;
+
+  /// No description provided for @inventoryNoRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'No room set'**
+  String get inventoryNoRoom;
+
+  /// No description provided for @inventoryWarrantyEnds.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty ends {date}'**
+  String inventoryWarrantyEnds(String date);
+
+  /// No description provided for @inventoryWarrantyUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Under warranty until {date}'**
+  String inventoryWarrantyUntil(String date);
+
+  /// No description provided for @inventoryWarrantyEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty ended {date}'**
+  String inventoryWarrantyEnded(String date);
+
+  /// No description provided for @inventoryLentTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent to {name}'**
+  String inventoryLentTo(String name);
+
+  /// No description provided for @inventoryLentSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Lent to {name} since {date}'**
+  String inventoryLentSince(String name, String date);
+
+  /// No description provided for @inventoryBoughtOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought {date}'**
+  String inventoryBoughtOn(String date);
+
+  /// No description provided for @inventorySerialLine.
+  ///
+  /// In en, this message translates to:
+  /// **'S/N {serial}'**
+  String inventorySerialLine(String serial);
+
+  /// No description provided for @inventoryCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'{category, select, appliance{Appliance} electronics{Electronics} furniture{Furniture} tools{Tools} other{Other}}'**
+  String inventoryCategory(String category);
+
+  /// No description provided for @inventoryPhotoNotHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo not here yet · try again'**
+  String get inventoryPhotoNotHere;
+
+  /// No description provided for @inventoryPhotoTooBig.
+  ///
+  /// In en, this message translates to:
+  /// **'That photo is too big.'**
+  String get inventoryPhotoTooBig;
+
+  /// No description provided for @inventoryTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get inventoryTakePhoto;
+
+  /// No description provided for @inventoryRetakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'New photo'**
+  String get inventoryRetakePhoto;
+
+  /// No description provided for @inventoryChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get inventoryChoosePhoto;
+
+  /// No description provided for @inventoryRemovePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get inventoryRemovePhoto;
+
+  /// No description provided for @inventoryLend.
+  ///
+  /// In en, this message translates to:
+  /// **'Lend'**
+  String get inventoryLend;
+
+  /// No description provided for @inventoryReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get inventoryReturned;
+
+  /// No description provided for @inventoryLendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lend {name}'**
+  String inventoryLendTitle(String name);
+
+  /// No description provided for @inventoryLendWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Who borrowed it'**
+  String get inventoryLendWho;
+
+  /// No description provided for @inventoryLendSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Since'**
+  String get inventoryLendSince;
+
+  /// No description provided for @inventoryItemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get inventoryItemName;
+
+  /// No description provided for @inventoryItemNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Ref, aircon, electric fan'**
+  String get inventoryItemNameHint;
+
+  /// No description provided for @inventoryRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get inventoryRoom;
+
+  /// No description provided for @inventoryDefaultRooms.
+  ///
+  /// In en, this message translates to:
+  /// **'Sala,Kusina,Kwarto,CR,Garahe,Bodega'**
+  String get inventoryDefaultRooms;
+
+  /// No description provided for @inventoryBrand.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand'**
+  String get inventoryBrand;
+
+  /// No description provided for @inventoryModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get inventoryModel;
+
+  /// No description provided for @inventorySerial.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial number'**
+  String get inventorySerial;
+
+  /// No description provided for @inventoryBought.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought on'**
+  String get inventoryBought;
+
+  /// No description provided for @inventoryPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price paid'**
+  String get inventoryPrice;
+
+  /// No description provided for @inventoryWarrantyField.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty until'**
+  String get inventoryWarrantyField;
+
+  /// No description provided for @inventoryNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get inventoryNote;
+
+  /// No description provided for @inventoryNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get inventoryNotSet;
+
+  /// No description provided for @inventoryClearDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear date'**
+  String get inventoryClearDate;
+
+  /// No description provided for @calendarWarrantyEnds.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty ends'**
+  String get calendarWarrantyEnds;
 }
 
 class _AppLocalizationsDelegate
