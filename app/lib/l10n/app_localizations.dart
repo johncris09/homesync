@@ -1798,6 +1798,48 @@ abstract class AppLocalizations {
   /// **'Note'**
   String get eventNote;
 
+  /// No description provided for @eventColour.
+  ///
+  /// In en, this message translates to:
+  /// **'Colour'**
+  String get eventColour;
+
+  /// No description provided for @eventColourUbe.
+  ///
+  /// In en, this message translates to:
+  /// **'Ube'**
+  String get eventColourUbe;
+
+  /// No description provided for @eventColourDagat.
+  ///
+  /// In en, this message translates to:
+  /// **'Dagat'**
+  String get eventColourDagat;
+
+  /// No description provided for @eventColourDahon.
+  ///
+  /// In en, this message translates to:
+  /// **'Dahon'**
+  String get eventColourDahon;
+
+  /// No description provided for @eventColourNarra.
+  ///
+  /// In en, this message translates to:
+  /// **'Narra'**
+  String get eventColourNarra;
+
+  /// No description provided for @eventColourRosas.
+  ///
+  /// In en, this message translates to:
+  /// **'Rosas'**
+  String get eventColourRosas;
+
+  /// No description provided for @eventColourTubig.
+  ///
+  /// In en, this message translates to:
+  /// **'Tubig'**
+  String get eventColourTubig;
+
   /// No description provided for @eventSeveralDays.
   ///
   /// In en, this message translates to:

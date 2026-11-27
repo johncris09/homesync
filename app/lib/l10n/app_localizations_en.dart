@@ -1111,6 +1111,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventNote => 'Note';
 
   @override
+  String get eventColour => 'Colour';
+
+  @override
+  String get eventColourUbe => 'Ube';
+
+  @override
+  String get eventColourDagat => 'Dagat';
+
+  @override
+  String get eventColourDahon => 'Dahon';
+
+  @override
+  String get eventColourNarra => 'Narra';
+
+  @override
+  String get eventColourRosas => 'Rosas';
+
+  @override
+  String get eventColourTubig => 'Tubig';
+
+  @override
   String get eventSeveralDays => 'Several days';
 
   @override

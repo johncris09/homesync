@@ -8,7 +8,9 @@ import 'package:homesync/core/auth/secure_store.dart';
 import 'package:homesync/core/auth/auth_service.dart';
 import 'package:homesync/core/db/database.dart';
 import 'package:homesync/features/bills/bills_repository.dart';
+import 'package:homesync/app/theme.dart';
 import 'package:homesync/features/calendar/calendar_repository.dart';
+import 'package:homesync/features/calendar/event_colors.dart';
 import 'package:homesync/shared/dates.dart';
 import 'package:intl/intl.dart';
 
@@ -45,6 +47,11 @@ CalendarEvent event(
   endTime: until,
   repeat: repeat,
 );
+
+/// Tomorrow is in the same week row and month (weeks start on Sunday in tests),
+/// so a band from [d] joins to it.
+bool joinsTomorrow(DateTime d) =>
+    d.weekday != DateTime.saturday && DateTime(d.year, d.month, d.day + 1).month == d.month;
 
 void main() {
   group('occurrences', () {
@@ -211,6 +218,18 @@ void main() {
       final after = (await repo.watchEvents().first).single;
       await repo.editEvent(after, title: 'Dentist', startsOn: DateTime(2026, 12, 4), repeat: 'none');
       expect(await db.select(db.outbox).get(), isEmpty, reason: 'nothing changed');
+    });
+
+    test('a colour is saved by name; the default colour is stored as null', () async {
+      await repo.addEvent(title: 'Fair', startsOn: DateTime(2026, 12, 4), color: 'dagat');
+      var e = (await repo.watchEvents().first).single;
+      expect(e.color, 'dagat');
+
+      await db.delete(db.outbox).go();
+      await repo.editEvent(e, title: 'Fair', startsOn: DateTime(2026, 12, 4), repeat: 'none', color: 'ube');
+      e = (await repo.watchEvents().first).single;
+      expect(e.color, isNull);
+      expect((await db.select(db.outbox).get()).single.fields, contains('"color":null'));
     });
 
     test('a range saves ends_on; one day or a span too long for the repeat is fixed', () async {
@@ -416,8 +435,10 @@ void main() {
       tester.getSize(find.byKey(Key('day-${isoDate(d)}'))).width,
       reason: 'the band fills the cell so joined days meet',
     );
-    final join = find.descendant(of: find.byKey(Key('band-${isoDate(d)}')), matching: find.byType(ColoredBox));
-    expect(tester.getSize(join.first).height, greaterThan(20), reason: 'the join to the next day is visible');
+    if (joinsTomorrow(d)) {
+      final join = find.descendant(of: find.byKey(Key('band-${isoDate(d)}')), matching: find.byType(ColoredBox));
+      expect(tester.getSize(join.first).height, greaterThan(20), reason: 'the join to the next day is visible');
+    }
     // Next week's copy comes up once, with its range.
     final next = DateTime(d.year, d.month, d.day + 7);
     final f = DateFormat.MMMd('en');
@@ -426,6 +447,43 @@ void main() {
       findsOneWidget,
     );
 
+    await app.finish(tester, s);
+  });
+
+  testWidgets('picking a colour paints the event and its days', (tester) async {
+    final store = MemorySecureStore();
+    app.signedIn(store);
+    final s = (await tester.runAsync(() => open(store)))!;
+    await app.pumpApp(tester, s);
+    await tapText(tester, 'Calendar');
+
+    final today = DateTime.now();
+    final d = DateTime(today.year, today.month, today.day);
+    await tester.tap(find.text('Add event'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('event-title')), 'School fair');
+    expect(
+      find.descendant(of: find.byKey(const Key('event-colour-ube')), matching: find.byIcon(Icons.check)),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const Key('event-several-days')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('event-colour-dagat')));
+    await tester.tap(find.byKey(const Key('event-colour-dagat')));
+    await tester.pumpAndSettle();
+    await tapText(tester, 'Save');
+
+    expect((await tester.runAsync(() => s.db.select(s.db.events).getSingle()))!.color, 'dagat');
+    final avatar = tester.widget<CircleAvatar>(
+      find.descendant(of: find.widgetWithText(ListTile, 'School fair'), matching: find.byType(CircleAvatar)),
+    );
+    expect(avatar.backgroundColor, HomeColors.dagat);
+    final pieces = find.descendant(of: find.byKey(Key('band-${isoDate(d)}')), matching: find.byType(Container));
+    expect((tester.widget<Container>(pieces.first).decoration! as BoxDecoration).color, bandTint(HomeColors.dagat));
+    if (joinsTomorrow(d)) {
+      final join = find.descendant(of: find.byKey(Key('band-${isoDate(d)}')), matching: find.byType(ColoredBox));
+      expect(tester.widget<ColoredBox>(join.first).color, bandTint(HomeColors.dagat));
+    }
     await app.finish(tester, s);
   });
 

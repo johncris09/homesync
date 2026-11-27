@@ -15,6 +15,7 @@ import '../members/members_screen.dart' show memberColor;
 import '../sync/sync_widgets.dart';
 import 'calendar_providers.dart';
 import 'calendar_repository.dart';
+import 'event_colors.dart';
 
 TimeOfDay? parseTime(String? hhmm) {
   final parts = hhmm?.split(':');
@@ -250,7 +251,11 @@ class _MonthCard extends ConsumerWidget {
                               spanning(DateTime(d.year, d.month, d.day + by)).intersection(here).isNotEmpty;
                           return _DayCell(
                             day: d,
-                            band: here.isNotEmpty,
+                            band: agenda
+                                .on(d)
+                                .where((i) => i.multiDay)
+                                .map((i) => bandTint(eventColor(i.event!.color) ?? HomeColors.ube))
+                                .firstOrNull,
                             joinLeft: col > 0 && n > 1 && joins(-1),
                             joinRight: col < 6 && n < days && joins(1),
                             selected: daysUntil(d, day) == 0,
@@ -270,9 +275,6 @@ class _MonthCard extends ConsumerWidget {
   }
 }
 
-/// Ube at a low tint, for the multi-day band.
-const _bandColor = Color(0xFFE4DCEC);
-
 class _DayCell extends StatelessWidget {
   const _DayCell({
     required this.day,
@@ -280,7 +282,7 @@ class _DayCell extends StatelessWidget {
     required this.isToday,
     required this.items,
     required this.onTap,
-    this.band = false,
+    this.band,
     this.joinLeft = false,
     this.joinRight = false,
   });
@@ -289,7 +291,7 @@ class _DayCell extends StatelessWidget {
 
   /// A multi-day event covers this day: a soft band behind the number,
   /// joined to the neighbouring days it shares an event with.
-  final bool band;
+  final Color? band;
   final bool joinLeft;
   final bool joinRight;
   final bool selected;
@@ -314,7 +316,7 @@ class _DayCell extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  if (band)
+                  if (band case final band?)
                     Positioned.fill(
                       key: Key('band-${isoDate(day)}'),
                       top: 2,
@@ -322,18 +324,18 @@ class _DayCell extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Expanded(child: joinLeft ? const ColoredBox(color: _bandColor) : const SizedBox()),
+                          Expanded(child: joinLeft ? ColoredBox(color: band) : const SizedBox()),
                           Container(
                             width: 30,
                             decoration: BoxDecoration(
-                              color: _bandColor,
+                              color: band,
                               borderRadius: BorderRadius.horizontal(
                                 left: Radius.circular(joinLeft ? 0 : 13),
                                 right: Radius.circular(joinRight ? 0 : 13),
                               ),
                             ),
                           ),
-                          Expanded(child: joinRight ? const ColoredBox(color: _bandColor) : const SizedBox()),
+                          Expanded(child: joinRight ? ColoredBox(color: band) : const SizedBox()),
                         ],
                       ),
                     ),
@@ -368,7 +370,9 @@ class _DayCell extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 1),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: i.kind == CalendarKind.event ? HomeColors.ube : HomeColors.mangga,
+                      color: i.kind == CalendarKind.event
+                          ? eventColor(i.event?.color) ?? HomeColors.ube
+                          : HomeColors.mangga,
                     ),
                   ),
               ],
@@ -415,7 +419,7 @@ class _ItemTile extends ConsumerWidget {
     final canEdit = ref.watch(canEditEventProvider)(event);
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: who == null ? HomeColors.ube : memberColor(who.color),
+        backgroundColor: eventColor(event.color) ?? (who == null ? HomeColors.ube : memberColor(who.color)),
         foregroundColor: Colors.white,
         child: Icon(event.repeat == 'yearly' ? Icons.cake_outlined : Icons.event_outlined),
       ),
@@ -509,6 +513,7 @@ class _EventFormState extends ConsumerState<EventForm> {
   late TimeOfDay? _end = parseTime(widget.event?.endTime);
   late String _repeat = widget.event?.repeat ?? 'none';
   late String? _memberId = widget.event?.memberId;
+  late String _color = eventColor(widget.event?.color) == null ? eventColorDefault : widget.event!.color!;
   bool _tried = false;
 
   @override
@@ -544,6 +549,7 @@ class _EventFormState extends ConsumerState<EventForm> {
         startTime: start,
         endTime: end,
         repeat: _repeat,
+        color: _color,
         memberId: _memberId,
         location: _location.text,
         note: _note.text,
@@ -557,6 +563,7 @@ class _EventFormState extends ConsumerState<EventForm> {
         startTime: start,
         endTime: end,
         repeat: _repeat,
+        color: _color,
         memberId: _memberId,
         location: _location.text,
         note: _note.text,
@@ -697,6 +704,39 @@ class _EventFormState extends ConsumerState<EventForm> {
           ],
           selected: {_repeat},
           onSelectionChanged: (s) => setState(() => _repeat = s.first),
+        ),
+        const SizedBox(height: 16),
+        Text(l10n.eventColour, style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            for (final name in eventColorNames)
+              Tooltip(
+                message: eventColorLabel(l10n, name),
+                child: Semantics(
+                  selected: _color == name,
+                  button: true,
+                  child: InkResponse(
+                    key: Key('event-colour-$name'),
+                    radius: 22,
+                    onTap: () => setState(() => _color = name),
+                    child: Container(
+                      width: 34,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: eventColor(name),
+                        border: _color == name ? Border.all(color: HomeColors.capiz, width: 3) : null,
+                        boxShadow: _color == name ? const [BoxShadow(color: HomeColors.narra, spreadRadius: 2)] : null,
+                      ),
+                      child: _color == name ? const Icon(Icons.check, color: Colors.white, size: 18) : null,
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
         const SizedBox(height: 16),
         Text(l10n.eventForWho, style: Theme.of(context).textTheme.titleMedium),

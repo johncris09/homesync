@@ -4,6 +4,9 @@ import '../../core/db/database.dart';
 import '../../core/sync/outbox.dart';
 import '../../shared/dates.dart';
 
+/// The default event colour (`events.color` null).
+const eventColorDefault = 'ube';
+
 /// How far ahead "coming up" looks.
 const comingUpDays = 30;
 
@@ -207,11 +210,12 @@ class CalendarRepository {
     String? startTime,
     String? endTime,
     String repeat = 'none',
+    String? color,
     String? memberId,
     String? location,
     String? note,
   }) => writer.insert('events', {
-    ..._fields(title, startsOn, endsOn, startTime, endTime, repeat, memberId, location, note),
+    ..._fields(title, startsOn, endsOn, startTime, endTime, repeat, color, memberId, location, note),
     'created_by': writer.identity.memberId,
   });
 
@@ -223,11 +227,12 @@ class CalendarRepository {
     String? startTime,
     String? endTime,
     required String repeat,
+    String? color,
     String? memberId,
     String? location,
     String? note,
   }) {
-    final next = _fields(title, startsOn, endsOn, startTime, endTime, repeat, memberId, location, note);
+    final next = _fields(title, startsOn, endsOn, startTime, endTime, repeat, color, memberId, location, note);
     final current = {
       'title': e.title,
       'starts_on': e.startsOn,
@@ -235,6 +240,7 @@ class CalendarRepository {
       'start_time': e.startTime,
       'end_time': e.endTime,
       'repeat': e.repeat,
+      'color': e.color,
       'member_id': e.memberId,
       'location': e.location,
       'note': e.note,
@@ -253,6 +259,7 @@ class CalendarRepository {
     String? startTime,
     String? endTime,
     String repeat,
+    String? color,
     String? memberId,
     String? location,
     String? note,
@@ -268,6 +275,8 @@ class CalendarRepository {
       'start_time': startTime,
       'end_time': startTime == null ? null : endTime,
       'repeat': repeat,
+      // The first colour is the default look, stored as null.
+      'color': color == null || color == eventColorDefault ? null : color,
       'member_id': memberId,
       'location': blank(location),
       'note': blank(note),
