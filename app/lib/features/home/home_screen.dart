@@ -20,6 +20,8 @@ import '../debts/debts_providers.dart';
 import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
+import '../vehicles/vehicles_providers.dart';
+import '../vehicles/vehicles_screen.dart' show dueWhen;
 import '../vault/vault_providers.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -48,6 +50,10 @@ class HomeScreen extends ConsumerWidget {
         : l10n.budgetTileSpent(peso(money.spent));
     final bills = adult ? ref.watch(billsSummaryProvider) : null;
     final debts = adult ? ref.watch(debtsSummaryProvider) : null;
+    final vehicles = adult ? ref.watch(vehiclesProvider).value ?? const [] : const [];
+    final cars = adult ? ref.watch(vehiclesSummaryProvider) : null;
+    final carNext = cars?.next;
+    final carWhen = carNext == null ? null : dueWhen(l10n, locale, carNext, ref.read(vehiclesRepoProvider).today);
     final vaultItems = adult ? (ref.watch(vaultItemsProvider).value ?? const <VaultItem>[]) : const <VaultItem>[];
     final vaultReady = adult && ref.watch(vaultKeyRowProvider).value != null;
     final vaultRenew = adult ? vaultItems.where(ref.watch(vaultRepoProvider).renewSoon).length : 0;
@@ -135,6 +141,27 @@ class HomeScreen extends ConsumerWidget {
                           ),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => context.push(Routes.debts),
+                        ),
+                      if (cars != null)
+                        ListTile(
+                          key: const Key('vehicles-tile'),
+                          leading: CircleAvatar(
+                            backgroundColor: cars.overdue > 0 ? HomeColors.gumamela : HomeColors.dagat,
+                            foregroundColor: Colors.white,
+                            child: const Icon(Icons.directions_car_outlined),
+                          ),
+                          title: Text(l10n.vehiclesModule),
+                          subtitle: Text(
+                            vehicles.isEmpty
+                                ? l10n.vehiclesTileNone
+                                : cars.overdue > 1
+                                ? l10n.vehiclesTileOverdue(cars.overdue)
+                                : carNext != null
+                                ? '${carNext.vehicle.name} · ${l10n.vehiclesNextFigure(l10n.vehicleDueKind(carNext.kind), carWhen!.when)}'
+                                : l10n.vehiclesTileNothingDue,
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => context.push(Routes.vehicles),
                         ),
                       if (adult)
                         ListTile(

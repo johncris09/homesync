@@ -253,8 +253,10 @@ void main() {
     await v5.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
     await v5.customStatement('ALTER TABLE events DROP COLUMN "color"');
     for (final t in ['vault_keys', 'vault_items', 'vault_files', 'vault_blobs']) {
-      await v5.customStatement('DROP TABLE "$t"'); // added in v11
+      await v5.customStatement('DROP TABLE "$t"'); // added in v12
     }
+    await v5.customStatement('DROP TABLE vehicles'); // added in v11
+    await v5.customStatement('DROP TABLE vehicle_logs');
     await v5.customStatement('PRAGMA user_version = 5');
     await v5.close();
 

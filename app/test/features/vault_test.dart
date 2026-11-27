@@ -444,17 +444,17 @@ void main() {
     });
   });
 
-  test('upgrading a version 10 database adds the vault tables', () async {
+  test('upgrading a version 11 database adds the vault tables', () async {
     final dir = await Directory.systemTemp.createTemp('hs-migrate');
     final file = File('${dir.path}/db.sqlite');
     driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
-    final v10 = AppDatabase(NativeDatabase(file));
-    await v10.customStatement('SELECT 1');
+    final v11 = AppDatabase(NativeDatabase(file));
+    await v11.customStatement('SELECT 1');
     for (final t in ['vault_keys', 'vault_items', 'vault_files', 'vault_blobs']) {
-      await v10.customStatement('DROP TABLE "$t"');
+      await v11.customStatement('DROP TABLE "$t"');
     }
-    await v10.customStatement('PRAGMA user_version = 10');
-    await v10.close();
+    await v11.customStatement('PRAGMA user_version = 11');
+    await v11.close();
 
     final reopened = AppDatabase(NativeDatabase(file));
     await reopened

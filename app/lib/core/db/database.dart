@@ -18,6 +18,8 @@ part 'database.g.dart';
     Events,
     Debts,
     DebtPayments,
+    Vehicles,
+    VehicleLogs,
     Budgets,
     Transactions,
     VaultKeys,
@@ -35,7 +37,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 11;
+  int get schemaVersion => 12;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -74,6 +76,11 @@ class AppDatabase extends _$AppDatabase {
       if (from >= 5 && from < 9) await m.addColumn(events, events.endsOn);
       if (from >= 5 && from < 10) await m.addColumn(events, events.color); // event colours
       if (from < 11) {
+        // Vehicles (new tables only, so this step can be renumbered freely)
+        await m.createTable(vehicles);
+        await m.createTable(vehicleLogs);
+      }
+      if (from < 12) {
         // Document Vault
         await m.createTable(vaultKeys);
         await m.createTable(vaultItems);
