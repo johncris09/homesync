@@ -245,6 +245,18 @@ const syncedEntities = <String, EntitySpec>{
       'note',
     },
   ),
+  'recipes': EntitySpec(
+    name: 'recipes',
+    fields: {'name', 'servings', 'steps', 'note'},
+  ),
+  'recipe_ingredients': EntitySpec(
+    name: 'recipe_ingredients',
+    fields: {'recipe_id', 'name', 'quantity', 'unit', 'position'},
+  ),
+  'meals': EntitySpec(
+    name: 'meals',
+    fields: {'planned_on', 'slot', 'recipe_id', 'dish', 'note'},
+  ),
   'transactions': EntitySpec(
     name: 'transactions',
     fields: {

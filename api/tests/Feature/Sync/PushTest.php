@@ -446,6 +446,33 @@ class PushTest extends SyncTestCase
         $this->assertSame(2899900, $row['price_minor']);
     }
 
+    public function test_the_household_plans_meals_and_adds_recipes_viewers_only_see_them(): void
+    {
+        $helper = $this->device('helper');
+        $teen = $this->device('teen');
+        $viewer = $this->device('viewer');
+        $recipe = (string) Str::uuid7();
+
+        $this->assertSame('forbidden', $this->push($viewer, [$this->op('recipes', (string) Str::uuid7(), 'insert', ['name' => 'Adobo'], $this->hlc(1))])->json('results.0.error'));
+        $this->assertSame(['applied', 'applied', 'applied'], $this->statuses($this->push($helper, [
+            $this->op('recipes', $recipe, 'insert', ['name' => 'Sinigang', 'servings' => 6, 'steps' => 'Boil the pork.'], $this->hlc(2)),
+            $this->op('recipe_ingredients', (string) Str::uuid7(), 'insert', ['recipe_id' => $recipe, 'name' => 'Pork ribs', 'quantity' => 0.75, 'unit' => 'kg', 'position' => 0], $this->hlc(3)),
+            $this->op('meals', (string) Str::uuid7(), 'insert', ['planned_on' => '2026-12-07', 'slot' => 'dinner', 'recipe_id' => $recipe], $this->hlc(4)),
+        ])));
+        $this->assertSame(['applied'], $this->statuses($this->push($teen, [$this->op('meals', (string) Str::uuid7(), 'insert', ['planned_on' => '2026-12-07', 'slot' => 'merienda', 'dish' => 'Turon'], $this->hlc(5))])));
+        $this->assertSame('forbidden', $this->push($viewer, [$this->op('meals', (string) Str::uuid7(), 'insert', ['planned_on' => '2026-12-08', 'slot' => 'lunch', 'dish' => 'Pancit'], $this->hlc(6))])->json('results.0.error'));
+
+        $changes = collect($this->pull($viewer)->assertOk()->json('changes'));
+        $this->assertSame(6, $changes->firstWhere('entity', 'recipes')['row']['servings']);
+        $ingredient = $changes->firstWhere('entity', 'recipe_ingredients')['row'];
+        $this->assertEquals(0.75, $ingredient['quantity']);
+        $this->assertSame('kg', $ingredient['unit']);
+        $meals = $changes->where('entity', 'meals')->pluck('row');
+        $this->assertSame(['dinner', 'merienda'], $meals->pluck('slot')->all());
+        $this->assertSame('2026-12-07', $meals->first()['planned_on']);
+        $this->assertSame('Turon', $meals->last()['dish']);
+    }
+
     public function test_conflicts_sync_to_adults_and_can_be_resolved(): void
     {
         $john = $this->device('owner');

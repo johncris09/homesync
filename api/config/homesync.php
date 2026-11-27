@@ -524,6 +524,48 @@ return [
             'write' => $adults,
         ],
 
+        // Food Planner: family recipes. Everyone but viewers adds and edits.
+        'recipes' => [
+            'table' => 'recipes',
+            'fields' => [
+                'name' => 'string',
+                'servings' => 'int',
+                'steps' => 'text',
+                'note' => 'text',
+            ],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
+        // One row per ingredient line of a recipe.
+        'recipe_ingredients' => [
+            'table' => 'recipe_ingredients',
+            'fields' => [
+                'recipe_id' => 'uuid',
+                'name' => 'string',
+                'quantity' => 'decimal',
+                'unit' => 'string',
+                'position' => 'int',
+            ],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
+        // The meal plan: one row per dish in a slot (breakfast, lunch,
+        // merienda, dinner) of a day, either a recipe or a typed dish.
+        'meals' => [
+            'table' => 'meals',
+            'fields' => [
+                'planned_on' => 'date',
+                'slot' => 'string',
+                'recipe_id' => 'uuid',
+                'dish' => 'string',
+                'note' => 'text',
+            ],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',

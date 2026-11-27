@@ -4839,6 +4839,330 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Everything here is on this phone and works without signal.'**
   String get emergencyWorksOffline;
+
+  /// No description provided for @foodModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Food Planner'**
+  String get foodModule;
+
+  /// No description provided for @foodTileTonight.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight: {dish}'**
+  String foodTileTonight(String dish);
+
+  /// No description provided for @foodTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing planned for tonight'**
+  String get foodTileNone;
+
+  /// No description provided for @foodTonightFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight: {dish}'**
+  String foodTonightFigure(String dish);
+
+  /// No description provided for @foodNoDinnerFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'Dinner not planned'**
+  String get foodNoDinnerFigure;
+
+  /// No description provided for @foodDaysPlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No days planned this week} =1{1 of 7 days planned this week} other{{count} of 7 days planned this week}}'**
+  String foodDaysPlanned(int count);
+
+  /// No description provided for @foodWeekTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get foodWeekTab;
+
+  /// No description provided for @foodRecipesTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipes'**
+  String get foodRecipesTab;
+
+  /// No description provided for @foodPrevWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous week'**
+  String get foodPrevWeek;
+
+  /// No description provided for @foodNextWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Next week'**
+  String get foodNextWeek;
+
+  /// No description provided for @foodThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get foodThisWeek;
+
+  /// No description provided for @foodToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today · {day}'**
+  String foodToday(String day);
+
+  /// No description provided for @foodSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'{slot, select, breakfast{Breakfast} lunch{Lunch} merienda{Merienda} other{Dinner}}'**
+  String foodSlot(String slot);
+
+  /// No description provided for @foodAddTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to {meal}'**
+  String foodAddTo(String meal);
+
+  /// No description provided for @foodMealSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{meal} · {day}'**
+  String foodMealSheetTitle(String meal, String day);
+
+  /// No description provided for @foodDishHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a dish, or pick a recipe below'**
+  String get foodDishHint;
+
+  /// No description provided for @foodAddDish.
+  ///
+  /// In en, this message translates to:
+  /// **'Add “{dish}”'**
+  String foodAddDish(String dish);
+
+  /// No description provided for @foodCanCook.
+  ///
+  /// In en, this message translates to:
+  /// **'Can cook from the pantry'**
+  String get foodCanCook;
+
+  /// No description provided for @foodYourRecipes.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recipes'**
+  String get foodYourRecipes;
+
+  /// No description provided for @foodNoRecipesToPick.
+  ///
+  /// In en, this message translates to:
+  /// **'No recipes yet. Type a dish above.'**
+  String get foodNoRecipesToPick;
+
+  /// No description provided for @foodNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No recipe by that name.'**
+  String get foodNoMatch;
+
+  /// No description provided for @foodInPantryCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{have} of {total} in the pantry'**
+  String foodInPantryCount(int have, int total);
+
+  /// No description provided for @foodAllInPantry.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is in the pantry'**
+  String get foodAllInPantry;
+
+  /// No description provided for @foodNeeds.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs {items}'**
+  String foodNeeds(String items);
+
+  /// No description provided for @foodRemoveMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {dish}'**
+  String foodRemoveMeal(String dish);
+
+  /// No description provided for @foodPlanToGrocery.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the week\'s ingredients to the grocery list'**
+  String get foodPlanToGrocery;
+
+  /// No description provided for @foodPlanToGroceryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Only what the pantry lacks, from today on.'**
+  String get foodPlanToGroceryHint;
+
+  /// No description provided for @foodGroceryAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing new to buy} =1{1 item added to the grocery list} other{{count} items added to the grocery list}}'**
+  String foodGroceryAdded(int count);
+
+  /// No description provided for @foodGroceryInPantry.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} in the pantry'**
+  String foodGroceryInPantry(int count);
+
+  /// No description provided for @foodGroceryListed.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} already on the list'**
+  String foodGroceryListed(int count);
+
+  /// No description provided for @foodRecipesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No recipes yet. Add the family\'s favourites.'**
+  String get foodRecipesEmpty;
+
+  /// No description provided for @foodRecipesEmptyViewer.
+  ///
+  /// In en, this message translates to:
+  /// **'No recipes yet.'**
+  String get foodRecipesEmptyViewer;
+
+  /// No description provided for @foodAddRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Add recipe'**
+  String get foodAddRecipe;
+
+  /// No description provided for @foodEditRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit recipe'**
+  String get foodEditRecipe;
+
+  /// No description provided for @foodRecipeName.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe name'**
+  String get foodRecipeName;
+
+  /// No description provided for @foodRecipeNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name.'**
+  String get foodRecipeNameRequired;
+
+  /// No description provided for @foodServings.
+  ///
+  /// In en, this message translates to:
+  /// **'Servings'**
+  String get foodServings;
+
+  /// No description provided for @foodServingsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 serving} other{{count} servings}}'**
+  String foodServingsCount(int count);
+
+  /// No description provided for @foodIngredients.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients'**
+  String get foodIngredients;
+
+  /// No description provided for @foodIngredientCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No ingredients} =1{1 ingredient} other{{count} ingredients}}'**
+  String foodIngredientCount(int count);
+
+  /// No description provided for @foodIngredientName.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredient'**
+  String get foodIngredientName;
+
+  /// No description provided for @foodQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get foodQuantity;
+
+  /// No description provided for @foodUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get foodUnit;
+
+  /// No description provided for @foodAddIngredient.
+  ///
+  /// In en, this message translates to:
+  /// **'Add ingredient'**
+  String get foodAddIngredient;
+
+  /// No description provided for @foodRemoveIngredient.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove ingredient'**
+  String get foodRemoveIngredient;
+
+  /// No description provided for @foodSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get foodSteps;
+
+  /// No description provided for @foodNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get foodNote;
+
+  /// No description provided for @foodDeleteRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete recipe'**
+  String get foodDeleteRecipe;
+
+  /// No description provided for @foodDeleteRecipeConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}? Meals already planned keep its name.'**
+  String foodDeleteRecipeConfirm(String name);
+
+  /// No description provided for @foodDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get foodDelete;
+
+  /// No description provided for @foodEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get foodEdit;
+
+  /// No description provided for @foodInPantry.
+  ///
+  /// In en, this message translates to:
+  /// **'In the pantry'**
+  String get foodInPantry;
+
+  /// No description provided for @foodToBuy.
+  ///
+  /// In en, this message translates to:
+  /// **'To buy'**
+  String get foodToBuy;
+
+  /// No description provided for @foodToBuyAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'To buy: {amount}'**
+  String foodToBuyAmount(String amount);
 }
 
 class _AppLocalizationsDelegate

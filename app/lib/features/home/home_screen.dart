@@ -22,6 +22,7 @@ import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
 import '../health/health_providers.dart';
 import '../emergency/emergency_providers.dart';
+import '../food/food_providers.dart';
 import '../inventory/inventory_providers.dart';
 import '../rent/rent_providers.dart';
 import '../vehicles/vehicles_providers.dart';
@@ -58,6 +59,7 @@ class HomeScreen extends ConsumerWidget {
     final cars = adult ? ref.watch(vehiclesSummaryProvider) : null;
     final rent = adult ? ref.watch(rentSummaryProvider) : null;
     final inventory = ref.watch(inventorySummaryProvider);
+    final tonight = ref.watch(tonightProvider);
     final board = ref.watch(checkinBoardProvider);
     final bagsWithItems = ref.watch(goBagsProvider).where((b) => b.memberId != null && b.items.isNotEmpty).toList();
     final help = board.needHelp;
@@ -309,6 +311,18 @@ class HomeScreen extends ConsumerWidget {
                         subtitle: Text(l10n.pantryModuleCaption(toBuy, low)),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () => context.push(Routes.pantry),
+                      ),
+                      ListTile(
+                        key: const Key('food-tile'),
+                        leading: const CircleAvatar(
+                          backgroundColor: HomeColors.dahon,
+                          foregroundColor: Colors.white,
+                          child: Icon(Icons.restaurant_menu_outlined),
+                        ),
+                        title: Text(l10n.foodModule),
+                        subtitle: Text(tonight == null ? l10n.foodTileNone : l10n.foodTileTonight(tonight)),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(Routes.food),
                       ),
                       if (!emergencyFirst) emergencyTile,
                     ],

@@ -21,6 +21,7 @@ import '../features/sync/sync_problems_screen.dart';
 import '../features/vault/vault_screen.dart';
 import '../features/health/health_screen.dart';
 import '../features/emergency/emergency_screen.dart';
+import '../features/food/food_screen.dart';
 import '../features/inventory/inventory_screen.dart';
 import '../features/rent/rent_screen.dart';
 import '../features/vehicles/vehicles_screen.dart';
@@ -45,6 +46,7 @@ abstract final class Routes {
   static const vehicles = '/vehicles';
   static const rent = '/rent';
   static const inventory = '/inventory';
+  static const food = '/food';
   static const emergency = '/emergency';
   static const health = '/health';
 }
@@ -79,6 +81,7 @@ GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRo
     GoRoute(path: Routes.vehicles, builder: (_, _) => const VehiclesScreen()),
     GoRoute(path: Routes.rent, builder: (_, _) => const RentScreen()),
     GoRoute(path: Routes.inventory, builder: (_, _) => const InventoryScreen()),
+    GoRoute(path: Routes.food, builder: (_, _) => const FoodScreen()),
     GoRoute(path: Routes.emergency, builder: (_, _) => const EmergencyScreen()),
     GoRoute(path: Routes.health, builder: (_, _) => const HealthScreen()),
   ],

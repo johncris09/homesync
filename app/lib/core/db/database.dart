@@ -39,6 +39,9 @@ part 'database.g.dart';
     GoBagItems,
     EmergencyChecks,
     SafetyCheckins,
+    Recipes,
+    RecipeIngredients,
+    Meals,
     Conflicts,
     Outbox,
     FieldClocks,
@@ -50,7 +53,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 16;
+  int get schemaVersion => 17;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -124,6 +127,12 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(goBagItems);
         await m.createTable(emergencyChecks);
         await m.createTable(safetyCheckins);
+      }
+      if (from < 17) {
+        // Food Planner (new tables only)
+        await m.createTable(recipes);
+        await m.createTable(recipeIngredients);
+        await m.createTable(meals);
       }
     },
   );

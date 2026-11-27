@@ -360,6 +360,36 @@ class SafetyCheckins extends Table with SyncColumns {
   DateTimeColumn get checkedAt => dateTime()();
 }
 
+/// A family recipe. Its ingredients are [RecipeIngredients] rows.
+class Recipes extends Table with SyncColumns {
+  TextColumn get name => text()();
+  IntColumn get servings => integer().nullable()();
+  TextColumn get steps => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
+/// One ingredient line of a recipe; [quantity] and [unit] are optional
+/// ("salt to taste").
+class RecipeIngredients extends Table with SyncColumns {
+  TextColumn get recipeId => text()();
+  TextColumn get name => text()();
+  RealColumn get quantity => real().nullable()();
+  TextColumn get unit => text().nullable()();
+  IntColumn get position => integer().withDefault(const Constant(0))();
+}
+
+/// One dish in a meal slot of a day: a recipe, or a typed [dish].
+class Meals extends Table with SyncColumns {
+  /// Calendar date `YYYY-MM-DD`.
+  TextColumn get plannedOn => text()();
+
+  /// `breakfast`, `lunch`, `merienda` or `dinner`.
+  TextColumn get slot => text()();
+  TextColumn get recipeId => text().nullable()();
+  TextColumn get dish => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
 /// A member's health profile; [sealed] is blood type, allergies, conditions,
 /// maintenance medicines, PhilHealth/HMO numbers and doctor, encrypted with
 /// the vault key. One row per member (derived id).
