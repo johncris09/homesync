@@ -36,13 +36,15 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       _error = null;
     });
     try {
-      await ref.read(authProvider).signIn(
-        email: _email.text.trim(),
-        password: _password.text,
-        deviceName: kIsWeb ? l10n.deviceNameWeb : l10n.deviceNameAndroid,
-        platform: kIsWeb ? 'web' : 'android',
-        isShared: _shared,
-      );
+      await ref
+          .read(authProvider)
+          .signIn(
+            email: _email.text.trim(),
+            password: _password.text,
+            deviceName: kIsWeb ? l10n.deviceNameWeb : l10n.deviceNameAndroid,
+            platform: kIsWeb ? 'web' : 'android',
+            isShared: _shared,
+          );
     } on InvalidCredentials {
       _error = l10n.signInFailed;
     } on SyncUnavailable {
@@ -60,14 +62,31 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
-          ScreenHeader(figure: l10n.appTitle, caption: l10n.signInCaption, color: HomeColors.dahon),
+          ScreenHeader(
+            figure: l10n.appTitle,
+            caption: l10n.signInCaption,
+            color: HomeColors.dahon,
+            leading: const Padding(
+              padding: EdgeInsets.only(top: 8, bottom: 16),
+              // The title next to it already says HomeSync.
+              child: Image(
+                image: AssetImage('assets/images/logo.png'),
+                width: 64,
+                height: 64,
+                excludeFromSemantics: true,
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(20),
             child: AutofillGroup(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(l10n.signInTitle, style: Theme.of(context).textTheme.titleMedium),
+                  Text(
+                    l10n.signInTitle,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                   const SizedBox(height: 12),
                   TextField(
                     controller: _email,
@@ -95,12 +114,21 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   if (_error != null)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12),
-                      child: Text(_error!, style: const TextStyle(color: HomeColors.gumamela)),
+                      child: Text(
+                        _error!,
+                        style: const TextStyle(color: HomeColors.gumamela),
+                      ),
                     ),
                   FilledButton(
                     onPressed: _busy ? null : _submit,
                     child: _busy
-                        ? const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                        ? const SizedBox.square(
+                            dimension: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
                         : Text(l10n.signInButton),
                   ),
                 ],

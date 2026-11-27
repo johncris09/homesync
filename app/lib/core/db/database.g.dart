@@ -964,6 +964,28 @@ class $GroceryItemsTable extends GroceryItems
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _clearedAtMeta = const VerificationMeta(
+    'clearedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> clearedAt = GeneratedColumn<DateTime>(
+    'cleared_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _plannedOnMeta = const VerificationMeta(
+    'plannedOn',
+  );
+  @override
+  late final GeneratedColumn<String> plannedOn = GeneratedColumn<String>(
+    'planned_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _requestedByMeta = const VerificationMeta(
     'requestedBy',
   );
@@ -1000,6 +1022,8 @@ class $GroceryItemsTable extends GroceryItems
     store,
     isBought,
     boughtAt,
+    clearedAt,
+    plannedOn,
     requestedBy,
     note,
   ];
@@ -1111,6 +1135,18 @@ class $GroceryItemsTable extends GroceryItems
         boughtAt.isAcceptableOrUnknown(data['bought_at']!, _boughtAtMeta),
       );
     }
+    if (data.containsKey('cleared_at')) {
+      context.handle(
+        _clearedAtMeta,
+        clearedAt.isAcceptableOrUnknown(data['cleared_at']!, _clearedAtMeta),
+      );
+    }
+    if (data.containsKey('planned_on')) {
+      context.handle(
+        _plannedOnMeta,
+        plannedOn.isAcceptableOrUnknown(data['planned_on']!, _plannedOnMeta),
+      );
+    }
     if (data.containsKey('requested_by')) {
       context.handle(
         _requestedByMeta,
@@ -1191,6 +1227,14 @@ class $GroceryItemsTable extends GroceryItems
         DriftSqlType.dateTime,
         data['${effectivePrefix}bought_at'],
       ),
+      clearedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}cleared_at'],
+      ),
+      plannedOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}planned_on'],
+      ),
       requestedBy: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}requested_by'],
@@ -1223,6 +1267,12 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
   final String? store;
   final bool isBought;
   final DateTime? boughtAt;
+
+  /// Set by "clear bought": hidden from the list, kept for history.
+  final DateTime? clearedAt;
+
+  /// Planned shopping day (`YYYY-MM-DD`) while still to buy; null = no date.
+  final String? plannedOn;
   final String? requestedBy;
   final String? note;
   const GroceryItem({
@@ -1240,6 +1290,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
     this.store,
     required this.isBought,
     this.boughtAt,
+    this.clearedAt,
+    this.plannedOn,
     this.requestedBy,
     this.note,
   });
@@ -1275,6 +1327,12 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
     map['is_bought'] = Variable<bool>(isBought);
     if (!nullToAbsent || boughtAt != null) {
       map['bought_at'] = Variable<DateTime>(boughtAt);
+    }
+    if (!nullToAbsent || clearedAt != null) {
+      map['cleared_at'] = Variable<DateTime>(clearedAt);
+    }
+    if (!nullToAbsent || plannedOn != null) {
+      map['planned_on'] = Variable<String>(plannedOn);
     }
     if (!nullToAbsent || requestedBy != null) {
       map['requested_by'] = Variable<String>(requestedBy);
@@ -1315,6 +1373,12 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
       boughtAt: boughtAt == null && nullToAbsent
           ? const Value.absent()
           : Value(boughtAt),
+      clearedAt: clearedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(clearedAt),
+      plannedOn: plannedOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(plannedOn),
       requestedBy: requestedBy == null && nullToAbsent
           ? const Value.absent()
           : Value(requestedBy),
@@ -1342,6 +1406,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
       store: serializer.fromJson<String?>(json['store']),
       isBought: serializer.fromJson<bool>(json['isBought']),
       boughtAt: serializer.fromJson<DateTime?>(json['boughtAt']),
+      clearedAt: serializer.fromJson<DateTime?>(json['clearedAt']),
+      plannedOn: serializer.fromJson<String?>(json['plannedOn']),
       requestedBy: serializer.fromJson<String?>(json['requestedBy']),
       note: serializer.fromJson<String?>(json['note']),
     );
@@ -1364,6 +1430,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
       'store': serializer.toJson<String?>(store),
       'isBought': serializer.toJson<bool>(isBought),
       'boughtAt': serializer.toJson<DateTime?>(boughtAt),
+      'clearedAt': serializer.toJson<DateTime?>(clearedAt),
+      'plannedOn': serializer.toJson<String?>(plannedOn),
       'requestedBy': serializer.toJson<String?>(requestedBy),
       'note': serializer.toJson<String?>(note),
     };
@@ -1384,6 +1452,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
     Value<String?> store = const Value.absent(),
     bool? isBought,
     Value<DateTime?> boughtAt = const Value.absent(),
+    Value<DateTime?> clearedAt = const Value.absent(),
+    Value<String?> plannedOn = const Value.absent(),
     Value<String?> requestedBy = const Value.absent(),
     Value<String?> note = const Value.absent(),
   }) => GroceryItem(
@@ -1403,6 +1473,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
     store: store.present ? store.value : this.store,
     isBought: isBought ?? this.isBought,
     boughtAt: boughtAt.present ? boughtAt.value : this.boughtAt,
+    clearedAt: clearedAt.present ? clearedAt.value : this.clearedAt,
+    plannedOn: plannedOn.present ? plannedOn.value : this.plannedOn,
     requestedBy: requestedBy.present ? requestedBy.value : this.requestedBy,
     note: note.present ? note.value : this.note,
   );
@@ -1428,6 +1500,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
       store: data.store.present ? data.store.value : this.store,
       isBought: data.isBought.present ? data.isBought.value : this.isBought,
       boughtAt: data.boughtAt.present ? data.boughtAt.value : this.boughtAt,
+      clearedAt: data.clearedAt.present ? data.clearedAt.value : this.clearedAt,
+      plannedOn: data.plannedOn.present ? data.plannedOn.value : this.plannedOn,
       requestedBy: data.requestedBy.present
           ? data.requestedBy.value
           : this.requestedBy,
@@ -1452,6 +1526,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
           ..write('store: $store, ')
           ..write('isBought: $isBought, ')
           ..write('boughtAt: $boughtAt, ')
+          ..write('clearedAt: $clearedAt, ')
+          ..write('plannedOn: $plannedOn, ')
           ..write('requestedBy: $requestedBy, ')
           ..write('note: $note')
           ..write(')'))
@@ -1474,6 +1550,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
     store,
     isBought,
     boughtAt,
+    clearedAt,
+    plannedOn,
     requestedBy,
     note,
   );
@@ -1495,6 +1573,8 @@ class GroceryItem extends DataClass implements Insertable<GroceryItem> {
           other.store == this.store &&
           other.isBought == this.isBought &&
           other.boughtAt == this.boughtAt &&
+          other.clearedAt == this.clearedAt &&
+          other.plannedOn == this.plannedOn &&
           other.requestedBy == this.requestedBy &&
           other.note == this.note);
 }
@@ -1514,6 +1594,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
   final Value<String?> store;
   final Value<bool> isBought;
   final Value<DateTime?> boughtAt;
+  final Value<DateTime?> clearedAt;
+  final Value<String?> plannedOn;
   final Value<String?> requestedBy;
   final Value<String?> note;
   final Value<int> rowid;
@@ -1532,6 +1614,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
     this.store = const Value.absent(),
     this.isBought = const Value.absent(),
     this.boughtAt = const Value.absent(),
+    this.clearedAt = const Value.absent(),
+    this.plannedOn = const Value.absent(),
     this.requestedBy = const Value.absent(),
     this.note = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1551,6 +1635,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
     this.store = const Value.absent(),
     this.isBought = const Value.absent(),
     this.boughtAt = const Value.absent(),
+    this.clearedAt = const Value.absent(),
+    this.plannedOn = const Value.absent(),
     this.requestedBy = const Value.absent(),
     this.note = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1572,6 +1658,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
     Expression<String>? store,
     Expression<bool>? isBought,
     Expression<DateTime>? boughtAt,
+    Expression<DateTime>? clearedAt,
+    Expression<String>? plannedOn,
     Expression<String>? requestedBy,
     Expression<String>? note,
     Expression<int>? rowid,
@@ -1591,6 +1679,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
       if (store != null) 'store': store,
       if (isBought != null) 'is_bought': isBought,
       if (boughtAt != null) 'bought_at': boughtAt,
+      if (clearedAt != null) 'cleared_at': clearedAt,
+      if (plannedOn != null) 'planned_on': plannedOn,
       if (requestedBy != null) 'requested_by': requestedBy,
       if (note != null) 'note': note,
       if (rowid != null) 'rowid': rowid,
@@ -1612,6 +1702,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
     Value<String?>? store,
     Value<bool>? isBought,
     Value<DateTime?>? boughtAt,
+    Value<DateTime?>? clearedAt,
+    Value<String?>? plannedOn,
     Value<String?>? requestedBy,
     Value<String?>? note,
     Value<int>? rowid,
@@ -1631,6 +1723,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
       store: store ?? this.store,
       isBought: isBought ?? this.isBought,
       boughtAt: boughtAt ?? this.boughtAt,
+      clearedAt: clearedAt ?? this.clearedAt,
+      plannedOn: plannedOn ?? this.plannedOn,
       requestedBy: requestedBy ?? this.requestedBy,
       note: note ?? this.note,
       rowid: rowid ?? this.rowid,
@@ -1682,6 +1776,12 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
     if (boughtAt.present) {
       map['bought_at'] = Variable<DateTime>(boughtAt.value);
     }
+    if (clearedAt.present) {
+      map['cleared_at'] = Variable<DateTime>(clearedAt.value);
+    }
+    if (plannedOn.present) {
+      map['planned_on'] = Variable<String>(plannedOn.value);
+    }
     if (requestedBy.present) {
       map['requested_by'] = Variable<String>(requestedBy.value);
     }
@@ -1711,6 +1811,8 @@ class GroceryItemsCompanion extends UpdateCompanion<GroceryItem> {
           ..write('store: $store, ')
           ..write('isBought: $isBought, ')
           ..write('boughtAt: $boughtAt, ')
+          ..write('clearedAt: $clearedAt, ')
+          ..write('plannedOn: $plannedOn, ')
           ..write('requestedBy: $requestedBy, ')
           ..write('note: $note, ')
           ..write('rowid: $rowid')
@@ -6131,6 +6233,15 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _endsOnMeta = const VerificationMeta('endsOn');
+  @override
+  late final GeneratedColumn<String> endsOn = GeneratedColumn<String>(
+    'ends_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _startTimeMeta = const VerificationMeta(
     'startTime',
   );
@@ -6162,6 +6273,15 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
     defaultValue: const Constant('none'),
+  );
+  static const VerificationMeta _colorMeta = const VerificationMeta('color');
+  @override
+  late final GeneratedColumn<String> color = GeneratedColumn<String>(
+    'color',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _memberIdMeta = const VerificationMeta(
     'memberId',
@@ -6218,9 +6338,11 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
     deviceId,
     title,
     startsOn,
+    endsOn,
     startTime,
     endTime,
     repeat,
+    color,
     memberId,
     location,
     note,
@@ -6315,6 +6437,12 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
     } else if (isInserting) {
       context.missing(_startsOnMeta);
     }
+    if (data.containsKey('ends_on')) {
+      context.handle(
+        _endsOnMeta,
+        endsOn.isAcceptableOrUnknown(data['ends_on']!, _endsOnMeta),
+      );
+    }
     if (data.containsKey('start_time')) {
       context.handle(
         _startTimeMeta,
@@ -6331,6 +6459,12 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
       context.handle(
         _repeatMeta,
         repeat.isAcceptableOrUnknown(data['repeat']!, _repeatMeta),
+      );
+    }
+    if (data.containsKey('color')) {
+      context.handle(
+        _colorMeta,
+        color.isAcceptableOrUnknown(data['color']!, _colorMeta),
       );
     }
     if (data.containsKey('member_id')) {
@@ -6410,6 +6544,10 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
         DriftSqlType.string,
         data['${effectivePrefix}starts_on'],
       )!,
+      endsOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ends_on'],
+      ),
       startTime: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}start_time'],
@@ -6422,6 +6560,10 @@ class $EventsTable extends Events with TableInfo<$EventsTable, CalendarEvent> {
         DriftSqlType.string,
         data['${effectivePrefix}repeat'],
       )!,
+      color: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}color'],
+      ),
       memberId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}member_id'],
@@ -6462,10 +6604,19 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
   /// Calendar date `YYYY-MM-DD` (the first occurrence).
   final String startsOn;
 
-  /// Local `HH:MM`; null = all day.
+  /// Last day `YYYY-MM-DD` of a multi-day event's first occurrence; null = one
+  /// day. A repeat copies the whole span.
+  final String? endsOn;
+
+  /// Local `HH:MM`; null = all day. On a multi-day event the start time is on
+  /// the first day and the end time on the last.
   final String? startTime;
   final String? endTime;
   final String repeat;
+
+  /// Palette name (`ube`, `dagat`, `dahon`, `narra`, `rosas`, `tubig`); null =
+  /// the default look.
+  final String? color;
 
   /// Who it is for; null = the whole family.
   final String? memberId;
@@ -6484,9 +6635,11 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     this.deviceId,
     required this.title,
     required this.startsOn,
+    this.endsOn,
     this.startTime,
     this.endTime,
     required this.repeat,
+    this.color,
     this.memberId,
     this.location,
     this.note,
@@ -6516,6 +6669,9 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     }
     map['title'] = Variable<String>(title);
     map['starts_on'] = Variable<String>(startsOn);
+    if (!nullToAbsent || endsOn != null) {
+      map['ends_on'] = Variable<String>(endsOn);
+    }
     if (!nullToAbsent || startTime != null) {
       map['start_time'] = Variable<String>(startTime);
     }
@@ -6523,6 +6679,9 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       map['end_time'] = Variable<String>(endTime);
     }
     map['repeat'] = Variable<String>(repeat);
+    if (!nullToAbsent || color != null) {
+      map['color'] = Variable<String>(color);
+    }
     if (!nullToAbsent || memberId != null) {
       map['member_id'] = Variable<String>(memberId);
     }
@@ -6559,6 +6718,9 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
           : Value(deviceId),
       title: Value(title),
       startsOn: Value(startsOn),
+      endsOn: endsOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endsOn),
       startTime: startTime == null && nullToAbsent
           ? const Value.absent()
           : Value(startTime),
@@ -6566,6 +6728,9 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
           ? const Value.absent()
           : Value(endTime),
       repeat: Value(repeat),
+      color: color == null && nullToAbsent
+          ? const Value.absent()
+          : Value(color),
       memberId: memberId == null && nullToAbsent
           ? const Value.absent()
           : Value(memberId),
@@ -6596,9 +6761,11 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       deviceId: serializer.fromJson<String?>(json['deviceId']),
       title: serializer.fromJson<String>(json['title']),
       startsOn: serializer.fromJson<String>(json['startsOn']),
+      endsOn: serializer.fromJson<String?>(json['endsOn']),
       startTime: serializer.fromJson<String?>(json['startTime']),
       endTime: serializer.fromJson<String?>(json['endTime']),
       repeat: serializer.fromJson<String>(json['repeat']),
+      color: serializer.fromJson<String?>(json['color']),
       memberId: serializer.fromJson<String?>(json['memberId']),
       location: serializer.fromJson<String?>(json['location']),
       note: serializer.fromJson<String?>(json['note']),
@@ -6620,9 +6787,11 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       'deviceId': serializer.toJson<String?>(deviceId),
       'title': serializer.toJson<String>(title),
       'startsOn': serializer.toJson<String>(startsOn),
+      'endsOn': serializer.toJson<String?>(endsOn),
       'startTime': serializer.toJson<String?>(startTime),
       'endTime': serializer.toJson<String?>(endTime),
       'repeat': serializer.toJson<String>(repeat),
+      'color': serializer.toJson<String?>(color),
       'memberId': serializer.toJson<String?>(memberId),
       'location': serializer.toJson<String?>(location),
       'note': serializer.toJson<String?>(note),
@@ -6642,9 +6811,11 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     Value<String?> deviceId = const Value.absent(),
     String? title,
     String? startsOn,
+    Value<String?> endsOn = const Value.absent(),
     Value<String?> startTime = const Value.absent(),
     Value<String?> endTime = const Value.absent(),
     String? repeat,
+    Value<String?> color = const Value.absent(),
     Value<String?> memberId = const Value.absent(),
     Value<String?> location = const Value.absent(),
     Value<String?> note = const Value.absent(),
@@ -6663,9 +6834,11 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     deviceId: deviceId.present ? deviceId.value : this.deviceId,
     title: title ?? this.title,
     startsOn: startsOn ?? this.startsOn,
+    endsOn: endsOn.present ? endsOn.value : this.endsOn,
     startTime: startTime.present ? startTime.value : this.startTime,
     endTime: endTime.present ? endTime.value : this.endTime,
     repeat: repeat ?? this.repeat,
+    color: color.present ? color.value : this.color,
     memberId: memberId.present ? memberId.value : this.memberId,
     location: location.present ? location.value : this.location,
     note: note.present ? note.value : this.note,
@@ -6688,9 +6861,11 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
       deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
       title: data.title.present ? data.title.value : this.title,
       startsOn: data.startsOn.present ? data.startsOn.value : this.startsOn,
+      endsOn: data.endsOn.present ? data.endsOn.value : this.endsOn,
       startTime: data.startTime.present ? data.startTime.value : this.startTime,
       endTime: data.endTime.present ? data.endTime.value : this.endTime,
       repeat: data.repeat.present ? data.repeat.value : this.repeat,
+      color: data.color.present ? data.color.value : this.color,
       memberId: data.memberId.present ? data.memberId.value : this.memberId,
       location: data.location.present ? data.location.value : this.location,
       note: data.note.present ? data.note.value : this.note,
@@ -6712,9 +6887,11 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
           ..write('deviceId: $deviceId, ')
           ..write('title: $title, ')
           ..write('startsOn: $startsOn, ')
+          ..write('endsOn: $endsOn, ')
           ..write('startTime: $startTime, ')
           ..write('endTime: $endTime, ')
           ..write('repeat: $repeat, ')
+          ..write('color: $color, ')
           ..write('memberId: $memberId, ')
           ..write('location: $location, ')
           ..write('note: $note, ')
@@ -6736,9 +6913,11 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
     deviceId,
     title,
     startsOn,
+    endsOn,
     startTime,
     endTime,
     repeat,
+    color,
     memberId,
     location,
     note,
@@ -6759,9 +6938,11 @@ class CalendarEvent extends DataClass implements Insertable<CalendarEvent> {
           other.deviceId == this.deviceId &&
           other.title == this.title &&
           other.startsOn == this.startsOn &&
+          other.endsOn == this.endsOn &&
           other.startTime == this.startTime &&
           other.endTime == this.endTime &&
           other.repeat == this.repeat &&
+          other.color == this.color &&
           other.memberId == this.memberId &&
           other.location == this.location &&
           other.note == this.note &&
@@ -6780,9 +6961,11 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
   final Value<String?> deviceId;
   final Value<String> title;
   final Value<String> startsOn;
+  final Value<String?> endsOn;
   final Value<String?> startTime;
   final Value<String?> endTime;
   final Value<String> repeat;
+  final Value<String?> color;
   final Value<String?> memberId;
   final Value<String?> location;
   final Value<String?> note;
@@ -6800,9 +6983,11 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     this.deviceId = const Value.absent(),
     this.title = const Value.absent(),
     this.startsOn = const Value.absent(),
+    this.endsOn = const Value.absent(),
     this.startTime = const Value.absent(),
     this.endTime = const Value.absent(),
     this.repeat = const Value.absent(),
+    this.color = const Value.absent(),
     this.memberId = const Value.absent(),
     this.location = const Value.absent(),
     this.note = const Value.absent(),
@@ -6821,9 +7006,11 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     this.deviceId = const Value.absent(),
     required String title,
     required String startsOn,
+    this.endsOn = const Value.absent(),
     this.startTime = const Value.absent(),
     this.endTime = const Value.absent(),
     this.repeat = const Value.absent(),
+    this.color = const Value.absent(),
     this.memberId = const Value.absent(),
     this.location = const Value.absent(),
     this.note = const Value.absent(),
@@ -6845,9 +7032,11 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     Expression<String>? deviceId,
     Expression<String>? title,
     Expression<String>? startsOn,
+    Expression<String>? endsOn,
     Expression<String>? startTime,
     Expression<String>? endTime,
     Expression<String>? repeat,
+    Expression<String>? color,
     Expression<String>? memberId,
     Expression<String>? location,
     Expression<String>? note,
@@ -6866,9 +7055,11 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
       if (deviceId != null) 'device_id': deviceId,
       if (title != null) 'title': title,
       if (startsOn != null) 'starts_on': startsOn,
+      if (endsOn != null) 'ends_on': endsOn,
       if (startTime != null) 'start_time': startTime,
       if (endTime != null) 'end_time': endTime,
       if (repeat != null) 'repeat': repeat,
+      if (color != null) 'color': color,
       if (memberId != null) 'member_id': memberId,
       if (location != null) 'location': location,
       if (note != null) 'note': note,
@@ -6889,9 +7080,11 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     Value<String?>? deviceId,
     Value<String>? title,
     Value<String>? startsOn,
+    Value<String?>? endsOn,
     Value<String?>? startTime,
     Value<String?>? endTime,
     Value<String>? repeat,
+    Value<String?>? color,
     Value<String?>? memberId,
     Value<String?>? location,
     Value<String?>? note,
@@ -6910,9 +7103,11 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
       deviceId: deviceId ?? this.deviceId,
       title: title ?? this.title,
       startsOn: startsOn ?? this.startsOn,
+      endsOn: endsOn ?? this.endsOn,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       repeat: repeat ?? this.repeat,
+      color: color ?? this.color,
       memberId: memberId ?? this.memberId,
       location: location ?? this.location,
       note: note ?? this.note,
@@ -6957,6 +7152,9 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     if (startsOn.present) {
       map['starts_on'] = Variable<String>(startsOn.value);
     }
+    if (endsOn.present) {
+      map['ends_on'] = Variable<String>(endsOn.value);
+    }
     if (startTime.present) {
       map['start_time'] = Variable<String>(startTime.value);
     }
@@ -6965,6 +7163,9 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
     }
     if (repeat.present) {
       map['repeat'] = Variable<String>(repeat.value);
+    }
+    if (color.present) {
+      map['color'] = Variable<String>(color.value);
     }
     if (memberId.present) {
       map['member_id'] = Variable<String>(memberId.value);
@@ -6998,9 +7199,11 @@ class EventsCompanion extends UpdateCompanion<CalendarEvent> {
           ..write('deviceId: $deviceId, ')
           ..write('title: $title, ')
           ..write('startsOn: $startsOn, ')
+          ..write('endsOn: $endsOn, ')
           ..write('startTime: $startTime, ')
           ..write('endTime: $endTime, ')
           ..write('repeat: $repeat, ')
+          ..write('color: $color, ')
           ..write('memberId: $memberId, ')
           ..write('location: $location, ')
           ..write('note: $note, ')
@@ -14138,6 +14341,8 @@ typedef $$GroceryItemsTableCreateCompanionBuilder =
       Value<String?> store,
       Value<bool> isBought,
       Value<DateTime?> boughtAt,
+      Value<DateTime?> clearedAt,
+      Value<String?> plannedOn,
       Value<String?> requestedBy,
       Value<String?> note,
       Value<int> rowid,
@@ -14158,6 +14363,8 @@ typedef $$GroceryItemsTableUpdateCompanionBuilder =
       Value<String?> store,
       Value<bool> isBought,
       Value<DateTime?> boughtAt,
+      Value<DateTime?> clearedAt,
+      Value<String?> plannedOn,
       Value<String?> requestedBy,
       Value<String?> note,
       Value<int> rowid,
@@ -14239,6 +14446,16 @@ class $$GroceryItemsTableFilterComposer
 
   ColumnFilters<DateTime> get boughtAt => $composableBuilder(
     column: $table.boughtAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get clearedAt => $composableBuilder(
+    column: $table.clearedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get plannedOn => $composableBuilder(
+    column: $table.plannedOn,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -14332,6 +14549,16 @@ class $$GroceryItemsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get clearedAt => $composableBuilder(
+    column: $table.clearedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get plannedOn => $composableBuilder(
+    column: $table.plannedOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get requestedBy => $composableBuilder(
     column: $table.requestedBy,
     builder: (column) => ColumnOrderings(column),
@@ -14400,6 +14627,12 @@ class $$GroceryItemsTableAnnotationComposer
   GeneratedColumn<DateTime> get boughtAt =>
       $composableBuilder(column: $table.boughtAt, builder: (column) => column);
 
+  GeneratedColumn<DateTime> get clearedAt =>
+      $composableBuilder(column: $table.clearedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get plannedOn =>
+      $composableBuilder(column: $table.plannedOn, builder: (column) => column);
+
   GeneratedColumn<String> get requestedBy => $composableBuilder(
     column: $table.requestedBy,
     builder: (column) => column,
@@ -14454,6 +14687,8 @@ class $$GroceryItemsTableTableManager
                 Value<String?> store = const Value.absent(),
                 Value<bool> isBought = const Value.absent(),
                 Value<DateTime?> boughtAt = const Value.absent(),
+                Value<DateTime?> clearedAt = const Value.absent(),
+                Value<String?> plannedOn = const Value.absent(),
                 Value<String?> requestedBy = const Value.absent(),
                 Value<String?> note = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -14472,6 +14707,8 @@ class $$GroceryItemsTableTableManager
                 store: store,
                 isBought: isBought,
                 boughtAt: boughtAt,
+                clearedAt: clearedAt,
+                plannedOn: plannedOn,
                 requestedBy: requestedBy,
                 note: note,
                 rowid: rowid,
@@ -14492,6 +14729,8 @@ class $$GroceryItemsTableTableManager
                 Value<String?> store = const Value.absent(),
                 Value<bool> isBought = const Value.absent(),
                 Value<DateTime?> boughtAt = const Value.absent(),
+                Value<DateTime?> clearedAt = const Value.absent(),
+                Value<String?> plannedOn = const Value.absent(),
                 Value<String?> requestedBy = const Value.absent(),
                 Value<String?> note = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -14510,6 +14749,8 @@ class $$GroceryItemsTableTableManager
                 store: store,
                 isBought: isBought,
                 boughtAt: boughtAt,
+                clearedAt: clearedAt,
+                plannedOn: plannedOn,
                 requestedBy: requestedBy,
                 note: note,
                 rowid: rowid,
@@ -16523,9 +16764,11 @@ typedef $$EventsTableCreateCompanionBuilder =
       Value<String?> deviceId,
       required String title,
       required String startsOn,
+      Value<String?> endsOn,
       Value<String?> startTime,
       Value<String?> endTime,
       Value<String> repeat,
+      Value<String?> color,
       Value<String?> memberId,
       Value<String?> location,
       Value<String?> note,
@@ -16545,9 +16788,11 @@ typedef $$EventsTableUpdateCompanionBuilder =
       Value<String?> deviceId,
       Value<String> title,
       Value<String> startsOn,
+      Value<String?> endsOn,
       Value<String?> startTime,
       Value<String?> endTime,
       Value<String> repeat,
+      Value<String?> color,
       Value<String?> memberId,
       Value<String?> location,
       Value<String?> note,
@@ -16619,6 +16864,11 @@ class $$EventsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get endsOn => $composableBuilder(
+    column: $table.endsOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get startTime => $composableBuilder(
     column: $table.startTime,
     builder: (column) => ColumnFilters(column),
@@ -16631,6 +16881,11 @@ class $$EventsTableFilterComposer
 
   ColumnFilters<String> get repeat => $composableBuilder(
     column: $table.repeat,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get color => $composableBuilder(
+    column: $table.color,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -16719,6 +16974,11 @@ class $$EventsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get endsOn => $composableBuilder(
+    column: $table.endsOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get startTime => $composableBuilder(
     column: $table.startTime,
     builder: (column) => ColumnOrderings(column),
@@ -16731,6 +16991,11 @@ class $$EventsTableOrderingComposer
 
   ColumnOrderings<String> get repeat => $composableBuilder(
     column: $table.repeat,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get color => $composableBuilder(
+    column: $table.color,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -16801,6 +17066,9 @@ class $$EventsTableAnnotationComposer
   GeneratedColumn<String> get startsOn =>
       $composableBuilder(column: $table.startsOn, builder: (column) => column);
 
+  GeneratedColumn<String> get endsOn =>
+      $composableBuilder(column: $table.endsOn, builder: (column) => column);
+
   GeneratedColumn<String> get startTime =>
       $composableBuilder(column: $table.startTime, builder: (column) => column);
 
@@ -16809,6 +17077,9 @@ class $$EventsTableAnnotationComposer
 
   GeneratedColumn<String> get repeat =>
       $composableBuilder(column: $table.repeat, builder: (column) => column);
+
+  GeneratedColumn<String> get color =>
+      $composableBuilder(column: $table.color, builder: (column) => column);
 
   GeneratedColumn<String> get memberId =>
       $composableBuilder(column: $table.memberId, builder: (column) => column);
@@ -16865,9 +17136,11 @@ class $$EventsTableTableManager
                 Value<String?> deviceId = const Value.absent(),
                 Value<String> title = const Value.absent(),
                 Value<String> startsOn = const Value.absent(),
+                Value<String?> endsOn = const Value.absent(),
                 Value<String?> startTime = const Value.absent(),
                 Value<String?> endTime = const Value.absent(),
                 Value<String> repeat = const Value.absent(),
+                Value<String?> color = const Value.absent(),
                 Value<String?> memberId = const Value.absent(),
                 Value<String?> location = const Value.absent(),
                 Value<String?> note = const Value.absent(),
@@ -16885,9 +17158,11 @@ class $$EventsTableTableManager
                 deviceId: deviceId,
                 title: title,
                 startsOn: startsOn,
+                endsOn: endsOn,
                 startTime: startTime,
                 endTime: endTime,
                 repeat: repeat,
+                color: color,
                 memberId: memberId,
                 location: location,
                 note: note,
@@ -16907,9 +17182,11 @@ class $$EventsTableTableManager
                 Value<String?> deviceId = const Value.absent(),
                 required String title,
                 required String startsOn,
+                Value<String?> endsOn = const Value.absent(),
                 Value<String?> startTime = const Value.absent(),
                 Value<String?> endTime = const Value.absent(),
                 Value<String> repeat = const Value.absent(),
+                Value<String?> color = const Value.absent(),
                 Value<String?> memberId = const Value.absent(),
                 Value<String?> location = const Value.absent(),
                 Value<String?> note = const Value.absent(),
@@ -16927,9 +17204,11 @@ class $$EventsTableTableManager
                 deviceId: deviceId,
                 title: title,
                 startsOn: startsOn,
+                endsOn: endsOn,
                 startTime: startTime,
                 endTime: endTime,
                 repeat: repeat,
+                color: color,
                 memberId: memberId,
                 location: location,
                 note: note,

@@ -156,6 +156,11 @@ void main() {
     await v4.customStatement('SELECT 1');
     await v4.customStatement('DROP TABLE chores');
     await v4.customStatement('DROP TABLE chore_completions');
+    await v4.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
+    await v4.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on'); // added in v8
+    // Also undo version 9 (multi-day events).
+    await v4.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
+    await v4.customStatement('ALTER TABLE events DROP COLUMN "color"');
     await v4.customStatement('PRAGMA user_version = 3');
     await v4.close();
 

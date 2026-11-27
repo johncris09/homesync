@@ -374,11 +374,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groceryClearBought => 'Clear bought';
 
   @override
-  String groceryFor(String name) {
-    return 'asked by $name';
-  }
-
-  @override
   String get groceryEditTitle => 'Edit item';
 
   @override
@@ -395,6 +390,86 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get groceryRemove => 'Remove from list';
+
+  @override
+  String groceryBoughtOn(String date) {
+    return 'Bought $date';
+  }
+
+  @override
+  String get groceryChangeDate => 'Change the date bought';
+
+  @override
+  String get groceryToday => 'Today';
+
+  @override
+  String get groceryYesterday => 'Yesterday';
+
+  @override
+  String get groceryHistory => 'Past groceries';
+
+  @override
+  String groceryHistoryFigure(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+      zero: 'Nothing bought',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String groceryHistoryCaption(String month) {
+    return 'bought in $month';
+  }
+
+  @override
+  String get groceryHistoryEmpty =>
+      'Nothing bought yet. Items you tick off show here by the day they were bought.';
+
+  @override
+  String groceryDayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get groceryBuyAgain => 'Add to the list again';
+
+  @override
+  String get groceryTomorrow => 'Tomorrow';
+
+  @override
+  String get groceryNoDate => 'No date';
+
+  @override
+  String get grocerySetDate => 'Set date';
+
+  @override
+  String get groceryPlanHelp => 'When will you buy it?';
+
+  @override
+  String groceryPlanFor(String day) {
+    return 'Shopping day: $day';
+  }
+
+  @override
+  String get groceryChangePlan => 'Change the shopping day';
+
+  @override
+  String get groceryRemovePlan => 'Remove the date';
+
+  @override
+  String groceryNextShopping(String day) {
+    return 'Next shopping: $day';
+  }
 
   @override
   String get itemName => 'Name';
@@ -1109,6 +1184,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventNote => 'Note';
+
+  @override
+  String get eventColour => 'Colour';
+
+  @override
+  String get eventColourUbe => 'Ube';
+
+  @override
+  String get eventColourDagat => 'Dagat';
+
+  @override
+  String get eventColourDahon => 'Dahon';
+
+  @override
+  String get eventColourNarra => 'Narra';
+
+  @override
+  String get eventColourRosas => 'Rosas';
+
+  @override
+  String get eventColourTubig => 'Tubig';
+
+  @override
+  String get eventSeveralDays => 'Several days';
+
+  @override
+  String eventUntilDate(String date) {
+    return 'Until $date';
+  }
+
+  @override
+  String eventStartsAt(String time) {
+    return 'Starts $time';
+  }
+
+  @override
+  String eventUntilTime(String time) {
+    return 'Until $time';
+  }
+
+  @override
+  String eventDayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String eventTooLong(int days) {
+    return 'Too long for this repeat: up to $days days';
+  }
+
+  @override
+  String calendarRange(String from, String to) {
+    return '$from – $to';
+  }
 
   @override
   String eventAddedBy(String name) {

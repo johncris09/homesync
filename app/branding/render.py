@@ -1,4 +1,4 @@
-"""Render the HomeSync logo into the Android and web icon files.
+"""Render the HomeSync logo into the Android and web icon files and the in-app logo.
 
 Usage (from app/):  python branding/render.py
 Needs Chrome (or Edge) and Pillow. Chrome renders logo.svg at 1024 px;
@@ -109,6 +109,8 @@ def main() -> None:
             save(tile, size, res / f"mipmap-{folder}" / "ic_launcher.png")
 
         save(tile, 512, APP / "branding" / "logo-512.png")
+        # In-app logo (sign-in header).
+        save(tile, 256, APP / "assets" / "images" / "logo.png")
 
 
 if __name__ == "__main__":

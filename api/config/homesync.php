@@ -47,6 +47,7 @@ return [
         ],
 
         // Shared grocery list. "Bought" only moves forward (see sync-protocol §6).
+        // "Clear bought" sets cleared_at (kept for history), it does not delete.
         'grocery_items' => [
             'table' => 'grocery_items',
             'fields' => [
@@ -55,6 +56,8 @@ return [
                 'store' => 'string',
                 'is_bought' => 'bool',
                 'bought_at' => 'datetime',
+                'cleared_at' => 'datetime',
+                'planned_on' => 'date',
                 'requested_by' => 'uuid',
                 'note' => 'text',
             ],
@@ -163,16 +166,20 @@ return [
         ],
 
         // Calendar events: all day or at a local "HH:MM" time, once or
-        // repeating weekly, monthly or yearly from starts_on. member_id is who
-        // it is for (null = the whole family). Everyone but viewers adds them.
+        // repeating weekly, monthly or yearly from starts_on. ends_on is the
+        // last day of a multi-day event (null = one day); a repeat copies the
+        // whole span. color is a palette name (null = default). member_id is
+        // who it is for (null = the whole family). Everyone but viewers adds them.
         'events' => [
             'table' => 'events',
             'fields' => [
                 'title' => 'string',
                 'starts_on' => 'date',
+                'ends_on' => 'date',
                 'start_time' => 'string',
                 'end_time' => 'string',
                 'repeat' => 'string',
+                'color' => 'string',
                 'member_id' => 'uuid',
                 'location' => 'string',
                 'note' => 'text',

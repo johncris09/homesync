@@ -200,6 +200,11 @@ void main() {
     for (final c in ['category', 'repeat', 'series_id']) {
       await v2.customStatement('ALTER TABLE bills DROP COLUMN "$c"');
     }
+    await v2.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at'); // added in v7
+    await v2.customStatement('ALTER TABLE grocery_items DROP COLUMN planned_on'); // added in v8
+    // Also undo version 9 (multi-day events).
+    await v2.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
+    await v2.customStatement('ALTER TABLE events DROP COLUMN "color"');
     await v2.customStatement('PRAGMA user_version = 1');
     await v2.close();
 

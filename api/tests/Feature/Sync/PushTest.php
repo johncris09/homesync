@@ -81,6 +81,39 @@ class PushTest extends SyncTestCase
         $this->assertTrue($this->latest($ana, $id)['is_bought']);
     }
 
+    public function test_clearing_a_bought_item_keeps_it_with_cleared_at_for_history(): void
+    {
+        $ana = $this->device('adult');
+        $id = (string) Str::uuid7();
+        $this->push($ana, [$this->op('grocery_items', $id, 'insert', ['name' => 'Eggs'], $this->hlc(1))]);
+        $this->push($ana, [$this->op('grocery_items', $id, 'update', ['is_bought' => true, 'bought_at' => '2026-11-26T01:00:00.000Z'], $this->hlc(2))]);
+
+        $res = $this->push($ana, [$this->op('grocery_items', $id, 'update', [
+            'bought_at' => '2026-11-24T01:00:00.000Z',
+            'cleared_at' => '2026-11-26T10:00:00.000Z',
+        ], $this->hlc(3))]);
+
+        $this->assertSame(['applied'], $this->statuses($res));
+        $row = $this->latest($ana, $id);
+        $this->assertTrue($row['is_bought']);
+        $this->assertNull($row['deleted_at']);
+        $this->assertStringStartsWith('2026-11-24T01:00:00', $row['bought_at']);
+        $this->assertStringStartsWith('2026-11-26T10:00:00', $row['cleared_at']);
+    }
+
+    public function test_a_grocery_item_can_carry_a_planned_shopping_day(): void
+    {
+        $ana = $this->device('adult');
+        $id = (string) Str::uuid7();
+        $this->push($ana, [$this->op('grocery_items', $id, 'insert', ['name' => 'Rice', 'planned_on' => '2026-11-29'], $this->hlc(1))]);
+        $this->assertSame('2026-11-29', substr($this->latest($ana, $id)['planned_on'], 0, 10));
+
+        $res = $this->push($ana, [$this->op('grocery_items', $id, 'update', ['planned_on' => null], $this->hlc(2))]);
+
+        $this->assertSame(['applied'], $this->statuses($res));
+        $this->assertNull($this->latest($ana, $id)['planned_on']);
+    }
+
     public function test_the_person_who_marked_bought_can_undo_it(): void
     {
         $ana = $this->device('adult');
@@ -251,7 +284,7 @@ class PushTest extends SyncTestCase
         $child = $this->device('child');
         $viewer = $this->device('viewer');
         $id = (string) Str::uuid7();
-        $fields = ['title' => 'School play', 'starts_on' => '2026-12-04', 'start_time' => '15:00', 'repeat' => 'none', 'member_id' => $child->member_id, 'created_by' => $child->member_id];
+        $fields = ['title' => 'School play', 'starts_on' => '2026-12-04', 'ends_on' => '2026-12-05', 'color' => 'dagat', 'start_time' => '15:00', 'repeat' => 'none', 'member_id' => $child->member_id, 'created_by' => $child->member_id];
 
         $this->assertSame(['applied'], $this->statuses($this->push($child, [$this->op('events', $id, 'insert', $fields, $this->hlc(1))])));
         $this->assertSame('forbidden', $this->push($viewer, [$this->op('events', (string) Str::uuid7(), 'insert', $fields, $this->hlc(2))])->json('results.0.error'));
@@ -260,6 +293,8 @@ class PushTest extends SyncTestCase
         $this->assertSame($id, $pulled['entity_id']);
         $this->assertSame('15:00', $pulled['row']['start_time']);
         $this->assertSame('2026-12-04', $pulled['row']['starts_on']);
+        $this->assertSame('2026-12-05', $pulled['row']['ends_on']);
+        $this->assertSame('dagat', $pulled['row']['color']);
     }
 
     public function test_debts_are_for_adults_and_payments_from_two_devices_both_count(): void

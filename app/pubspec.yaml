@@ -73,6 +73,7 @@ flutter:
   generate: true
   assets:
     - assets/fonts/OFL.txt
+    - assets/images/logo.png
   fonts:
     # Variable font (opsz, wdth, wght); weights and widths are set with
     # FontVariation in lib/app/theme.dart.

@@ -29,21 +29,32 @@ class PantryRepository {
   /// Bought items not cleared yet, newest first.
   Stream<List<GroceryItem>> watchBought() => _bought().watch();
 
+  /// Every bought item still kept (cleared or not), newest first. Feeds the
+  /// history screen; group it with [groupByDay].
+  Stream<List<GroceryItem>> watchHistory() =>
+      (db.select(db.groceryItems)
+            ..where((g) => g.deletedAt.isNull() & g.isBought.equals(true))
+            ..orderBy([(g) => OrderingTerm.desc(g.boughtAt), (g) => OrderingTerm.asc(g.name)]))
+          .watch();
+
   SimpleSelectStatement<$GroceryItemsTable, GroceryItem> _toBuy() => db.select(db.groceryItems)
     ..where((g) => g.deletedAt.isNull() & g.isBought.equals(false))
     ..orderBy([
+      (g) => OrderingTerm(expression: g.plannedOn.isNull()),
+      (g) => OrderingTerm(expression: g.plannedOn),
       (g) => OrderingTerm(expression: g.store.isNull()),
       (g) => OrderingTerm(expression: g.store.lower()),
       (g) => OrderingTerm(expression: g.name.lower()),
     ]);
 
   SimpleSelectStatement<$GroceryItemsTable, GroceryItem> _bought() => db.select(db.groceryItems)
-    ..where((g) => g.deletedAt.isNull() & g.isBought.equals(true))
+    ..where((g) => g.deletedAt.isNull() & g.isBought.equals(true) & g.clearedAt.isNull())
     ..orderBy([(g) => OrderingTerm.desc(g.boughtAt)]);
 
-  Future<String> addGrocery(String name, {String? quantityText, String? store, String? note}) =>
+  Future<String> addGrocery(String name, {String? quantityText, String? store, String? note, DateTime? plannedOn}) =>
       writer.insert('grocery_items', {
         'name': name.trim(),
+        'planned_on': plannedOn == null ? null : isoDate(plannedOn),
         'quantity_text': _blankToNull(quantityText),
         'store': _blankToNull(store),
         'note': _blankToNull(note),
@@ -51,8 +62,25 @@ class PantryRepository {
         'requested_by': writer.identity.memberId,
       });
 
-  Future<void> setBought(String id, bool bought) =>
-      writer.update('grocery_items', id, {'is_bought': bought, 'bought_at': bought ? _now().toUtc() : null});
+  /// Ticks an item off with today's date (or puts it back on the list).
+  /// Either way it is no longer cleared, so it shows on the list again.
+  Future<void> setBought(String id, bool bought) => writer.update('grocery_items', id, {
+    'is_bought': bought,
+    'bought_at': bought ? _now().toUtc() : null,
+    'cleared_at': null,
+  });
+
+  /// Sets (or with null, removes) the day the item is to be bought.
+  Future<void> setPlannedOn(String id, DateTime? day) =>
+      writer.update('grocery_items', id, {'planned_on': day == null ? null : isoDate(day)});
+
+  /// Changes the day an item was bought, keeping the time of day it was
+  /// ticked (so items bought together stay in the same order).
+  Future<void> setBoughtOn(GroceryItem item, DateTime day) {
+    final at = (item.boughtAt ?? _now()).toLocal();
+    final next = DateTime(day.year, day.month, day.day, at.hour, at.minute, at.second, at.millisecond);
+    return writer.update('grocery_items', item.id, {'bought_at': next.toUtc()});
+  }
 
   Future<void> editGrocery(
     GroceryItem item, {
@@ -74,13 +102,28 @@ class PantryRepository {
 
   Future<void> removeGrocery(String id) => writer.delete('grocery_items', id);
 
-  /// Clears the bought list (tombstones). Returns how many were cleared.
+  /// Clears the bought list. The items are kept (with `cleared_at`) for the
+  /// history screen. Returns how many were cleared.
   Future<int> clearBought() async {
     final bought = await _bought().get();
+    final at = _now().toUtc();
     for (final g in bought) {
-      await writer.delete('grocery_items', g.id);
+      await writer.update('grocery_items', g.id, {'cleared_at': at});
     }
     return bought.length;
+  }
+
+  /// Puts a past item back on the list (name, quantity and store) unless the
+  /// same name is already on it. Returns false when it was already listed.
+  Future<bool> buyAgain(GroceryItem item) async {
+    if (await _isListed(item.name)) return false;
+    await addGrocery(item.name, quantityText: item.quantityText, store: item.store);
+    return true;
+  }
+
+  Future<bool> _isListed(String name) async {
+    final key = name.trim().toLowerCase();
+    return (await _toBuy().get()).any((g) => g.name.trim().toLowerCase() == key);
   }
 
   // ----------------------------------------------------------------- pantry
@@ -155,14 +198,53 @@ class PantryRepository {
   /// Puts a pantry item on the grocery list unless it is already there
   /// (same name, not bought). Returns false when it was already listed.
   Future<bool> addToGrocery(PantryItem item) async {
-    final open = await _toBuy().get();
-    final name = item.name.trim().toLowerCase();
-    if (open.any((g) => g.name.trim().toLowerCase() == name)) return false;
+    if (await _isListed(item.name)) return false;
     await addGrocery(item.name);
     return true;
   }
 
   static String? _blankToNull(String? s) => s == null || s.trim().isEmpty ? null : s.trim();
+}
+
+/// Items still to buy grouped by planned day (as ordered by
+/// [PantryRepository.watchToBuy]: soonest first, no date last).
+List<({String? day, List<GroceryItem> items})> groupByPlannedDay(List<GroceryItem> items) {
+  final groups = <({String? day, List<GroceryItem> items})>[];
+  for (final g in items) {
+    if (groups.isNotEmpty && groups.last.day == g.plannedOn) {
+      groups.last.items.add(g);
+    } else {
+      groups.add((day: g.plannedOn, items: [g]));
+    }
+  }
+  return groups;
+}
+
+/// The soonest planned shopping day from [today] on, or null.
+DateTime? nextShoppingDay(List<GroceryItem> toBuy, DateTime today) {
+  DateTime? next;
+  for (final g in toBuy) {
+    final d = parseIsoDate(g.plannedOn);
+    if (d == null || daysUntil(d, today) < 0) continue;
+    if (next == null || d.isBefore(next)) next = d;
+  }
+  return next;
+}
+
+/// Bought items grouped by the local day they were bought, keeping the
+/// order given (newest day first for [PantryRepository.watchHistory]).
+List<({DateTime day, List<GroceryItem> items})> groupByDay(List<GroceryItem> items) {
+  final groups = <({DateTime day, List<GroceryItem> items})>[];
+  for (final g in items) {
+    final at = (g.boughtAt ?? g.updatedAt).toLocal();
+    final day = DateTime(at.year, at.month, at.day);
+    if (groups.isNotEmpty && groups.last.day == day) {
+      groups.last.items.add(g);
+    } else {
+      groups.add((day: day, items: [g]));
+    }
+  }
+  return groups;
 }
 
 /// At or below its minimum (only when a minimum is set).
