@@ -586,6 +586,29 @@ void main() {
     await app.finish(tester, s);
   });
 
+  testWidgets('a quiet week keeps a full band while a busy week stacks', (tester) async {
+    final store = MemorySecureStore();
+    app.signedIn(store);
+    final t = DateTime.now();
+    final d = DateTime(t.year, t.month, t.day);
+    // Two weeks away, inside this month, so it is in another week row.
+    final x = d.day <= 14 ? DateTime(d.year, d.month, d.day + 14) : DateTime(d.year, d.month, d.day - 14);
+    final s = (await tester.runAsync(() async {
+      final s = await open(store);
+      final repo = CalendarRepository(s.db, s.writer);
+      for (final title in ['A', 'B']) {
+        await repo.addEvent(title: title, startsOn: d, endsOn: DateTime(d.year, d.month, d.day + 1));
+      }
+      await repo.addEvent(title: 'C', startsOn: x, endsOn: DateTime(x.year, x.month, x.day + 1));
+      return s;
+    }))!;
+    await app.pumpApp(tester, s);
+    await tapText(tester, 'Calendar');
+    expect(tester.getSize(find.byKey(Key('band-${isoDate(d)}-1'))).height, lessThan(13));
+    expect(tester.getSize(find.byKey(Key('band-${isoDate(x)}-0'))).height, 26);
+    await app.finish(tester, s);
+  });
+
   testWidgets('a range too long for the repeat is not saved', (tester) async {
     final store = MemorySecureStore();
     app.signedIn(store);

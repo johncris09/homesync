@@ -185,6 +185,20 @@ class _MonthCard extends ConsumerWidget {
 
     final layout = BandLayout(agenda, month, DateTime(month.year, month.month, days));
 
+    // Lanes drawn in a week row: up to its highest used lane, so a quiet week
+    // keeps thick bands even when another week of the month is busy.
+    int rowLanes(int row) {
+      var most = 0;
+      for (var col = 0; col < 7; col++) {
+        final n = row * 7 + col - lead + 1;
+        if (n < 1 || n > days) continue;
+        final here = layout.on(DateTime(month.year, month.month, n));
+        final used = here.lastIndexWhere((i) => i != null) + 1;
+        if (used > most) most = used;
+      }
+      return most;
+    }
+
     void moveMonth(int by) {
       final next = DateTime(month.year, month.month + by);
       ref.read(calendarMonthProvider.notifier).state = next;
@@ -241,7 +255,7 @@ class _MonthCard extends ConsumerWidget {
                           final n = row * 7 + col - lead + 1;
                           if (n < 1 || n > days) return const SizedBox(height: 44);
                           final d = DateTime(month.year, month.month, n);
-                          final here = layout.on(d);
+                          final here = layout.on(d).take(rowLanes(row)).toList();
                           final left = col > 0 && n > 1 ? layout.on(DateTime(d.year, d.month, n - 1)) : null;
                           final right = col < 6 && n < days ? layout.on(DateTime(d.year, d.month, n + 1)) : null;
                           return _DayCell(
@@ -252,7 +266,7 @@ class _MonthCard extends ConsumerWidget {
                                   _Band(
                                     color: bandTint(
                                       eventColor(i.event!.color) ?? HomeColors.ube,
-                                      stacked: layout.lanes > 1,
+                                      stacked: here.length > 1,
                                     ),
                                     joinLeft: BandLayout.same(i, left?[l]),
                                     joinRight: BandLayout.same(i, right?[l]),
