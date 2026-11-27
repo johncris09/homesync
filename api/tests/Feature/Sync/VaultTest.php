@@ -187,6 +187,33 @@ class VaultTest extends SyncTestCase
         $this->getJson("/api/files/$sha/chunks", self::H)->assertForbidden();
     }
 
+    public function test_an_inventory_photo_is_served_to_everyone_but_a_vault_file_is_not(): void
+    {
+        Storage::fake('local');
+        $owner = $this->device('owner');
+        $photo = random_bytes(29);
+        $sha = $this->upload($owner, $photo);
+        $this->push($owner, [$this->op('inventory_items', (string) Str::uuid7(), 'insert', [
+            'name' => 'Ref', 'category' => 'appliance', 'room' => 'Kusina',
+            'photo_sha256' => $sha, 'photo_size' => strlen($photo),
+        ], $this->hlc(1))]);
+        $secret = random_bytes(31);
+        $vaultSha = $this->upload($owner, $secret);
+        $this->push($owner, [$this->op('vault_files', (string) Str::uuid7(), 'insert', [
+            'item_id' => (string) Str::uuid7(), 'sha256' => $vaultSha, 'size' => strlen($secret),
+            'key_wrap' => 'AQ-k', 'sealed' => 'AQ-s', 'position' => 0,
+        ], $this->hlc(2))]);
+
+        foreach (['viewer', 'helper', 'adult'] as $role) {
+            Sanctum::actingAs($this->device($role));
+            $this->assertSame($photo, $this->get("/api/files/$sha", self::H)->assertOk()->streamedContent(), $role);
+        }
+        Sanctum::actingAs($this->device('helper'));
+        $this->get("/api/files/$vaultSha", self::H)->assertForbidden();
+        $this->get('/api/files/'.hash('sha256', 'nothing'), self::H)->assertNotFound();
+        $this->getJson("/api/files/$sha/chunks", self::H)->assertForbidden();
+    }
+
     public function test_an_interrupted_upload_resumes_and_a_wrong_hash_is_refused(): void
     {
         Storage::fake('local');

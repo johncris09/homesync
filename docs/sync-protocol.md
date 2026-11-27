@@ -218,6 +218,8 @@ Health (`docs/vault.md` for the key): a member's `health_profiles` row holds blo
 
 Rent the household collects: a `rental_units` row per room, house or stall (kept while vacant) and a `leases` row per tenant in a unit, with rent due every month on `due_day` (the last day of a shorter month) from the month of `starts_on` up to the month of `ends_on`. `rent_minor` applies from the month of `rent_since` (from the start when null); earlier months use `prev_rent_minor`. Money received is an append-only `rent_payments` row (`kind` `payment`, or `waived` for rent forgiven). What a tenant owes is never stored: devices add up the rent due so far and subtract every payment, which covers the oldest month first, so partial, advance and offline payments from two devices all count. A `payment` also posts income to `transactions` (category `income`, `source_type` `rent`, `source_id` the lease, id derived from the payment, §2.1); `waived` does not. The deposit is kept on the lease and never posted to the ledger.
 
+Household Inventory: an `inventory_items` row per durable thing the household owns (`category` `appliance`, `electronics`, `furniture`, `tools`, `other`) with its `room`, brand, model, serial number, `bought_on`, `price_minor` and `warranty_until`. Lending it out sets `lent_to` and `lent_on`; returning it clears both. Everyone reads it (the app hides prices from non-adults); adults write. The photo is a plain JPEG at `/api/files/{photo_sha256}` (§7), not encrypted, so members without the vault key can see it. All fields follow the default rule.
+
 Tombstones are kept 90 days, then pruned by the nightly job.
 
 ### 6.1 Conflict records
@@ -237,20 +239,20 @@ Every value stored for review (reviewed money, never-auto-merged) is a row in th
 
 ---
 
-## 7. Files (vault)
+## 7. Files (vault and inventory photos)
 
-Encrypted vault files live on the hub's private disk, named by the SHA-256 of their ciphertext. The device encrypts before hashing and uploading (`docs/vault.md`), so the hub only ever sees ciphertext. Every call is authenticated; uploads need `write` on `vault_files`, downloads `read`.
+Files live on the hub's private disk, named by the SHA-256 of their bytes: encrypted vault files (the device encrypts before hashing and uploading, `docs/vault.md`, so the hub only ever sees ciphertext) and plain inventory photos. Every call is authenticated; uploads need `write` on `vault_files` or `inventory_items`. A download needs `read` on a live record that names the file.
 
 | Endpoint | Body | Returns |
 | --- | --- | --- |
 | `GET /api/files/{sha256}/chunks` | — | `{ "complete": bool, "chunks": [0, 1] }`: which chunks the hub already has (resume) |
 | `PUT /api/files/{sha256}/chunks/{index}` | raw bytes, 1 B – 1 MiB (`application/octet-stream`) | `{ "received": index }` |
 | `POST /api/files/{sha256}/complete` | `{ "chunks": n }` | `{ "sha256", "size" }`, or `422` if chunks are missing, the file is over 20 MB or the hash does not match (the chunks are then discarded) |
-| `GET /api/files/{sha256}` | — | the ciphertext, if a live `vault_files` row in the household names it; else `404` |
+| `GET /api/files/{sha256}` | — | the bytes, if a live `vault_files` row (`sha256`) or `inventory_items` row (`photo_sha256`) in the household that the member can read names it; `403` if only records they can't read name it; else `404` |
 
-1. The device stores the ciphertext locally first and writes the `vault_files` row through the outbox.
+1. The device stores the bytes locally first and writes the `vault_files` / `inventory_items` row through the outbox.
 2. After a sync it uploads every file still waiting, chunk by chunk, then calls `complete`. A file already on the hub answers `complete: true` and needs no upload.
-3. Other devices download a file when it is opened and keep the ciphertext locally. A `404` means the device that added it has not uploaded it yet.
+3. Other devices download a file when it is opened (an inventory photo when it is shown) and keep it locally. A `404` means the device that added it has not uploaded it yet.
 
 Files no live row names are kept for now; pruning them is a later job.
 
