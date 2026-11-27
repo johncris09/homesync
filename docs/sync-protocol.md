@@ -226,6 +226,8 @@ Emergency & Disaster Preparedness: `emergency_contacts` (`kind` `family`, `baran
 
 Tombstones are kept 90 days, then pruned by the nightly job.
 
+Food Planner: `recipes` (name, `servings`, `steps`, `note`) and `recipe_ingredients`, one row per ingredient line (`recipe_id`, `name`, optional `quantity` and `unit`, `position`), so two phones editing different lines of a recipe both stick. A planned dish is a `meals` row (`planned_on`, `slot` `breakfast`, `lunch`, `merienda` or `dinner`, and either a `recipe_id` or a typed `dish`; a meal from a recipe also keeps the recipe's name in `dish`, so the plan still reads right after the recipe is deleted). A slot may hold several dishes; removing one deletes its row. Deleting a recipe deletes its lines. The grocery list from the plan is worked out on the device and written as ordinary `grocery_items`. Everyone reads all three; everyone but viewers writes. All fields follow the default rule.
+
 ### 6.1 Conflict records
 
 Every value stored for review (reviewed money, never-auto-merged) is a row in the synced `conflicts` entity, readable and writable by Owner and Adult only:
