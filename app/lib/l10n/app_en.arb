@@ -515,7 +515,7 @@
   "vaultNewRecoveryCode": "New recovery code",
   "vaultSetUpTitle": "Set up the vault",
   "vaultSetUpCaption": "For IDs, titles and certificates",
-  "vaultSetUpBody": "Choose a vault passphrase for the household and tell the other adults in person. Documents are encrypted on the phone before they sync; the hub never sees them.",
+  "vaultSetUpBody": "Choose a vault passphrase for the household and tell the other adults in person. Documents are encrypted on this device before they sync; the hub never sees them.",
   "vaultSetUpButton": "Set up",
   "vaultSetUpOffline": "Connect to the internet to set up the vault, so every device gets the same key.",
   "vaultNotSetUp": "The owner hasn't set up the vault yet.",

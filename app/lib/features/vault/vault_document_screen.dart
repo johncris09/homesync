@@ -111,6 +111,7 @@ class _VaultDocumentScreenState extends ConsumerState<VaultDocumentScreen> {
         padding: EdgeInsets.zero,
         children: [
           Stack(
+            fit: StackFit.passthrough,
             children: [
               ScreenHeader(
                 figure: fields == null ? l10n.vaultUnreadable : doc.title,

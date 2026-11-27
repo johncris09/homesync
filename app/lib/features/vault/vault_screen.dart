@@ -601,6 +601,7 @@ class _VaultList extends ConsumerWidget {
         padding: EdgeInsets.zero,
         children: [
           Stack(
+            fit: StackFit.passthrough,
             children: [
               ScreenHeader(
                 figure: l10n.vaultDocuments(docs.length),

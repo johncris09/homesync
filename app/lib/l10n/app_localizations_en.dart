@@ -1672,7 +1672,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vaultSetUpBody =>
-      'Choose a vault passphrase for the household and tell the other adults in person. Documents are encrypted on the phone before they sync; the hub never sees them.';
+      'Choose a vault passphrase for the household and tell the other adults in person. Documents are encrypted on this device before they sync; the hub never sees them.';
 
   @override
   String get vaultSetUpButton => 'Set up';

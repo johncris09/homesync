@@ -2497,7 +2497,7 @@ abstract class AppLocalizations {
   /// No description provided for @vaultSetUpBody.
   ///
   /// In en, this message translates to:
-  /// **'Choose a vault passphrase for the household and tell the other adults in person. Documents are encrypted on the phone before they sync; the hub never sees them.'**
+  /// **'Choose a vault passphrase for the household and tell the other adults in person. Documents are encrypted on this device before they sync; the hub never sees them.'**
   String get vaultSetUpBody;
 
   /// No description provided for @vaultSetUpButton.
