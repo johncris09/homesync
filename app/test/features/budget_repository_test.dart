@@ -217,6 +217,7 @@ void main() {
     await v2.customStatement('DROP TABLE rental_units'); // added in v14
     await v2.customStatement('DROP TABLE leases');
     await v2.customStatement('DROP TABLE rent_payments');
+    await v2.customStatement('DROP TABLE inventory_items'); // added in v15
     await v2.customStatement('PRAGMA user_version = 1');
     await v2.close();
 

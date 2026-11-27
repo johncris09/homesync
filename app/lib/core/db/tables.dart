@@ -283,6 +283,35 @@ class RentPayments extends Table with SyncColumns {
   TextColumn get note => text().nullable()();
 }
 
+/// A durable thing the household owns (appliance, electronics, furniture,
+/// tools). Everyone reads; adults write. The photo is a plain file named by
+/// [photoSha256], kept in [VaultBlobs] and uploaded like vault files.
+class InventoryItems extends Table with SyncColumns {
+  TextColumn get name => text()();
+
+  /// `appliance`, `electronics`, `furniture`, `tools` or `other`.
+  TextColumn get category => text()();
+  TextColumn get room => text().nullable()();
+  TextColumn get brand => text().nullable()();
+  TextColumn get model => text().nullable()();
+  TextColumn get serialNo => text().nullable()();
+
+  /// Calendar date `YYYY-MM-DD`.
+  TextColumn get boughtOn => text().nullable()();
+  IntColumn get priceMinor => integer().nullable()();
+  TextColumn get currency => text().withDefault(const Constant('PHP'))();
+
+  /// Calendar date `YYYY-MM-DD`: the last day under warranty.
+  TextColumn get warrantyUntil => text().nullable()();
+  TextColumn get photoSha256 => text().nullable()();
+  IntColumn get photoSize => integer().nullable()();
+
+  /// Who borrowed it and since when; both null when it is home.
+  TextColumn get lentTo => text().nullable()();
+  TextColumn get lentOn => text().nullable()();
+  TextColumn get note => text().nullable()();
+}
+
 /// A member's health profile; [sealed] is blood type, allergies, conditions,
 /// maintenance medicines, PhilHealth/HMO numbers and doctor, encrypted with
 /// the vault key. One row per member (derived id).

@@ -423,6 +423,33 @@ return [
             'write' => $adults,
         ],
 
+        // Household Inventory: durable things the household owns. Everyone
+        // can look up where a thing is and who borrowed it; adults add and
+        // change items (the app hides prices from non-adults). The photo is
+        // a plain file at /api/files/{photo_sha256}.
+        'inventory_items' => [
+            'table' => 'inventory_items',
+            'fields' => [
+                'name' => 'string',
+                'category' => 'string',
+                'room' => 'string',
+                'brand' => 'string',
+                'model' => 'string',
+                'serial_no' => 'string',
+                'bought_on' => 'date',
+                'price_minor' => 'int',
+                'currency' => 'string',
+                'warranty_until' => 'date',
+                'photo_sha256' => 'string',
+                'photo_size' => 'int',
+                'lent_to' => 'string',
+                'lent_on' => 'date',
+                'note' => 'text',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',

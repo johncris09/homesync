@@ -21,6 +21,7 @@ import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
 import '../health/health_providers.dart';
+import '../inventory/inventory_providers.dart';
 import '../rent/rent_providers.dart';
 import '../vehicles/vehicles_providers.dart';
 import '../vehicles/vehicles_screen.dart' show dueWhen;
@@ -55,6 +56,7 @@ class HomeScreen extends ConsumerWidget {
     final vehicles = adult ? ref.watch(vehiclesProvider).value ?? const [] : const [];
     final cars = adult ? ref.watch(vehiclesSummaryProvider) : null;
     final rent = adult ? ref.watch(rentSummaryProvider) : null;
+    final inventory = ref.watch(inventorySummaryProvider);
     final health = ref.watch(healthSummaryProvider);
     final checkup = health.upcoming.firstOrNull;
     final healthCaption = health.left > 0
@@ -250,6 +252,24 @@ class HomeScreen extends ConsumerWidget {
                         subtitle: Text(calendarCaption),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () => context.push(Routes.calendar),
+                      ),
+                      ListTile(
+                        key: const Key('inventory-tile'),
+                        leading: CircleAvatar(
+                          backgroundColor: inventory.needsAttention.isNotEmpty ? HomeColors.mangga : HomeColors.ube,
+                          foregroundColor: inventory.needsAttention.isNotEmpty ? HomeColors.narra : Colors.white,
+                          child: const Icon(Icons.chair_outlined),
+                        ),
+                        title: Text(l10n.inventoryModule),
+                        subtitle: Text(
+                          inventory.isEmpty
+                              ? l10n.inventoryTileNone
+                              : inventory.needsAttention.isNotEmpty
+                              ? l10n.inventoryTileAttention(inventory.count, inventory.needsAttention.length)
+                              : l10n.inventoryTileItems(inventory.count),
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(Routes.inventory),
                       ),
                       ListTile(
                         leading: const CircleAvatar(

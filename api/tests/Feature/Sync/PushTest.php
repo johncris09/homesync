@@ -397,6 +397,25 @@ class PushTest extends SyncTestCase
         $this->assertSame('rejected', $this->push($john, [$this->op('rent_payments', $payId, 'update', ['amount_minor' => 1], $this->hlc(6), 1)])->json('results.0.status'), 'payments are append-only');
     }
 
+    public function test_everyone_sees_inventory_and_only_adults_change_it(): void
+    {
+        $john = $this->device('owner');
+        $teen = $this->device('teen');
+        $viewer = $this->device('viewer');
+        $id = (string) Str::uuid7();
+        $item = ['name' => 'Aircon', 'category' => 'appliance', 'room' => 'Kwarto', 'brand' => 'Carrier', 'serial_no' => 'SN-1', 'bought_on' => '2025-04-10', 'price_minor' => 2899900, 'warranty_until' => '2027-04-10'];
+
+        $this->assertSame('forbidden', $this->push($teen, [$this->op('inventory_items', (string) Str::uuid7(), 'insert', $item, $this->hlc(1))])->json('results.0.error'));
+        $this->assertSame(['applied'], $this->statuses($this->push($john, [$this->op('inventory_items', $id, 'insert', $item, $this->hlc(2))])));
+        $this->assertSame(['applied'], $this->statuses($this->push($john, [$this->op('inventory_items', $id, 'update', ['lent_to' => 'Tita Baby', 'lent_on' => '2026-11-20'], $this->hlc(3))])));
+
+        $row = collect($this->pull($viewer)->assertOk()->json('changes'))->where('entity', 'inventory_items')->last()['row'];
+        $this->assertSame('Kwarto', $row['room']);
+        $this->assertSame('2027-04-10', $row['warranty_until']);
+        $this->assertSame('Tita Baby', $row['lent_to']);
+        $this->assertSame(2899900, $row['price_minor']);
+    }
+
     public function test_conflicts_sync_to_adults_and_can_be_resolved(): void
     {
         $john = $this->device('owner');

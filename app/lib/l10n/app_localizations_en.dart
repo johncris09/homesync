@@ -2756,4 +2756,237 @@ class AppLocalizationsEn extends AppLocalizations {
   String calendarRentDue(String amount) {
     return 'Rent due · $amount';
   }
+
+  @override
+  String get inventoryModule => 'Inventory';
+
+  @override
+  String get inventoryTileNone => 'Nothing listed yet';
+
+  @override
+  String inventoryTileItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inventoryTileAttention(int count, int attention) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0 · $attention need a look';
+  }
+
+  @override
+  String get inventoryNoneFigure => 'No items yet';
+
+  @override
+  String inventoryCountFigure(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get inventoryEmptyCaption =>
+      'Appliances, gadgets, furniture and tools';
+
+  @override
+  String inventoryWorth(String amount) {
+    return 'worth $amount';
+  }
+
+  @override
+  String inventoryRoomCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count rooms',
+      one: '1 room',
+      zero: 'no rooms set',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inventoryAttentionCount(int count) {
+    return '$count need a look';
+  }
+
+  @override
+  String get inventoryEmpty =>
+      'List what the household owns: where it is, when it was bought, its warranty and who borrowed it.';
+
+  @override
+  String get inventoryEmptyHelper =>
+      'Nothing is listed yet. An adult can add items.';
+
+  @override
+  String get inventoryAddItem => 'Add item';
+
+  @override
+  String get inventoryEditItem => 'Edit item';
+
+  @override
+  String get inventoryRemoveItem => 'Remove item';
+
+  @override
+  String inventoryRemoveTitle(String name) {
+    return 'Remove $name?';
+  }
+
+  @override
+  String get inventoryRemoveBody =>
+      'It disappears from every phone in the household.';
+
+  @override
+  String get inventorySearch => 'Search name, brand, serial or who has it';
+
+  @override
+  String get inventoryClearSearch => 'Clear search';
+
+  @override
+  String get inventoryNoMatch => 'Nothing matches.';
+
+  @override
+  String get inventoryNeedsAttention => 'Needs a look';
+
+  @override
+  String get inventoryNoRoom => 'No room set';
+
+  @override
+  String inventoryWarrantyEnds(String date) {
+    return 'Warranty ends $date';
+  }
+
+  @override
+  String inventoryWarrantyUntil(String date) {
+    return 'Under warranty until $date';
+  }
+
+  @override
+  String inventoryWarrantyEnded(String date) {
+    return 'Warranty ended $date';
+  }
+
+  @override
+  String inventoryLentTo(String name) {
+    return 'Lent to $name';
+  }
+
+  @override
+  String inventoryLentSince(String name, String date) {
+    return 'Lent to $name since $date';
+  }
+
+  @override
+  String inventoryBoughtOn(String date) {
+    return 'Bought $date';
+  }
+
+  @override
+  String inventorySerialLine(String serial) {
+    return 'S/N $serial';
+  }
+
+  @override
+  String inventoryCategory(String category) {
+    String _temp0 = intl.Intl.selectLogic(category, {
+      'appliance': 'Appliance',
+      'electronics': 'Electronics',
+      'furniture': 'Furniture',
+      'tools': 'Tools',
+      'other': 'Other',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get inventoryPhotoNotHere => 'Photo not here yet · try again';
+
+  @override
+  String get inventoryPhotoTooBig => 'That photo is too big.';
+
+  @override
+  String get inventoryTakePhoto => 'Take photo';
+
+  @override
+  String get inventoryRetakePhoto => 'New photo';
+
+  @override
+  String get inventoryChoosePhoto => 'Choose photo';
+
+  @override
+  String get inventoryRemovePhoto => 'Remove photo';
+
+  @override
+  String get inventoryLend => 'Lend';
+
+  @override
+  String get inventoryReturned => 'Returned';
+
+  @override
+  String inventoryLendTitle(String name) {
+    return 'Lend $name';
+  }
+
+  @override
+  String get inventoryLendWho => 'Who borrowed it';
+
+  @override
+  String get inventoryLendSince => 'Since';
+
+  @override
+  String get inventoryItemName => 'Name';
+
+  @override
+  String get inventoryItemNameHint => 'e.g. Ref, aircon, electric fan';
+
+  @override
+  String get inventoryRoom => 'Room';
+
+  @override
+  String get inventoryDefaultRooms => 'Sala,Kusina,Kwarto,CR,Garahe,Bodega';
+
+  @override
+  String get inventoryBrand => 'Brand';
+
+  @override
+  String get inventoryModel => 'Model';
+
+  @override
+  String get inventorySerial => 'Serial number';
+
+  @override
+  String get inventoryBought => 'Bought on';
+
+  @override
+  String get inventoryPrice => 'Price paid';
+
+  @override
+  String get inventoryWarrantyField => 'Warranty until';
+
+  @override
+  String get inventoryNote => 'Note';
+
+  @override
+  String get inventoryNotSet => 'Not set';
+
+  @override
+  String get inventoryClearDate => 'Clear date';
+
+  @override
+  String get calendarWarrantyEnds => 'Warranty ends';
 }

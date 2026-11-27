@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
- * Encrypted vault files (sync-protocol §7). The hub never sees plaintext:
- * devices encrypt before hashing and uploading, and decrypt after download.
+ * Files named by their SHA-256 (sync-protocol §7): encrypted vault files
+ * (the hub never sees plaintext) and plain inventory photos. A file is
+ * served to a member who can read a record that uses it.
  */
 class FileController extends Controller
 {
@@ -21,7 +22,7 @@ class FileController extends Controller
     /** Which chunks the hub already has, so an interrupted upload resumes. */
     public function status(Request $request, string $sha256): JsonResponse
     {
-        $device = $this->device($request, write: true);
+        $device = $this->uploader($request);
         $complete = $this->files->exists($device->household_id, $sha256);
 
         return response()->json([
@@ -32,7 +33,7 @@ class FileController extends Controller
 
     public function chunk(Request $request, string $sha256, int $index): JsonResponse
     {
-        $device = $this->device($request, write: true);
+        $device = $this->uploader($request);
         $chunkBytes = (int) config('homesync.file_chunk_bytes');
         $maxChunks = $this->maxChunks();
         $bytes = $request->getContent();
@@ -52,7 +53,7 @@ class FileController extends Controller
 
     public function complete(Request $request, string $sha256): JsonResponse
     {
-        $device = $this->device($request, write: true);
+        $device = $this->uploader($request);
         $data = $request->validate(['chunks' => ['required', 'integer', 'min:1', 'max:'.$this->maxChunks()]]);
 
         $size = $this->files->complete($device->household_id, $sha256, (int) $data['chunks'], (int) config('homesync.file_max_bytes'));
@@ -66,16 +67,36 @@ class FileController extends Controller
         return response()->json(['sha256' => $sha256, 'size' => $size]);
     }
 
-    /** Streams the ciphertext of a file that a vault record in this household uses. */
+    /** Records that point at a file: entity => column holding the SHA-256. */
+    private const SOURCES = [
+        'vault_files' => 'sha256',
+        'inventory_items' => 'photo_sha256',
+    ];
+
+    /** Streams a file that a record this member can read uses. */
     public function show(Request $request, string $sha256): BinaryFileResponse|JsonResponse
     {
-        $device = $this->device($request, write: false);
-        $known = DB::table('vault_files')
-            ->where('household_id', $device->household_id)
-            ->where('sha256', $sha256)
-            ->whereNull('deleted_at')
-            ->exists();
-        if (! $known || ! $this->files->exists($device->household_id, $sha256)) {
+        /** @var Device $device */
+        $device = $request->user();
+        $role = $device->member->role;
+        $readable = false;
+        $usedElsewhere = false;
+        foreach (self::SOURCES as $entity => $column) {
+            $used = DB::table($entity)
+                ->where('household_id', $device->household_id)
+                ->where($column, $sha256)
+                ->whereNull('deleted_at')
+                ->exists();
+            if ($this->registry->canRead($entity, $role)) {
+                $readable = $readable || $used;
+            } else {
+                $usedElsewhere = $usedElsewhere || $used;
+            }
+        }
+        if (! $readable && ($usedElsewhere || ! $this->canReadAny($role))) {
+            return response()->json(['error' => 'forbidden'], 403);
+        }
+        if (! $readable || ! $this->files->exists($device->household_id, $sha256)) {
             return response()->json(['error' => 'not_found'], 404);
         }
 
@@ -90,14 +111,27 @@ class FileController extends Controller
         return (int) ceil(config('homesync.file_max_bytes') / config('homesync.file_chunk_bytes'));
     }
 
-    private function device(Request $request, bool $write): Device
+    private function canReadAny(string $role): bool
+    {
+        foreach (array_keys(self::SOURCES) as $entity) {
+            if ($this->registry->canRead($entity, $role)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /** Uploads: a member who can write any record that holds a file. */
+    private function uploader(Request $request): Device
     {
         /** @var Device $device */
         $device = $request->user();
         $role = $device->member->role;
-        $allowed = $write
-            ? $this->registry->canWrite('vault_files', $role)
-            : $this->registry->canRead('vault_files', $role);
+        $allowed = false;
+        foreach (array_keys(self::SOURCES) as $entity) {
+            $allowed = $allowed || $this->registry->canWrite($entity, $role);
+        }
         abort_unless($allowed, 403, 'forbidden');
 
         return $device;

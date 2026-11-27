@@ -33,6 +33,7 @@ part 'database.g.dart';
     RentalUnits,
     Leases,
     RentPayments,
+    InventoryItems,
     Conflicts,
     Outbox,
     FieldClocks,
@@ -44,7 +45,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 14;
+  int get schemaVersion => 15;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -106,6 +107,10 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(rentalUnits);
         await m.createTable(leases);
         await m.createTable(rentPayments);
+      }
+      if (from < 15) {
+        // Household Inventory (new table only)
+        await m.createTable(inventoryItems);
       }
     },
   );
