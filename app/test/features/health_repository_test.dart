@@ -8,6 +8,7 @@ import 'package:homesync/core/db/database.dart';
 import 'package:homesync/core/sync/sync_engine.dart';
 import 'package:homesync/core/vault/vault_crypto.dart';
 import 'package:homesync/core/vault/vault_session.dart';
+import 'package:homesync/features/calendar/calendar_repository.dart';
 import 'package:homesync/features/health/health_repository.dart';
 
 import '../support/fake_server.dart';
@@ -167,6 +168,27 @@ void main() {
       session.lock();
       expect(await locked.openProfile(row), isNull);
     });
+  });
+
+  test('open checkups with a date show on the calendar', () async {
+    final db = memoryDb();
+    final repo = repoFor(db, memberA, deviceA);
+    await repo.addCheckup(kind: 'vaccine', title: 'Flu vaccine', dueOn: DateTime(2026, 12, 3), dueTime: '09:30');
+    final done = await repo.addCheckup(kind: 'checkup', title: 'Dentist', dueOn: DateTime(2026, 12, 4));
+    await repo.addCheckup(kind: 'checkup', title: 'Someday');
+    await repo.markDone((await repo.watchCheckups().first).firstWhere((c) => c.id == done));
+    final agenda = Agenda(
+      const [],
+      DateTime(2026, 12, 1),
+      DateTime(2026, 12, 31),
+      checkups: await repo.watchCheckups().first,
+    );
+    final item = agenda.on(DateTime(2026, 12, 3)).single;
+    expect(item.kind, CalendarKind.checkup);
+    expect(item.dueKind, 'vaccine');
+    expect(item.startTime, '09:30');
+    expect(agenda.on(DateTime(2026, 12, 4)), isEmpty, reason: 'done');
+    await db.close();
   });
 
   test('two people tick the same dose offline: recorded once', () async {

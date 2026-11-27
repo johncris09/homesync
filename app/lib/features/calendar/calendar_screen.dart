@@ -411,7 +411,7 @@ class _DayCell extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: switch (i.kind) {
                         CalendarKind.event => eventColor(i.event?.color) ?? HomeColors.ube,
-                        CalendarKind.vehicle => HomeColors.dagat,
+                        CalendarKind.vehicle || CalendarKind.checkup => HomeColors.dagat,
                         _ => HomeColors.mangga,
                       },
                     ),
@@ -439,6 +439,23 @@ class _ItemTile extends ConsumerWidget {
     final locale = Localizations.localeOf(context).toString();
     final members = {for (final m in ref.watch(membersProvider).value ?? const <Member>[]) m.id: m};
     final event = item.event;
+
+    if (item.kind == CalendarKind.checkup) {
+      final who = members[item.memberId]?.name;
+      return ListTile(
+        leading: CircleAvatar(
+          backgroundColor: HomeColors.dagat,
+          foregroundColor: Colors.white,
+          child: Icon(item.dueKind == 'vaccine' ? Icons.vaccines_outlined : Icons.medical_services_outlined),
+        ),
+        title: Text(item.title),
+        subtitle: Text(
+          [?showDay, l10n.calendarCheckupDue(item.dueKind ?? 'checkup'), timeLabel(context, item), ?who].join(' · '),
+        ),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => context.push(Routes.health),
+      );
+    }
 
     if (item.kind == CalendarKind.vehicle) {
       return ListTile(

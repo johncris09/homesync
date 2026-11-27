@@ -2156,4 +2156,332 @@ class AppLocalizationsEn extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get healthModule => 'Health';
+
+  @override
+  String healthTileDosesLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count doses left today',
+      one: '1 dose left today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String healthTileLow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count medicines running low',
+      one: '1 medicine running low',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String healthTileCheckup(String title, String date) {
+    return '$title $date';
+  }
+
+  @override
+  String get healthTileNothing => 'No doses or checkups due';
+
+  @override
+  String get healthNoMedicines => 'No medicines yet';
+
+  @override
+  String get healthNoDosesToday => 'No doses today';
+
+  @override
+  String get healthEmptyCaption =>
+      'Medicines, checkups and the family\'s health';
+
+  @override
+  String healthCheckupCaption(String title, String date) {
+    return 'Next: $title on $date';
+  }
+
+  @override
+  String get healthAllGiven => 'All doses given';
+
+  @override
+  String healthAllGivenCaption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count doses given today',
+      one: '1 dose given today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String healthDosesLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count doses left',
+      one: '1 dose left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String healthNextDose(String what, String time) {
+    return 'Next: $what at $time';
+  }
+
+  @override
+  String get healthToday => 'Today';
+
+  @override
+  String get healthRunningLow => 'Running low';
+
+  @override
+  String get healthCheckups => 'Checkups and vaccines';
+
+  @override
+  String get healthNoCheckups => 'Nothing coming up.';
+
+  @override
+  String get healthMedicines => 'Medicines';
+
+  @override
+  String get healthMedicinesEmpty =>
+      'Add the medicines the family takes to tick off doses and know when to restock.';
+
+  @override
+  String get healthFamily => 'Family';
+
+  @override
+  String get healthProfilesLocked =>
+      'Open the vault to see blood types, allergies and conditions';
+
+  @override
+  String get healthProfilesNoVault =>
+      'Set up the vault to keep health profiles';
+
+  @override
+  String doseGivenBy(String time, String name) {
+    return '$time · given by $name';
+  }
+
+  @override
+  String doseGivenByName(String name) {
+    return 'Given by $name';
+  }
+
+  @override
+  String get doseUndo => 'Undo this dose';
+
+  @override
+  String get medicineAdd => 'Add medicine';
+
+  @override
+  String get medicineEdit => 'Edit medicine';
+
+  @override
+  String get medicineRemove => 'Remove medicine';
+
+  @override
+  String medicineLeft(String count) {
+    return '$count left';
+  }
+
+  @override
+  String medicineExpires(String date) {
+    return 'Expires $date';
+  }
+
+  @override
+  String medicineExpired(String date) {
+    return 'Expired $date';
+  }
+
+  @override
+  String get medicineAddToList => 'Add to list';
+
+  @override
+  String get medicineForAnyone => 'Anyone';
+
+  @override
+  String get medicineAsNeeded => 'As needed';
+
+  @override
+  String medicineUntil(String date) {
+    return 'until $date';
+  }
+
+  @override
+  String medicineStockLine(String count, String unit) {
+    return '$count $unit left';
+  }
+
+  @override
+  String get medicineUnitDefault => 'tablets';
+
+  @override
+  String get medicineGiveDose => 'Give a dose';
+
+  @override
+  String get medicineRestock => 'Restock';
+
+  @override
+  String get medicineStockTake => 'Count what\'s left';
+
+  @override
+  String get medicineDoses => 'Doses';
+
+  @override
+  String get medicineDosesEmpty => 'No doses given yet.';
+
+  @override
+  String get medicineExtraDose => 'extra dose';
+
+  @override
+  String get medicineCounted => 'How many are left';
+
+  @override
+  String get medicineAdded => 'How many you bought';
+
+  @override
+  String get medicineCost => 'Cost (optional)';
+
+  @override
+  String get medicineNameHint => 'e.g. Losartan';
+
+  @override
+  String get medicineStrength => 'Strength (optional)';
+
+  @override
+  String get medicineForWhom => 'Who is it for?';
+
+  @override
+  String get medicineTimes => 'Dose times (optional)';
+
+  @override
+  String get medicineTimesHelp =>
+      'Like 8:00, 20:00. Leave empty for as needed.';
+
+  @override
+  String get medicineTimesInvalid => 'Use times like 8:00 or 20:30';
+
+  @override
+  String get medicineStockNow => 'How many you have now';
+
+  @override
+  String get medicineMin => 'Running low at (optional)';
+
+  @override
+  String get medicineUnit => 'Unit (optional)';
+
+  @override
+  String get medicineEndsOn => 'Last day';
+
+  @override
+  String get medicineOngoing => 'Ongoing';
+
+  @override
+  String get medicineExpiry => 'Expiry date';
+
+  @override
+  String get checkupAdd => 'Add checkup';
+
+  @override
+  String get checkupEdit => 'Edit checkup';
+
+  @override
+  String get checkupRemove => 'Remove checkup';
+
+  @override
+  String checkupKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'vaccine': 'Vaccine',
+      'other': 'Checkup',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String checkupTitleHint(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'vaccine': 'e.g. Flu vaccine',
+      'other': 'e.g. Cardiology checkup',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get checkupDate => 'Date';
+
+  @override
+  String get checkupTime => 'Time (optional)';
+
+  @override
+  String get checkupTimeHelp => 'Like 9:30 or 14:00';
+
+  @override
+  String get checkupPlace => 'Doctor or place (optional)';
+
+  @override
+  String get checkupCost => 'Cost (optional)';
+
+  @override
+  String get checkupMarkDone => 'Mark done';
+
+  @override
+  String calendarCheckupDue(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'vaccine': 'Vaccine',
+      'other': 'Checkup',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String profileTitle(String name) {
+    return '$name\'s health';
+  }
+
+  @override
+  String get profileSealedHelp =>
+      'Only adults with the vault passphrase can read this.';
+
+  @override
+  String get profileEmpty => 'No profile yet';
+
+  @override
+  String profileBloodLine(String type) {
+    return 'Blood type $type';
+  }
+
+  @override
+  String profileAllergyLine(String what) {
+    return 'Allergic: $what';
+  }
+
+  @override
+  String get profileBlood => 'Blood type (optional)';
+
+  @override
+  String get profileAllergies => 'Allergies (optional)';
+
+  @override
+  String get profileConditions => 'Conditions (optional)';
+
+  @override
+  String get profileMaintenance => 'Maintenance medicines (optional)';
+
+  @override
+  String get profilePhilhealth => 'PhilHealth number (optional)';
+
+  @override
+  String get profileHmo => 'HMO and card number (optional)';
+
+  @override
+  String get profileDoctor => 'Doctor (optional)';
 }
