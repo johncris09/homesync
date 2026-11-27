@@ -3550,4 +3550,330 @@ class AppLocalizationsEn extends AppLocalizations {
   String foodToBuyAmount(String amount) {
     return 'To buy: $amount';
   }
+
+  @override
+  String get maintModule => 'Home maintenance';
+
+  @override
+  String get maintTileNone => 'Upkeep, repairs and contractors';
+
+  @override
+  String maintTileOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tasks overdue',
+      one: '1 task overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String maintTileNext(String task, String when) {
+    return '$task · $when';
+  }
+
+  @override
+  String get maintTileNothingDue => 'Nothing due';
+
+  @override
+  String maintOverdueFigure(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count overdue',
+      one: '1 overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String maintNextFigure(String task, String when) {
+    return '$task $when';
+  }
+
+  @override
+  String get maintNothingDueFigure => 'Nothing due';
+
+  @override
+  String get maintNoneFigure => 'Home maintenance';
+
+  @override
+  String get maintEmptyCaption => 'Upkeep, repairs and the people you call';
+
+  @override
+  String maintTaskCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tasks',
+      one: '1 task',
+      zero: 'No tasks',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String maintSpentThisYear(String amount) {
+    return '$amount this year';
+  }
+
+  @override
+  String get maintWhenToday => 'today';
+
+  @override
+  String get maintWhenTomorrow => 'tomorrow';
+
+  @override
+  String maintWhenInDays(int count) {
+    return 'in $count days';
+  }
+
+  @override
+  String maintWhenOn(String date) {
+    return 'on $date';
+  }
+
+  @override
+  String get maintUpkeepTab => 'Upkeep';
+
+  @override
+  String get maintHistoryTab => 'History';
+
+  @override
+  String get maintContractorsTab => 'Contractors';
+
+  @override
+  String get maintOverdue => 'Overdue';
+
+  @override
+  String get maintComingUp => 'Coming up';
+
+  @override
+  String get maintNoDate => 'No date yet';
+
+  @override
+  String get maintDoneOnce => 'Done';
+
+  @override
+  String maintEvery(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Every $count months',
+      one: 'Every month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get maintOnce => 'Once';
+
+  @override
+  String maintDueOn(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String maintWasDue(String date) {
+    return 'Was due $date';
+  }
+
+  @override
+  String maintDoneOn(String date) {
+    return 'Done $date';
+  }
+
+  @override
+  String get maintMarkDone => 'Mark done';
+
+  @override
+  String get maintUpkeepEmpty =>
+      'No upkeep tasks yet. Add aircon cleaning, tank cleaning, pest control and the like.';
+
+  @override
+  String get maintUpkeepEmptyViewer => 'No upkeep tasks yet.';
+
+  @override
+  String get maintHistoryEmpty =>
+      'Nothing logged yet. Upkeep marked done and repairs show here.';
+
+  @override
+  String get maintContractorsEmpty => 'No contractors yet.';
+
+  @override
+  String get maintAddTask => 'Add task';
+
+  @override
+  String get maintEditTask => 'Edit task';
+
+  @override
+  String get maintLogRepair => 'Log repair';
+
+  @override
+  String get maintAddContractor => 'Add contractor';
+
+  @override
+  String get maintEditContractor => 'Edit contractor';
+
+  @override
+  String get maintSuggestions => 'Common upkeep';
+
+  @override
+  String maintStarter(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'aircon': 'Aircon cleaning',
+      'tank': 'Water tank cleaning',
+      'pest': 'Pest control',
+      'roof': 'Roof and gutter check',
+      'electrical': 'Electrical check',
+      'septic': 'Septic tank siphoning',
+      'other': 'Upkeep',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get maintTaskName => 'Task';
+
+  @override
+  String get maintNameRequired => 'Enter a name.';
+
+  @override
+  String maintArea(String area) {
+    String _temp0 = intl.Intl.selectLogic(area, {
+      'aircon': 'Aircon',
+      'water': 'Water and tank',
+      'roof': 'Roof',
+      'electrical': 'Electrical',
+      'plumbing': 'Plumbing',
+      'septic': 'Septic',
+      'pest': 'Pests',
+      'appliance': 'Appliance',
+      'garden': 'Garden',
+      'other': 'Other',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get maintAreaLabel => 'Area';
+
+  @override
+  String get maintHowOften => 'How often';
+
+  @override
+  String get maintNextDue => 'Next due';
+
+  @override
+  String get maintNotSet => 'Not set';
+
+  @override
+  String get maintClearDate => 'Clear date';
+
+  @override
+  String get maintItem => 'Inventory item';
+
+  @override
+  String get maintNoItem => 'None';
+
+  @override
+  String get maintContractor => 'Contractor';
+
+  @override
+  String get maintNoContractor => 'None';
+
+  @override
+  String get maintNote => 'Note';
+
+  @override
+  String get maintDeleteTask => 'Delete task';
+
+  @override
+  String maintDeleteTaskConfirm(String name) {
+    return 'Delete $name? What was logged stays in the history.';
+  }
+
+  @override
+  String get maintUndoDone => 'Undo marking done';
+
+  @override
+  String maintDoneTitle(String task) {
+    return 'Done: $task';
+  }
+
+  @override
+  String get maintDoneDate => 'Done on';
+
+  @override
+  String get maintCost => 'Cost (optional)';
+
+  @override
+  String get maintCostHint => 'Added to the Budget as a household expense.';
+
+  @override
+  String maintNextAfter(String date) {
+    return 'Next due $date';
+  }
+
+  @override
+  String get maintRepairTitle => 'What was fixed';
+
+  @override
+  String maintKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'upkeep': 'Upkeep',
+      'other': 'Repair',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get maintDeleteEntry => 'Delete entry';
+
+  @override
+  String maintDeleteEntryConfirm(String title) {
+    return 'Delete $title? Its cost is removed from the Budget too.';
+  }
+
+  @override
+  String get maintContractorName => 'Name';
+
+  @override
+  String get maintTradeLabel => 'Trade';
+
+  @override
+  String maintTrade(String trade) {
+    String _temp0 = intl.Intl.selectLogic(trade, {
+      'electrician': 'Electrician',
+      'plumber': 'Plumber',
+      'aircon': 'Aircon technician',
+      'carpenter': 'Carpenter',
+      'mason': 'Mason',
+      'pest': 'Pest control',
+      'general': 'Handyman',
+      'other': 'Other',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get maintPhone => 'Phone';
+
+  @override
+  String maintCall(String name) {
+    return 'Call $name';
+  }
+
+  @override
+  String get maintDeleteContractor => 'Delete contractor';
+
+  @override
+  String get maintDelete => 'Delete';
+
+  @override
+  String get maintItemHistory => 'Upkeep and repairs';
+
+  @override
+  String get calendarUpkeepDue => 'Upkeep due';
 }

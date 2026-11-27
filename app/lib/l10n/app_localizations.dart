@@ -5163,6 +5163,450 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To buy: {amount}'**
   String foodToBuyAmount(String amount);
+
+  /// No description provided for @maintModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Home maintenance'**
+  String get maintModule;
+
+  /// No description provided for @maintTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Upkeep, repairs and contractors'**
+  String get maintTileNone;
+
+  /// No description provided for @maintTileOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 task overdue} other{{count} tasks overdue}}'**
+  String maintTileOverdue(int count);
+
+  /// No description provided for @maintTileNext.
+  ///
+  /// In en, this message translates to:
+  /// **'{task} · {when}'**
+  String maintTileNext(String task, String when);
+
+  /// No description provided for @maintTileNothingDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing due'**
+  String get maintTileNothingDue;
+
+  /// No description provided for @maintOverdueFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 overdue} other{{count} overdue}}'**
+  String maintOverdueFigure(int count);
+
+  /// No description provided for @maintNextFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{task} {when}'**
+  String maintNextFigure(String task, String when);
+
+  /// No description provided for @maintNothingDueFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing due'**
+  String get maintNothingDueFigure;
+
+  /// No description provided for @maintNoneFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'Home maintenance'**
+  String get maintNoneFigure;
+
+  /// No description provided for @maintEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Upkeep, repairs and the people you call'**
+  String get maintEmptyCaption;
+
+  /// No description provided for @maintTaskCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No tasks} =1{1 task} other{{count} tasks}}'**
+  String maintTaskCount(int count);
+
+  /// No description provided for @maintSpentThisYear.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} this year'**
+  String maintSpentThisYear(String amount);
+
+  /// No description provided for @maintWhenToday.
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get maintWhenToday;
+
+  /// No description provided for @maintWhenTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'tomorrow'**
+  String get maintWhenTomorrow;
+
+  /// No description provided for @maintWhenInDays.
+  ///
+  /// In en, this message translates to:
+  /// **'in {count} days'**
+  String maintWhenInDays(int count);
+
+  /// No description provided for @maintWhenOn.
+  ///
+  /// In en, this message translates to:
+  /// **'on {date}'**
+  String maintWhenOn(String date);
+
+  /// No description provided for @maintUpkeepTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Upkeep'**
+  String get maintUpkeepTab;
+
+  /// No description provided for @maintHistoryTab.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get maintHistoryTab;
+
+  /// No description provided for @maintContractorsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Contractors'**
+  String get maintContractorsTab;
+
+  /// No description provided for @maintOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get maintOverdue;
+
+  /// No description provided for @maintComingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get maintComingUp;
+
+  /// No description provided for @maintNoDate.
+  ///
+  /// In en, this message translates to:
+  /// **'No date yet'**
+  String get maintNoDate;
+
+  /// No description provided for @maintDoneOnce.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get maintDoneOnce;
+
+  /// No description provided for @maintEvery.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Every month} other{Every {count} months}}'**
+  String maintEvery(int count);
+
+  /// No description provided for @maintOnce.
+  ///
+  /// In en, this message translates to:
+  /// **'Once'**
+  String get maintOnce;
+
+  /// No description provided for @maintDueOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String maintDueOn(String date);
+
+  /// No description provided for @maintWasDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Was due {date}'**
+  String maintWasDue(String date);
+
+  /// No description provided for @maintDoneOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Done {date}'**
+  String maintDoneOn(String date);
+
+  /// No description provided for @maintMarkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark done'**
+  String get maintMarkDone;
+
+  /// No description provided for @maintUpkeepEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No upkeep tasks yet. Add aircon cleaning, tank cleaning, pest control and the like.'**
+  String get maintUpkeepEmpty;
+
+  /// No description provided for @maintUpkeepEmptyViewer.
+  ///
+  /// In en, this message translates to:
+  /// **'No upkeep tasks yet.'**
+  String get maintUpkeepEmptyViewer;
+
+  /// No description provided for @maintHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing logged yet. Upkeep marked done and repairs show here.'**
+  String get maintHistoryEmpty;
+
+  /// No description provided for @maintContractorsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No contractors yet.'**
+  String get maintContractorsEmpty;
+
+  /// No description provided for @maintAddTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Add task'**
+  String get maintAddTask;
+
+  /// No description provided for @maintEditTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit task'**
+  String get maintEditTask;
+
+  /// No description provided for @maintLogRepair.
+  ///
+  /// In en, this message translates to:
+  /// **'Log repair'**
+  String get maintLogRepair;
+
+  /// No description provided for @maintAddContractor.
+  ///
+  /// In en, this message translates to:
+  /// **'Add contractor'**
+  String get maintAddContractor;
+
+  /// No description provided for @maintEditContractor.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit contractor'**
+  String get maintEditContractor;
+
+  /// No description provided for @maintSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Common upkeep'**
+  String get maintSuggestions;
+
+  /// No description provided for @maintStarter.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, aircon{Aircon cleaning} tank{Water tank cleaning} pest{Pest control} roof{Roof and gutter check} electrical{Electrical check} septic{Septic tank siphoning} other{Upkeep}}'**
+  String maintStarter(String key);
+
+  /// No description provided for @maintTaskName.
+  ///
+  /// In en, this message translates to:
+  /// **'Task'**
+  String get maintTaskName;
+
+  /// No description provided for @maintNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name.'**
+  String get maintNameRequired;
+
+  /// No description provided for @maintArea.
+  ///
+  /// In en, this message translates to:
+  /// **'{area, select, aircon{Aircon} water{Water and tank} roof{Roof} electrical{Electrical} plumbing{Plumbing} septic{Septic} pest{Pests} appliance{Appliance} garden{Garden} other{Other}}'**
+  String maintArea(String area);
+
+  /// No description provided for @maintAreaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get maintAreaLabel;
+
+  /// No description provided for @maintHowOften.
+  ///
+  /// In en, this message translates to:
+  /// **'How often'**
+  String get maintHowOften;
+
+  /// No description provided for @maintNextDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Next due'**
+  String get maintNextDue;
+
+  /// No description provided for @maintNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get maintNotSet;
+
+  /// No description provided for @maintClearDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear date'**
+  String get maintClearDate;
+
+  /// No description provided for @maintItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory item'**
+  String get maintItem;
+
+  /// No description provided for @maintNoItem.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get maintNoItem;
+
+  /// No description provided for @maintContractor.
+  ///
+  /// In en, this message translates to:
+  /// **'Contractor'**
+  String get maintContractor;
+
+  /// No description provided for @maintNoContractor.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get maintNoContractor;
+
+  /// No description provided for @maintNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get maintNote;
+
+  /// No description provided for @maintDeleteTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete task'**
+  String get maintDeleteTask;
+
+  /// No description provided for @maintDeleteTaskConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}? What was logged stays in the history.'**
+  String maintDeleteTaskConfirm(String name);
+
+  /// No description provided for @maintUndoDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo marking done'**
+  String get maintUndoDone;
+
+  /// No description provided for @maintDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Done: {task}'**
+  String maintDoneTitle(String task);
+
+  /// No description provided for @maintDoneDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Done on'**
+  String get maintDoneDate;
+
+  /// No description provided for @maintCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost (optional)'**
+  String get maintCost;
+
+  /// No description provided for @maintCostHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to the Budget as a household expense.'**
+  String get maintCostHint;
+
+  /// No description provided for @maintNextAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Next due {date}'**
+  String maintNextAfter(String date);
+
+  /// No description provided for @maintRepairTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What was fixed'**
+  String get maintRepairTitle;
+
+  /// No description provided for @maintKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, upkeep{Upkeep} other{Repair}}'**
+  String maintKind(String kind);
+
+  /// No description provided for @maintDeleteEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete entry'**
+  String get maintDeleteEntry;
+
+  /// No description provided for @maintDeleteEntryConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {title}? Its cost is removed from the Budget too.'**
+  String maintDeleteEntryConfirm(String title);
+
+  /// No description provided for @maintContractorName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get maintContractorName;
+
+  /// No description provided for @maintTradeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Trade'**
+  String get maintTradeLabel;
+
+  /// No description provided for @maintTrade.
+  ///
+  /// In en, this message translates to:
+  /// **'{trade, select, electrician{Electrician} plumber{Plumber} aircon{Aircon technician} carpenter{Carpenter} mason{Mason} pest{Pest control} general{Handyman} other{Other}}'**
+  String maintTrade(String trade);
+
+  /// No description provided for @maintPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get maintPhone;
+
+  /// No description provided for @maintCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Call {name}'**
+  String maintCall(String name);
+
+  /// No description provided for @maintDeleteContractor.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete contractor'**
+  String get maintDeleteContractor;
+
+  /// No description provided for @maintDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get maintDelete;
+
+  /// No description provided for @maintItemHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Upkeep and repairs'**
+  String get maintItemHistory;
+
+  /// No description provided for @calendarUpkeepDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Upkeep due'**
+  String get calendarUpkeepDue;
 }
 
 class _AppLocalizationsDelegate

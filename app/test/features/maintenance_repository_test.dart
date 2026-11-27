@@ -5,6 +5,7 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:homesync/core/db/database.dart';
 import 'package:homesync/core/sync/sync_engine.dart';
+import 'package:homesync/features/calendar/calendar_repository.dart';
 import 'package:homesync/features/maintenance/maintenance_repository.dart';
 
 import '../support/fake_server.dart';
@@ -112,6 +113,20 @@ void main() {
       expect(s.soonCount, 1);
       expect(s.undated.single.name, 'Paint the fence');
       expect(s.spentThisYear, 120000);
+    });
+
+    test('upkeep due dates show on the calendar', () async {
+      await repo.addTask(name: 'Tank cleaning', area: 'water', everyMonths: 6, nextDueOn: DateTime(2026, 12, 10));
+      await repo.addTask(name: 'Paint the fence', area: 'other');
+      final agenda = Agenda(
+        const [],
+        DateTime(2026, 12, 1),
+        DateTime(2026, 12, 31),
+        upkeep: await repo.watchTasks().first,
+      );
+      final items = agenda.on(DateTime(2026, 12, 10));
+      expect(items.single.kind, CalendarKind.upkeep);
+      expect(items.single.title, 'Tank cleaning');
     });
 
     test('contractors', () async {

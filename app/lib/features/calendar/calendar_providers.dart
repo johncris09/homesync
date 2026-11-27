@@ -5,6 +5,7 @@ import '../../core/db/database.dart';
 import '../bills/bills_providers.dart';
 import '../health/health_providers.dart';
 import '../inventory/inventory_providers.dart';
+import '../maintenance/maintenance_providers.dart';
 import '../rent/rent_providers.dart';
 import '../rent/rent_repository.dart' show RentSummary, UnitRow;
 import '../vehicles/vehicles_providers.dart';
@@ -64,6 +65,7 @@ final agendaProvider = Provider.autoDispose<Agenda>((ref) {
     checkups: ref.watch(checkupsProvider).value ?? const <Checkup>[],
     rent: ref.watch(canSeeRentProvider) ? rentRows(ref.watch(rentSummaryProvider)) : const [],
     warranties: ref.watch(inventoryItemsProvider).value ?? const <InventoryItem>[],
+    upkeep: ref.watch(maintenanceTasksProvider).value ?? const <MaintenanceTask>[],
   );
 });
 
@@ -91,5 +93,6 @@ final upcomingAgendaProvider = Provider<Agenda>((ref) {
     checkups: ref.watch(checkupsProvider).value ?? const <Checkup>[],
     rent: ref.watch(canSeeRentProvider) ? rentRows(ref.watch(rentSummaryProvider)) : const [],
     warranties: ref.watch(inventoryItemsProvider).value ?? const <InventoryItem>[],
+    upkeep: ref.watch(maintenanceTasksProvider).value ?? const <MaintenanceTask>[],
   );
 });
