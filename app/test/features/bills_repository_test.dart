@@ -255,6 +255,8 @@ void main() {
     // Also undo version 9 (multi-day events).
     await v3.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
     await v3.customStatement('ALTER TABLE events DROP COLUMN "color"');
+    await v3.customStatement('DROP TABLE vehicles'); // added in v11
+    await v3.customStatement('DROP TABLE vehicle_logs');
     await v3.customStatement('PRAGMA user_version = 2');
     await v3.close();
 

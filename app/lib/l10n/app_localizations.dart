@@ -2277,6 +2277,342 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove this entry'**
   String get debtRemoveEntry;
+
+  /// No description provided for @vehiclesModule.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicles'**
+  String get vehiclesModule;
+
+  /// No description provided for @vehiclesTileNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No vehicles yet'**
+  String get vehiclesTileNone;
+
+  /// No description provided for @vehiclesTileNothingDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing due'**
+  String get vehiclesTileNothingDue;
+
+  /// No description provided for @vehiclesTileOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 thing overdue} other{{count} things overdue}}'**
+  String vehiclesTileOverdue(int count);
+
+  /// No description provided for @vehiclesNoneFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'No vehicles yet'**
+  String get vehiclesNoneFigure;
+
+  /// No description provided for @vehiclesEmptyCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Cars and motorcycles: papers, PMS and costs'**
+  String get vehiclesEmptyCaption;
+
+  /// No description provided for @vehiclesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your car or motorcycle to keep track of its registration, insurance, PMS and costs.'**
+  String get vehiclesEmpty;
+
+  /// No description provided for @vehiclesNothingDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing due'**
+  String get vehiclesNothingDue;
+
+  /// No description provided for @vehiclesNextFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{what} {when}'**
+  String vehiclesNextFigure(String what, String when);
+
+  /// No description provided for @vehiclesMoreOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 more overdue} other{{count} more overdue}}'**
+  String vehiclesMoreOverdue(int count);
+
+  /// No description provided for @vehiclesSpentLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent this month: {amount}'**
+  String vehiclesSpentLine(String amount);
+
+  /// No description provided for @vehiclesComingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get vehiclesComingUp;
+
+  /// No description provided for @vehiclesOurs.
+  ///
+  /// In en, this message translates to:
+  /// **'Our vehicles'**
+  String get vehiclesOurs;
+
+  /// No description provided for @vehicleDueKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, registration{Registration} insurance{Insurance} other{PMS}}'**
+  String vehicleDueKind(String kind);
+
+  /// No description provided for @vehicleDueOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{overdue by 1 day} other{overdue by {count} days}}'**
+  String vehicleDueOverdue(int count);
+
+  /// No description provided for @vehicleDueIn.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{due today} =1{due tomorrow} other{in {count} days}}'**
+  String vehicleDueIn(int count);
+
+  /// No description provided for @vehicleDueOn.
+  ///
+  /// In en, this message translates to:
+  /// **'on {date}'**
+  String vehicleDueOn(String date);
+
+  /// No description provided for @vehicleKmLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'in {km} km'**
+  String vehicleKmLeft(String km);
+
+  /// No description provided for @vehicleKmPast.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km past due'**
+  String vehicleKmPast(String km);
+
+  /// No description provided for @vehicleAtKm.
+  ///
+  /// In en, this message translates to:
+  /// **'at {km} km'**
+  String vehicleAtKm(String km);
+
+  /// No description provided for @vehicleOrAt.
+  ///
+  /// In en, this message translates to:
+  /// **'or at {km} km'**
+  String vehicleOrAt(String km);
+
+  /// No description provided for @vehicleOrOn.
+  ///
+  /// In en, this message translates to:
+  /// **'or by {date}'**
+  String vehicleOrOn(String date);
+
+  /// No description provided for @vehicleKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, car{Car} other{Motorcycle}}'**
+  String vehicleKind(String kind);
+
+  /// No description provided for @vehicleLogKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, fuel{Fuel} pms{PMS} repair{Repair} registration{Registration} insurance{Insurance} other{Odometer}}'**
+  String vehicleLogKind(String kind);
+
+  /// No description provided for @vehicleAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add vehicle'**
+  String get vehicleAdd;
+
+  /// No description provided for @vehicleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit vehicle'**
+  String get vehicleEdit;
+
+  /// No description provided for @vehicleRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove vehicle'**
+  String get vehicleRemove;
+
+  /// No description provided for @vehicleLogFuel.
+  ///
+  /// In en, this message translates to:
+  /// **'Log fuel'**
+  String get vehicleLogFuel;
+
+  /// No description provided for @vehicleAddCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Add cost'**
+  String get vehicleAddCost;
+
+  /// No description provided for @vehicleUpdateOdometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Update odometer'**
+  String get vehicleUpdateOdometer;
+
+  /// No description provided for @vehicleOdometer.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String vehicleOdometer(String km);
+
+  /// No description provided for @vehicleNoOdometer.
+  ///
+  /// In en, this message translates to:
+  /// **'No odometer reading yet'**
+  String get vehicleNoOdometer;
+
+  /// No description provided for @vehicleLastReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Last reading {km} km'**
+  String vehicleLastReading(String km);
+
+  /// No description provided for @vehicleNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, car{e.g. Innova} other{e.g. Mio}}'**
+  String vehicleNameHint(String kind);
+
+  /// No description provided for @vehiclePlate.
+  ///
+  /// In en, this message translates to:
+  /// **'Plate number (optional)'**
+  String get vehiclePlate;
+
+  /// No description provided for @vehicleColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Colour (optional)'**
+  String get vehicleColor;
+
+  /// No description provided for @vehicleOdometerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer'**
+  String get vehicleOdometerLabel;
+
+  /// No description provided for @vehicleOdometerOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer (optional)'**
+  String get vehicleOdometerOptional;
+
+  /// No description provided for @vehicleOdometerInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number above zero'**
+  String get vehicleOdometerInvalid;
+
+  /// No description provided for @vehicleDueDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, registration{LTO registration due} insurance{Insurance due} other{Next PMS date}}'**
+  String vehicleDueDateLabel(String kind);
+
+  /// No description provided for @vehicleNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get vehicleNotSet;
+
+  /// No description provided for @vehicleClearDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear date'**
+  String get vehicleClearDate;
+
+  /// No description provided for @vehiclePmsKm.
+  ///
+  /// In en, this message translates to:
+  /// **'Next PMS at (optional)'**
+  String get vehiclePmsKm;
+
+  /// No description provided for @vehiclePmsEveryMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'PMS every how many months (optional)'**
+  String get vehiclePmsEveryMonths;
+
+  /// No description provided for @vehiclePmsEveryKm.
+  ///
+  /// In en, this message translates to:
+  /// **'PMS every how many km (optional)'**
+  String get vehiclePmsEveryKm;
+
+  /// No description provided for @vehiclePmsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'PMS is due at its date or km, whichever comes first. Logging a PMS sets the next one from these.'**
+  String get vehiclePmsHelp;
+
+  /// No description provided for @vehicleNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get vehicleNote;
+
+  /// No description provided for @vehicleAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get vehicleAmount;
+
+  /// No description provided for @vehicleLitres.
+  ///
+  /// In en, this message translates to:
+  /// **'Litres (optional)'**
+  String get vehicleLitres;
+
+  /// No description provided for @vehicleLitresLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{litres} L'**
+  String vehicleLitresLine(String litres);
+
+  /// No description provided for @vehicleRenewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, registration{Moves the registration due date one year on.} insurance{Moves the insurance due date one year on.} other{Sets the next PMS from its interval.}}'**
+  String vehicleRenewHint(String kind);
+
+  /// No description provided for @vehicleWhich.
+  ///
+  /// In en, this message translates to:
+  /// **'Which vehicle?'**
+  String get vehicleWhich;
+
+  /// No description provided for @vehicleHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get vehicleHistory;
+
+  /// No description provided for @vehicleHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded yet.'**
+  String get vehicleHistoryEmpty;
+
+  /// No description provided for @vehicleRemoveEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this entry'**
+  String get vehicleRemoveEntry;
+
+  /// No description provided for @calendarVehicleDue.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, registration{Registration due} insurance{Insurance due} other{PMS due}}'**
+  String calendarVehicleDue(String kind);
 }
 
 class _AppLocalizationsDelegate

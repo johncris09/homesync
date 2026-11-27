@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
 import '../../core/db/database.dart';
 import '../bills/bills_providers.dart';
+import '../vehicles/vehicles_providers.dart';
 import 'calendar_repository.dart';
 
 final calendarRepoProvider = Provider<CalendarRepository>((ref) {
@@ -41,7 +42,7 @@ final calendarDayProvider = StateProvider.autoDispose<DateTime>((ref) {
 
 /// From the start of the shown month (or today, if earlier) to [comingUpDays]
 /// after the later of today and the month's end; bills and subscriptions for
-/// adults.
+/// adults, and vehicle due dates.
 final agendaProvider = Provider.autoDispose<Agenda>((ref) {
   final today = ref.watch(calendarRepoProvider).today;
   final month = ref.watch(calendarMonthProvider);
@@ -55,6 +56,7 @@ final agendaProvider = Provider.autoDispose<Agenda>((ref) {
     DateTime(last.year, last.month, last.day + comingUpDays),
     bills: adult ? ref.watch(unpaidBillsProvider).value ?? const <Bill>[] : const [],
     subscriptions: adult ? ref.watch(subscriptionsProvider).value ?? const <Subscription>[] : const [],
+    vehicles: ref.watch(canSeeVehiclesProvider) ? ref.watch(vehiclesProvider).value ?? const <Vehicle>[] : const [],
   );
 });
 
@@ -68,5 +70,6 @@ final upcomingAgendaProvider = Provider<Agenda>((ref) {
     DateTime(t.year, t.month, t.day + comingUpDays),
     bills: adult ? ref.watch(unpaidBillsProvider).value ?? const <Bill>[] : const [],
     subscriptions: adult ? ref.watch(subscriptionsProvider).value ?? const <Subscription>[] : const [],
+    vehicles: ref.watch(canSeeVehiclesProvider) ? ref.watch(vehiclesProvider).value ?? const <Vehicle>[] : const [],
   );
 });

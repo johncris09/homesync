@@ -328,6 +328,8 @@ void main() {
     // Also undo versions 9 and 10 (calendar events).
     await v6.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
     await v6.customStatement('ALTER TABLE events DROP COLUMN "color"');
+    await v6.customStatement('DROP TABLE vehicles'); // added in v11
+    await v6.customStatement('DROP TABLE vehicle_logs');
     await v6.customStatement('PRAGMA user_version = 6');
     await v6.close();
 
