@@ -11,6 +11,7 @@ final pantryRepoProvider = Provider<PantryRepository>((ref) {
 
 final toBuyProvider = StreamProvider<List<GroceryItem>>((ref) => ref.watch(pantryRepoProvider).watchToBuy());
 final boughtProvider = StreamProvider<List<GroceryItem>>((ref) => ref.watch(pantryRepoProvider).watchBought());
+final groceryHistoryProvider = StreamProvider<List<GroceryItem>>((ref) => ref.watch(pantryRepoProvider).watchHistory());
 final pantryItemsProvider = StreamProvider<List<PantryItem>>((ref) => ref.watch(pantryRepoProvider).watchPantry());
 
 /// Everyone in the household may change the list and the pantry, except

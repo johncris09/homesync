@@ -397,6 +397,58 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groceryRemove => 'Remove from list';
 
   @override
+  String groceryBoughtOn(String date) {
+    return 'Bought $date';
+  }
+
+  @override
+  String get groceryChangeDate => 'Change the date bought';
+
+  @override
+  String get groceryToday => 'Today';
+
+  @override
+  String get groceryYesterday => 'Yesterday';
+
+  @override
+  String get groceryHistory => 'Past groceries';
+
+  @override
+  String groceryHistoryFigure(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+      zero: 'Nothing bought',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String groceryHistoryCaption(String month) {
+    return 'bought in $month';
+  }
+
+  @override
+  String get groceryHistoryEmpty =>
+      'Nothing bought yet. Items you tick off show here by the day they were bought.';
+
+  @override
+  String groceryDayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get groceryBuyAgain => 'Add to the list again';
+
+  @override
   String get itemName => 'Name';
 
   @override

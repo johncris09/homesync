@@ -706,6 +706,66 @@ abstract class AppLocalizations {
   /// **'Remove from list'**
   String get groceryRemove;
 
+  /// No description provided for @groceryBoughtOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought {date}'**
+  String groceryBoughtOn(String date);
+
+  /// No description provided for @groceryChangeDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the date bought'**
+  String get groceryChangeDate;
+
+  /// No description provided for @groceryToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get groceryToday;
+
+  /// No description provided for @groceryYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get groceryYesterday;
+
+  /// No description provided for @groceryHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Past groceries'**
+  String get groceryHistory;
+
+  /// No description provided for @groceryHistoryFigure.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing bought} =1{1 item} other{{count} items}}'**
+  String groceryHistoryFigure(int count);
+
+  /// No description provided for @groceryHistoryCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'bought in {month}'**
+  String groceryHistoryCaption(String month);
+
+  /// No description provided for @groceryHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing bought yet. Items you tick off show here by the day they were bought.'**
+  String get groceryHistoryEmpty;
+
+  /// No description provided for @groceryDayCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item} other{{count} items}}'**
+  String groceryDayCount(int count);
+
+  /// No description provided for @groceryBuyAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to the list again'**
+  String get groceryBuyAgain;
+
   /// No description provided for @itemName.
   ///
   /// In en, this message translates to:

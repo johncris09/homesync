@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
+import '../../app/router.dart';
 import '../../app/theme.dart';
 import '../../core/db/database.dart';
 import '../../l10n/app_localizations.dart';
 import '../sync/sync_widgets.dart';
+import 'grocery_history_screen.dart';
 import 'pantry_providers.dart';
 import 'pantry_repository.dart';
 
@@ -145,6 +148,15 @@ class _GroceryTabState extends ConsumerState<GroceryTab> {
             ),
           ),
         ],
+        const SizedBox(height: 16),
+        Align(
+          child: TextButton.icon(
+            key: const Key('grocery-history'),
+            onPressed: () => context.push(Routes.groceryHistory),
+            icon: const Icon(Icons.history),
+            label: Text(l10n.groceryHistory),
+          ),
+        ),
       ],
     );
   }
@@ -172,13 +184,51 @@ class _GroceryTile extends ConsumerWidget {
         style: item.isBought ? const TextStyle(decoration: TextDecoration.lineThrough, color: Colors.black45) : null,
       ),
       subtitle: details.isEmpty ? null : Text(details),
-      trailing: SyncMarker(entity: 'grocery_items', id: item.id),
+      trailing: item.isBought && item.boughtAt != null
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _BoughtChip(item: item, canEdit: canEdit),
+                SyncMarker(entity: 'grocery_items', id: item.id),
+              ],
+            )
+          : SyncMarker(entity: 'grocery_items', id: item.id),
       onTap: canEdit
           ? () => showModalBottomSheet<void>(
               context: context,
               isScrollControlled: true,
               builder: (_) => GroceryForm(item: item),
             )
+          : null,
+    );
+  }
+}
+
+/// The day a bought item was bought ("Today" unless changed); tap to change.
+class _BoughtChip extends ConsumerWidget {
+  const _BoughtChip({required this.item, required this.canEdit});
+
+  final GroceryItem item;
+  final bool canEdit;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final at = item.boughtAt!.toLocal();
+    final day = DateTime(at.year, at.month, at.day);
+    return ActionChip(
+      key: Key('bought-on-${item.id}'),
+      label: Text(boughtDayLabel(context, day, DateTime.now())),
+      tooltip: canEdit ? l10n.groceryChangeDate : null,
+      backgroundColor: HomeColors.mangga.withValues(alpha: 0.25),
+      side: BorderSide.none,
+      shape: const StadiumBorder(),
+      visualDensity: VisualDensity.compact,
+      onPressed: canEdit
+          ? () async {
+              final picked = await pickBoughtDay(context, day);
+              if (picked != null && picked != day) await ref.read(pantryRepoProvider).setBoughtOn(item, picked);
+            }
           : null,
     );
   }
@@ -198,7 +248,15 @@ class _GroceryFormState extends ConsumerState<GroceryForm> {
   late final _qty = TextEditingController(text: widget.item.quantityText ?? '');
   late final _store = TextEditingController(text: widget.item.store ?? '');
   late final _note = TextEditingController(text: widget.item.note ?? '');
+  late final DateTime? _boughtDay = _dayOf(widget.item.boughtAt);
+  late DateTime? _day = _boughtDay;
   bool _tried = false;
+
+  static DateTime? _dayOf(DateTime? at) {
+    if (at == null) return null;
+    final l = at.toLocal();
+    return DateTime(l.year, l.month, l.day);
+  }
 
   @override
   void dispose() {
@@ -213,9 +271,15 @@ class _GroceryFormState extends ConsumerState<GroceryForm> {
       setState(() => _tried = true);
       return;
     }
-    await ref
-        .read(pantryRepoProvider)
-        .editGrocery(widget.item, name: _name.text, quantityText: _qty.text, store: _store.text, note: _note.text);
+    final repo = ref.read(pantryRepoProvider);
+    await repo.editGrocery(
+      widget.item,
+      name: _name.text,
+      quantityText: _qty.text,
+      store: _store.text,
+      note: _note.text,
+    );
+    if (widget.item.isBought && _day != null && _day != _boughtDay) await repo.setBoughtOn(widget.item, _day!);
     if (mounted) Navigator.pop(context);
   }
 
@@ -255,6 +319,20 @@ class _GroceryFormState extends ConsumerState<GroceryForm> {
           controller: _note,
           decoration: InputDecoration(labelText: l10n.itemNote),
         ),
+        if (widget.item.isBought && _day != null) ...[
+          const SizedBox(height: 8),
+          ListTile(
+            key: const Key('grocery-bought-on'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.event_outlined),
+            title: Text(l10n.groceryBoughtOn(boughtDayLabel(context, _day!, DateTime.now()))),
+            trailing: const Icon(Icons.edit_calendar_outlined),
+            onTap: () async {
+              final picked = await pickBoughtDay(context, _day!);
+              if (picked != null) setState(() => _day = picked);
+            },
+          ),
+        ],
         const SizedBox(height: 20),
         FilledButton(onPressed: _save, child: Text(l10n.save)),
         TextButton(

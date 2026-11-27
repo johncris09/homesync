@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:drift/drift.dart' show driftRuntimeOptions;
+import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:homesync/core/db/database.dart';
 import 'package:homesync/core/sync/sync_engine.dart';
@@ -77,14 +80,78 @@ void main() {
       expect((await repo.watchToBuy().first).single.id, id);
     });
 
-    test('clear bought tombstones only bought items', () async {
+    test('clear bought hides bought items but keeps them for history', () async {
       final a = await repo.addGrocery('Eggs');
       await repo.addGrocery('Rice');
       await repo.setBought(a, true);
+      now = DateTime(2026, 11, 26, 18);
+      await db.delete(db.outbox).go();
       expect(await repo.clearBought(), 1);
       expect(await repo.watchBought().first, isEmpty);
       expect((await repo.watchToBuy().first).single.name, 'Rice');
-      expect((await rawRow(db, 'grocery_items', a))!['deleted_at'], isNotNull);
+      final row = (await rawRow(db, 'grocery_items', a))!;
+      expect(row['deleted_at'], isNull);
+      expect(row['cleared_at'], isNotNull);
+      expect((await repo.watchHistory().first).single.name, 'Eggs');
+      final sent = await ops();
+      expect(sent.single['op'], 'update', reason: 'clear sends an update, not a delete');
+      expect((sent.single['fields'] as Map).keys, ['cleared_at']);
+    });
+
+    test('ticking a cleared item again puts it back on the bought list', () async {
+      final id = await repo.addGrocery('Eggs');
+      await repo.setBought(id, true);
+      await repo.clearBought();
+      await repo.setBought(id, false);
+      expect((await repo.watchToBuy().first).single.clearedAt, isNull);
+      await repo.setBought(id, true);
+      expect((await repo.watchBought().first).single.name, 'Eggs');
+    });
+
+    test('changing the day bought keeps the time it was ticked', () async {
+      final id = await repo.addGrocery('Eggs');
+      await repo.setBought(id, true); // Nov 26, 09:00
+      final g = (await repo.watchBought().first).single;
+      await repo.setBoughtOn(g, DateTime(2026, 11, 24));
+      expect((await repo.watchBought().first).single.boughtAt, DateTime(2026, 11, 24, 9).toUtc());
+    });
+
+    test('history is every bought item, newest day first, grouped by day', () async {
+      Future<String> buy(String name, DateTime at) async {
+        now = at;
+        final id = await repo.addGrocery(name, quantityText: '1', store: 'SM');
+        await repo.setBought(id, true);
+        return id;
+      }
+
+      await buy('Rice', DateTime(2026, 11, 22, 10));
+      await buy('Oil', DateTime(2026, 11, 22, 10, 5));
+      await repo.clearBought();
+      await buy('Eggs', DateTime(2026, 11, 26, 8));
+      await repo.addGrocery('Milk'); // not bought: not in history
+      final removed = await buy('Soap', DateTime(2026, 11, 26, 9));
+      await repo.removeGrocery(removed); // removed: not in history
+
+      final days = groupByDay(await repo.watchHistory().first);
+      expect(days.map((d) => d.day), [DateTime(2026, 11, 26), DateTime(2026, 11, 22)]);
+      expect(days.map((d) => d.items.map((g) => g.name).toList()), [
+        ['Eggs'],
+        ['Oil', 'Rice'],
+      ]);
+    });
+
+    test('buy again copies name, quantity and store unless already listed', () async {
+      final id = await repo.addGrocery('Eggs', quantityText: '1 tray', store: 'SM');
+      await repo.setBought(id, true);
+      await repo.clearBought();
+      final past = (await repo.watchHistory().first).single;
+
+      expect(await repo.buyAgain(past), isTrue);
+      final listed = (await repo.watchToBuy().first).single;
+      expect([listed.name, listed.quantityText, listed.store], ['Eggs', '1 tray', 'SM']);
+      expect(listed.id, isNot(id));
+      expect(await repo.buyAgain(past), isFalse);
+      expect(await repo.watchToBuy().first, hasLength(1));
     });
   });
 
@@ -216,5 +283,25 @@ void main() {
       expect((await r.watchBought().first).single.name, 'Rice', reason: 'bought stays bought (forward-only)');
     }
     await dbB.close();
+  });
+
+  test('upgrading a version 6 database adds cleared_at and keeps the list', () async {
+    final dir = await Directory.systemTemp.createTemp('hs-migrate');
+    final file = File('${dir.path}/db.sqlite');
+    driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
+    final v6 = AppDatabase(NativeDatabase(file));
+    final old = PantryRepository(v6, writer(v6, identity(memberId: memberA, deviceId: deviceA)));
+    final id = await old.addGrocery('Eggs');
+    await v6.customStatement('ALTER TABLE grocery_items DROP COLUMN cleared_at');
+    await v6.customStatement('PRAGMA user_version = 6');
+    await v6.close();
+
+    final reopened = AppDatabase(NativeDatabase(file));
+    final repo = PantryRepository(reopened, writer(reopened, identity(memberId: memberA, deviceId: deviceA)));
+    await repo.setBought(id, true);
+    expect(await repo.clearBought(), 1);
+    expect((await repo.watchHistory().first).single.name, 'Eggs');
+    await reopened.close();
+    await dir.delete(recursive: true);
   });
 }

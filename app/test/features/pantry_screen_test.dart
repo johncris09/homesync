@@ -57,6 +57,67 @@ void main() {
     await app.finish(tester, s);
   });
 
+  testWidgets('bought items show the day; cleared items are in past groceries and can be bought again', (
+    tester,
+  ) async {
+    final store = MemorySecureStore();
+    app.signedIn(store);
+    final s = (await tester.runAsync(
+      () => open(store, seed: (r) => r.addGrocery('Eggs', quantityText: '1 tray', store: 'SM')),
+    ))!;
+    await app.pumpApp(tester, s);
+    await openPantry(tester);
+
+    await tester.tap(find.byType(Checkbox));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(ActionChip, 'Today'), findsOneWidget);
+
+    // The chip opens a date picker for the day bought.
+    await tester.tap(find.widgetWithText(ActionChip, 'Today'));
+    await tester.pumpAndSettle();
+    expect(find.text('Change the date bought'), findsOneWidget);
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Clear bought'));
+    await tester.pumpAndSettle();
+    expect(find.text('Eggs'), findsNothing);
+
+    await tester.tap(find.byKey(const Key('grocery-history')));
+    await tester.pumpAndSettle();
+    expect(find.text('Past groceries'), findsNothing, reason: 'the history screen replaced the list');
+    expect(find.text('1 item'), findsNWidgets(2)); // header figure and the day's count
+    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Eggs'), findsOneWidget);
+    expect(find.text('1 tray · SM'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Add to the list again'));
+    await tester.pumpAndSettle();
+    expect(find.text('Added to the grocery list.'), findsOneWidget);
+    await tester.tap(find.byTooltip('Add to the list again'));
+    await tester.pumpAndSettle();
+    expect(find.text('Already on the grocery list.'), findsOneWidget);
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('1 to buy'), findsOneWidget);
+    expect(find.text('Eggs'), findsOneWidget);
+    await app.finish(tester, s);
+  });
+
+  testWidgets('history is empty until something is bought', (tester) async {
+    final store = MemorySecureStore();
+    app.signedIn(store);
+    final s = (await tester.runAsync(() => open(store)))!;
+    await app.pumpApp(tester, s);
+    await openPantry(tester);
+    await tester.tap(find.byKey(const Key('grocery-history')));
+    await tester.pumpAndSettle();
+    expect(find.text('Nothing bought'), findsOneWidget);
+    expect(find.textContaining('Nothing bought yet.'), findsOneWidget);
+    await app.finish(tester, s);
+  });
+
   testWidgets('pantry: add an item, use and restock it, then put it on the list', (tester) async {
     final store = MemorySecureStore();
     app.signedIn(store);
