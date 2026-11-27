@@ -48,6 +48,9 @@ Some entities hold at most one row per natural key. Their id is not random: the 
 | `transactions` (subscription payment) | `subscription/<subscription_id>/<due_on>` |
 | `transactions` (debt payment) | `debt/<debt_payment_id>` |
 | `vault_keys` | `household` |
+| `health_profiles` | `<member_id>` |
+| `med_doses` (scheduled dose) | `<medicine_id>/<taken_on>/<slot>` |
+| `transactions` (checkup cost) | `checkup/<checkup_id>` |
 
 An `insert` for an existing **append-only** record (two devices recording the same payment) changes nothing: the first record stays and the op is answered `merged`, so the second device pulls the first one. A payment re-recorded after its owner undid it uses a random id.
 
@@ -207,6 +210,8 @@ A debt (`debts`) is one loan, credit card, pawn ticket or sum lent (`kind` `loan
 A field of a never-auto-merged entity is in conflict when an op changes it to a different value and the field was last set by a change the device had not seen (its `seq` is above the op's `base_version`; an insert onto an existing derived-id row counts as base 0). The newer HLC is live and the other value is stored in `conflicts`, whichever arrives first; the op is answered `merged`. Edits made after pulling the latest version, and concurrent edits of different fields, apply normally. Vault values are ciphertext, so the conflict holds ciphertext too and only a device with the vault key can show it.
 
 The Document Vault (`docs/vault.md`) keeps secrets encrypted on the device with the household vault key: `vault_keys` holds that key wrapped by the vault passphrase and by the owner's recovery code (owner writes; adults read). A document (`vault_items`) has a plain `kind` (`id`, `certificate`, `property`, `contract`, `warranty`, `insurance`, `pawn`, `vehicle`, `other`), `member_id` (whose it is, null = the household) and `expires_on`; its title, number, issuer, issue date and note are one sealed `sealed` field. A file (`vault_files`) names its ciphertext by `sha256` and `size`, carries its own key wrapped by the vault key (`key_wrap`) and a sealed name and type, and is ordered by `position`. Owner and adults only.
+
+Health (`docs/vault.md` for the key): a member's `health_profiles` row holds blood type, allergies, conditions, maintenance medicines, PhilHealth and HMO numbers and the doctor in `sealed`, encrypted with the vault key (additional data `homesync/health_profiles/<id>/sealed`); only `member_id` is plain. It follows the never-auto-merged rule. A medicine (`medicines`) is for a member (null = anyone), taken at local `HH:MM` `times` (comma-separated; null = as needed) until `ends_on`; `stock` is a counter: a dose sends `-dose_qty`, a restock or stock-take sends the difference, so use and restocking on two devices both count. Everyone but viewers writes `medicines` because a dose changes the stock; only adults edit a medicine (checked in the app). A dose given is an append-only `med_doses` row; a scheduled dose's id is derived from the medicine, day and slot (§2.1), so two people ticking it offline record it once (both stock decrements still count; a stock-take corrects that rare case); an as-needed dose has a random id. Undo is a delete by the person who gave it, with the stock sent back. A restock may post an expense (category `health`, `source_type` `medicine`, random id: it is one device's action). `checkups` (`kind` `checkup` or `vaccine`) have a due date and optional time, are done when `done_at` is set, and marking one done may post its cost (`source_type` `checkup`, id derived from the checkup). Health fields otherwise follow the default rule.
 
 Tombstones are kept 90 days, then pruned by the nightly job.
 

@@ -242,6 +242,84 @@ return [
             'write' => $adults,
         ],
 
+        // One health profile per member (id derived from the member,
+        // sync-protocol §2.1). Blood type, allergies, conditions, PhilHealth
+        // and HMO numbers are in `sealed`, encrypted with the vault key.
+        'health_profiles' => [
+            'table' => 'health_profiles',
+            'fields' => [
+                'member_id' => 'uuid',
+                'sealed' => 'text',
+            ],
+            'never_merged' => true,
+            'read' => $adults,
+            'write' => $adults,
+        ],
+
+        // Medicines: for a member (null = anyone), taken at local "HH:MM"
+        // times (comma-separated; null = as needed) until ends_on. Stock is a
+        // counter: a dose sends -dose_qty, a restock or stock-take the
+        // difference. Everyone but viewers writes it (doses change the
+        // stock); only adults edit a medicine, checked in the app.
+        'medicines' => [
+            'table' => 'medicines',
+            'fields' => [
+                'name' => 'string',
+                'strength' => 'string',
+                'member_id' => 'uuid',
+                'times' => 'string',
+                'dose_qty' => 'decimal',
+                'ends_on' => 'date',
+                'stock' => 'decimal',
+                'min_stock' => 'decimal',
+                'unit' => 'string',
+                'expires_on' => 'date',
+                'note' => 'text',
+            ],
+            'counters' => ['stock'],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
+        // A dose given. A scheduled dose's id is derived from the medicine,
+        // day and slot (sync-protocol §2.1), so two people ticking it offline
+        // record it once. Append-only: undo is a delete.
+        'med_doses' => [
+            'table' => 'med_doses',
+            'fields' => [
+                'medicine_id' => 'uuid',
+                'member_id' => 'uuid',
+                'given_by' => 'uuid',
+                'taken_on' => 'date',
+                'slot' => 'string',
+                'taken_at' => 'datetime',
+                'note' => 'text',
+            ],
+            'append_only' => true,
+            'mutable' => ['note'],
+            'read' => $everyone,
+            'write' => $household,
+        ],
+
+        // Checkups and vaccines (kind checkup or vaccine) with a due date and
+        // optional local time; done_at marks it done. Adults manage them.
+        'checkups' => [
+            'table' => 'checkups',
+            'fields' => [
+                'member_id' => 'uuid',
+                'kind' => 'string',
+                'title' => 'string',
+                'due_on' => 'date',
+                'due_time' => 'string',
+                'place' => 'string',
+                'done_at' => 'datetime',
+                'done_by' => 'uuid',
+                'note' => 'text',
+            ],
+            'read' => $everyone,
+            'write' => $adults,
+        ],
+
         // The money ledger. Append-only: only note and deletion can change later.
         'transactions' => [
             'table' => 'transactions',
