@@ -2484,4 +2484,276 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileDoctor => 'Doctor (optional)';
+
+  @override
+  String get rentModule => 'Rent';
+
+  @override
+  String get rentTileNone => 'No rentals yet';
+
+  @override
+  String get rentTileAllPaid => 'All paid this month';
+
+  @override
+  String rentTileToCollect(String amount) {
+    return '$amount to collect';
+  }
+
+  @override
+  String rentTileLate(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tenants late',
+      one: '1 tenant late',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get rentNoneFigure => 'No rentals yet';
+
+  @override
+  String get rentEmptyCaption => 'Rooms, houses and stalls you rent out';
+
+  @override
+  String get rentEmpty =>
+      'Add a room, house or stall you rent out, then the tenant who stays there.';
+
+  @override
+  String rentToCollectFigure(String amount) {
+    return '$amount to collect';
+  }
+
+  @override
+  String get rentAllPaidFigure => 'All paid';
+
+  @override
+  String rentPaidCount(int paid, int total) {
+    return '$paid of $total paid';
+  }
+
+  @override
+  String rentOverdueCount(int count) {
+    return '$count overdue';
+  }
+
+  @override
+  String rentVacantCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count vacant',
+      one: '1 vacant',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get rentToCollect => 'To collect';
+
+  @override
+  String get rentPaidThisMonth => 'Paid this month';
+
+  @override
+  String get rentVacant => 'Vacant';
+
+  @override
+  String get rentVacantLine => 'Vacant · add a tenant';
+
+  @override
+  String rentOwesLine(String amount) {
+    return 'Owes $amount';
+  }
+
+  @override
+  String rentLeftOf(String left, String rent) {
+    return '$left left of $rent';
+  }
+
+  @override
+  String rentDueOn(String date) {
+    return 'due $date';
+  }
+
+  @override
+  String rentDaysLate(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days late',
+      one: '1 day late',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rentMovedOut(String date) {
+    return 'moved out $date';
+  }
+
+  @override
+  String rentPaidOn(String date) {
+    return 'paid $date';
+  }
+
+  @override
+  String rentAhead(String amount) {
+    return '$amount paid ahead';
+  }
+
+  @override
+  String get rentRecordPayment => 'Record payment';
+
+  @override
+  String get rentAddUnit => 'Add unit';
+
+  @override
+  String get rentEditUnit => 'Rename unit';
+
+  @override
+  String get rentRemoveUnit => 'Remove unit';
+
+  @override
+  String get rentUnitName => 'Unit name';
+
+  @override
+  String get rentUnitNameHint => 'Room 1, upstairs, stall 3';
+
+  @override
+  String get rentAddTenant => 'Add tenant';
+
+  @override
+  String get rentEditTenant => 'Edit tenant';
+
+  @override
+  String get rentRemoveTenant => 'Remove tenant';
+
+  @override
+  String get rentTenantName => 'Tenant name';
+
+  @override
+  String get rentPhone => 'Phone (optional)';
+
+  @override
+  String get rentMonthly => 'Monthly rent';
+
+  @override
+  String get rentChangeHint =>
+      'A new rent applies from this month; earlier months keep the old one.';
+
+  @override
+  String get rentDueDay => 'Due day of the month';
+
+  @override
+  String get rentDueDayHelp =>
+      '29, 30 or 31 falls on the last day of a shorter month';
+
+  @override
+  String get rentDueDayInvalid => 'Enter a day from 1 to 31';
+
+  @override
+  String get rentStartsOn => 'Moved in';
+
+  @override
+  String get rentDeposit => 'Deposit (optional)';
+
+  @override
+  String get rentNote => 'Note (optional)';
+
+  @override
+  String rentEveryLine(String amount, int day) {
+    return '$amount a month, due on day $day';
+  }
+
+  @override
+  String rentSince(String date) {
+    return 'Since $date';
+  }
+
+  @override
+  String rentDepositLine(String amount) {
+    return 'Deposit $amount';
+  }
+
+  @override
+  String rentDepositReturned(String returned, String deposit) {
+    return 'Deposit: $returned of $deposit returned';
+  }
+
+  @override
+  String get rentCall => 'Call';
+
+  @override
+  String get rentText => 'Text';
+
+  @override
+  String get rentWhich => 'Which tenant?';
+
+  @override
+  String get rentAmount => 'Amount';
+
+  @override
+  String get rentPaidOnLabel => 'Paid on';
+
+  @override
+  String rentMethod(String method) {
+    String _temp0 = intl.Intl.selectLogic(method, {
+      'cash': 'Cash',
+      'gcash': 'GCash',
+      'bank': 'Bank',
+      'other': 'Other',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get rentPayHint =>
+      'Pays the oldest month first. Recorded as money in on the Budget.';
+
+  @override
+  String get rentWaive => 'Waive rent';
+
+  @override
+  String get rentWaiveHint =>
+      'Forgiven rent counts as paid but is not money in.';
+
+  @override
+  String get rentMoveOut => 'Move out';
+
+  @override
+  String get rentMoveOutDate => 'Moving out on';
+
+  @override
+  String get rentDepositBack => 'Deposit returned';
+
+  @override
+  String get rentMoveOutHint =>
+      'Rent stops after this month. The unit shows as vacant; anything still owed stays on the list.';
+
+  @override
+  String get rentUndoMoveOut => 'Undo move out';
+
+  @override
+  String get rentHistory => 'Payments';
+
+  @override
+  String get rentHistoryEmpty => 'No payments yet';
+
+  @override
+  String rentKind(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'waived': 'Waived',
+      'other': 'Payment',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get rentRemoveEntry => 'Remove entry';
+
+  @override
+  String calendarRentDue(String amount) {
+    return 'Rent due · $amount';
+  }
 }

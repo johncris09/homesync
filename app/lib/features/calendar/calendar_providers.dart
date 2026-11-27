@@ -4,6 +4,8 @@ import '../../app/providers.dart';
 import '../../core/db/database.dart';
 import '../bills/bills_providers.dart';
 import '../health/health_providers.dart';
+import '../rent/rent_providers.dart';
+import '../rent/rent_repository.dart' show RentSummary, UnitRow;
 import '../vehicles/vehicles_providers.dart';
 import 'calendar_repository.dart';
 
@@ -59,8 +61,19 @@ final agendaProvider = Provider.autoDispose<Agenda>((ref) {
     subscriptions: adult ? ref.watch(subscriptionsProvider).value ?? const <Subscription>[] : const [],
     vehicles: ref.watch(canSeeVehiclesProvider) ? ref.watch(vehiclesProvider).value ?? const <Vehicle>[] : const [],
     checkups: ref.watch(checkupsProvider).value ?? const <Checkup>[],
+    rent: ref.watch(canSeeRentProvider) ? rentRows(ref.watch(rentSummaryProvider)) : const [],
   );
 });
+
+/// Every lease the calendar shows rent for: current tenants and anyone who
+/// still owes.
+List<UnitRow> rentRows(RentSummary s) {
+  final seen = <String>{};
+  return [
+    for (final r in [...s.toCollect, ...s.paid])
+      if (seen.add(r.status!.lease.id)) r,
+  ];
+}
 
 /// Today and the next [comingUpDays] days, for the home tile.
 final upcomingAgendaProvider = Provider<Agenda>((ref) {
@@ -74,5 +87,6 @@ final upcomingAgendaProvider = Provider<Agenda>((ref) {
     subscriptions: adult ? ref.watch(subscriptionsProvider).value ?? const <Subscription>[] : const [],
     vehicles: ref.watch(canSeeVehiclesProvider) ? ref.watch(vehiclesProvider).value ?? const <Vehicle>[] : const [],
     checkups: ref.watch(checkupsProvider).value ?? const <Checkup>[],
+    rent: ref.watch(canSeeRentProvider) ? rentRows(ref.watch(rentSummaryProvider)) : const [],
   );
 });

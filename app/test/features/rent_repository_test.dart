@@ -24,7 +24,11 @@ void main() {
     setUp(() {
       db = memoryDb();
       now = DateTime(2026, 12, 6, 9);
-      repo = RentRepository(db, writer(db, identity(memberId: memberA, deviceId: deviceA)), now: () => now);
+      repo = RentRepository(
+        db,
+        writer(db, identity(memberId: memberA, deviceId: deviceA)),
+        now: () => now,
+      );
     });
     tearDown(() => db.close());
 
@@ -153,11 +157,25 @@ void main() {
     final now = DateTime(2026, 12, 6, 9);
     final a = RentRepository(dbA, wA, now: () => now);
     final b = RentRepository(dbB, wB, now: () => now);
-    final syncA = SyncEngine(db: dbA, api: server.apiFor(memberId: memberA, deviceId: deviceA), clock: wA.clock);
-    final syncB = SyncEngine(db: dbB, api: server.apiFor(memberId: memberB, deviceId: deviceB), clock: wB.clock);
+    final syncA = SyncEngine(
+      db: dbA,
+      api: server.apiFor(memberId: memberA, deviceId: deviceA),
+      clock: wA.clock,
+    );
+    final syncB = SyncEngine(
+      db: dbB,
+      api: server.apiFor(memberId: memberB, deviceId: deviceB),
+      clock: wB.clock,
+    );
 
     final unit = await a.addUnit('Room 2');
-    final id = await a.addLease(unitId: unit, tenantName: 'Jun', rentMinor: 350000, dueDay: 1, startsOn: DateTime(2026, 11, 1));
+    final id = await a.addLease(
+      unitId: unit,
+      tenantName: 'Jun',
+      rentMinor: 350000,
+      dueDay: 1,
+      startsOn: DateTime(2026, 11, 1),
+    );
     await syncA.sync();
     await syncB.sync();
     await a.recordPayment((await a.watchLeases().first).single, 'Room 2', 350000);
@@ -192,7 +210,13 @@ void main() {
     final reopened = AppDatabase(NativeDatabase(file));
     final repo = RentRepository(reopened, writer(reopened, identity(memberId: memberA, deviceId: deviceA)));
     final unit = await repo.addUnit('Room 1');
-    await repo.addLease(unitId: unit, tenantName: 'Carlo', rentMinor: 300000, dueDay: 5, startsOn: DateTime(2026, 12, 1));
+    await repo.addLease(
+      unitId: unit,
+      tenantName: 'Carlo',
+      rentMinor: 300000,
+      dueDay: 5,
+      startsOn: DateTime(2026, 12, 1),
+    );
     expect(await repo.watchLeases().first, hasLength(1));
     await reopened.close();
     await dir.delete(recursive: true);

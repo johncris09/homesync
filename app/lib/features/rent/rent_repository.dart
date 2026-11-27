@@ -82,8 +82,15 @@ class LeaseStatus {
     return LeaseStatus._(lease, dueSoFar, received, oldest, oldestLeft, last, today);
   }
 
-  LeaseStatus._(this.lease, this.dueSoFar, this.received, this.oldestDue, this.oldestLeft, this.lastPayment, DateTime today)
-    : daysLate = oldestDue == null ? 0 : -daysUntil(oldestDue, today);
+  LeaseStatus._(
+    this.lease,
+    this.dueSoFar,
+    this.received,
+    this.oldestDue,
+    this.oldestLeft,
+    this.lastPayment,
+    DateTime today,
+  ) : daysLate = oldestDue == null ? 0 : -daysUntil(oldestDue, today);
 
   final Lease lease;
 
@@ -113,6 +120,29 @@ class LeaseStatus {
     if (owed == 0) return RentDue.paid;
     if (daysLate > 0) return RentDue.overdue;
     return -daysLate <= rentSoonDays ? RentDue.soon : RentDue.later;
+  }
+
+  /// Due dates from [from] to [to] of months not yet covered by payments,
+  /// with what is left of each (future months too, up to the move-out).
+  List<(DateTime, int)> unpaidBetween(DateTime from, DateTime to) {
+    final start = parseIsoDate(lease.startsOn);
+    if (start == null) return const [];
+    final ends = parseIsoDate(lease.endsOn);
+    var until = monthOf(to);
+    if (ends != null && monthOf(ends).isBefore(until)) until = monthOf(ends);
+    final a = DateTime(from.year, from.month, from.day);
+    final b = DateTime(to.year, to.month, to.day);
+    var left = received;
+    final out = <(DateTime, int)>[];
+    for (var m = monthOf(start); !m.isAfter(until); m = DateTime(m.year, m.month + 1)) {
+      final rent = rentFor(lease, m);
+      final cover = left >= rent ? rent : left;
+      left -= cover;
+      if (cover == rent) continue;
+      final d = rentDueIn(lease, m);
+      if (!d.isBefore(a) && !d.isAfter(b)) out.add((d, rent - cover));
+    }
+    return out;
   }
 }
 
@@ -191,8 +221,7 @@ class RentRepository {
 
   Stream<List<Lease>> watchLeases() => (db.select(db.leases)..where((l) => l.deletedAt.isNull())).watch();
 
-  Stream<List<RentPayment>> watchPayments() =>
-      (db.select(db.rentPayments)..where((p) => p.deletedAt.isNull())).watch();
+  Stream<List<RentPayment>> watchPayments() => (db.select(db.rentPayments)..where((p) => p.deletedAt.isNull())).watch();
 
   /// One lease's payments, latest first.
   Stream<List<RentPayment>> watchHistory(String leaseId) =>
@@ -271,19 +300,15 @@ class RentRepository {
 
   /// The tenant leaves on [endsOn]; [depositReturnedMinor] (may be less than
   /// the deposit, or 0) is recorded when given.
-  Future<void> moveOut(Lease l, DateTime endsOn, {int? depositReturnedMinor}) =>
-      writer.update('leases', l.id, {
-        'ends_on': isoDate(endsOn),
-        if (depositReturnedMinor != null) 'deposit_returned_minor': depositReturnedMinor,
-        if (depositReturnedMinor != null) 'deposit_returned_on': isoDate(today),
-      });
+  Future<void> moveOut(Lease l, DateTime endsOn, {int? depositReturnedMinor}) => writer.update('leases', l.id, {
+    'ends_on': isoDate(endsOn),
+    'deposit_returned_minor': ?depositReturnedMinor,
+    if (depositReturnedMinor != null) 'deposit_returned_on': isoDate(today),
+  });
 
   /// Undoes a move-out recorded by mistake.
-  Future<void> undoMoveOut(Lease l) => writer.update('leases', l.id, {
-    'ends_on': null,
-    'deposit_returned_minor': null,
-    'deposit_returned_on': null,
-  });
+  Future<void> undoMoveOut(Lease l) =>
+      writer.update('leases', l.id, {'ends_on': null, 'deposit_returned_minor': null, 'deposit_returned_on': null});
 
   Future<void> removeLease(String id) => writer.delete('leases', id);
 
