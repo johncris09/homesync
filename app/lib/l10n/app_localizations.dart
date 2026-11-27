@@ -664,12 +664,6 @@ abstract class AppLocalizations {
   /// **'Clear bought'**
   String get groceryClearBought;
 
-  /// No description provided for @groceryFor.
-  ///
-  /// In en, this message translates to:
-  /// **'asked by {name}'**
-  String groceryFor(String name);
-
   /// No description provided for @groceryEditTitle.
   ///
   /// In en, this message translates to:

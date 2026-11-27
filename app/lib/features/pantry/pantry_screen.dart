@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../app/providers.dart';
 import '../../app/router.dart';
 import '../../app/theme.dart';
 import '../../core/db/database.dart';
@@ -98,7 +97,6 @@ class _GroceryTabState extends ConsumerState<GroceryTab> {
     final toBuy = ref.watch(toBuyProvider).value ?? const <GroceryItem>[];
     final bought = ref.watch(boughtProvider).value ?? const <GroceryItem>[];
     final canEdit = ref.watch(canEditPantryProvider);
-    final names = {for (final m in ref.watch(membersProvider).value ?? const <Member>[]) m.id: m.name};
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
@@ -153,9 +151,7 @@ class _GroceryTabState extends ConsumerState<GroceryTab> {
               ),
             Card(
               child: Column(
-                children: [
-                  for (final g in group.items) _GroceryTile(item: g, requester: names[g.requestedBy], canEdit: canEdit),
-                ],
+                children: [for (final g in group.items) _GroceryTile(item: g, canEdit: canEdit)],
               ),
             ),
           ],
@@ -174,9 +170,7 @@ class _GroceryTabState extends ConsumerState<GroceryTab> {
           const SizedBox(height: 8),
           Card(
             child: Column(
-              children: [
-                for (final g in bought) _GroceryTile(item: g, requester: names[g.requestedBy], canEdit: canEdit),
-              ],
+              children: [for (final g in bought) _GroceryTile(item: g, canEdit: canEdit)],
             ),
           ),
         ],
@@ -195,16 +189,14 @@ class _GroceryTabState extends ConsumerState<GroceryTab> {
 }
 
 class _GroceryTile extends ConsumerWidget {
-  const _GroceryTile({required this.item, required this.requester, required this.canEdit});
+  const _GroceryTile({required this.item, required this.canEdit});
 
   final GroceryItem item;
-  final String? requester;
   final bool canEdit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final details = [?item.quantityText, ?item.store, if (requester != null) l10n.groceryFor(requester!)].join(' · ');
+    final details = [?item.quantityText, ?item.store].join(' · ');
     return ListTile(
       leading: Checkbox(
         value: item.isBought,

@@ -374,11 +374,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groceryClearBought => 'Clear bought';
 
   @override
-  String groceryFor(String name) {
-    return 'asked by $name';
-  }
-
-  @override
   String get groceryEditTitle => 'Edit item';
 
   @override

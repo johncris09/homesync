@@ -123,8 +123,6 @@
   "groceryEmpty": "The list is empty.",
   "groceryBought": "Bought",
   "groceryClearBought": "Clear bought",
-  "groceryFor": "asked by {name}",
-  "@groceryFor": {"placeholders": {"name": {"type": "String"}}},
   "groceryEditTitle": "Edit item",
   "groceryQuantity": "How much",
   "groceryQuantityHint": "e.g. 1 tray, 2 kg",

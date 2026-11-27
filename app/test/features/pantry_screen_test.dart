@@ -42,7 +42,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('2 to buy'), findsOneWidget);
-    expect(find.text('asked by Mama'), findsNWidgets(2));
+    expect(find.textContaining('asked by'), findsNothing, reason: 'who added an item is not shown');
 
     await tester.tap(find.byType(Checkbox).first); // Eggs (sorted by name)
     await tester.pumpAndSettle();
