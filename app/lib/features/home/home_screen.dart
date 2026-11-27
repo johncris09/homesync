@@ -6,6 +6,7 @@ import '../../app/providers.dart';
 import '../../app/router.dart';
 import '../../app/theme.dart';
 import '../../core/app_version.dart';
+import '../../core/db/database.dart';
 import '../../core/auth/pin_hash.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/pin_pad.dart';
@@ -19,6 +20,7 @@ import '../debts/debts_providers.dart';
 import '../pantry/pantry_providers.dart';
 import '../pantry/pantry_repository.dart' show isLow;
 import '../sync/sync_widgets.dart';
+import '../vault/vault_providers.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -46,6 +48,9 @@ class HomeScreen extends ConsumerWidget {
         : l10n.budgetTileSpent(peso(money.spent));
     final bills = adult ? ref.watch(billsSummaryProvider) : null;
     final debts = adult ? ref.watch(debtsSummaryProvider) : null;
+    final vaultItems = adult ? (ref.watch(vaultItemsProvider).value ?? const <VaultItem>[]) : const <VaultItem>[];
+    final vaultReady = adult && ref.watch(vaultKeyRowProvider).value != null;
+    final vaultRenew = adult ? vaultItems.where(ref.watch(vaultRepoProvider).renewSoon).length : 0;
     final chores = ref.watch(choreBoardProvider);
     final choresCaption = chores.today.isEmpty
         ? l10n.choresTileNone
@@ -130,6 +135,24 @@ class HomeScreen extends ConsumerWidget {
                           ),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => context.push(Routes.debts),
+                        ),
+                      if (adult)
+                        ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: vaultRenew > 0 ? HomeColors.mangga : HomeColors.narra,
+                            foregroundColor: vaultRenew > 0 ? HomeColors.narra : Colors.white,
+                            child: const Icon(Icons.lock_outline),
+                          ),
+                          title: Text(l10n.vaultModule),
+                          subtitle: Text(
+                            !vaultReady
+                                ? l10n.vaultTileSetUp
+                                : vaultRenew > 0
+                                ? l10n.vaultTileRenew(vaultRenew)
+                                : l10n.vaultTileDocs(vaultItems.length),
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => context.push(Routes.vault),
                         ),
                       ListTile(
                         leading: const CircleAvatar(

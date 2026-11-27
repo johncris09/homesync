@@ -14,6 +14,9 @@ import 'sync/outbox.dart';
 import 'sync/sync_engine.dart';
 import 'sync/sync_scheduler.dart';
 import 'sync/sync_state_store.dart';
+import 'vault/vault_crypto.dart';
+import 'vault/vault_files_api.dart';
+import 'vault/vault_session.dart';
 
 /// Everything the app (and the Android background task) needs, built once.
 class AppServices {
@@ -26,6 +29,9 @@ class AppServices {
     required this.engine,
     required this.scheduler,
     required this.writer,
+    required this.vault,
+    required this.vaultCrypto,
+    required this.vaultFiles,
   });
 
   final SecureStore store;
@@ -37,9 +43,14 @@ class AppServices {
   final SyncScheduler scheduler;
   final LocalWriter writer;
 
+  /// Document Vault: the key while open, the crypto, and the hub's file store.
+  final VaultSession vault;
+  final VaultCrypto vaultCrypto;
+  final VaultFilesApi vaultFiles;
+
   static const _dbKey = 'db_key';
 
-  static Future<AppServices> open({SecureStore? secureStore, AppDatabase? database}) async {
+  static Future<AppServices> open({SecureStore? secureStore, AppDatabase? database, VaultCrypto? vaultCrypto}) async {
     final store = secureStore ?? FlutterSecureStore();
     final db = database ?? AppDatabase(openAppDatabase(encryptionKey: await _databaseKey(store)));
     final state = SyncStateStore(db);
@@ -63,11 +74,14 @@ class AppServices {
       api: DioSyncApi(dio, tokenFor: auth.tokenFor, mainDeviceId: () => auth.session!.main.deviceId),
       clock: clock,
     );
+    final vaultFiles = DioVaultFilesApi(dio, token: () async => auth.tokenFor(auth.session!.main.deviceId));
     final scheduler = SyncScheduler(
       sync: () async {
         if (!auth.signedIn) return;
         await auth.fetchMissingProfileTokens();
         await engine.sync();
+        // Vault files go up after their rows (sync-protocol §7).
+        await VaultUploader(db, vaultFiles).uploadPending();
       },
       // sync-protocol §8: every 3 min on web; WorkManager covers Android in
       // the background, this only covers a long foreground session.
@@ -80,11 +94,24 @@ class AppServices {
       onWrite: scheduler.notifyLocalWrite,
     );
 
+    final vault = VaultSession(store: store);
+    var vaultHousehold = auth.session?.householdId;
+    var vaultMember = auth.session?.active.memberId;
+
     // Writes are stamped with whoever is using the app right now.
     auth.addListener(() {
       final s = auth.session;
       writer.identity = s?.identity ?? _noIdentity;
       if (s != null) scheduler.resume();
+      // The vault closes when someone else takes over, and forgets its key
+      // on sign-out (docs/vault.md).
+      if (s == null && vaultHousehold != null) {
+        vault.forget(vaultHousehold!);
+      } else if (s?.active.memberId != vaultMember) {
+        vault.lock();
+      }
+      vaultHousehold = s?.householdId;
+      vaultMember = s?.active.memberId;
     });
 
     return AppServices._(
@@ -96,6 +123,9 @@ class AppServices {
       engine: engine,
       scheduler: scheduler,
       writer: writer,
+      vault: vault,
+      vaultCrypto: vaultCrypto ?? VaultCrypto(),
+      vaultFiles: vaultFiles,
     );
   }
 

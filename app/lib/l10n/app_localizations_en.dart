@@ -1517,4 +1517,367 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get debtRemoveEntry => 'Remove this entry';
+
+  @override
+  String get vaultModule => 'Document vault';
+
+  @override
+  String vaultTileDocs(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count documents',
+      one: '1 document',
+      zero: 'Nothing kept yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vaultTileRenew(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count to renew soon',
+      one: '1 to renew soon',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vaultTileSetUp => 'Not set up yet';
+
+  @override
+  String get vaultInboxNote =>
+      'A vault document was changed on two devices. Open it in the vault to compare.';
+
+  @override
+  String vaultDocuments(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count documents',
+      one: '1 document',
+      zero: 'No documents',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vaultLockedCaption => 'Locked. Encrypted on this device.';
+
+  @override
+  String vaultLockedRenew(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Locked · $count to renew soon',
+      one: 'Locked · 1 to renew soon',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vaultKeptSafe => 'Encrypted before it leaves this device';
+
+  @override
+  String vaultExpiresOn(String title, String date) {
+    return '$title expires $date';
+  }
+
+  @override
+  String get vaultRenewSoon => 'Renew soon';
+
+  @override
+  String get vaultEmpty =>
+      'Add IDs, birth certificates, land titles, contracts and warranties. Only adults can open them.';
+
+  @override
+  String get vaultAdd => 'Add document';
+
+  @override
+  String get vaultEdit => 'Edit document';
+
+  @override
+  String get vaultDelete => 'Delete';
+
+  @override
+  String vaultDeleteConfirm(String title) {
+    return 'Delete $title and its files from the vault?';
+  }
+
+  @override
+  String get vaultLock => 'Lock';
+
+  @override
+  String get vaultUnlock => 'Unlock';
+
+  @override
+  String get vaultOpening => 'Opening the vault. This takes a few seconds.';
+
+  @override
+  String get vaultPassphrase => 'Vault passphrase';
+
+  @override
+  String get vaultPassphraseAgain => 'Passphrase again';
+
+  @override
+  String vaultPassphraseTooShort(int count) {
+    return 'Use at least $count characters. A few words work well.';
+  }
+
+  @override
+  String get vaultPassphrasesDontMatch => 'The passphrases don\'t match';
+
+  @override
+  String get vaultWrongPassphrase => 'That passphrase didn\'t open the vault';
+
+  @override
+  String get vaultAppLockHint =>
+      'Turn on app lock on Home to open the vault with your PIN instead of the passphrase.';
+
+  @override
+  String get vaultBiometricReason => 'Open the document vault';
+
+  @override
+  String get vaultPinTitle => 'Enter your app PIN';
+
+  @override
+  String get vaultUseRecovery => 'Use recovery code';
+
+  @override
+  String get vaultRecoveryHint => 'K7QM-3XRT-9WHD-PC2E-VN6A-YB4F';
+
+  @override
+  String get vaultWrongRecovery => 'That recovery code didn\'t open the vault';
+
+  @override
+  String get vaultNewPassphrase => 'New vault passphrase';
+
+  @override
+  String get vaultNewPassphraseBody =>
+      'Tell the other adults the new passphrase. Phones that already opened the vault keep working.';
+
+  @override
+  String get vaultChangePassphrase => 'Change passphrase';
+
+  @override
+  String get vaultNewRecoveryCode => 'New recovery code';
+
+  @override
+  String get vaultSetUpTitle => 'Set up the vault';
+
+  @override
+  String get vaultSetUpCaption => 'For IDs, titles and certificates';
+
+  @override
+  String get vaultSetUpBody =>
+      'Choose a vault passphrase for the household and tell the other adults in person. Documents are encrypted on the phone before they sync; the hub never sees them.';
+
+  @override
+  String get vaultSetUpButton => 'Set up';
+
+  @override
+  String get vaultSetUpOffline =>
+      'Connect to the internet to set up the vault, so every device gets the same key.';
+
+  @override
+  String get vaultNotSetUp => 'The owner hasn\'t set up the vault yet.';
+
+  @override
+  String get vaultRecoveryTitle => 'Your recovery code';
+
+  @override
+  String get vaultRecoveryCaption =>
+      'The only way back if the passphrase is lost';
+
+  @override
+  String get vaultRecoveryBody =>
+      'Print it or write it down and keep it with the land titles. If the passphrase and this code are both lost, no one can open the documents again, not even HomeSync.';
+
+  @override
+  String get vaultRecoverySaved => 'I\'ve saved it somewhere safe';
+
+  @override
+  String get vaultFinish => 'Finish';
+
+  @override
+  String get vaultCopy => 'Copy';
+
+  @override
+  String get vaultKindId => 'ID';
+
+  @override
+  String get vaultKindCertificate => 'Certificate';
+
+  @override
+  String get vaultKindProperty => 'Property';
+
+  @override
+  String get vaultKindContract => 'Contract';
+
+  @override
+  String get vaultKindInsurance => 'Insurance';
+
+  @override
+  String get vaultKindWarranty => 'Warranty';
+
+  @override
+  String get vaultKindVehicle => 'Vehicle';
+
+  @override
+  String get vaultKindPawn => 'Pawn ticket';
+
+  @override
+  String get vaultKindOther => 'Other';
+
+  @override
+  String get vaultGroupId => 'IDs';
+
+  @override
+  String get vaultGroupCertificate => 'Certificates';
+
+  @override
+  String get vaultGroupProperty => 'Property';
+
+  @override
+  String get vaultGroupContract => 'Contracts';
+
+  @override
+  String get vaultGroupInsurance => 'Insurance';
+
+  @override
+  String get vaultGroupWarranty => 'Warranties';
+
+  @override
+  String get vaultGroupVehicle => 'Vehicles';
+
+  @override
+  String get vaultGroupPawn => 'Pawn tickets';
+
+  @override
+  String get vaultGroupOther => 'Other documents';
+
+  @override
+  String vaultTitleOf(String title, String name) {
+    return '$title · $name';
+  }
+
+  @override
+  String get vaultUnreadable => 'Can\'t open this document';
+
+  @override
+  String vaultDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days left',
+      one: '1 day left',
+      zero: 'Expires today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vaultExpiredDaysAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Expired $count days ago',
+      one: 'Expired yesterday',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String vaultExpiresCaption(String date) {
+    return 'Expires $date';
+  }
+
+  @override
+  String vaultExpiredOn(String date) {
+    return 'Expired $date';
+  }
+
+  @override
+  String get vaultNumber => 'Number';
+
+  @override
+  String get vaultShowNumber => 'Show number';
+
+  @override
+  String get vaultHideNumber => 'Hide number';
+
+  @override
+  String get vaultKind => 'Kind';
+
+  @override
+  String get vaultWhose => 'Whose';
+
+  @override
+  String get vaultWholeFamily => 'Whole family';
+
+  @override
+  String get vaultIssuer => 'Issued by';
+
+  @override
+  String get vaultIssuerHint => 'DFA, PSA, LTO';
+
+  @override
+  String get vaultIssuedOn => 'Issued';
+
+  @override
+  String get vaultExpiresOnLabel => 'Expires';
+
+  @override
+  String get vaultNote => 'Note';
+
+  @override
+  String get vaultTitle => 'Name';
+
+  @override
+  String get vaultTitleHint => 'Passport';
+
+  @override
+  String get vaultTitleRequired => 'Give the document a name';
+
+  @override
+  String get vaultEncryptedNote =>
+      'Name, number, issuer and note are encrypted. Kind, whose and the expiry date are not, so reminders work while the vault is locked.';
+
+  @override
+  String get vaultFiles => 'Photos and files';
+
+  @override
+  String get vaultTakePhoto => 'Take photo';
+
+  @override
+  String get vaultAddPhoto => 'Add photo';
+
+  @override
+  String get vaultAddPdf => 'Add PDF';
+
+  @override
+  String get vaultRemoveFile => 'Remove from the document';
+
+  @override
+  String get vaultFileTooBig => 'That file is over 20 MB';
+
+  @override
+  String get vaultFileOffline =>
+      'Can\'t reach the hub to get this file. Try again when online.';
+
+  @override
+  String get vaultFileNotUploaded =>
+      'This file hasn\'t been uploaded yet from the device that added it.';
+
+  @override
+  String get vaultConflictTitle => 'Changed on two devices at once';
+
+  @override
+  String get vaultUseOther => 'Use the other';
+
+  @override
+  String get vaultConflictOwner =>
+      'The owner will choose which version to keep.';
 }

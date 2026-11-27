@@ -18,6 +18,7 @@ import '../features/pantry/grocery_history_screen.dart';
 import '../features/pantry/pantry_screen.dart';
 import '../features/sync/conflict_inbox_screen.dart';
 import '../features/sync/sync_problems_screen.dart';
+import '../features/vault/vault_screen.dart';
 
 abstract final class Routes {
   static const home = '/';
@@ -35,6 +36,7 @@ abstract final class Routes {
   static const chores = '/chores';
   static const calendar = '/calendar';
   static const debts = '/debts';
+  static const vault = '/vault';
 }
 
 GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRouter(
@@ -63,5 +65,6 @@ GoRouter buildRouter({required AuthService auth, required AppLock lock}) => GoRo
     GoRoute(path: Routes.chores, builder: (_, _) => const ChoresScreen()),
     GoRoute(path: Routes.calendar, builder: (_, _) => const CalendarScreen()),
     GoRoute(path: Routes.debts, builder: (_, _) => const DebtsScreen()),
+    GoRoute(path: Routes.vault, builder: (_, _) => const VaultScreen()),
   ],
 );

@@ -11,7 +11,7 @@ class FakeSyncServer {
   int timeMs = 1795586690000;
 
   final Map<String, Map<String, Map<String, Object?>>> rows = {};
-  final Map<String, ({String hlc, String by})> _clocks = {};
+  final Map<String, ({String hlc, String by, int seq})> _clocks = {};
   final Map<String, int> _processed = {};
   final List<PulledChange> log = [];
   int _conflictSeq = 0;
@@ -171,6 +171,18 @@ class FakeSyncServer {
       }
       final differs = '$current' != '$value';
       final reviewed = ctx.spec.reviewed.contains(field);
+      // Never auto-merged: a field changed after the version this device saw.
+      if (differs && clock != null && ctx.spec.neverMerged && ctx.baseVersion != null && clock.seq > ctx.baseVersion!) {
+        if (_newer(ctx.hlc, clock.hlc)) {
+          conflictId = _recordConflict(ctx, field, value, ctx.member, current, clock.by);
+          changes[field] = value;
+          _setClock(ctx, field);
+        } else {
+          conflictId = _recordConflict(ctx, field, current, clock.by, value, ctx.member);
+        }
+        merged = true;
+        return;
+      }
       if (_newer(ctx.hlc, clock?.hlc)) {
         if (differs && reviewed && clock != null && clock.by != ctx.member &&
             ctx.baseVersion != null && ctx.baseVersion! < (row['server_version'] as int? ?? 0)) {
@@ -246,10 +258,11 @@ class FakeSyncServer {
     return ('applied', null);
   }
 
-  ({String hlc, String by})? _clock(_Ctx ctx, String field) => _clocks[_key(ctx.spec.name, ctx.id, field)];
+  ({String hlc, String by, int seq})? _clock(_Ctx ctx, String field) => _clocks[_key(ctx.spec.name, ctx.id, field)];
 
+  /// [seq] is the change that set the field (field_clocks.seq on the hub).
   void _setClock(_Ctx ctx, String field) =>
-      _clocks[_key(ctx.spec.name, ctx.id, field)] = (hlc: ctx.hlc, by: ctx.member);
+      _clocks[_key(ctx.spec.name, ctx.id, field)] = (hlc: ctx.hlc, by: ctx.member, seq: log.length + 1);
 
   void _touch(_Ctx ctx, Map<String, Object?> row) {
     row['updated_at'] = _iso();
