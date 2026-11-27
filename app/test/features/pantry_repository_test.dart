@@ -328,6 +328,9 @@ void main() {
     // Also undo versions 9 and 10 (calendar events).
     await v6.customStatement('ALTER TABLE events DROP COLUMN "ends_on"');
     await v6.customStatement('ALTER TABLE events DROP COLUMN "color"');
+    for (final t in ['vault_keys', 'vault_items', 'vault_files', 'vault_blobs']) {
+      await v6.customStatement('DROP TABLE "$t"'); // added in v11
+    }
     await v6.customStatement('PRAGMA user_version = 6');
     await v6.close();
 

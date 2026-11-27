@@ -211,6 +211,58 @@ class Transactions extends Table with SyncColumns {
   TextColumn get note => text().nullable()();
 }
 
+// ------------------------------------------------------------- vault
+// Document Vault (docs/vault.md). Secrets are encrypted on the device with
+// the household vault key before they reach this database; the hub only
+// ever sees ciphertext. All three are never auto-merged (sync-protocol §6).
+
+/// The household vault key, wrapped by the vault passphrase and by the
+/// owner's recovery code. One row per household (derived id).
+class VaultKeys extends Table with SyncColumns {
+  /// base64 of version byte, nonce, ciphertext and tag (see VaultCrypto).
+  TextColumn get passphraseWrap => text()();
+  TextColumn get kdfSalt => text()();
+  IntColumn get kdfIterations => integer()();
+  TextColumn get recoveryWrap => text()();
+  TextColumn get recoverySalt => text()();
+  TextColumn get createdBy => text().nullable()();
+}
+
+/// A document. [sealed] is the encrypted title, number, issuer and note.
+class VaultItems extends Table with SyncColumns {
+  TextColumn get kind => text()();
+  TextColumn get memberId => text().nullable()();
+
+  /// Calendar date `YYYY-MM-DD`; plain so reminders work while locked.
+  TextColumn get expiresOn => text().nullable()();
+  TextColumn get sealed => text()();
+  TextColumn get createdBy => text().nullable()();
+}
+
+/// A photo or PDF of a document: its own key ([keyWrap], wrapped by the
+/// vault key), the SHA-256 and size of its ciphertext, and its encrypted
+/// name and type ([sealed]).
+class VaultFiles extends Table with SyncColumns {
+  TextColumn get itemId => text()();
+  TextColumn get sha256 => text()();
+  IntColumn get size => integer()();
+  TextColumn get keyWrap => text()();
+  TextColumn get sealed => text()();
+  IntColumn get position => integer().withDefault(const Constant(0))();
+}
+
+/// Local only: encrypted file bytes kept on this device, by SHA-256 of the
+/// ciphertext. [needsUpload] until the hub has them.
+class VaultBlobs extends Table {
+  TextColumn get sha256 => text()();
+  BlobColumn get data => blob()();
+  BoolColumn get needsUpload => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get createdAt => dateTime().clientDefault(DateTime.now)();
+
+  @override
+  Set<Column> get primaryKey => {sha256};
+}
+
 /// Values kept for review (sync-protocol §6.1). Created by the hub only.
 @DataClassName('ConflictRecord')
 class Conflicts extends Table with SyncColumns {

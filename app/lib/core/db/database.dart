@@ -20,6 +20,10 @@ part 'database.g.dart';
     DebtPayments,
     Budgets,
     Transactions,
+    VaultKeys,
+    VaultItems,
+    VaultFiles,
+    VaultBlobs,
     Conflicts,
     Outbox,
     FieldClocks,
@@ -31,7 +35,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 10;
+  int get schemaVersion => 11;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -69,6 +73,13 @@ class AppDatabase extends _$AppDatabase {
       // Multi-day events; databases older than 5 got events with ends_on above.
       if (from >= 5 && from < 9) await m.addColumn(events, events.endsOn);
       if (from >= 5 && from < 10) await m.addColumn(events, events.color); // event colours
+      if (from < 11) {
+        // Document Vault
+        await m.createTable(vaultKeys);
+        await m.createTable(vaultItems);
+        await m.createTable(vaultFiles);
+        await m.createTable(vaultBlobs);
+      }
     },
   );
 
